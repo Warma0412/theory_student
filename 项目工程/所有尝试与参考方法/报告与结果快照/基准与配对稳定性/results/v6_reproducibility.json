@@ -1,0 +1,52 @@
+{
+  "seed": 20260907,
+  "panel_rows": 14677,
+  "panel_sellers": 2793,
+  "benchmark": {
+    "selection_cutoff": "2018-04-01",
+    "test_period": [
+      "2018-05-01",
+      "2018-07-01"
+    ],
+    "matched_budget": 12,
+    "knockoff_reference_features": [
+      "avg_price",
+      "avg_product_name_length",
+      "avg_product_description_length",
+      "avg_ship_days",
+      "avg_estimate_gap_days",
+      "item_count",
+      "order_count",
+      "category_count",
+      "unique_customer_count",
+      "buyer_state_diversity",
+      "dominant_customer_state_share",
+      "seller_state_frequency"
+    ],
+    "elastic_net": {
+      "alpha": 0.028288694346259694,
+      "l1_ratio": 0.75
+    },
+    "stability_lasso_alpha": 0.021469314691592495,
+    "xgboost": {
+      "n_estimators": 450,
+      "max_depth": 2,
+      "learning_rate": 0.04,
+      "min_child_weight": 10,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_lambda": 2.0,
+      "objective": "reg:squarederror",
+      "n_jobs": -1,
+      "random_state": 20260907
+    }
+  },
+  "python": "3.9.6 (default, Apr 30 2025, 02:07:17) \n[Clang 17.0.0 (clang-1700.0.13.5)]",
+  "platform": "macOS-15.7.3-arm64-arm-64bit",
+  "numpy": "2.0.2",
+  "pandas": "2.3.3",
+  "scipy": "1.13.1",
+  "sklearn": "1.6.1",
+  "xgboost": "2.1.4",
+  "elapsed_seconds": 97.28271484375
+}

@@ -1,0 +1,1589 @@
+[
+  {
+    "key": "deepdrk2024",
+    "cited_title": "DeepDRK: Deep Dependency Regularized Knockoff for Feature Selection",
+    "cited_year": 2024,
+    "status": "web_verification_recorded_separately_not_fetched_by_this_script",
+    "url": "https://openreview.net/forum?id=ibKpPabHVn",
+    "note": "Official conference page and author-linked source code"
+  },
+  {
+    "key": "deeplasso2023",
+    "cited_title": "A Performance-Driven Benchmark for Feature Selection in Tabular Deep Learning",
+    "cited_year": 2023,
+    "status": "web_verification_recorded_separately_not_fetched_by_this_script",
+    "url": "https://openreview.net/forum?id=v4PMCdSaAT",
+    "note": "Official conference page and source code"
+  },
+  {
+    "key": "vtfs2024",
+    "cited_title": "Feature Selection as Deep Sequential Generative Learning",
+    "cited_year": 2024,
+    "status": "metadata_retrieved",
+    "doi": "10.1145/3687485",
+    "registered_title": [
+      "Feature Selection as Deep Sequential Generative Learning"
+    ],
+    "journal": [
+      "ACM Transactions on Knowledge Discovery from Data"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2024,
+          10,
+          18
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2024,
+          11,
+          30
+        ]
+      ]
+    },
+    "volume": "18",
+    "issue": "9",
+    "pages": "1-21",
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0009-0009-6196-0287",
+        "authenticated-orcid": false,
+        "given": "Wangyang",
+        "family": "Ying",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "School of Computing and Augmented Intelligence, Arizona State University, Tempe, AZ, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0003-3948-0059",
+        "authenticated-orcid": false,
+        "given": "Dongjie",
+        "family": "Wang",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Computer Science, University of Kansas, Lawrence, KS, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-9363-738X",
+        "authenticated-orcid": false,
+        "given": "Haifeng",
+        "family": "Chen",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "NEC Laboratories America Inc, Princeton, NJ, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-1767-8024",
+        "authenticated-orcid": false,
+        "given": "Yanjie",
+        "family": "Fu",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "School of Computing and Augmented Intelligence, Arizona State University, Tempe, AZ, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "mafs2024",
+    "cited_title": "A multi-head attention-like feature selection approach for tabular data",
+    "cited_year": 2024,
+    "status": "metadata_retrieved",
+    "doi": "10.1016/j.knosys.2024.112250",
+    "registered_title": [
+      "A multi-head attention-like feature selection approach for tabular data"
+    ],
+    "journal": [
+      "Knowledge-Based Systems"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2024,
+          10
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2024,
+          10
+        ]
+      ]
+    },
+    "volume": "301",
+    "issue": null,
+    "pages": "112250",
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0000-0001-7704-5053",
+        "authenticated-orcid": false,
+        "given": "Hieu",
+        "family": "Pham",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Yi",
+        "family": "Tan",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Tripti",
+        "family": "Singh",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0009-0008-9603-2440",
+        "authenticated-orcid": false,
+        "given": "Vasileios",
+        "family": "Pavlopoulos",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-6050-9130",
+        "authenticated-orcid": false,
+        "given": "Ravi",
+        "family": "Patnayakuni",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "tabm2025",
+    "cited_title": "TabM: Advancing Tabular Deep Learning with Parameter-Efficient Ensembling",
+    "cited_year": 2025,
+    "status": "web_verification_recorded_separately_not_fetched_by_this_script",
+    "url": "https://openreview.net/forum?id=Sd4wYYOhmY",
+    "note": "Official author repository and publication metadata"
+  },
+  {
+    "key": "tabpfn2025",
+    "cited_title": "Accurate predictions on small data with a tabular foundation model",
+    "cited_year": 2025,
+    "status": "metadata_retrieved",
+    "doi": "10.1038/s41586-024-08328-6",
+    "registered_title": [
+      "Accurate predictions on small data with a tabular foundation model"
+    ],
+    "journal": [
+      "Nature"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2025,
+          1,
+          8
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2025,
+          1,
+          9
+        ]
+      ]
+    },
+    "volume": "637",
+    "issue": "8045",
+    "pages": "319-326",
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0000-0001-8556-518X",
+        "authenticated-orcid": false,
+        "given": "Noah",
+        "family": "Hollmann",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0009-0000-0795-6097",
+        "authenticated-orcid": false,
+        "given": "Samuel",
+        "family": "Müller",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0009-0001-1181-0549",
+        "authenticated-orcid": false,
+        "given": "Lennart",
+        "family": "Purucker",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0009-0000-0688-9435",
+        "authenticated-orcid": false,
+        "given": "Arjun",
+        "family": "Krishnakumar",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Max",
+        "family": "Körfer",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Shi Bin",
+        "family": "Hoo",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-5518-7445",
+        "authenticated-orcid": false,
+        "given": "Robin Tibor",
+        "family": "Schirrmeister",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-2037-3694",
+        "authenticated-orcid": false,
+        "given": "Frank",
+        "family": "Hutter",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "nogueira2018",
+    "cited_title": "On the Stability of Feature Selection Algorithms",
+    "cited_year": 2018,
+    "status": "web_verification_recorded_separately_not_fetched_by_this_script",
+    "url": "https://www.jmlr.org/papers/v18/17-514.html",
+    "note": "Journal page"
+  },
+  {
+    "key": "cpss2013",
+    "cited_title": "Variable selection with error control: another look at stability selection",
+    "cited_year": 2013,
+    "status": "metadata_retrieved",
+    "doi": "10.1111/j.1467-9868.2011.01034.x",
+    "registered_title": [
+      "Variable Selection with Error Control: Another Look at Stability Selection"
+    ],
+    "journal": [
+      "Journal of the Royal Statistical Society Series B: Statistical Methodology"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2012,
+          6,
+          21
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2013,
+          1,
+          1
+        ]
+      ]
+    },
+    "volume": "75",
+    "issue": "1",
+    "pages": "55-80",
+    "authors": [
+      {
+        "given": "Rajen D.",
+        "family": "Shah",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "University of Cambridge , UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Richard J.",
+        "family": "Samworth",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Cambridge , UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "stability2010",
+    "cited_title": "Stability selection",
+    "cited_year": 2010,
+    "status": "metadata_retrieved",
+    "doi": "10.1111/j.1467-9868.2010.00740.x",
+    "registered_title": [
+      "Stability Selection"
+    ],
+    "journal": [
+      "Journal of the Royal Statistical Society Series B: Statistical Methodology"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2010,
+          8,
+          5
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2010,
+          9,
+          1
+        ]
+      ]
+    },
+    "volume": "72",
+    "issue": "4",
+    "pages": "417-473",
+    "authors": [
+      {
+        "given": "Nicolai",
+        "family": "Meinshausen",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "University of Oxford , UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Peter",
+        "family": "Bühlmann",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Eidgenössiche Technische Hochschule Zürich , Switzerland"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "modelx2018",
+    "cited_title": "Panning for gold: model-X knockoffs for high dimensional controlled variable selection",
+    "cited_year": 2018,
+    "status": "metadata_retrieved",
+    "doi": "10.1111/rssb.12265",
+    "registered_title": [
+      "Panning for Gold: ‘Model-X’ Knockoffs for High Dimensional Controlled Variable Selection"
+    ],
+    "journal": [
+      "Journal of the Royal Statistical Society Series B: Statistical Methodology"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2018,
+          1,
+          8
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2018,
+          6,
+          1
+        ]
+      ]
+    },
+    "volume": "80",
+    "issue": "3",
+    "pages": "551-577",
+    "authors": [
+      {
+        "given": "Emmanuel",
+        "family": "Candès",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Stanford University , USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Yingying",
+        "family": "Fan",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Southern California , Los Angeles , USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Lucas",
+        "family": "Janson",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Stanford University , USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Jinchi",
+        "family": "Lv",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Southern California , Los Angeles , USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "mvr2022",
+    "cited_title": "Powerful knockoffs via minimizing reconstructability",
+    "cited_year": 2022,
+    "status": "metadata_retrieved",
+    "doi": "10.1214/21-aos2104",
+    "registered_title": [
+      "Powerful knockoffs via minimizing reconstructability"
+    ],
+    "journal": [
+      "The Annals of Statistics"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2022,
+          2,
+          1
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2022,
+          2,
+          1
+        ]
+      ]
+    },
+    "volume": "50",
+    "issue": "1",
+    "pages": null,
+    "authors": [
+      {
+        "given": "Asher",
+        "family": "Spector",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Department of Statistics, Harvard University"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Lucas",
+        "family": "Janson",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Statistics, Harvard University"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "derand2024",
+    "cited_title": "Derandomised knockoffs: leveraging e-values for false discovery rate control",
+    "cited_year": 2024,
+    "status": "metadata_retrieved",
+    "doi": "10.1093/jrsssb/qkad085",
+    "registered_title": [
+      "Derandomised knockoffs: leveraging\n                    <i>e</i>\n                    -values for false discovery rate control"
+    ],
+    "journal": [
+      "Journal of the Royal Statistical Society Series B: Statistical Methodology"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2023,
+          9,
+          7
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2024,
+          2,
+          8
+        ]
+      ]
+    },
+    "volume": "86",
+    "issue": "1",
+    "pages": "122-154",
+    "authors": [
+      {
+        "given": "Zhimei",
+        "family": "Ren",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Department of Statistics and Data Science, Wharton School, University of Pennsylvania , Philadelphia, PA , USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-4854-8644",
+        "authenticated-orcid": false,
+        "given": "Rina Foygel",
+        "family": "Barber",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Statistics, University of Chicago , Chicago, IL , USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "ebh2022",
+    "cited_title": "False discovery rate control with e-values",
+    "cited_year": 2022,
+    "status": "metadata_retrieved",
+    "doi": "10.1111/rssb.12489",
+    "registered_title": [
+      "False Discovery Rate Control with E-values"
+    ],
+    "journal": [
+      "Journal of the Royal Statistical Society Series B: Statistical Methodology"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2022,
+          1,
+          11
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2022,
+          7,
+          1
+        ]
+      ]
+    },
+    "volume": "84",
+    "issue": "3",
+    "pages": "822-852",
+    "authors": [
+      {
+        "given": "Ruodu",
+        "family": "Wang",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Department of Statistics and Actuarial Science, University of Waterloo , Waterloo , Ontario , Canada"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Aaditya",
+        "family": "Ramdas",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Departments of Statistics and Machine Learning, Carnegie Mellon University , Pittsburgh , Pennsylvania , USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "knockoff2015",
+    "cited_title": "Controlling the false discovery rate via knockoffs",
+    "cited_year": 2015,
+    "status": "metadata_retrieved",
+    "doi": "10.1214/15-aos1337",
+    "registered_title": [
+      "Controlling the false discovery rate via knockoffs"
+    ],
+    "journal": [
+      "The Annals of Statistics"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2015,
+          10,
+          1
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2015,
+          10,
+          1
+        ]
+      ]
+    },
+    "volume": "43",
+    "issue": "5",
+    "pages": null,
+    "authors": [
+      {
+        "given": "Rina Foygel",
+        "family": "Barber",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Emmanuel J.",
+        "family": "Candès",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "elastic2005",
+    "cited_title": "Regularization and variable selection via the elastic net",
+    "cited_year": 2005,
+    "status": "metadata_retrieved",
+    "doi": "10.1111/j.1467-9868.2005.00503.x",
+    "registered_title": [
+      "Regularization and Variable Selection Via the Elastic Net"
+    ],
+    "journal": [
+      "Journal of the Royal Statistical Society Series B: Statistical Methodology"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2005,
+          3,
+          9
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2005,
+          4,
+          1
+        ]
+      ]
+    },
+    "volume": "67",
+    "issue": "2",
+    "pages": "301-320",
+    "authors": [
+      {
+        "given": "Hui",
+        "family": "Zou",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Stanford University , USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Trevor",
+        "family": "Hastie",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Stanford University , USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "lasso1996",
+    "cited_title": "Regression shrinkage and selection via the lasso",
+    "cited_year": 1996,
+    "status": "metadata_retrieved",
+    "doi": "10.1111/j.2517-6161.1996.tb02080.x",
+    "registered_title": [
+      "Regression Shrinkage and Selection Via the Lasso"
+    ],
+    "journal": [
+      "Journal of the Royal Statistical Society Series B: Statistical Methodology"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          1996,
+          1,
+          1
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          1996,
+          1,
+          1
+        ]
+      ]
+    },
+    "volume": "58",
+    "issue": "1",
+    "pages": "267-288",
+    "authors": [
+      {
+        "given": "Robert",
+        "family": "Tibshirani",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "University of Toronto   Canada"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "extratrees2006",
+    "cited_title": "Extremely randomized trees",
+    "cited_year": 2006,
+    "status": "metadata_retrieved",
+    "doi": "10.1007/s10994-006-6226-1",
+    "registered_title": [
+      "Extremely randomized trees"
+    ],
+    "journal": [
+      "Machine Learning"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2006,
+          3,
+          2
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2006,
+          4
+        ]
+      ]
+    },
+    "volume": "63",
+    "issue": "1",
+    "pages": "3-42",
+    "authors": [
+      {
+        "given": "Pierre",
+        "family": "Geurts",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Damien",
+        "family": "Ernst",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Louis",
+        "family": "Wehenkel",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "boruta2010",
+    "cited_title": "Feature Selection with the Boruta Package",
+    "cited_year": 2010,
+    "status": "metadata_retrieved",
+    "doi": "10.18637/jss.v036.i11",
+    "registered_title": [
+      "Feature Selection with the\n                    <b>Boruta</b>\n                    Package"
+    ],
+    "journal": [
+      "Journal of Statistical Software"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2010
+        ]
+      ]
+    },
+    "published_print": null,
+    "volume": "36",
+    "issue": "11",
+    "pages": null,
+    "authors": [
+      {
+        "given": "Miron B.",
+        "family": "Kursa",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Witold R.",
+        "family": "Rudnicki",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "xgb2016",
+    "cited_title": "XGBoost: A Scalable Tree Boosting System",
+    "cited_year": 2016,
+    "status": "metadata_retrieved",
+    "doi": "10.1145/2939672.2939785",
+    "registered_title": [
+      "XGBoost"
+    ],
+    "journal": [
+      "Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2016,
+          8,
+          13
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2016,
+          8,
+          13
+        ]
+      ]
+    },
+    "volume": null,
+    "issue": null,
+    "pages": "785-794",
+    "authors": [
+      {
+        "given": "Tianqi",
+        "family": "Chen",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "University of Washington, Seattle, WA, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Carlos",
+        "family": "Guestrin",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Washington, Seattle, WA, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "shap2017",
+    "cited_title": "A Unified Approach to Interpreting Model Predictions",
+    "cited_year": 2017,
+    "status": "web_verification_recorded_separately_not_fetched_by_this_script",
+    "url": "https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions",
+    "note": "see source register"
+  },
+  {
+    "key": "treeshap2020",
+    "cited_title": "From local explanations to global understanding with explainable AI for trees",
+    "cited_year": 2020,
+    "status": "metadata_retrieved",
+    "doi": "10.1038/s42256-019-0138-9",
+    "registered_title": [
+      "From local explanations to global understanding with explainable AI for trees"
+    ],
+    "journal": [
+      "Nature Machine Intelligence"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2020,
+          1,
+          17
+        ]
+      ]
+    },
+    "published_print": null,
+    "volume": "2",
+    "issue": "1",
+    "pages": "56-67",
+    "authors": [
+      {
+        "given": "Scott M.",
+        "family": "Lundberg",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-8741-131X",
+        "authenticated-orcid": false,
+        "given": "Gabriel",
+        "family": "Erion",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Hugh",
+        "family": "Chen",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Alex",
+        "family": "DeGrave",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Jordan M.",
+        "family": "Prutkin",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Bala",
+        "family": "Nair",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Ronit",
+        "family": "Katz",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Jonathan",
+        "family": "Himmelfarb",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Nisha",
+        "family": "Bansal",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-5833-5215",
+        "authenticated-orcid": false,
+        "given": "Su-In",
+        "family": "Lee",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "ledoit2004",
+    "cited_title": "A well-conditioned estimator for large-dimensional covariance matrices",
+    "cited_year": 2004,
+    "status": "metadata_retrieved",
+    "doi": "10.1016/s0047-259x(03)00096-4",
+    "registered_title": [
+      "A well-conditioned estimator for large-dimensional covariance matrices"
+    ],
+    "journal": [
+      "Journal of Multivariate Analysis"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2004,
+          2
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2004,
+          2
+        ]
+      ]
+    },
+    "volume": "88",
+    "issue": "2",
+    "pages": "365-411",
+    "authors": [
+      {
+        "given": "Olivier",
+        "family": "Ledoit",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Michael",
+        "family": "Wolf",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "bh1995",
+    "cited_title": "Controlling the false discovery rate: a practical and powerful approach to multiple testing",
+    "cited_year": 1995,
+    "status": "metadata_retrieved",
+    "doi": "10.1111/j.2517-6161.1995.tb02031.x",
+    "registered_title": [
+      "Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing"
+    ],
+    "journal": [
+      "Journal of the Royal Statistical Society Series B: Statistical Methodology"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          1995,
+          1,
+          1
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          1995,
+          1,
+          1
+        ]
+      ]
+    },
+    "volume": "57",
+    "issue": "1",
+    "pages": "289-300",
+    "authors": [
+      {
+        "given": "Yoav",
+        "family": "Benjamini",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Tel Aviv University , Israel"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Yosef",
+        "family": "Hochberg",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Tel Aviv University , Israel"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "morris2019",
+    "cited_title": "Using simulation studies to evaluate statistical methods",
+    "cited_year": 2019,
+    "status": "metadata_retrieved",
+    "doi": "10.1002/sim.8086",
+    "registered_title": [
+      "Using simulation studies to evaluate statistical methods"
+    ],
+    "journal": [
+      "Statistics in Medicine"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2019,
+          1,
+          16
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2019,
+          5,
+          20
+        ]
+      ]
+    },
+    "volume": "38",
+    "issue": "11",
+    "pages": "2074-2102",
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0000-0001-5850-3610",
+        "authenticated-orcid": false,
+        "given": "Tim P.",
+        "family": "Morris",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "London Hub for Trials Methodology Research MRC Clinical Trials Unit at UCL London United Kingdom"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-6718-7661",
+        "authenticated-orcid": false,
+        "given": "Ian R.",
+        "family": "White",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "London Hub for Trials Methodology Research MRC Clinical Trials Unit at UCL London United Kingdom"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-8378-8259",
+        "authenticated-orcid": false,
+        "given": "Michael J.",
+        "family": "Crowther",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Biostatistics Research Group, Department of Health Sciences University of Leicester Leicester United Kingdom"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "olist2018",
+    "cited_title": "Brazilian E-Commerce Public Dataset by Olist",
+    "cited_year": 2018,
+    "status": "web_verification_recorded_separately_not_fetched_by_this_script",
+    "url": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce",
+    "note": "see source register"
+  },
+  {
+    "key": "funnel2018",
+    "cited_title": "Marketing Funnel by Olist",
+    "cited_year": 2018,
+    "status": "web_verification_recorded_separately_not_fetched_by_this_script",
+    "url": "https://www.kaggle.com/datasets/olistbr/marketing-funnel-olist",
+    "note": "see source register"
+  }
+]

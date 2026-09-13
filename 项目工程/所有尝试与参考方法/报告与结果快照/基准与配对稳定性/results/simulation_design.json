@@ -1,0 +1,23 @@
+{
+  "seed": 20260907,
+  "n": 4000,
+  "p": 31,
+  "true_features": [
+    "avg_price",
+    "avg_freight",
+    "avg_product_name_length",
+    "avg_review_score",
+    "avg_ship_days",
+    "item_count",
+    "order_count",
+    "category_count",
+    "unique_customer_count",
+    "buyer_state_diversity"
+  ],
+  "signal_to_noise_sd_ratio": 1.8,
+  "simulation_repetitions": 20,
+  "knockoff_repetitions": 10,
+  "stability_subsamples": 20,
+  "shadow_repetitions": 8,
+  "q": 0.2
+}

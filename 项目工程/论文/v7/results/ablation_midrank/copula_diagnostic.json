@@ -1,0 +1,22 @@
+{
+  "mean_marginal_ks": 0.20865638437401426,
+  "classifier_tests": [
+    {
+      "swap_fraction": 0.25,
+      "auc": 0.9999448475405714,
+      "permutation_p": 0.005
+    },
+    {
+      "swap_fraction": 0.5,
+      "auc": 1.0,
+      "permutation_p": 0.005
+    },
+    {
+      "swap_fraction": 1.0,
+      "auc": 1.0,
+      "permutation_p": 0.005
+    }
+  ],
+  "empirical_warning": true,
+  "passing_is_not_a_proof": true
+}

@@ -1,0 +1,14 @@
+{
+  "seed": 20260908,
+  "selection_cutoff": "2018-04-01",
+  "outer_repetitions": 30,
+  "seller_fraction": 0.7,
+  "paired_seller_subsamples": true,
+  "matched_budget": 12,
+  "knockoff_repetitions_per_outer_sample": 60,
+  "stability_selection_inner_repetitions": 20,
+  "shadow_repetitions_per_outer_sample": 8,
+  "legacy_knockoff_algorithmic_stability": 0.9692307692307692,
+  "legacy_metric_interpretation": "Fixed-data, varying-knockoff ranking stability; retained only as a separate algorithmic-randomness diagnostic.",
+  "elapsed_seconds": 187.48604583740234
+}

@@ -1,0 +1,61 @@
+{
+  "version": "v3",
+  "seed": 20260823,
+  "selection_parameter": "K",
+  "allowed_k": [
+    1,
+    14
+  ],
+  "ranking_rule": "Within the q=0.20 e-BH set, rank by validation-set mean absolute TreeSHAP contribution from a model trained only on the training period",
+  "default_k_rule": "Smallest K with cumulative validation SHAP contribution >= 90% and validation RMSE within 0.5% of the best K",
+  "performance_tolerance": 0.005,
+  "contribution_target": 0.9,
+  "recommended_default_k": 10,
+  "selected_k": 10,
+  "user_overrode_default_k": false,
+  "shortlist_count": 10,
+  "shortlist_features": [
+    "unique_customer_count",
+    "order_count",
+    "avg_price",
+    "avg_ship_days",
+    "avg_estimate_gap_days",
+    "buyer_state_diversity",
+    "avg_delivery_days",
+    "item_count",
+    "avg_freight",
+    "avg_product_name_length"
+  ],
+  "shortlist_labels_zh": [
+    "独立顾客数",
+    "成交订单数",
+    "平均商品价格",
+    "平均审核至承运天数",
+    "平均预计提前送达天数",
+    "买家州数量",
+    "平均下单至送达天数",
+    "成交件数",
+    "平均运费",
+    "平均商品标题长度"
+  ],
+  "formal_fdr_set_count": 14,
+  "shortlist_is_operational_not_new_fdr_claim": true,
+  "xgboost_parameters": {
+    "n_estimators": 550,
+    "max_depth": 2,
+    "learning_rate": 0.04,
+    "min_child_weight": 10,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "reg_lambda": 2.0,
+    "objective": "reg:squarederror",
+    "n_jobs": -1,
+    "random_state": 20260823
+  },
+  "default_k_test_rmse": 2.385337534516986,
+  "full_xgboost_rmse": 2.3876636934103077,
+  "relative_rmse_change_vs_full_xgboost": -0.000974240593322086,
+  "best_validation_rmse_across_k": 2.3349412116425015,
+  "selection_path_file": "v3_selection_path.csv",
+  "panel_sha256": "7212bf462a8b23ba6455bed5fe7354481b43d3e3a0f633a13ced1a97c3046a1e"
+}

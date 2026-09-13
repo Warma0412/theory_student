@@ -1,0 +1,1156 @@
+{
+  "status": "ok",
+  "scene": {
+    "name": "global_null",
+    "signals": 0,
+    "rho": 0.6,
+    "snr": 0,
+    "response": "null",
+    "generator": "oracle_gaussian"
+  },
+  "rep": 27,
+  "methods": {
+    "xgb_sko_ridge": {
+      "score": [
+        -0.00817931859504769,
+        -0.00023221312898819512,
+        0.006625575823444243,
+        0.0019067100703752632,
+        -0.005398012763426968,
+        0.005978733613913534,
+        0.010784425119834674,
+        1.0343398506497126e-05,
+        0.001826089803775358,
+        -0.0056246987299847515,
+        -0.007854404694674735,
+        -0.009289720253907357,
+        0.00529829319643692,
+        0.011699906516670997,
+        -0.0011400833211380529,
+        0.004088314784890742,
+        0.009167607265173048,
+        0.0031679997017452933,
+        -0.00607677182595561,
+        -0.0007683335582098857,
+        -0.0003152995838134842,
+        -0.0005739317775403485,
+        0.003394538017463563,
+        0.007880639242061309,
+        0.004586836739118036,
+        0.006214777114995021,
+        -0.0021604217662926774,
+        0.00529216706537348,
+        0.0005618874531760407,
+        0.006370026865832601,
+        -0.006108681811922186
+      ],
+      "order": [
+        13,
+        6,
+        16,
+        23,
+        2,
+        29,
+        25,
+        5,
+        12,
+        27,
+        24,
+        15,
+        22,
+        17,
+        3,
+        8,
+        28,
+        7,
+        1,
+        20,
+        21,
+        19,
+        14,
+        26,
+        4,
+        9,
+        18,
+        30,
+        10,
+        0,
+        11
+      ],
+      "metadata": {
+        "oracle_guarantee_not_transferred_to_estimated_nuisance": true,
+        "nuisance_uses_scoring_response": true,
+        "permutations_per_side": 1
+      },
+      "native": [],
+      "native_q10": [],
+      "top12_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 12,
+        "false_count": 12
+      },
+      "top8_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 8,
+        "false_count": 8
+      },
+      "native_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "native10_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "rmse12": 1.0167592740481763,
+      "rmse_native": 0.9886176281105609
+    },
+    "xgb_sko_quad": {
+      "score": [
+        -0.006866873214312495,
+        -0.008371072366372526,
+        0.005389499078594995,
+        -0.0018091480375833995,
+        -0.0038544769632177537,
+        0.004277130977862009,
+        0.01138666394032511,
+        1.0733547496413684e-05,
+        -0.0008151110870374828,
+        -0.007760662948323627,
+        -0.0015914348897763048,
+        -0.008996570347038893,
+        0.0016153319586486156,
+        0.004767049131173835,
+        -0.0022706926744607337,
+        0.005008680388290993,
+        0.003022430336592808,
+        -0.004121955447021262,
+        -0.004772645906925666,
+        -0.000764384434497765,
+        -0.007338532378732423,
+        0.0007796183139369603,
+        0.0002672662892617664,
+        0.01119524088668557,
+        -9.119406309692088e-05,
+        0.010433196147140202,
+        0.005273557914980434,
+        0.0006028663560201198,
+        0.004257499723505001,
+        -0.004117910235783744,
+        0.007058391569902445
+      ],
+      "order": [
+        6,
+        23,
+        25,
+        30,
+        2,
+        26,
+        15,
+        13,
+        5,
+        28,
+        16,
+        12,
+        21,
+        27,
+        22,
+        7,
+        24,
+        19,
+        8,
+        10,
+        3,
+        14,
+        4,
+        29,
+        17,
+        18,
+        0,
+        20,
+        9,
+        1,
+        11
+      ],
+      "metadata": {
+        "oracle_guarantee_not_transferred_to_estimated_nuisance": true,
+        "nuisance_uses_scoring_response": true,
+        "permutations_per_side": 1
+      },
+      "native": [],
+      "native_q10": [],
+      "top12_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 12,
+        "false_count": 12
+      },
+      "top8_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 8,
+        "false_count": 8
+      },
+      "native_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "native10_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "rmse12": 1.0198847163567653,
+      "rmse_native": 0.9886176281105609
+    },
+    "xgb_sko_scale": {
+      "score": [
+        -0.01005129893560444,
+        0.001135175783483586,
+        0.0029835366458249423,
+        0.0023719883163879772,
+        -0.004740884140259745,
+        0.002439370259678721,
+        0.008517567046346167,
+        -0.009695147456508102,
+        0.003992332141194651,
+        -0.006162488082262953,
+        -0.01706402376089204,
+        -0.010442291172152727,
+        0.0051090877472928,
+        0.012048707141202599,
+        -0.0025432913734491714,
+        0.003606268633198478,
+        0.01708178222919706,
+        0.006976091937931095,
+        0.0022520337928602185,
+        -0.0024174277376053,
+        0.004675846674759404,
+        -0.0008714343153771136,
+        0.003006769275737663,
+        0.004391701921041763,
+        0.005737041611418859,
+        0.007272937221559008,
+        -0.0036036609548661834,
+        0.007741624275440337,
+        0.001338802083226167,
+        0.012474798834997785,
+        -0.0028221009571723
+      ],
+      "order": [
+        16,
+        29,
+        13,
+        6,
+        27,
+        25,
+        17,
+        24,
+        12,
+        20,
+        23,
+        8,
+        15,
+        22,
+        2,
+        5,
+        3,
+        18,
+        28,
+        1,
+        21,
+        19,
+        14,
+        30,
+        26,
+        4,
+        9,
+        7,
+        0,
+        11,
+        10
+      ],
+      "metadata": {
+        "oracle_guarantee_not_transferred_to_estimated_nuisance": true,
+        "nuisance_uses_scoring_response": true,
+        "permutations_per_side": 1
+      },
+      "native": [],
+      "native_q10": [],
+      "top12_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 12,
+        "false_count": 12
+      },
+      "top8_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 8,
+        "false_count": 8
+      },
+      "native_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "native10_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "rmse12": 1.0034156609306,
+      "rmse_native": 0.9886176281105609
+    },
+    "xgb_sko_quad_scale": {
+      "score": [
+        -0.0061070426619910245,
+        -0.006256178032479467,
+        0.0037615580630397582,
+        0.0027053314067629276,
+        -0.0022714114000098764,
+        9.844303096446128e-05,
+        0.009610996616502587,
+        -0.00865547081853057,
+        0.006458930760161674,
+        -0.0071656167985659006,
+        -0.010373332468884531,
+        -0.00556024963436901,
+        0.004209588617454158,
+        0.006259264597976662,
+        -0.001021325921641892,
+        0.003059842669945291,
+        0.00872519276908471,
+        -0.0012788815778081637,
+        -0.0034825390224770343,
+        -0.0014667528845036042,
+        -0.0015202375908299072,
+        -0.003841454423646531,
+        -0.004561679876292493,
+        0.0019222556443715785,
+        0.0001463728949842255,
+        0.01132337317990909,
+        -0.0018542016224153434,
+        -0.0013364455433418423,
+        0.005430879733402183,
+        0.0038872200766383353,
+        0.005076770331006485
+      ],
+      "order": [
+        25,
+        6,
+        16,
+        8,
+        13,
+        28,
+        30,
+        12,
+        29,
+        2,
+        15,
+        3,
+        23,
+        24,
+        5,
+        14,
+        17,
+        27,
+        19,
+        20,
+        26,
+        4,
+        18,
+        21,
+        22,
+        11,
+        0,
+        1,
+        9,
+        7,
+        10
+      ],
+      "metadata": {
+        "oracle_guarantee_not_transferred_to_estimated_nuisance": true,
+        "nuisance_uses_scoring_response": true,
+        "permutations_per_side": 1
+      },
+      "native": [],
+      "native_q10": [],
+      "top12_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 12,
+        "false_count": 12
+      },
+      "top8_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 8,
+        "false_count": 8
+      },
+      "native_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "native10_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "rmse12": 1.0168257993650025,
+      "rmse_native": 0.9886176281105609
+    },
+    "tabm_sko_ridge": {
+      "score": [
+        9.143080301893459e-05,
+        -0.00038983157612596366,
+        9.543587322687515e-06,
+        0.0002193504782748391,
+        0.00010929657449171523,
+        -0.00016307669464385208,
+        0.00020683527012333895,
+        9.424176889476099e-05,
+        -0.00019301299700491816,
+        -0.00023804992790198574,
+        -0.0005865162267989732,
+        -0.00014905013780290905,
+        -1.9107908942404028e-05,
+        0.00016561185816644329,
+        4.5785638716065995e-05,
+        -0.00021697477127414079,
+        0.0006294681615818423,
+        0.0006940193553996939,
+        -3.6442889314215064e-05,
+        -2.0582576423649362e-05,
+        -0.0002831847305596903,
+        -0.00024376304552837537,
+        0.00021525386673321606,
+        0.0001652767814108401,
+        -0.00019489325987057834,
+        0.0003118500362950331,
+        0.0003812951712582345,
+        0.00010691680238637577,
+        0.00014922430696567447,
+        0.00021932716934889532,
+        -0.0002718099074945224
+      ],
+      "order": [
+        17,
+        16,
+        26,
+        25,
+        3,
+        29,
+        22,
+        6,
+        13,
+        23,
+        28,
+        4,
+        27,
+        7,
+        0,
+        14,
+        2,
+        12,
+        19,
+        18,
+        11,
+        5,
+        8,
+        24,
+        15,
+        9,
+        21,
+        30,
+        20,
+        1,
+        10
+      ],
+      "metadata": {
+        "oracle_guarantee_not_transferred_to_estimated_nuisance": true,
+        "nuisance_uses_scoring_response": true,
+        "permutations_per_side": 1
+      },
+      "native": [],
+      "native_q10": [],
+      "top12_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 12,
+        "false_count": 12
+      },
+      "top8_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 8,
+        "false_count": 8
+      },
+      "native_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "native10_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "rmse12": 1.0085406197500735,
+      "rmse_native": 0.9886176281105609
+    },
+    "tabm_sko_quad": {
+      "score": [
+        0.00027370846546515254,
+        -0.0005081478343841275,
+        2.9999358873801853e-05,
+        -7.235194717979835e-05,
+        9.467016080989264e-05,
+        -0.00035100458029228257,
+        5.887797633620188e-05,
+        -4.6797306468433374e-05,
+        -0.00027864159932171914,
+        -0.0002509019565871333,
+        -0.000602600876928942,
+        -0.00023631326684980778,
+        6.537906292985439e-05,
+        0.00013999452733316965,
+        -4.960562687935941e-06,
+        -0.00017520528405161196,
+        0.00035665680994175506,
+        0.0006571817867845721,
+        -4.6872104899005255e-05,
+        4.607936615147905e-05,
+        -0.000322783245582758,
+        -0.00028665707444205235,
+        0.00014292663441552053,
+        -0.00021628906214929536,
+        -0.00034529573175263285,
+        0.00029921239889269235,
+        0.0003072257536300349,
+        2.9573669023356127e-05,
+        0.0002209013770251741,
+        0.00017898890350633077,
+        -0.00017865729718128493
+      ],
+      "order": [
+        17,
+        16,
+        26,
+        25,
+        0,
+        28,
+        29,
+        22,
+        13,
+        4,
+        12,
+        6,
+        19,
+        2,
+        27,
+        14,
+        7,
+        18,
+        3,
+        15,
+        30,
+        23,
+        11,
+        9,
+        8,
+        21,
+        20,
+        24,
+        5,
+        1,
+        10
+      ],
+      "metadata": {
+        "oracle_guarantee_not_transferred_to_estimated_nuisance": true,
+        "nuisance_uses_scoring_response": true,
+        "permutations_per_side": 1
+      },
+      "native": [],
+      "native_q10": [],
+      "top12_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 12,
+        "false_count": 12
+      },
+      "top8_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 8,
+        "false_count": 8
+      },
+      "native_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "native10_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "rmse12": 1.0089945497611859,
+      "rmse_native": 0.9886176281105609
+    },
+    "tabm_sko_scale": {
+      "score": [
+        -0.0002461783549326204,
+        -0.00033838196527511674,
+        -6.787280876915975e-05,
+        0.00012608473758109973,
+        6.774800325693672e-05,
+        0.00020191845158667164,
+        0.00018336033067190192,
+        5.6189220197371025e-05,
+        -9.723702387157539e-05,
+        -0.00017178775119208072,
+        -0.0005115775220510616,
+        -0.00016571878189112005,
+        6.515711671288129e-05,
+        -7.568898847174982e-05,
+        9.94522134575189e-05,
+        -0.00022017950171289124,
+        0.001032396007143961,
+        0.0006587894619824547,
+        -6.63331267088744e-05,
+        -0.00014931172910758969,
+        1.1573409955527754e-05,
+        -0.000241731826925615,
+        0.0002633298374088015,
+        -7.011842781382109e-06,
+        -0.0001095943015928804,
+        0.000497117781842214,
+        0.0004853593055187762,
+        4.765662151046976e-05,
+        0.00016017860214348706,
+        0.0002531987571800845,
+        -0.00036700908598881205
+      ],
+      "order": [
+        16,
+        17,
+        25,
+        26,
+        22,
+        29,
+        5,
+        6,
+        28,
+        3,
+        14,
+        4,
+        12,
+        7,
+        27,
+        20,
+        23,
+        18,
+        2,
+        13,
+        8,
+        24,
+        19,
+        11,
+        9,
+        15,
+        21,
+        0,
+        1,
+        30,
+        10
+      ],
+      "metadata": {
+        "oracle_guarantee_not_transferred_to_estimated_nuisance": true,
+        "nuisance_uses_scoring_response": true,
+        "permutations_per_side": 1
+      },
+      "native": [],
+      "native_q10": [],
+      "top12_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 12,
+        "false_count": 12
+      },
+      "top8_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 8,
+        "false_count": 8
+      },
+      "native_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "native10_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "rmse12": 1.021315511963986,
+      "rmse_native": 0.9886176281105609
+    },
+    "tabm_sko_quad_scale": {
+      "score": [
+        1.339077655898361e-05,
+        -0.0005444434694473344,
+        9.846522128600441e-05,
+        -7.33465629072786e-06,
+        3.300976225826651e-05,
+        -0.00018070439727278114,
+        -5.06072468146183e-05,
+        -4.030500204089668e-05,
+        -0.00010211521309345265,
+        -0.00023805846824463767,
+        -0.0005007403533894337,
+        -0.00015255611599738532,
+        9.294188275540274e-05,
+        -1.529300754347958e-05,
+        0.0002104253813967763,
+        -0.000126712850651379,
+        0.0004283696900207097,
+        0.0005676052513356948,
+        -3.6493001944711615e-05,
+        -0.0001241785818834934,
+        -0.0002461032827022861,
+        -0.0003758310211638506,
+        0.00019252456179673632,
+        -0.0002807791220426955,
+        -0.00028133419910134376,
+        0.000132611356967867,
+        0.0003321021751510403,
+        -1.2442130825538346e-05,
+        0.00021301460672479302,
+        0.00020864935898665053,
+        -0.00018755913992011237
+      ],
+      "order": [
+        17,
+        16,
+        26,
+        28,
+        14,
+        29,
+        22,
+        25,
+        2,
+        12,
+        4,
+        0,
+        3,
+        27,
+        13,
+        18,
+        7,
+        6,
+        8,
+        19,
+        15,
+        11,
+        5,
+        30,
+        9,
+        20,
+        23,
+        24,
+        21,
+        10,
+        1
+      ],
+      "metadata": {
+        "oracle_guarantee_not_transferred_to_estimated_nuisance": true,
+        "nuisance_uses_scoring_response": true,
+        "permutations_per_side": 1
+      },
+      "native": [],
+      "native_q10": [],
+      "top12_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 12,
+        "false_count": 12
+      },
+      "top8_metrics": {
+        "FDP": 1.0,
+        "power": null,
+        "size": 8,
+        "false_count": 8
+      },
+      "native_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "native10_metrics": {
+        "FDP": 0.0,
+        "power": null,
+        "size": 0,
+        "false_count": 0
+      },
+      "rmse12": 1.0097798845926869,
+      "rmse_native": 0.9886176281105609
+    }
+  },
+  "x_hash": "8f900008af69fc47250528ecce2736bee7e5980cbb6ec673e31014804649ebdd",
+  "y_hash": "edf3f20938985c5f129ef19d2b4524656e4811a4ecbf523225824a27ef73e87a",
+  "parent_file": "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/方法研究_20260913/results/simulations/global_null_027.json",
+  "training": [
+    {
+      "seed": 11,
+      "epoch": 9,
+      "refit_epochs": 9
+    },
+    {
+      "seed": 29,
+      "epoch": 8,
+      "refit_epochs": 8
+    },
+    {
+      "seed": 47,
+      "epoch": 9,
+      "refit_epochs": 9
+    }
+  ],
+  "diagnostic": [
+    {
+      "feature": 0,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.0021213123310059386
+    },
+    {
+      "feature": 0,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.047267052910408204
+    },
+    {
+      "feature": 1,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.0017344322769597825
+    },
+    {
+      "feature": 1,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.06014317795214175
+    },
+    {
+      "feature": 2,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 5.835709359690598e-05
+    },
+    {
+      "feature": 2,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.029151356177558554
+    },
+    {
+      "feature": 3,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.002470171449359857
+    },
+    {
+      "feature": 3,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.031615581051013204
+    },
+    {
+      "feature": 4,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 3.962864112770572e-05
+    },
+    {
+      "feature": 4,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.02893437371889015
+    },
+    {
+      "feature": 5,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.00010561664585700605
+    },
+    {
+      "feature": 5,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.03809496597168179
+    },
+    {
+      "feature": 6,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 1.3191701674626355e-06
+    },
+    {
+      "feature": 6,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.03343045589883746
+    },
+    {
+      "feature": 7,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.0004507215423684065
+    },
+    {
+      "feature": 7,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.05285354374850109
+    },
+    {
+      "feature": 8,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.0013014327959493144
+    },
+    {
+      "feature": 8,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.046780721675099536
+    },
+    {
+      "feature": 9,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 8.859041696565336e-05
+    },
+    {
+      "feature": 9,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.033472957538349224
+    },
+    {
+      "feature": 10,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.002573878941195996
+    },
+    {
+      "feature": 10,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.049800393516672384
+    },
+    {
+      "feature": 11,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.0032539660054260976
+    },
+    {
+      "feature": 11,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.0370003383323182
+    },
+    {
+      "feature": 12,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.00025475761080011094
+    },
+    {
+      "feature": 12,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.03501868804514248
+    },
+    {
+      "feature": 13,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 2.3947809409190134e-05
+    },
+    {
+      "feature": 13,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.035991158498306
+    },
+    {
+      "feature": 14,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.002889394640477536
+    },
+    {
+      "feature": 14,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.031353400384877626
+    },
+    {
+      "feature": 15,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.00033011270857054726
+    },
+    {
+      "feature": 15,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.04917927236486681
+    },
+    {
+      "feature": 16,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.00033148312952475766
+    },
+    {
+      "feature": 16,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.0539562091615394
+    },
+    {
+      "feature": 17,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.0005004165095115251
+    },
+    {
+      "feature": 17,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.03761685366075338
+    },
+    {
+      "feature": 18,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 4.904796691828987e-05
+    },
+    {
+      "feature": 18,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.04192928224021981
+    },
+    {
+      "feature": 19,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.0004154507069774968
+    },
+    {
+      "feature": 19,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.05378770859580575
+    },
+    {
+      "feature": 20,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.0001269550517041637
+    },
+    {
+      "feature": 20,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.040412886497375206
+    },
+    {
+      "feature": 21,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.002792014348403582
+    },
+    {
+      "feature": 21,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.0567605910203629
+    },
+    {
+      "feature": 22,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 1.1067141999247034e-05
+    },
+    {
+      "feature": 22,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.032691014669188306
+    },
+    {
+      "feature": 23,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.00013181918843437025
+    },
+    {
+      "feature": 23,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.023189265730576204
+    },
+    {
+      "feature": 24,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.0011100430988400846
+    },
+    {
+      "feature": 24,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.040552477294779905
+    },
+    {
+      "feature": 25,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 2.6584876788286775e-05
+    },
+    {
+      "feature": 25,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.038013825220547505
+    },
+    {
+      "feature": 26,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 5.928730271223452e-05
+    },
+    {
+      "feature": 26,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.0313084684605679
+    },
+    {
+      "feature": 27,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.0001835357652052829
+    },
+    {
+      "feature": 27,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.04032895757422828
+    },
+    {
+      "feature": 28,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.0010925722312406143
+    },
+    {
+      "feature": 28,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.024151032835429066
+    },
+    {
+      "feature": 29,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 4.171089147819522e-05
+    },
+    {
+      "feature": 29,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.024310236292555465
+    },
+    {
+      "feature": 30,
+      "mean_model": "ridge",
+      "conditional_mean_gap": 0.00020815359992577666
+    },
+    {
+      "feature": 30,
+      "mean_model": "quad",
+      "conditional_mean_gap": 0.06698779204148535
+    }
+  ],
+  "protocol_sha": "f23b3843e996ae47417b9ba2ede67de9c43a28529c1424f5c70c4cef1cf961cd",
+  "seconds": 4.363396875094622
+}

@@ -1,0 +1,324 @@
+{
+  "sign_flip_cases": [
+    {
+      "statistic": "naive",
+      "swapped": [
+        0
+      ],
+      "max_error": 0.4723775945030775
+    },
+    {
+      "statistic": "midpoint",
+      "swapped": [
+        0
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit",
+      "swapped": [
+        0
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit_student",
+      "swapped": [
+        0
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "naive",
+      "swapped": [
+        1
+      ],
+      "max_error": 0.9134796023617509
+    },
+    {
+      "statistic": "midpoint",
+      "swapped": [
+        1
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit",
+      "swapped": [
+        1
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit_student",
+      "swapped": [
+        1
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "naive",
+      "swapped": [
+        2
+      ],
+      "max_error": 0.9134796023617506
+    },
+    {
+      "statistic": "midpoint",
+      "swapped": [
+        2
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit",
+      "swapped": [
+        2
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit_student",
+      "swapped": [
+        2
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "naive",
+      "swapped": [
+        3
+      ],
+      "max_error": 0.09100705170818157
+    },
+    {
+      "statistic": "midpoint",
+      "swapped": [
+        3
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit",
+      "swapped": [
+        3
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit_student",
+      "swapped": [
+        3
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "naive",
+      "swapped": [
+        4
+      ],
+      "max_error": 0.6502660592184255
+    },
+    {
+      "statistic": "midpoint",
+      "swapped": [
+        4
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit",
+      "swapped": [
+        4
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit_student",
+      "swapped": [
+        4
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "naive",
+      "swapped": [
+        5
+      ],
+      "max_error": 0.6502660592184255
+    },
+    {
+      "statistic": "midpoint",
+      "swapped": [
+        5
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit",
+      "swapped": [
+        5
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit_student",
+      "swapped": [
+        5
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "naive",
+      "swapped": [
+        6
+      ],
+      "max_error": 0.5742007644835176
+    },
+    {
+      "statistic": "midpoint",
+      "swapped": [
+        6
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit",
+      "swapped": [
+        6
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit_student",
+      "swapped": [
+        6
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "naive",
+      "swapped": [
+        7
+      ],
+      "max_error": 0.4546499076941979
+    },
+    {
+      "statistic": "midpoint",
+      "swapped": [
+        7
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit",
+      "swapped": [
+        7
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit_student",
+      "swapped": [
+        7
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "naive",
+      "swapped": [
+        0,
+        2,
+        4
+      ],
+      "max_error": 1.1897572931488416
+    },
+    {
+      "statistic": "midpoint",
+      "swapped": [
+        0,
+        2,
+        4
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit",
+      "swapped": [
+        0,
+        2,
+        4
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit_student",
+      "swapped": [
+        0,
+        2,
+        4
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "naive",
+      "swapped": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "max_error": 1.9282432564933512
+    },
+    {
+      "statistic": "midpoint",
+      "swapped": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit",
+      "swapped": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "max_error": 0.0
+    },
+    {
+      "statistic": "orbit_student",
+      "swapped": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "max_error": 0.0
+    }
+  ],
+  "oracle_covariance_error": 0.006207381881485119,
+  "knockoff_threshold_minimum_count": "passed",
+  "status": "passed",
+  "not_a_proof_of_Olist_exchangeability": true
+}

@@ -1,0 +1,144 @@
+{
+  "method": "deep_lasso",
+  "params": {
+    "width": 64,
+    "layers": 2,
+    "lr": 0.003,
+    "regularization": 1.0
+  },
+  "trials": [
+    {
+      "trial": 0,
+      "params": {
+        "width": 64,
+        "layers": 2,
+        "lr": 0.001,
+        "regularization": 0.01
+      },
+      "rmse_scaled": 0.7443035926974466,
+      "seconds": 2.788373582996428
+    },
+    {
+      "trial": 1,
+      "params": {
+        "width": 64,
+        "layers": 2,
+        "lr": 0.001,
+        "regularization": 0.1
+      },
+      "rmse_scaled": 0.7401315767829288,
+      "seconds": 0.6902835420332849
+    },
+    {
+      "trial": 2,
+      "params": {
+        "width": 64,
+        "layers": 2,
+        "lr": 0.001,
+        "regularization": 1.0
+      },
+      "rmse_scaled": 0.7410673873249516,
+      "seconds": 1.0813314160332084
+    },
+    {
+      "trial": 3,
+      "params": {
+        "width": 64,
+        "layers": 2,
+        "lr": 0.003,
+        "regularization": 0.01
+      },
+      "rmse_scaled": 0.745706311446548,
+      "seconds": 0.26685154205188155
+    },
+    {
+      "trial": 4,
+      "params": {
+        "width": 64,
+        "layers": 2,
+        "lr": 0.003,
+        "regularization": 0.1
+      },
+      "rmse_scaled": 0.7416152539932294,
+      "seconds": 0.45710458396933973
+    },
+    {
+      "trial": 5,
+      "params": {
+        "width": 64,
+        "layers": 2,
+        "lr": 0.003,
+        "regularization": 1.0
+      },
+      "rmse_scaled": 0.7239075136197112,
+      "seconds": 1.0578251250553876
+    },
+    {
+      "trial": 6,
+      "params": {
+        "width": 128,
+        "layers": 2,
+        "lr": 0.001,
+        "regularization": 0.01
+      },
+      "rmse_scaled": 0.7457036949786764,
+      "seconds": 0.461573958164081
+    },
+    {
+      "trial": 7,
+      "params": {
+        "width": 128,
+        "layers": 2,
+        "lr": 0.001,
+        "regularization": 0.1
+      },
+      "rmse_scaled": 0.7449474735816899,
+      "seconds": 0.5433319169096649
+    },
+    {
+      "trial": 8,
+      "params": {
+        "width": 128,
+        "layers": 2,
+        "lr": 0.001,
+        "regularization": 1.0
+      },
+      "rmse_scaled": 0.7335228400955679,
+      "seconds": 1.6171504580415785
+    },
+    {
+      "trial": 9,
+      "params": {
+        "width": 128,
+        "layers": 2,
+        "lr": 0.003,
+        "regularization": 0.01
+      },
+      "rmse_scaled": 0.7467098371732818,
+      "seconds": 0.29744416708126664
+    },
+    {
+      "trial": 10,
+      "params": {
+        "width": 128,
+        "layers": 2,
+        "lr": 0.003,
+        "regularization": 0.1
+      },
+      "rmse_scaled": 0.7445235912848216,
+      "seconds": 0.3694571671076119
+    },
+    {
+      "trial": 11,
+      "params": {
+        "width": 128,
+        "layers": 2,
+        "lr": 0.003,
+        "regularization": 1.0
+      },
+      "rmse_scaled": 0.725499712421316,
+      "seconds": 1.606854208977893
+    }
+  ],
+  "split": "train targets through 2017-12; tuning targets 2018-01..02"
+}

@@ -1,0 +1,131 @@
+{
+  "method": "xgboost_shap",
+  "params": {
+    "depth": 4,
+    "lr": 0.03,
+    "trees": 280
+  },
+  "trials": [
+    {
+      "trial": 0,
+      "params": {
+        "depth": 2,
+        "lr": 0.03,
+        "trees": 140
+      },
+      "rmse_scaled": 0.7315759023801699,
+      "seconds": 0.04712804197333753
+    },
+    {
+      "trial": 1,
+      "params": {
+        "depth": 2,
+        "lr": 0.03,
+        "trees": 280
+      },
+      "rmse_scaled": 0.7119340416642879,
+      "seconds": 0.0814047500025481
+    },
+    {
+      "trial": 2,
+      "params": {
+        "depth": 2,
+        "lr": 0.07,
+        "trees": 140
+      },
+      "rmse_scaled": 0.7066095881782845,
+      "seconds": 0.044712958158925176
+    },
+    {
+      "trial": 3,
+      "params": {
+        "depth": 2,
+        "lr": 0.07,
+        "trees": 280
+      },
+      "rmse_scaled": 0.7046438536355335,
+      "seconds": 0.07630195817910135
+    },
+    {
+      "trial": 4,
+      "params": {
+        "depth": 4,
+        "lr": 0.03,
+        "trees": 140
+      },
+      "rmse_scaled": 0.7017627029844289,
+      "seconds": 0.08608612511307001
+    },
+    {
+      "trial": 5,
+      "params": {
+        "depth": 4,
+        "lr": 0.03,
+        "trees": 280
+      },
+      "rmse_scaled": 0.7009475910399529,
+      "seconds": 0.15277429204434156
+    },
+    {
+      "trial": 6,
+      "params": {
+        "depth": 4,
+        "lr": 0.07,
+        "trees": 140
+      },
+      "rmse_scaled": 0.70491929453274,
+      "seconds": 0.0834570829756558
+    },
+    {
+      "trial": 7,
+      "params": {
+        "depth": 4,
+        "lr": 0.07,
+        "trees": 280
+      },
+      "rmse_scaled": 0.7120684064653365,
+      "seconds": 0.14884645910933614
+    },
+    {
+      "trial": 8,
+      "params": {
+        "depth": 6,
+        "lr": 0.03,
+        "trees": 140
+      },
+      "rmse_scaled": 0.7025853821003696,
+      "seconds": 0.18018374987877905
+    },
+    {
+      "trial": 9,
+      "params": {
+        "depth": 6,
+        "lr": 0.03,
+        "trees": 280
+      },
+      "rmse_scaled": 0.7082816947383092,
+      "seconds": 0.3145355419255793
+    },
+    {
+      "trial": 10,
+      "params": {
+        "depth": 6,
+        "lr": 0.07,
+        "trees": 140
+      },
+      "rmse_scaled": 0.7144573384484204,
+      "seconds": 0.15938924998044968
+    },
+    {
+      "trial": 11,
+      "params": {
+        "depth": 6,
+        "lr": 0.07,
+        "trees": 280
+      },
+      "rmse_scaled": 0.7243976436737096,
+      "seconds": 0.29822824988514185
+    }
+  ],
+  "split": "train targets through 2017-12; tuning targets 2018-01..02"
+}

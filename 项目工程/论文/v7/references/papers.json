@@ -1,0 +1,254 @@
+[
+  {
+    "key": "deepdrk2024",
+    "authors": "Shen H, Yan Y, Zhao Z",
+    "title": "DeepDRK: Deep Dependency Regularized Knockoff for Feature Selection",
+    "venue": "Advances in Neural Information Processing Systems",
+    "year": 2024,
+    "url": "https://openreview.net/forum?id=ibKpPabHVn",
+    "code": "https://github.com/nowonder2000/DeepDRK",
+    "role": "Deep generative knockoff candidate; architecture and loss port disclosed",
+    "verified": "Official conference page and author-linked source code"
+  },
+  {
+    "key": "deeplasso2023",
+    "authors": "Cherepanova V, Levin R, Somepalli G, et al.",
+    "title": "A Performance-Driven Benchmark for Feature Selection in Tabular Deep Learning",
+    "venue": "NeurIPS Datasets and Benchmarks Track",
+    "year": 2023,
+    "url": "https://openreview.net/forum?id=v4PMCdSaAT",
+    "code": "https://github.com/vcherepanova/tabular-feature-selection",
+    "role": "Deep Lasso; directly invokes official input-loss-gradient group penalty",
+    "verified": "Official conference page and source code"
+  },
+  {
+    "key": "vtfs2024",
+    "authors": "Ying W, Wang D, Chen H, Fu Y",
+    "title": "Feature Selection as Deep Sequential Generative Learning",
+    "venue": "ACM Transactions on Knowledge Discovery from Data, 18(9), Article 221",
+    "year": 2024,
+    "doi": "10.1145/3687485",
+    "url": "https://dl.acm.org/doi/10.1145/3687485",
+    "code": "https://tinyurl.com/FSDSGL",
+    "role": "VTFS official encoder/decoder with explicit fixed-budget and corpus adaptations",
+    "verified": "Publisher full text and author-linked VTFS.zip"
+  },
+  {
+    "key": "mafs2024",
+    "authors": "Pham H, Tan Y, Singh T, Pavlopoulos V, Patnayakuni R",
+    "title": "A multi-head attention-like feature selection approach for tabular data",
+    "venue": "Knowledge-Based Systems, 301, 112250",
+    "year": 2024,
+    "doi": "10.1016/j.knosys.2024.112250",
+    "url": "https://dl.acm.org/doi/10.1016/j.knosys.2024.112250",
+    "role": "Literature-screened only: paper calls the method filter-based, not a trained deep neural network",
+    "verified": "Publisher abstract; full algorithm/code not verified; no numerical results attributed"
+  },
+  {
+    "key": "tabm2025",
+    "authors": "Gorishniy Y, Kotelnikov A, Babenko A",
+    "title": "TabM: Advancing Tabular Deep Learning with Parameter-Efficient Ensembling",
+    "venue": "International Conference on Learning Representations",
+    "year": 2025,
+    "url": "https://openreview.net/forum?id=Sd4wYYOhmY",
+    "code": "https://github.com/yandex-research/tabm",
+    "role": "Official tabm package; permutation ranking is a separate adapter, not native FDR selection",
+    "verified": "Official author repository and publication metadata"
+  },
+  {
+    "key": "tabpfn2025",
+    "authors": "Hollmann N, Muller S, Purucker L, et al.",
+    "title": "Accurate predictions on small data with a tabular foundation model",
+    "venue": "Nature, 637, 319-326",
+    "year": 2025,
+    "doi": "10.1038/s41586-024-08328-6",
+    "url": "https://www.nature.com/articles/s41586-024-08328-6",
+    "code": "https://github.com/PriorLabs/TabPFN",
+    "role": "Pretrained v2 predictor; no claim of training the foundation model from scratch",
+    "verified": "Official source and paper citation; pinned tabpfn 2.0.9 rather than current v3"
+  },
+  {
+    "key": "nogueira2018",
+    "authors": "Nogueira S, Sechidis K, Brown G",
+    "title": "On the Stability of Feature Selection Algorithms",
+    "venue": "Journal of Machine Learning Research, 18(174), 1-54",
+    "year": 2018,
+    "url": "https://www.jmlr.org/papers/v18/17-514.html",
+    "role": "Chance-corrected set stability and uncertainty",
+    "verified": "Journal page"
+  },
+  {
+    "key": "cpss2013",
+    "authors": "Shah R D, Samworth R J",
+    "title": "Variable selection with error control: another look at stability selection",
+    "venue": "Journal of the Royal Statistical Society, Series B, 75(1), 55-80",
+    "year": 2013,
+    "doi": "10.1111/j.1467-9868.2011.01034.x",
+    "url": "https://www.statslab.cam.ac.uk/~rjs57/Research.html",
+    "role": "Motivates complementary half-samples; evaluation resampling alone does not inherit CPSS error bounds",
+    "verified": "Author publication list"
+  },
+  {
+    "key": "stability2010",
+    "authors": "Meinshausen N, Buhlmann P",
+    "title": "Stability selection",
+    "venue": "Journal of the Royal Statistical Society, Series B, 72(4), 417-473",
+    "year": 2010,
+    "doi": "10.1111/j.1467-9868.2010.00740.x",
+    "role": "Repeated subsampling selector; PFER assumptions are distinct from Model-X FDR"
+  },
+  {
+    "key": "modelx2018",
+    "authors": "Candes E, Fan Y, Janson L, Lv J",
+    "title": "Panning for gold: model-X knockoffs for high dimensional controlled variable selection",
+    "venue": "Journal of the Royal Statistical Society, Series B, 80(3), 551-577",
+    "year": 2018,
+    "doi": "10.1111/rssb.12265",
+    "role": "Conditional independence null and model-X exchangeability"
+  },
+  {
+    "key": "mvr2022",
+    "authors": "Spector A, Janson L",
+    "title": "Powerful knockoffs via minimizing reconstructability",
+    "venue": "The Annals of Statistics, 50(1), 252-276",
+    "year": 2022,
+    "role": "MVR S-matrix optimization",
+    "doi": "10.1214/21-AOS2104",
+    "url": "https://arxiv.org/abs/2011.14625"
+  },
+  {
+    "key": "derand2024",
+    "authors": "Ren Z, Barber R F",
+    "title": "Derandomised knockoffs: leveraging e-values for false discovery rate control",
+    "venue": "Journal of the Royal Statistical Society, Series B, 86(1), 122-154",
+    "year": 2024,
+    "doi": "10.1093/jrsssb/qkad085",
+    "role": "Repeated knockoff e-value aggregation"
+  },
+  {
+    "key": "ebh2022",
+    "authors": "Wang R, Ramdas A",
+    "title": "False discovery rate control with e-values",
+    "venue": "Journal of the Royal Statistical Society, Series B, 84(3), 822-852",
+    "year": 2022,
+    "doi": "10.1111/rssb.12489",
+    "role": "e-BH"
+  },
+  {
+    "key": "knockoff2015",
+    "authors": "Barber R F, Candes E J",
+    "title": "Controlling the false discovery rate via knockoffs",
+    "venue": "The Annals of Statistics, 43(5), 2055-2085",
+    "year": 2015,
+    "doi": "10.1214/15-AOS1337",
+    "role": "Original knockoff filter and sign-flip threshold"
+  },
+  {
+    "key": "elastic2005",
+    "authors": "Zou H, Hastie T",
+    "title": "Regularization and variable selection via the elastic net",
+    "venue": "Journal of the Royal Statistical Society, Series B, 67(2), 301-320",
+    "year": 2005,
+    "doi": "10.1111/j.1467-9868.2005.00503.x",
+    "role": "Sparse linear comparator"
+  },
+  {
+    "key": "lasso1996",
+    "authors": "Tibshirani R",
+    "title": "Regression shrinkage and selection via the lasso",
+    "venue": "Journal of the Royal Statistical Society, Series B, 58(1), 267-288",
+    "year": 1996,
+    "doi": "10.1111/j.2517-6161.1996.tb02080.x",
+    "role": "Sparse regression and input-gradient analogy"
+  },
+  {
+    "key": "extratrees2006",
+    "authors": "Geurts P, Ernst D, Wehenkel L",
+    "title": "Extremely randomized trees",
+    "venue": "Machine Learning, 63, 3-42",
+    "year": 2006,
+    "doi": "10.1007/s10994-006-6226-1",
+    "role": "Shadow-tree estimator and classifier diagnostic"
+  },
+  {
+    "key": "boruta2010",
+    "authors": "Kursa M B, Rudnicki W R",
+    "title": "Feature Selection with the Boruta Package",
+    "venue": "Journal of Statistical Software, 36(11), 1-13",
+    "year": 2010,
+    "doi": "10.18637/jss.v036.i11",
+    "role": "Shadow-feature idea; this study's Extra-Trees variant is not exact Boruta"
+  },
+  {
+    "key": "xgb2016",
+    "authors": "Chen T, Guestrin C",
+    "title": "XGBoost: A Scalable Tree Boosting System",
+    "venue": "Proceedings of KDD, 785-794",
+    "year": 2016,
+    "doi": "10.1145/2939672.2939785",
+    "role": "Common downstream evaluator and SHAP selector"
+  },
+  {
+    "key": "shap2017",
+    "authors": "Lundberg S M, Lee S I",
+    "title": "A Unified Approach to Interpreting Model Predictions",
+    "venue": "Advances in Neural Information Processing Systems, 30",
+    "year": 2017,
+    "url": "https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions",
+    "role": "Shapley-based model explanation"
+  },
+  {
+    "key": "treeshap2020",
+    "authors": "Lundberg S M, Erion G, Chen H, et al.",
+    "title": "From local explanations to global understanding with explainable AI for trees",
+    "venue": "Nature Machine Intelligence, 2, 56-67",
+    "year": 2020,
+    "doi": "10.1038/s42256-019-0138-9",
+    "role": "Tree feature attribution, not causal attribution"
+  },
+  {
+    "key": "ledoit2004",
+    "authors": "Ledoit O, Wolf M",
+    "title": "A well-conditioned estimator for large-dimensional covariance matrices",
+    "venue": "Journal of Multivariate Analysis, 88(2), 365-411",
+    "year": 2004,
+    "doi": "10.1016/S0047-259X(03)00096-4",
+    "role": "Covariance shrinkage"
+  },
+  {
+    "key": "bh1995",
+    "authors": "Benjamini Y, Hochberg Y",
+    "title": "Controlling the false discovery rate: a practical and powerful approach to multiple testing",
+    "venue": "Journal of the Royal Statistical Society, Series B, 57(1), 289-300",
+    "year": 1995,
+    "doi": "10.1111/j.2517-6161.1995.tb02031.x",
+    "role": "Error-rate definition"
+  },
+  {
+    "key": "morris2019",
+    "authors": "Morris T P, White I R, Crowther M J",
+    "title": "Using simulation studies to evaluate statistical methods",
+    "venue": "Statistics in Medicine, 38(11), 2074-2102",
+    "year": 2019,
+    "doi": "10.1002/sim.8086",
+    "role": "ADEMP simulation design and Monte Carlo uncertainty"
+  },
+  {
+    "key": "olist2018",
+    "authors": "Olist",
+    "title": "Brazilian E-Commerce Public Dataset by Olist",
+    "venue": "Kaggle dataset",
+    "year": 2018,
+    "url": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce",
+    "role": "Raw business tables"
+  },
+  {
+    "key": "funnel2018",
+    "authors": "Olist",
+    "title": "Marketing Funnel by Olist",
+    "venue": "Kaggle dataset",
+    "year": 2018,
+    "url": "https://www.kaggle.com/datasets/olistbr/marketing-funnel-olist",
+    "role": "Marketing leads and dated won deals"
+  }
+]

@@ -1,0 +1,41 @@
+              method           stage  found  successful  required
+         dl_jacobian            runs    112         112       112
+         dl_jacobian simulation_runs    600         600       600
+dl_jacobian_lossrank            runs    112         112       112
+dl_jacobian_lossrank simulation_runs    600         600       600
+       dl_score_only            runs    112         112       112
+       dl_score_only simulation_runs    600         600       600
+    tabm_budget_gate            runs    112         112       112
+    tabm_budget_gate simulation_runs    600         600       600
+       ep_regression            runs    112         112       112
+       ep_regression simulation_runs    600         600       600
+          ep_refresh            runs    112         112       112
+          ep_refresh simulation_runs    600         600       600
+       ep_dispersion            runs    112         112       112
+       ep_dispersion simulation_runs    600         600       600
+    vtfs_cardinality            runs    112         112       112
+    vtfs_cardinality simulation_runs    600         600       600
+       vtfs_pairrank            runs    112         112       112
+       vtfs_pairrank simulation_runs    600         600       600
+     random_k_search            runs    112         112       112
+     random_k_search simulation_runs    600         600       600
+| 方法 | XGB-RMSE | TabM-RMSE | 50% Jaccard | Nogueira | FDP@12 | Power@12 |
+| --- | --- | --- | --- | --- | --- | --- |
+| Copula-MVR | 1.8650 | 1.8967 | 0.7355 | 0.6798 | 0.3218 | 0.8305 |
+| Elastic Net | 1.8625 | 1.8806 | 0.7244 | 0.6185 | 0.3251 | 0.8265 |
+| 稳定性选择 | 1.8937 | 1.8885 | 0.5827 | 0.4788 | 0.3383 | 0.8107 |
+| 影子变量树 | 1.8611 | 1.8612 | 0.9388 | 0.9210 | 0.3361 | 0.8261 |
+| XGBoost-SHAP | 1.8466 | 1.8571 | 0.7682 | 0.7439 | 0.2315 | 0.9403 |
+| Deep Lasso | 1.8450 | 1.8594 | 0.8230 | 0.7754 | 0.2687 | 0.8947 |
+| TabM-置换 | 1.8458 | 1.8586 | 0.7505 | 0.7304 | 0.2656 | 0.8981 |
+| VTFS-定额适配 | 1.8622 | 1.8783 | 0.4068 | 0.2733 | 0.5306 | 0.5876 |
+| Deep Lasso-Jacobian | 1.8461 | 1.8600 | 0.8618 | 0.7889 | 0.2657 | 0.8978 |
+| Jacobian训练+原排名 | 1.8450 | 1.8594 | 0.7722 | 0.7591 | 0.2686 | 0.8943 |
+| 原Deep Lasso+Jacobian排名 | 1.8450 | 1.8594 | 0.8147 | 0.7994 | 0.2656 | 0.8986 |
+| TabM-预算门 | 1.8450 | 1.8594 | 0.8071 | 0.7172 | 0.2793 | 0.8826 |
+| EntryPrune-回归适配 | 1.8812 | 1.8744 | 0.6271 | 0.4893 | 0.2869 | 0.8729 |
+| EntryPrune-刷新 | 2.0418 | 2.0350 | 0.4596 | 0.2742 | 0.5203 | 0.6107 |
+| EntryPrune-环境波动惩罚 | 1.8706 | 1.8897 | 0.4498 | 0.2726 | 0.5074 | 0.6263 |
+| VTFS-固定K | 1.8676 | 1.8921 | 0.4540 | 0.3047 | 0.4593 | 0.6815 |
+| VTFS-固定K+成对损失 | 1.8653 | 1.8949 | 0.4333 | 0.3167 | 0.4531 | 0.6901 |
+| 等预算随机子集搜索 | 1.8661 | 1.8926 | 0.4368 | 0.2835 | 0.4911 | 0.6412 |

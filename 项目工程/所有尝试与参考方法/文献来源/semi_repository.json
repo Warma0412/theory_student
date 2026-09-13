@@ -1,0 +1,98 @@
+[
+  {
+    "name": ".gitignore",
+    "path": ".gitignore",
+    "sha": "28bcebac978f82d93eae6621af59e0637ab4c637",
+    "size": 321,
+    "url": "https://api.github.com/repos/AngelReyero/loss_based_KO/contents/.gitignore?ref=master",
+    "html_url": "https://github.com/AngelReyero/loss_based_KO/blob/master/.gitignore",
+    "git_url": "https://api.github.com/repos/AngelReyero/loss_based_KO/git/blobs/28bcebac978f82d93eae6621af59e0637ab4c637",
+    "download_url": "https://raw.githubusercontent.com/AngelReyero/loss_based_KO/master/.gitignore",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/AngelReyero/loss_based_KO/contents/.gitignore?ref=master",
+      "git": "https://api.github.com/repos/AngelReyero/loss_based_KO/git/blobs/28bcebac978f82d93eae6621af59e0637ab4c637",
+      "html": "https://github.com/AngelReyero/loss_based_KO/blob/master/.gitignore"
+    }
+  },
+  {
+    "name": "README.md",
+    "path": "README.md",
+    "sha": "e3cf0970419cdc622c7eb1f7d647ffc2681d9d67",
+    "size": 2072,
+    "url": "https://api.github.com/repos/AngelReyero/loss_based_KO/contents/README.md?ref=master",
+    "html_url": "https://github.com/AngelReyero/loss_based_KO/blob/master/README.md",
+    "git_url": "https://api.github.com/repos/AngelReyero/loss_based_KO/git/blobs/e3cf0970419cdc622c7eb1f7d647ffc2681d9d67",
+    "download_url": "https://raw.githubusercontent.com/AngelReyero/loss_based_KO/master/README.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/AngelReyero/loss_based_KO/contents/README.md?ref=master",
+      "git": "https://api.github.com/repos/AngelReyero/loss_based_KO/git/blobs/e3cf0970419cdc622c7eb1f7d647ffc2681d9d67",
+      "html": "https://github.com/AngelReyero/loss_based_KO/blob/master/README.md"
+    }
+  },
+  {
+    "name": "hidimstat",
+    "path": "hidimstat",
+    "sha": "5292877d7717fe8e8d6ec54cd1ae1adf568c5ec8",
+    "size": 0,
+    "url": "https://api.github.com/repos/AngelReyero/loss_based_KO/contents/hidimstat?ref=master",
+    "html_url": null,
+    "git_url": null,
+    "download_url": null,
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/AngelReyero/loss_based_KO/contents/hidimstat?ref=master",
+      "git": null,
+      "html": null
+    }
+  },
+  {
+    "name": "hrt",
+    "path": "hrt",
+    "sha": "f6d271a34590d073a08f0fc40f40e898f38cdf97",
+    "size": 0,
+    "url": "https://api.github.com/repos/AngelReyero/loss_based_KO/contents/hrt?ref=master",
+    "html_url": null,
+    "git_url": null,
+    "download_url": null,
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/AngelReyero/loss_based_KO/contents/hrt?ref=master",
+      "git": null,
+      "html": null
+    }
+  },
+  {
+    "name": "results",
+    "path": "results",
+    "sha": "560d37eefa366e1e662ce138de1bcd8ab27298bd",
+    "size": 0,
+    "url": "https://api.github.com/repos/AngelReyero/loss_based_KO/contents/results?ref=master",
+    "html_url": "https://github.com/AngelReyero/loss_based_KO/tree/master/results",
+    "git_url": "https://api.github.com/repos/AngelReyero/loss_based_KO/git/trees/560d37eefa366e1e662ce138de1bcd8ab27298bd",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/AngelReyero/loss_based_KO/contents/results?ref=master",
+      "git": "https://api.github.com/repos/AngelReyero/loss_based_KO/git/trees/560d37eefa366e1e662ce138de1bcd8ab27298bd",
+      "html": "https://github.com/AngelReyero/loss_based_KO/tree/master/results"
+    }
+  },
+  {
+    "name": "src",
+    "path": "src",
+    "sha": "53b96d5ae8ff115233ba47ca50a4cd3ffdccce48",
+    "size": 0,
+    "url": "https://api.github.com/repos/AngelReyero/loss_based_KO/contents/src?ref=master",
+    "html_url": "https://github.com/AngelReyero/loss_based_KO/tree/master/src",
+    "git_url": "https://api.github.com/repos/AngelReyero/loss_based_KO/git/trees/53b96d5ae8ff115233ba47ca50a4cd3ffdccce48",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/AngelReyero/loss_based_KO/contents/src?ref=master",
+      "git": "https://api.github.com/repos/AngelReyero/loss_based_KO/git/trees/53b96d5ae8ff115233ba47ca50a4cd3ffdccce48",
+      "html": "https://github.com/AngelReyero/loss_based_KO/tree/master/src"
+    }
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "primary_k": 12,
+  "primary_method": "vtfs",
+  "selected_at_primary_k": {
+    "method": "vtfs",
+    "k": 12,
+    "validation_rmse": 1.603848806541791
+  },
+  "compact_rule": "smallest K within 1% of best development RMSE",
+  "compact_choice": {
+    "method": "vtfs",
+    "k": 8,
+    "validation_rmse": 1.6032791993089872
+  },
+  "test_read": false,
+  "protocol_sha256": "5f84de78a6c741559717075a31093cedb1c8f575189be899549ee9028df31604",
+  "interpretation": "exploratory development selection; external independent confirmation is still needed"
+}

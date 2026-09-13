@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "compiler": "Tectonic 0.17.0",
+  "thesis": {
+    "pages": 68,
+    "width_points": 595.28,
+    "height_points": 841.89,
+    "chapters": 7,
+    "references": 45,
+    "template": "sufethesismas"
+  },
+  "proposal_slides": {
+    "pages": 19,
+    "width_points": 453.54,
+    "height_points": 255.12,
+    "frames": 19,
+    "template": "SUFE Beamer"
+  },
+  "proposal_report": {
+    "pages": 14,
+    "width_points": 595.28,
+    "height_points": 841.89,
+    "references": 25,
+    "reference_layout_pages": 14
+  },
+  "final_folder_files": 6,
+  "visible_previous_version_markers": 0,
+  "fatal_latex_errors": 0,
+  "slide_overfull_vboxes": 0
+}

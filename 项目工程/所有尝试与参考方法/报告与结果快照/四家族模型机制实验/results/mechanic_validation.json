@@ -1,0 +1,7 @@
+{
+  "soft_gate_cardinality": "passed",
+  "gate_shift_derivative_zero": "passed",
+  "linear_jacobian_known_answer": "passed",
+  "jacobian_batch_and_permutation_invariance": "passed",
+  "panel_keys": "passed"
+}

@@ -1,0 +1,49 @@
+{
+  "status": "passed",
+  "weekly_primary": {
+    "q10_count": 0,
+    "q20_count": 18,
+    "q30_count": 18,
+    "stable_90pct_count": 13
+  },
+  "monthly_weekly": {
+    "monthly_count": 14,
+    "weekly_count": 18,
+    "intersection_count": 11,
+    "jaccard": 0.5238095238095238
+  },
+  "clustered_q20": {
+    "between": 12,
+    "within": 0
+  },
+  "group_q20_count": 10,
+  "grip2": {
+    "q20_count": 0,
+    "q30_count": 12
+  },
+  "predictive": {
+    "best_model": "ExtraTrees",
+    "best_rmse": 2.416023606812565,
+    "selected_set_rmse": 2.420783431130472
+  },
+  "pdf_pages": {
+    "complete": 48,
+    "condensed": 16,
+    "ultra": 5
+  },
+  "thesis_structure": {
+    "chinese_abstract_characters": 770,
+    "reference_count": 45,
+    "chapter_section_counts": {
+      "1": 5,
+      "2": 5,
+      "3": 5,
+      "4": 5,
+      "5": 5,
+      "6": 5,
+      "7": 4
+    }
+  },
+  "standalone_thesis_version_markers": 0,
+  "all_result_csv_numeric_values_finite": true
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "seed": 20410823,
+    "epochs": 15,
+    "best_validation_mse": 0.6535770893096924,
+    "swapped_pair_count": 16
+  },
+  {
+    "seed": 20410824,
+    "epochs": 14,
+    "best_validation_mse": 0.6560801863670349,
+    "swapped_pair_count": 12
+  },
+  {
+    "seed": 20410825,
+    "epochs": 23,
+    "best_validation_mse": 0.6851430535316467,
+    "swapped_pair_count": 17
+  },
+  {
+    "seed": 20410826,
+    "epochs": 14,
+    "best_validation_mse": 0.6754615902900696,
+    "swapped_pair_count": 14
+  },
+  {
+    "seed": 20410827,
+    "epochs": 19,
+    "best_validation_mse": 0.6947672367095947,
+    "swapped_pair_count": 12
+  },
+  {
+    "seed": 20410828,
+    "epochs": 17,
+    "best_validation_mse": 0.6927154064178467,
+    "swapped_pair_count": 24
+  },
+  {
+    "seed": 20410829,
+    "epochs": 14,
+    "best_validation_mse": 0.6829151511192322,
+    "swapped_pair_count": 16
+  },
+  {
+    "seed": 20410830,
+    "epochs": 16,
+    "best_validation_mse": 0.6831567287445068,
+    "swapped_pair_count": 15
+  },
+  {
+    "seed": 20410831,
+    "epochs": 14,
+    "best_validation_mse": 0.6975619196891785,
+    "swapped_pair_count": 12
+  },
+  {
+    "seed": 20410832,
+    "epochs": 16,
+    "best_validation_mse": 0.7122636437416077,
+    "swapped_pair_count": 17
+  },
+  {
+    "seed": 20410833,
+    "epochs": 15,
+    "best_validation_mse": 0.6946095824241638,
+    "swapped_pair_count": 16
+  },
+  {
+    "seed": 20410834,
+    "epochs": 16,
+    "best_validation_mse": 0.6923736929893494,
+    "swapped_pair_count": 12
+  },
+  {
+    "seed": 20410835,
+    "epochs": 15,
+    "best_validation_mse": 0.7136836051940918,
+    "swapped_pair_count": 12
+  },
+  {
+    "seed": 20410836,
+    "epochs": 15,
+    "best_validation_mse": 0.6883273720741272,
+    "swapped_pair_count": 11
+  },
+  {
+    "seed": 20410837,
+    "epochs": 16,
+    "best_validation_mse": 0.6891129612922668,
+    "swapped_pair_count": 16
+  },
+  {
+    "seed": 20410838,
+    "epochs": 13,
+    "best_validation_mse": 0.6860275864601135,
+    "swapped_pair_count": 19
+  },
+  {
+    "seed": 20410839,
+    "epochs": 16,
+    "best_validation_mse": 0.6954720616340637,
+    "swapped_pair_count": 16
+  },
+  {
+    "seed": 20410840,
+    "epochs": 18,
+    "best_validation_mse": 0.7161964774131775,
+    "swapped_pair_count": 14
+  },
+  {
+    "seed": 20410841,
+    "epochs": 15,
+    "best_validation_mse": 0.7013232111930847,
+    "swapped_pair_count": 11
+  },
+  {
+    "seed": 20410842,
+    "epochs": 15,
+    "best_validation_mse": 0.6943270564079285,
+    "swapped_pair_count": 13
+  }
+]

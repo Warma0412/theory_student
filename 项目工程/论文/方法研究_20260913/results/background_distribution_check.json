@@ -1,0 +1,103 @@
+{
+  "passed": true,
+  "rows": 100000,
+  "features": 6,
+  "seed": 83153,
+  "blas_vs_explicit_einsum_max_error": 8.881784197001252e-16,
+  "random_contexts": [
+    {
+      "context": 0,
+      "covariance_max_error": 0.002827082686456678,
+      "mean_max_error": 0.003200131610841586
+    },
+    {
+      "context": 1,
+      "covariance_max_error": 0.012998697538765924,
+      "mean_max_error": 0.0032603533165585803
+    },
+    {
+      "context": 2,
+      "covariance_max_error": 0.00741924178686082,
+      "mean_max_error": 0.0026731000513389442
+    },
+    {
+      "context": 3,
+      "covariance_max_error": 0.010033151076511038,
+      "mean_max_error": 0.00502419973103301
+    },
+    {
+      "context": 4,
+      "covariance_max_error": 0.012023859250809066,
+      "mean_max_error": 0.004419519237775867
+    },
+    {
+      "context": 5,
+      "covariance_max_error": 0.00788239724081996,
+      "mean_max_error": 0.0028528927839236093
+    },
+    {
+      "context": 6,
+      "covariance_max_error": 0.010273942690973481,
+      "mean_max_error": 0.004400623478129827
+    },
+    {
+      "context": 7,
+      "covariance_max_error": 0.006562772163826794,
+      "mean_max_error": 0.0018207071284010042
+    }
+  ],
+  "midpoint_covariance_expected": [
+    [
+      0.761174441100654,
+      0.6,
+      0.36,
+      0.21599999999999997,
+      0.1296,
+      0.07775999999999998
+    ],
+    [
+      0.6,
+      0.761174441100654,
+      0.6,
+      0.36,
+      0.21599999999999997,
+      0.1296
+    ],
+    [
+      0.36,
+      0.6,
+      0.761174441100654,
+      0.6,
+      0.36,
+      0.21599999999999997
+    ],
+    [
+      0.21599999999999997,
+      0.36,
+      0.6,
+      0.761174441100654,
+      0.6,
+      0.36
+    ],
+    [
+      0.1296,
+      0.21599999999999997,
+      0.36,
+      0.6,
+      0.761174441100654,
+      0.6
+    ],
+    [
+      0.07775999999999998,
+      0.1296,
+      0.21599999999999997,
+      0.36,
+      0.6,
+      0.761174441100654
+    ]
+  ],
+  "midpoint_expected_covariance_error": 0.00587481471152429,
+  "midpoint_departure_from_original_covariance": 0.24212092801115803,
+  "scope": "exact Gaussian oracle; averaged over random masks, not an Olist validity certificate",
+  "after_results_theoretical_verification_only": true
+}

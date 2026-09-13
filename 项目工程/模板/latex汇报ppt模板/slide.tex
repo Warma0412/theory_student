@@ -1,0 +1,458 @@
+\documentclass{beamer}
+\usepackage{ctex, hyperref}
+\usepackage[T1]{fontenc}
+
+% other packages
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,listings,stackengine}
+
+\author{汇报人：吴优}
+\title{基于白噪声假设检验的归因分组变量选择研究}
+\subtitle{——以H\&M时尚电商交易数据为例}
+\institute{上海财经大学 · 应用统计学硕士}
+\date{2026年6月}
+\usepackage{SUFE}
+
+% defs
+\definecolor{deepblue}{RGB}{0,0,0.5}
+\definecolor{deepred}{RGB}{0.6,0,0}
+\definecolor{deepgreen}{RGB}{0,0.5,0}
+
+\begin{document}
+
+\kaishu
+\begin{frame}
+    \titlepage
+    \begin{figure}[htpb]
+        \begin{center}
+            \includegraphics[width=0.5\linewidth]{pic/sufe.png}
+        \end{center}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
+\end{frame}
+
+% ============================================================
+\section{研究背景与动机}
+% ============================================================
+
+\begin{frame}{业务痛点：DTU波动，归因看板变量太多}
+    \begin{block}{核心问题}
+        每日DTU（Daily Transaction Units，日交易笔数）波动时，归因看板上铺着\textbf{21个候选分组变量}，业务方根本看不过来。
+    \end{block}
+    
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{21个候选分组变量（五族）}
+            \begin{itemize}
+                \item \textbf{F1 时间衍生}：年/月/星期/季节/是否周末（5个）
+                \item \textbf{F2 交易渠道}：销售渠道/价格区间（2个）
+                \item \textbf{F3 用户画像}：年龄分段/会员状态/时尚资讯频率（3个）
+                \item \textbf{F4 商品层级}：指数组/品类组/品类/部门/区块/服装组等（7个）
+                \item \textbf{F5 商品属性}：颜色组/颜色明度/颜色主色/图形外观（4个）
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{行业现状}
+            \begin{itemize}
+                \item 到底盯哪几个变量，\textbf{完全依赖经验直觉}
+                \item 缺乏数理依据
+                \item 新业务需6--12个月人肉摸索
+            \end{itemize}
+            \vspace{0.5cm}
+            \textbf{本研究目标}
+            \begin{itemize}
+                \item 以\textbf{统计假设检验}框架筛选核心变量
+                \item 给业务方一个有统计背书的\textbf{核心分组变量清单}
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{核心思想：信号—噪声分解}
+    \begin{block}{关键观察}
+        子序列只有两种可能：\textbf{白噪声（无信号）}或\textbf{非白噪声（承载信号）}
+    \end{block}
+    
+    \begin{equation*}
+        DTU(t) = \sum_{j=1}^{r_k} DTU^{(k)}_j(t), \quad DTU^{(k)}_j(t) = s^{(k)}_j(t) + \varepsilon^{(k)}_j(t)
+    \end{equation*}
+    
+    \begin{itemize}
+        \item $s^{(k)}_j(t)$：信号部分（未知）
+        \item $\varepsilon^{(k)}_j(t)$：白噪声扰动
+        \item 理想归因变量：\textbf{多数子序列为信号}，且\textbf{噪声方差远小于信号}
+    \end{itemize}
+    
+    \begin{block}{例：颜色组 vs 部门}
+        \begin{itemize}
+            \item \textbf{颜色组}：绝大多数子序列涨跌接近随机扰动 → 白噪声噪音族
+            \item \textbf{部门}：Jersey Basic、Knitwear等子序列有稳定结构 → 信号族
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% ============================================================
+\section{数据概览}
+% ============================================================
+
+\begin{frame}{数据概览：H\&M电商交易数据}
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            \textbf{数据来源}
+            \begin{itemize}
+                \item Kaggle平台：H\&M Personalized Fashion Recommendations
+                \item 三表JOIN后：\textbf{31,788,324条交易} × 35列
+                \item 时间跨度：\textbf{2018-09-20 至 2020-09-22}
+                \item 总观测：\textbf{734天}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \textbf{目标变量}
+            \begin{itemize}
+                \item $Y(t)$ = DTU(t) = 第t天总交易笔数
+                \item 日均约 3--5万笔
+                \item 周末显著高于工作日
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    \begin{block}{21个候选分组变量（五族）}
+        \begin{tabular}{clrr}
+            \toprule
+            族 & 维度 & 水平数 & 举例 \\
+            \midrule
+            F1 时间 & 年/月/星期/季节/是否周末 & 2--12 & 2020, Summer, 周一 \\
+            F2 渠道 & 销售渠道/价格区间 & 2--5 & 线上/线下, Low--High \\
+            F3 用户 & 年龄分段/会员状态/时尚资讯频率 & 3--6 & 25-34, ACTIVE \\
+            F4 商品 & 品类组/品类/部门/区块等 & 5--250 & Jersey Basic, Trousers \\
+            F5 属性 & 颜色组/颜色明度/颜色主色/图形外观 & 8--50 & Black, Solid, Stripe \\
+            \bottomrule
+        \end{tabular}
+    \end{block}
+\end{frame}
+
+% ============================================================
+\section{研究方法：三阶段框架}
+% ============================================================
+
+\begin{frame}{整体框架：三阶段量化筛选流水线}
+    \begin{table}
+        \centering
+        \begin{tabular}{cllc}
+            \toprule
+            阶段 & 回答的问题 & 统计方法 & 输出 \\
+            \midrule
+            \textbf{一} & 子序列是噪声还是信号？ & Ljung--Box + McLeod--Li & $S_k$, $N_k$ \\
+            && + BY-FDR校正 & \\
+            \textbf{二} & 分组变量的归因价值多大？ & 信号方差解释比 $R^2_{sig}$ & 21个$R^2_{sig}$值 \\
+            \textbf{三} & 价值在不同窗口下是否稳定？ & 滑动窗口 + MBB & $S_{final}$ + $p_k$ + CI \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    
+    \begin{block}{方法定位}
+        \begin{itemize}
+            \item 全部采用\textbf{经典统计方法}（Ljung--Box, McLeod--Li, BY-FDR, MBB）
+            \item 贡献在\textbf{流程设计与量化指标定义}，而非方法本身
+            \item 不引入迁移学习框架（可复用性来自流程本身）
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% ============================================================
+\subsection{阶段一：白噪声假设检验}
+% ============================================================
+
+\begin{frame}{阶段一：子序列白噪声假设检验}
+    \textbf{对每个子序列 $X^{(k)}_j$ 做两类检验：}
+    
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Ljung--Box 检验（自相关）}
+                \vspace{-0.3cm}
+                \begin{equation*}
+                    Q_{LB} = T(T+2)\sum_{h=1}^{m}\frac{\hat{\rho}_h^2}{T-h} \sim \chi^2_m
+                \end{equation*}
+                \vspace{-0.3cm}
+                \begin{itemize}
+                    \item $H_0$：$\rho_1 = \cdots = \rho_m = 0$
+                    \item 检验均值层面自相关
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{McLeod--Li 检验（ARCH效应）}
+                \vspace{-0.3cm}
+                \begin{itemize}
+                    \item 对平方序列 $\{X^{(k)2}_j(t)\}$ 做Ljung--Box
+                    \item 捕获条件异方差型非线性信号
+                    \item 源于Engle (1982)的ARCH模型族
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.2cm}
+    \textbf{判定规则}：任一检验拒绝 → 判定为信号
+    
+    \vspace{0.2cm}
+    \begin{block}{BY-FDR 多重检验校正（$q=0.10$）}
+        \begin{itemize}
+            \item 约700个子序列同时检验，需控制假阳性膨胀
+            \item 采用 Benjamini--Yekutieli 程序：\textbf{任意依赖结构下仍保证FDR控制}
+            \item 比经典BH程序更保守，但更适合子序列间存在共波动的场景
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% ============================================================
+\subsection{阶段二：方差解释比}
+% ============================================================
+
+\begin{frame}{阶段二：信号方差解释比 $R^2_{sig}$}
+    \begin{block}{定义}
+        \begin{equation*}
+            R^2_{sig}(D_k) = \frac{\text{Var}\left(\sum_{j \in S_k} X^{(k)}_j\right)}{\text{Var}(DTU)} \in [0, +\infty)
+        \end{equation*}
+    \end{block}
+    
+    \begin{itemize}
+        \item $S_k$：阶段一判定为信号的子序列集合
+        \item $R^2_{sig} \to 1$：信号子序列解释了DTU的全部波动 → 归因价值高
+        \item $R^2_{sig} \to 0$：信号贡献微弱 → 归因价值低
+        \item 注意：$R^2_{sig}$ 可超过1（当信号子序列与噪声子序列负相关时）
+    \end{itemize}
+    
+    \begin{block}{辅助指标}
+        \begin{itemize}
+            \item \textbf{全水平方差占比} $R^2_{all}$：不区分信号/噪声，反映"水分"多少
+            \item \textbf{信号集占比} $\pi_{sig}^k = |S_k|/r_k$：多大比例的水平承载信号
+            \item 理想变量：同时具备\textbf{高$R^2_{sig}$和高$\pi_{sig}$}
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% ============================================================
+\subsection{阶段三：滑动窗口与Bootstrap}
+% ============================================================
+
+\begin{frame}{阶段三：滑动窗口与Bootstrap稳定性评估}
+    \textbf{三套滑动窗口方案（共84个窗口）}
+    \begin{table}
+        \centering
+        \begin{tabular}{cccc}
+            \toprule
+            方案 & 窗口构造 & 窗口数 & 设计意图 \\
+            \midrule
+            W1 & 30天 vs 前30天，步长30天 & $\sim$24 & 月度环比 \\
+            W2 & 30天 vs 前30天，步长14天 & $\sim$50 & 重叠月度 \\
+            W3 & 90天 vs 前90天，步长30天 & $\sim$20 & 季度对比 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    
+    \begin{block}{最终选维规则（Moving Block Bootstrap, $B=1000$）}
+        \begin{equation*}
+            p_k = \Pr(D_k \in \text{Top-K by } R^2_{sig})
+        \end{equation*}
+        \begin{equation*}
+            S_{final} = \{D_k : p_k \geq 0.80 \;\text{且}\; \mu_k > \text{median}(\mu_{1:K})\}
+        \end{equation*}
+        \begin{itemize}
+            \item MBB块长 $L=4$，块数 $\approx 21$
+            \item 同时报告95\% BCa置信区间（二阶精度）
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% ============================================================
+\section{实证结果}
+% ============================================================
+
+\begin{frame}{实证结果：21个分组变量按$\mu_k$排序}
+    \begin{table}
+        \centering
+        \footnotesize
+        \begin{tabular}{rllrrrr}
+            \toprule
+            \# & 分组变量 & 族 & $r_k$ & $\mu_k \pm \sigma_k$ & $CV_k$ & $p_k$ \\
+            \midrule
+            1 & 星期 & F1 & 7 & 5.351 ± 5.878 & 1.099 & \textbf{0.003} \\
+            2 & 是否周末 & F1 & 2 & 4.485 ± 4.683 & 1.044 & \textbf{0.006} \\
+            3 & 年 & F1 & 3 & 1.158 ± 0.591 & 0.510 & \textbf{1.000} \\
+            4 & 季节 & F1 & 4 & 1.000 ± 0.000 & 0.000 & \textbf{1.000} \\
+            5 & 月 & F1 & 12 & 1.000 ± 0.000 & 0.000 & \textbf{1.000} \\
+            6 & \textbf{会员状态} & F3 & 4 & 0.687 ± 0.463 & 0.673 & \textbf{0.881} \\
+            7 & \textbf{品类} & F4 & 130 & 0.603 ± 0.312 & 0.517 & \textbf{1.000} \\
+            8 & \textbf{部门} & F4 & 250 & 0.577 ± 0.298 & 0.516 & \textbf{1.000} \\
+            9 & 品类组 & F4 & 19 & 0.537 ± 0.341 & 0.635 & \textbf{0.978} \\
+            10 & 时尚资讯频率 & F3 & 4 & 0.524 ± 0.419 & 0.799 & 0.509 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \vspace{-0.2cm}
+    \begin{itemize}
+        \item 时间衍生变量（星期/是否周末）$\mu_k > 4$ 但 $CV > 1$ —— 结构对立，不稳定
+        \item 商品层级族（品类/部门/品类组）$\mu_k$ 高且稳定
+        \item 颜色族四项 $\mu_k \in [0.26, 0.30], p_k = 0$ —— 白噪声噪音族
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{稳定性验证与最终选维}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \begin{block}{秩稳定性}
+                \begin{itemize}
+                    \item 前后半窗 Spearman $\rho = 0.9740$
+                    \item Kendall $\tau \approx 0.89$
+                    \item 排名结构高度一致
+                \end{itemize}
+            \end{block}
+            \begin{block}{负对照验证}
+                \begin{itemize}
+                    \item 颜色族：$p_k = 0$ → 白噪声族
+                    \item 星期/是否周末：$CV > 1, p_k \leq 0.006$ → 被准确剔除
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{最终选维 $S_{final}$}
+                \vspace{-0.2cm}
+                \begin{equation*}
+                    S_{final} = \{\text{会员状态, 品类, 部门, 年, 季节}\}
+                \end{equation*}
+                \vspace{-0.2cm}
+                \begin{itemize}
+                    \item \textbf{F4 商品层级}：品类、部门（2项）
+                    \item \textbf{F1 时间衍生}：年、季节（2项）
+                    \item \textbf{F3 用户画像}：会员状态（1项）
+                    \item F2 渠道与F5 属性均无入选
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+    
+    \begin{block}{业务含义}
+        商品层级是DTU波动的核心结构性驱动；时间宏观周期承担长期趋势；会员状态反映用户结构；颜色等外观属性确认为白噪声族，可作为数据治理下线候选。
+    \end{block}
+\end{frame}
+
+% ============================================================
+\section{方法增益}
+% ============================================================
+
+\begin{frame}{方法增益：相比单一基线的优势}
+    \begin{block}{三条基线对比}
+        \begin{enumerate}
+            \item \textbf{简单方差占比 $R^2_{all}$}：不区分信号与噪声
+            \item \textbf{Cramér's V}：列联表关联强度，单窗口排名
+            \item \textbf{XGBoost gain}：梯度提升树特征重要性
+        \end{enumerate}
+    \end{block}
+    
+    \begin{block}{本框架的核心增益}
+        \begin{itemize}
+            \item \textbf{场景一（假阳性剔除）}：星期/是否周末在 $R^2_{all}$ 或 Cramér's V 下因结构对立被错选，本框架通过 $p_k \leq 0.006$ 准确剔除
+            \item \textbf{场景二（隐性不稳定识别）}：销售渠道 $\mu_k = 0.441$ 排名第11看似中等，但 $p_k = 0.047$ 揭示其Bootstrap下波动剧烈——单窗口分数无法识别
+        \end{itemize}
+    \end{block}
+    
+    \begin{center}
+        \textbf{引入Bootstrap不确定性量化（阶段三）是把方法从"统计描述"提升为"统计推断"的关键}
+    \end{center}
+\end{frame}
+
+% ============================================================
+\section{理论支撑}
+% ============================================================
+
+\begin{frame}{理论支撑：经典文献背书}
+    \begin{table}
+        \centering
+        \footnotesize
+        \begin{tabular}{cll}
+            \toprule
+            理论结果 & 出处 & 在本框架中的含义 \\
+            \midrule
+            Ljung--Box Q渐近$\chi^2_m$ & Ljung \& Box (1978) & 阶段一白噪声判别的零分布 \\
+            McLeod--Li检验 & McLeod \& Li (1983) & 捕获ARCH信号，与LB互补 \\
+            ARCH模型族 & Engle (1982) & 解释为何对平方序列做检验 \\
+            FDR控制(PRDS) & Benjamini \& Hochberg (1995) & 经典BH作为对照 \\
+            FDR控制(任意依赖) & Benjamini \& Yekutieli (2001) & 700子序列假阳性可控 \\
+            Block Bootstrap & Künsch (1989) & MBB方法起源 \\
+            Bootstrap一致性 & Lahiri (2003) & 相依数据下仍一致估计 \\
+            BCa置信区间 & Efron (1987) & $R^2_{sig}$的95\% CI二阶精度 \\
+            Stability Selection & Meinshausen \& Bühlmann (2010) & $p_k$作为稳定性证据的理论参照 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+% ============================================================
+\section{预期贡献}
+% ============================================================
+
+\begin{frame}{预期贡献与实际价值}
+    \begin{enumerate}
+        \item \textbf{从经验判断到数理依据}
+        \begin{itemize}
+            \item 将"分组变量好坏"转化为可统计检验、可置信区间量化的指标 $R^2_{sig}$
+            \item 输出"这5个变量在90\%以上历史窗口中 $R^2_{sig}$ 进Top-5, $p_k \geq 0.80$"
+        \end{itemize}
+        
+        \item \textbf{对新业务的方法可复用性}
+        \begin{itemize}
+            \item 新业务积累3个月数据后跑同样流水线 → 输出核心分组变量清单
+            \item 流程可复用，不涉及跨数据集迁移学习建模
+        \end{itemize}
+        
+        \item \textbf{支持数据治理决策}
+        \begin{itemize}
+            \item $p_k \geq 0.80$ → 配进看板默认视图
+            \item $p_k < 0.20$ → 可考虑从数据治理上下线，节省存储与ETL成本
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+% ============================================================
+\section{总结}
+% ============================================================
+
+\begin{frame}{总结}
+    \begin{center}
+        \Large
+        \begin{tabular}{c}
+            \toprule
+            \textbf{核心问题} \\
+            从21个候选分组变量中，筛选出长期承载真实信号的少数核心变量 \\
+            \midrule
+            \textbf{方法} \\
+            白噪声检验 + $R^2_{sig}$方差分解 + Bootstrap稳定性量化 \\
+            \midrule
+            \textbf{结果} \\
+            $S_{final} = \{\text{会员状态, 品类, 部门, 年, 季节}\}$ \\
+            \midrule
+            \textbf{贡献} \\
+            全流程基于经典统计方法，可辩护、可复用、可量化 \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \begin{center}
+        {\Huge\calligra Thanks!}
+        
+        \vspace{1cm}
+        \normalsize 指导教师：××× 教授
+        
+        \vspace{0.5cm}
+        上海财经大学 · 统计与管理学院
+    \end{center}
+\end{frame}
+
+\end{document}

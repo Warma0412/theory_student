@@ -1,0 +1,41 @@
+{
+  "status": "exploratory_complete",
+  "post_v7": true,
+  "test_previously_observed": true,
+  "ec_deep_lasso_chosen_gamma": 0.0,
+  "strict_categories": {
+    "可替代候选": 10,
+    "观察候选": 10,
+    "证据不足": 10,
+    "核心候选": 1
+  },
+  "robust_majority_categories": {
+    "观察候选": 11,
+    "证据不足": 10,
+    "可替代候选": 7,
+    "核心候选": 3
+  },
+  "group_aware_top8_features": [
+    "avg_price",
+    "order_count",
+    "avg_delivery_days",
+    "avg_estimate_gap_days",
+    "avg_review_score",
+    "avg_product_weight_g",
+    "avg_ship_days",
+    "avg_freight"
+  ],
+  "group_aware_top8_test_rmse": {
+    "xgboost": 1.8533571365575845,
+    "tabm": 1.8651228266974564
+  },
+  "shap_top8_test_rmse": {
+    "xgboost": 1.8453984026062529,
+    "tabm": 1.860637630018588
+  },
+  "script_sha256": {
+    "run_innovation_pilot.py": "15ad2154f0e4457caf2f59fac608c89fd4de0f3fc4fcb2d315b38a2a39ac743d",
+    "run_variable_quality_audit.py": "dc0c6d2a031c73238cf34d7f680731787d2f6085b83ddd0690c38e676f1a975c"
+  },
+  "warning": "No method novelty or confirmatory superiority claim; new penalty failed the development gate and group-aware rule is post-hoc."
+}

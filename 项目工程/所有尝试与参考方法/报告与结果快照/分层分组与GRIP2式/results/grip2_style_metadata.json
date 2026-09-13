@@ -1,0 +1,370 @@
+{
+  "runs": [
+    {
+      "seed": 20292823,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.7045938372612,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292824,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.6971830129623413,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292825,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.6780818104743958,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292826,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.6691767573356628,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292827,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.7004238367080688,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292828,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.6802917122840881,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292829,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.6945734024047852,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292830,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.6759287714958191,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292831,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.6733936071395874,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292832,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.6832393407821655,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292833,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.6679322123527527,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292834,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.7007068991661072,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292835,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.7052464485168457,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292836,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.7049556970596313,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292837,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.7048986554145813,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292838,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.700046956539154,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292839,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.6823343634605408,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292840,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.703169584274292,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292841,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.6908586025238037,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    },
+    {
+      "seed": 20292842,
+      "epochs": 36,
+      "trajectory_points": 31,
+      "best_validation_mse": 0.688873291015625,
+      "lambda_l1_grid": [
+        1e-05,
+        5e-05,
+        0.0002,
+        0.0008
+      ],
+      "lambda_group_grid": [
+        1e-05,
+        0.0001,
+        0.0005,
+        0.002
+      ]
+    }
+  ],
+  "antisymmetry": {
+    "feature": "avg_price",
+    "max_absolute_error": 0.0,
+    "mean_absolute_error": 0.0,
+    "passed_tolerance_1e_5": true
+  }
+}

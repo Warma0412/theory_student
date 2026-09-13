@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "real_cases": 111,
+  "simulation_cases": 800,
+  "new_method_count": 8,
+  "real_method_results": 888,
+  "simulation_method_results": 6400,
+  "prediction_outputs": 32,
+  "new_simulation_datasets": 0,
+  "same_input_hashes": true,
+  "same_sets_same_predictions": true,
+  "nuisance_rank_response_usage_disclosed": true,
+  "source_equivalence": {
+    "passed": true,
+    "max_score_error": 2.0122792321330962e-16,
+    "raw_source_sha": "a945c72aaabbcf86aa6ef5fe0b289ecc279cd73d17137df5fa3b1a855b0b8020",
+    "source_commit": "ff51ec239529620300e92efd9988eb69490eb3ac",
+    "threshold_source": "author AST function without unrelated imports",
+    "scope": "Ridge fit/predict, permutation order, vectorized score; native threshold corrected to paper equation",
+    "author_threshold_no_solution_bug": {
+      "W": [
+        1.0,
+        2.0,
+        3.0,
+        4.0
+      ],
+      "q": 0.2,
+      "author_threshold": 4.0,
+      "author_selected": [
+        3
+      ],
+      "correct_selected": []
+    },
+    "not_an_algorithmic_innovation": true
+  },
+  "protocol_sha": "f23b3843e996ae47417b9ba2ede67de9c43a28529c1424f5c70c4cef1cf961cd",
+  "source_hashes": {
+    "read_paper.py": "c0851f1cf76b8d7e179b8bac0f100b2e1d5aeca11d28f4555110a83878a7addf",
+    "summarize.py": "0ee6a85f06f86a79a45febf71be3e0f18c92899a6e7c8281d9b35a368576ba13",
+    "run_supplement.py": "d59408f5e26eb17815acb3de3368fb1a7530894ecc49aaa421e4c3d065d31738",
+    "build_archive.py": "4b3d57eb45f322b9a5714deb0a1fc355416ad85c7e37c75ac38296b07f0bdd2d"
+  }
+}

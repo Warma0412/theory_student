@@ -1,0 +1,42 @@
+# Raw and processed data
+原始数据/
+**/data_processed/
+*.parquet
+*.npz
+*.npy
+
+# Environments and caches
+.venv/
+**/.venv/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+.DS_Store
+
+# Model artifacts and caches
+*.pt
+*.pth
+*.ckpt
+*.joblib
+*.pkl
+**/prediction_cache/
+**/canonical_cache/
+
+# Per-row prediction exports
+**/predictions/
+**/predictions_mvr/
+**/canonical_predictions/
+*test_predictions.csv
+
+# Large repeated logs
+**/logs/full_xgboost_*.log
+**/logs/mvr-real_xgboost_*.log
+
+# LaTeX build intermediates
+*.aux
+*.out
+*.toc
+*.nav
+*.snm
+*.vrb
+*.synctex.gz

@@ -1,0 +1,1534 @@
+% !TEX program = xelatex
+\documentclass{sufethesismas}
+
+\usepackage{fontspec}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{calc}
+\usepackage{url}
+\usepackage{seqsplit}
+\usepackage{microtype}
+\usepackage{etoolbox}
+\usepackage{pdflscape}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>.72\textheight .72\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\providecommand{\pandocbounded}[1]{#1}
+\renewcommand{\arraystretch}{1.15}
+\urlstyle{same}
+
+\begin{document}
+\classification{}
+\confidential{}
+\UDC{}
+\serialnumber{}
+\title{基于去随机化Model-X Knockoff的电商GMV多粒度受控维度选择研究}
+\englishtitle{Multi-granularity Controlled Dimension Selection for E-commerce GMV Using Derandomized Model-X Knockoffs}
+\author{吴优}
+\advisor{张吕欧}
+\major{应用统计硕士专业学位论文}
+\completedate{2026年9月}
+\department{统计与数据科学学院}
+\school{上海财经大学}
+\studentidnumber{2025213385}
+
+\maketitle
+
+\frontmatter
+\begin{abstractCN}
+电商经营看板通常同时包含价格、交易规模、供给、支付、履约、口碑、地域和营销等大量指标。若仅依据边际相关、单变量显著性或单次机器学习重要性筛选监控维度，高度相关的代理变量容易被重复保留，入选集合中的误选比例也缺乏明确约束。本文研究在多个候选经营维度中筛选对下一期核心指标仍具有增量预测信息的变量，并将错误发现率控制、预测验证与可调展示数量纳入统一框架。
+
+研究使用Olist巴西电商公开数据，在订单、商品明细、支付、评价、商品、卖家、顾客、地理位置和营销漏斗的自然粒度上先聚合后连接。月度主分析形成14,677个卖家-月观测、2,793个卖家和19个月；周度稳健性分析形成33,190个卖家-周观测、2,834个卖家和83周。本文构造32项候选维度，排除一项零方差变量后，使用31项本期特征预测下一期\texttt{log(1+GMV)}。该目标避免件数、订单数和均价对同周期GMV的机械解释。
+
+方法上，本文采用随机化秩高斯Copula处理混合边际，以Ledoit-Wolf收缩协方差和最小方差重构准则生成二阶Model-X Knockoff，并以Lasso真实变量与仿制变量系数绝对值之差构造反对称统计量。每个主分析重复生成60组Knockoff，设置单轮水平\(\alpha_{\mathrm{kn}}=0.10\)、最终水平\(\alpha_{\mathrm{eBH}}=0.20\)，通过e-value聚合和e-BH实施去随机化选择。在确认集合内，使用训练期XGBoost和验证集TreeSHAP建立可调参数\(K\)的展示路径。研究进一步实施卖家均值---离差分层、十二业务组Group Knockoff、深度生成器交换性诊断、GRIP2式轨迹重要性、双向固定效应和自然时间外预测。
+
+月度主分析在最终FDR水平0.20下入选14项，其中10项在单轮程序中的入选频率不低于90\%。基于验证集贡献与预测误差的联合规则，默认推荐\(K=10\)；对应测试RMSE为2.385，与全31维XGBoost基本一致。周度分析在相同统计流程下入选18项，与月度集合共同入选11项，Jaccard系数为0.524。周度时间外最佳模型为Extra Trees，RMSE为2.416；只使用周度入选集合的XGBoost RMSE为2.421。月度与周度卖家内离差层均未形成严格发现，表明当前数据中的主要信号更多来自卖家间长期差异。
+
+为检验主方法相对于标准选择方法的增量价值，本文在测试期之前完成全部选维，并以相同12项预算比较Elastic Net、稳定性选择、影子变量树模型和XGBoost-SHAP。XGBoost-SHAP取得最低测试RMSE 2.383，去随机化Knockoff的RMSE为2.392。在30组完全相同的70\%卖家子样本中，Elastic Net的平均集合稳定性最高，为0.873；去随机化Knockoff为0.855，其与Elastic Net的配对差异置信区间包含0。在20轮真实协方差模拟中，去随机化Knockoff平均FDP为0.054、Power为1.000；单次Knockoff平均FDP为0.145、Power为1.000。结果表明预测最优、选择稳定和错误率控制是不同目标。
+
+研究结果表明，月度聚合能够降低低频卖家的零膨胀与偶发订单噪声，适合作为确认性主分析；周度聚合增加时间点，但稀疏性和共线性更强，适合作为粒度稳健性和短期预警补充。本文识别的是条件预测信息，不将Knockoff、SHAP或固定效应结果解释为因果效应。研究为高维经营看板提供了``受控确认---参数化展示---多粒度复核''的可审计维度治理路径。
+\end{abstractCN}
+\keywordsCN{电商GMV；Model-X Knockoff；错误发现率；多粒度面板；可解释机器学习}
+
+\begin{abstractEN}
+E-commerce dashboards commonly contain a large number of correlated indicators covering transaction scale, price, assortment, payment, fulfillment, reputation, geography, and marketing. Selecting monitoring dimensions solely by marginal correlation, individual significance, or a single machine-learning importance ranking may retain redundant proxies and provides no explicit control over the proportion of false discoveries. This study develops an integrated framework for identifying variables with incremental predictive information for next-period gross merchandise value while controlling the false discovery rate and allowing a configurable display size.
+
+The empirical analysis uses the public Brazilian Olist e-commerce data. Source tables are aggregated at their natural grains before joining to prevent many-to-many multiplication of item values. The monthly primary panel contains 14,677 seller-month observations for 2,793 sellers over 19 months. The weekly robustness panel contains 33,190 seller-week observations for 2,834 sellers over 83 weeks. Thirty-two candidate dimensions are constructed; one constant variable is excluded, and 31 current-period features are used to predict next-period \texttt{log(1+GMV)}.
+
+A randomized rank-Gaussian copula is used for mixed marginals. Second-order Model-X knockoffs are generated from a Ledoit-Wolf covariance estimate under the minimum-variance-reconstructability criterion. Antisymmetric statistics are defined by the absolute coefficient difference between original and knockoff variables in a joint Lasso model. Sixty independent knockoff realizations are aggregated through e-values, with \(\alpha_{\mathrm{kn}}=0.10\) and a final e-BH level of \(\alpha_{\mathrm{eBH}}=0.20\). Within the confirmatory set, a training-period XGBoost model and validation-period TreeSHAP values define a user-controlled top-\(K\) display path. Clustered mean-deviation knockoffs, business-group knockoffs, deep exchangeability diagnostics, trajectory-integrated nonlinear importance, two-way fixed effects, and out-of-time prediction provide complementary evidence.
+
+The monthly analysis selects 14 dimensions at the final FDR level of 0.20, of which 10 are selected in at least 90\% of individual runs. The prespecified rule recommends \(K=10\), with a test RMSE of 2.385. The weekly analysis selects 18 dimensions; 11 overlap with the monthly set, yielding a Jaccard index of 0.524. The best weekly predictor is Extra Trees with an RMSE of 2.416, while the XGBoost model using only weekly selected variables obtains an RMSE of 2.421. Neither the monthly nor weekly within-seller layer yields a strict discovery, indicating that most identifiable signals arise from persistent differences across sellers.
+
+Under a common pre-test selection window and a matched budget of 12 variables, XGBoost-SHAP achieves the lowest test RMSE of 2.383, whereas derandomized knockoffs obtain an RMSE of 2.392. Across 30 paired subsamples containing the same 70\% of sellers for every method, Elastic Net has the highest mean set stability of 0.873, while derandomized knockoffs obtain 0.855 and are not distinguishable from Elastic Net by the paired confidence interval. In 20 covariance-preserving simulations, derandomized knockoffs attain a mean FDP of 0.054 and a power of 1.000. These comparisons distinguish predictive accuracy, selection stability, and error-rate control rather than treating them as interchangeable objectives.
+
+The evidence supports monthly aggregation as the confirmatory design for low-frequency sellers and weekly aggregation as a robustness and short-horizon monitoring layer. The selected variables represent conditional predictive information rather than causal effects. The proposed framework provides an auditable route from controlled discovery to configurable dashboard presentation and multi-granularity verification.
+\end{abstractEN}
+\keywordsEN{e-commerce GMV; Model-X knockoff; false discovery rate; multi-granularity panel; interpretable machine learning}
+
+\tableofcontents
+
+\mainmatter
+\chapter{绪论}
+
+本章围绕电商经营指标过载与维度准入缺乏统计约束的问题展开。首先说明研究背景与实践意义，随后界定条件预测型维度选择问题，梳理相关研究的能力边界，最后给出研究问题、主要工作、创新点和全文结构。
+
+\section{研究背景与意义}
+
+数字平台能够持续记录获客、下单、支付、发货、送达和评价等经营过程。记录能力的提升使企业可以构建覆盖多个业务环节的监控看板，但也带来指标冗余：订单数、件数和顾客数共同反映交易规模；商品价格、运费和物理属性可能共同反映商品结构；履约时长指标之间也存在明显关联。若不断增加字段而缺乏准入与退出机制，看板将难以支持快速判断。
+
+传统筛选方式主要包括经验判断、相关系数、逐项显著性检验和机器学习重要性排序。经验判断依赖人员知识且难以复核；边际相关和单变量检验没有控制其余候选变量；树模型重要性能够处理非线性，却通常只给出相对排序。更重要的是，当候选变量较多时，多次检验会累积误报，而相关代理变量可能因共同解释同一信号而重复进入结果。
+
+错误发现率（False Discovery Rate，FDR）关注全部入选变量中错误发现比例的期望。与严格控制任一错误的族错误率相比，FDR允许在整体错误比例受控的条件下保留更多真实信号，适合需要兼顾探索效率和结果可信度的指标治理场景{[}1{]}。Model-X Knockoff通过为每个真实变量构造保持特征依赖结构的仿制变量，使真实变量与负对照变量在同一模型中竞争，从而把变量筛选转化为可审计的受控发现问题{[}2-3{]}。
+
+\section{问题定义与识别边界}
+
+本文研究的业务问题是：给定卖家在当前周期的多个经营维度，哪些变量在控制其余候选信息后，仍包含下一周期GMV的增量预测信息，并值得进入持续监控体系。月度主分析的条件零假设定义为
+
+\[
+H_{0j}:Y_{s,t+1}\perp X_{j,s,t}\mid X_{-j,s,t},
+\]
+
+其中，\(Y_{s,t+1}\)为卖家\(s\)在次月的对数GMV，\(X_{j,s,t}\)为本月第\(j\)个候选维度。周度分析将\(t\)替换为自然周\(w\)，其余定义保持一致。
+
+拒绝该零假设表示变量包含其他候选变量未覆盖的条件预测信息。该结论不表示人为改变变量一定会改变GMV，也不等价于结构因果效应。订单数和顾客数更接近状态变量；履约、内容和定价变量即使具备可行动性，也仍需要随机实验或准实验识别干预效应。
+
+\section{相关研究与研究空白}
+
+多重检验研究从单项第一类错误扩展到发现集合的整体质量控制。Benjamini和Hochberg提出FDR控制程序{[}1{]}；Wang和Ramdas进一步发展基于e-value的FDR控制{[}6{]}。Lasso和Elastic Net能够形成稀疏模型{[}7-8{]}，但交叉验证选择的正则参数以预测误差为目标，并不自动约束错误发现比例。
+
+Model-X Knockoff不要求正确指定响应条件分布，而把关键假设放在特征联合分布与成对可交换性上{[}3{]}。二阶高斯方法具有清晰的矩结构，MVR准则通过降低真变量与仿制变量的可重构性提高功效{[}9-10{]}。针对非高斯和复杂依赖，Deep Knockoffs、DDLK及依赖正则方法尝试以神经网络学习仿制变量{[}4,33-35{]}。然而，边际分布接近不等于联合交换性成立，深度生成器仍需独立的两样本诊断。
+
+在预测和解释方面，随机森林、梯度提升、XGBoost和多层感知机能够拟合非线性关系{[}11-13{]}，TreeSHAP可以分解模型预测贡献{[}14{]}。这些方法适合评价入选集合的时间外预测价值，但模型重要性不等于条件独立检验，更不等于因果效应。现有电商研究通常关注销售预测、用户分群或推荐，较少把FDR控制、随机稳定性、多粒度复核和看板展示数量纳入同一框架。
+
+据此，本文聚焦四个研究空白：其一，混合分布且高度相关的经营维度缺乏可控误选的准入机制；其二，随机生成仿制变量造成的结果波动需要正式聚合，而非任意频率阈值；其三，月度与周度聚合可能改变信号强度和稀疏结构，维度结论需要跨粒度验证；其四，应用研究常以不同数据窗口、不同入选数量比较方法，难以区分预测误差、选择稳定性与错误控制之间的真实差异。
+
+\section{研究问题、研究内容与贡献}
+
+围绕上述研究空白，本文回答四个问题。第一，如何在多表电商数据中构造不重复计算GMV的卖家面板；第二，如何在31项混合且相关的候选变量中控制错误发现率；第三，如何在不改变统计确认集合的前提下，通过参数\(K\)控制最终展示数量；第四，月度结论在周度面板、组级竞争、卖家内变化和非线性模型下是否保持稳定。
+
+本文的主要工作包括以下四项。
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  在原始表自然粒度上先聚合后连接，分别构建卖家-月与卖家-周面板，并采用下一周期GMV避免同周期定义泄漏。
+\item
+  构建随机化秩高斯Copula-MVR Knockoff、Lasso反对称统计量、60轮e-value聚合和e-BH组成的确认性选择流程。
+\item
+  在确认集合内使用验证集TreeSHAP构造\(K\in[1,14]\)的参数化展示路径，并以自然时间外预测检验压缩后的信息保留程度。
+\item
+  通过卖家均值---离差分层、业务组Knockoff、深度交换性诊断、轨迹重要性和周度完整重跑，检验结论对相关结构、模型形式和时间粒度的敏感性。
+\item
+  在统一测试期前选维窗口和相同变量预算下比较五种标准方法，并通过S矩阵、边际变换、统计量和重复次数消融识别主流程各组件的作用。
+\end{enumerate}
+
+本文的贡献不在于提出新的Knockoff理论，而在于形成一套面向经营指标治理的可复核应用框架：统计确认、展示数量、模型解释和稳健性证据分别承担不同结论权限，避免把预测重要性、稳定频率或失败的深度生成结果混写为正式发现。
+
+\section{论文结构}
+
+全文共七章。第1章说明研究背景、问题、研究空白和贡献；第2章介绍FDR、Model-X Knockoff、e-value、相关结构处理及机器学习解释；第3章说明数据来源、面板构造、变量和评价设计；第4章给出统一方法体系；第5章报告月度主分析与各类稳健性结果；第6章讨论跨粒度解释、看板治理和适用边界；第7章总结研究结论、贡献、局限与后续方向。
+
+\chapter{理论基础与相关方法}
+
+第1章将研究目标界定为受控的条件预测型维度选择。本章进一步说明该目标所依赖的统计概念和模型工具，重点讨论FDR、Model-X Knockoff、去随机化e-value、面板相关结构、深度交换性诊断及可解释机器学习之间的分工。
+
+\section{多重检验与错误发现率}
+
+设\(R\)为全部发现数，\(V\)为其中错误发现数，则FDR定义为
+
+\[
+\mathrm{FDR}=\mathbb{E}\left[\frac{V}{R\vee1}\right].
+\]
+
+Bonferroni方法控制族错误率，在候选变量较多或信号相关时可能过于保守。FDR允许有限探索，同时约束发现集合的平均错误比例，更适合指标准入。需要强调，FDR是重复抽样意义下的目标控制水平，不是对某一次具体入选集合中错误比例的确定性描述。
+
+\section{Model-X Knockoff与反对称统计量}
+
+Model-X Knockoff为真实特征\(X\)构造仿制特征\(\widetilde X\)。理想仿制变量满足
+
+\[
+(X,\widetilde X)_{\mathrm{swap}(S)}
+\overset{d}{=}(X,\widetilde X),\qquad
+\widetilde X\perp Y\mid X,
+\]
+
+其中\(\mathrm{swap}(S)\)表示交换任意变量子集中的真实变量和对应仿制变量。仿制变量不是简单打乱，也不是在原变量上添加独立噪声，而是在保留特征依赖结构的同时提供响应无关的负对照。
+
+将真实变量和仿制变量共同输入预测器，得到重要性\(Z_j\)和\(\widetilde Z_j\)后，可定义
+
+\[
+W_j=|Z_j|-|\widetilde Z_j|.
+\]
+
+交换\(X_j\)和\(\widetilde X_j\)时，\(W_j\)应改变符号。零变量的统计量符号在有效Knockoff条件下具有对称性，因而可用负向统计量估计正向发现中的错误数量。
+
+\section{去随机化Knockoff与e-value}
+
+单次Knockoff生成具有随机性。若仅报告某个随机种子或以任意入选频率聚合，多次运行不会自动继承FDR保证。本文采用去随机化Knockoff方法{[}5{]}。第\(m\)轮中第\(j\)个变量的e-value定义为
+
+\[
+e_j^{(m)}
+=p\frac{\mathbf{1}\{W_j^{(m)}\ge T^{(m)}\}}
+{1+\sum_{k=1}^{p}\mathbf{1}\{W_k^{(m)}\le -T^{(m)}\}},
+\]
+
+其中\(T^{(m)}\)为Knockoff+阈值。对\(M\)轮e-value取平均，
+
+\[
+\bar e_j=\frac{1}{M}\sum_{m=1}^{M}e_j^{(m)},
+\]
+
+再对\(\bar e_j\)实施e-BH。本文区分最终水平\(\alpha_{\mathrm{eBH}}\)与单轮水平\(\alpha_{\mathrm{kn}}\)，主设定分别为0.20和0.10。单轮入选频率仅作为随机稳定性描述，不承担正式FDR声明。
+
+\section{相关结构、深度诊断与组级选择}
+
+卖家面板同时包含跨卖家差异和同一卖家随时间变化。直接把所有观测视为独立可能低估组内相关风险。本文将时变特征分解为卖家均值和卖家内离差，分别检验长期位置差异与短期动态信息。对于高度共线的代理变量，进一步按价格成本、商品物理、商品内容、支付、履约、交易规模、市场覆盖和营销等业务概念构造Group Knockoff，以组内真实和仿制系数的\(L_2\)范数差定义组级统计量{[}20{]}。
+
+深度Knockoff能够表达复杂非线性联合分布，但模型名称不能替代交换性验证。本文同时使用边际KS、协方差误差、交叉协方差非对称度、固定核MMD、深度核MMD和分类器两样本检验。深度核在训练子集学习表示，在独立检验子集执行置换，避免在同一数据上学习并检验。未通过预设诊断的生成器不进入FDR结论。
+
+\section{可解释机器学习与面板模型}
+
+XGBoost、Extra Trees和多层感知机用于自然时间外预测，评价指标包括对数RMSE、MAE、\(R^2\)和原始金额WAPE。TreeSHAP用于解释模型在验证或测试样本上的平均绝对贡献{[}14{]}，其作用是对确认集合排序，而不是独立决定显著性。
+
+双向固定效应模型控制卖家不随时间变化的特征和共同周期冲击，标准误按卖家聚类{[}17-18{]}。该模型能够提供同一卖家随时间变化的条件关联，但仍可能受到促销、曝光、库存和竞争等时变遗漏变量影响。因此，固定效应与SHAP均作为补充证据，不转写为因果效应。
+
+\chapter{数据来源与研究设计}
+
+第2章明确了不同统计工具的结论权限。本章转向数据构造，说明原始表、连接顺序、分析单位、目标变量、候选维度和时间切分。数据处理的核心原则是保持业务金额可对账，并确保模型只比较定义明确的候选信息。
+
+\section{数据来源与自然粒度连接}
+
+主数据来自Olist发布的Brazilian E-Commerce Public Dataset{[}27{]}，营销信息来自Marketing Funnel by Olist{[}28{]}。实际读取的10张CSV及其用途见表3-1。
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\caption{原始数据表及实际读取规模}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+数据域
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+文件
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+实际行数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+用途
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+数据域
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+文件
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+实际行数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+用途
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+订单 & \path{olist_orders_dataset.csv} & 99,441 & 状态、时间戳 \\
+商品明细 & \path{olist_order_items_dataset.csv} & 112,650 & 卖家、商品、价格、运费 \\
+支付 & \path{olist_order_payments_dataset.csv} & 103,886 & 方式、分期、金额 \\
+评价 & \path{olist_order_reviews_dataset.csv} & 99,224 & 评分 \\
+商品 & \path{olist_products_dataset.csv} & 32,951 & 品类、物理与内容属性 \\
+卖家 & \path{olist_sellers_dataset.csv} & 3,095 & 卖家位置 \\
+顾客 & \path{olist_customers_dataset.csv} & 99,441 & 顾客唯一标识与位置 \\
+地理 & \path{olist_geolocation_dataset.csv} & 1,000,163 & 邮编前缀经纬度 \\
+营销线索 & \path{olist_marketing_qualified_leads_dataset.csv} & 8,000 & 线索来源 \\
+成交线索 & \path{olist_closed_deals_dataset.csv} & 842 & 线索与卖家映射 \\
+\end{longtable}
+
+支付和评价表可能一单多行，商品明细也可能一单多件。若直接连接全部明细后再汇总，商品价格和运费会被支付行或评价行重复。本文先在各表自然粒度上聚合：支付和评价聚合至订单，地理位置按邮编前缀取经纬度中位数，商品明细保留卖家和商品粒度；随后再按卖家与周期连接。
+
+顾客数量使用\texttt{\path{customer_unique_id}}去重，而非订单级\texttt{\path{customer_id}}。样本包含96,478笔已送达订单和110,197行已送达商品明细。处理后的GMV与原始商品明细逐笔对账一致，月度和周度面板主键重复数均为零。
+
+\section{月度与周度分析单位}
+
+月度主分析使用卖家\(s\)在月份\(t\)的经营状态预测次月GMV：
+
+\[
+Y_{s,t+1}=\log(1+\mathrm{GMV}_{s,t+1}).
+\]
+
+特征期为2017-01至2018-07，得到14,677个卖家-月、2,793个卖家和19个月。若卖家本月活跃而次月无已送达订单，则次月GMV记为零，零值率为25.86\%。
+
+周度分析以周一至周日为一个自然周，使用卖家\(s\)在周\(w\)的经营状态预测下一周GMV：
+
+\[
+Y_{s,w+1}=\log(1+\mathrm{GMV}_{s,w+1}).
+\]
+
+周度特征期为2017-W01至2018-W31，得到33,190个卖家-周、2,834个卖家和83周。下一周零值率为40.5\%。周度增加时间点，但每个卖家活跃周数中位数仅为5，因此稀疏性高于月度。
+
+\begin{longtable}[]{@{}lllllll@{}}
+\caption{月度与周度研究口径}\tabularnewline
+\toprule\noalign{}
+口径 & 面板行 & 卖家 & 期间数 & 目标零值率 & q=.20入选 & 研究角色 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+口径 & 面板行 & 卖家 & 期间数 & 目标零值率 & q=.20入选 & 研究角色 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+月度主分析 & 14677 & 2793 & 19 & 25.9\% & 14 & 确认性主结论 \\
+周度稳健性 & 33190 & 2834 & 83 & 40.5\% & 18 & 粒度稳健性补充 \\
+\end{longtable}
+
+\section{候选维度与数据质量}
+
+本文构造32个候选维度，覆盖价格、运费、商品物理属性、内容丰富度、支付、口碑、履约、交易规模、市场覆盖、卖家地域和营销。申报月收入对数在面板中恒为零，按照事前零方差规则排除，最终31项进入模型。
+
+\begin{longtable}[]{@{}llll@{}}
+\caption{候选维度及处理状态}\tabularnewline
+\toprule\noalign{}
+编号 & 变量名 & 中文定义 & 处理状态 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+编号 & 变量名 & 中文定义 & 处理状态 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+X1 & \path{avg_price} & 平均商品价格 & 纳入分析 \\
+X2 & \path{avg_freight} & 平均运费 & 纳入分析 \\
+X3 & \path{avg_product_weight_g} & 平均商品重量 & 纳入分析 \\
+X4 & \path{avg_product_length_cm} & 平均商品长度 & 纳入分析 \\
+X5 & \path{avg_product_height_cm} & 平均商品高度 & 纳入分析 \\
+X6 & \path{avg_product_width_cm} & 平均商品宽度 & 纳入分析 \\
+X7 & \path{avg_product_photos_qty} & 平均商品图片数 & 纳入分析 \\
+X8 & \path{avg_product_name_length} & 平均商品标题长度 & 纳入分析 \\
+X9 & \path{avg_product_description_length} & 平均商品描述长度 & 纳入分析 \\
+X10 & \path{avg_payment_installments} & 平均支付分期期数 & 纳入分析 \\
+X11 & \path{avg_payment_sequential} & 平均支付序列数 & 纳入分析 \\
+X12 & \path{credit_card_ratio} & 信用卡支付占比 & 纳入分析 \\
+X13 & \path{boleto_ratio} & Boleto支付占比 & 纳入分析 \\
+X14 & \path{voucher_ratio} & 代金券支付占比 & 纳入分析 \\
+X15 & \path{debit_card_ratio} & 借记卡支付占比 & 纳入分析 \\
+X16 & \path{avg_review_score} & 平均评价得分 & 纳入分析 \\
+X17 & \path{avg_delivery_days} & 平均下单至送达天数 & 纳入分析 \\
+X18 & \path{avg_approval_days} & 平均下单至审核天数 & 纳入分析 \\
+X19 & \path{avg_ship_days} & 平均审核至承运天数 & 纳入分析 \\
+X20 & \path{avg_estimate_gap_days} & 平均预计提前送达天数 & 纳入分析 \\
+X21 & \path{item_count} & 成交件数 & 纳入分析 \\
+X22 & \path{order_count} & 成交订单数 & 纳入分析 \\
+X23 & \path{category_count} & 活跃品类数 & 纳入分析 \\
+X24 & \path{unique_customer_count} & 独立顾客数 & 纳入分析 \\
+X25 & \path{buyer_state_diversity} & 买家州数量 & 纳入分析 \\
+X26 & \path{dominant_customer_state_share} & 第一大买家州占比 & 纳入分析 \\
+X27 & \path{interstate_ratio} & 跨州交易占比 & 纳入分析 \\
+X28 & \path{avg_distance_km} & 平均卖家-买家距离 & 纳入分析 \\
+X29 & \path{seller_state_frequency} & 卖家所在州频率 & 纳入分析 \\
+X30 & \path{marketing_origin_frequency} & 营销来源频率 & 纳入分析 \\
+X31 & \path{has_marketing_deal} & 是否匹配营销成交线索 & 纳入分析 \\
+X32 & \path{declared_revenue_log} & 申报月收入对数 & 零方差排除 \\
+\end{longtable}
+
+月度面板最大特征缺失率为1.49\%。物流时长中的负值和明显超界值设为缺失；距离超过5000公里的异常记录也设为缺失。所有缩尾点、插补值、偏态变换和标准化参数只在相应训练样本或当前推断样本的特征矩阵上估计，不使用未来响应。
+
+\section{描述统计与分布特征}
+
+关键变量的描述统计见表3-4。订单数、件数、顾客数和买家州数量具有明显右偏；支付方式占比和营销标记包含大量0或1；物流时长和距离存在长尾。这些分布特征说明直接使用原始高斯假设可能造成边际失配。
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}@{}}
+\caption{关键变量描述统计}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+变量
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+缺失率
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+均值
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+标准差
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+中位数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Spearman相关
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+变量
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+缺失率
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+均值
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+标准差
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+中位数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Spearman相关
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+平均商品价格 & 14677 & 0.00\% & 158.080 & 258.195 & 90.256 & 0.201 \\
+平均运费 & 14677 & 0.00\% & 22.586 & 18.367 & 17.696 & 0.094 \\
+平均评价得分 & 14653 & 0.16\% & 4.162 & 0.960 & 4.400 & -0.121 \\
+平均下单至送达天数 & 14674 & 0.02\% & 12.748 & 8.174 & 11.262 & 0.074 \\
+平均审核至承运天数 & 14600 & 0.52\% & 3.015 & 3.431 & 2.032 & -0.018 \\
+成交件数 & 14677 & 0.00\% & 7.000 & 14.798 & 3.000 & 0.550 \\
+成交订单数 & 14677 & 0.00\% & 6.206 & 12.948 & 2.000 & 0.572 \\
+活跃品类数 & 14677 & 0.00\% & 1.480 & 1.114 & 1.000 & 0.331 \\
+独立顾客数 & 14677 & 0.00\% & 6.173 & 12.850 & 2.000 & 0.572 \\
+买家州数量 & 14677 & 0.00\% & 2.959 & 2.747 & 2.000 & 0.551 \\
+跨州交易占比 & 14677 & 0.00\% & 0.674 & 0.357 & 0.750 & -0.081 \\
+平均卖家-买家距离 & 14617 & 0.41\% & 626.901 & 460.658 & 534.101 & 0.088 \\
+\end{longtable}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={月度GMV变化}]{figures/fig01_monthly_gmv.png}}
+\caption{月度GMV变化}
+\end{figure}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={次月对数GMV分布}]{figures/fig02_target_distribution.png}}
+\caption{次月对数GMV分布}
+\end{figure}
+
+月度GMV在2017-11达到样本期峰值987.8千雷亚尔，平台规模随时间呈明显变化。时间趋势可能同时推高多个变量，因此预测评估采用自然时间切分，动态关联补充采用周期固定效应。
+
+\section{训练验证测试划分与评价指标}
+
+月度预测将2017-01至2017-12作为训练期，2018-01至2018-04作为验证期，2018-05至2018-07作为测试期，对应样本量分别为7,199、3,970和3,508。周度预测使用同样的自然时间边界：2017-01-02至2017-12-25为训练期，2018-01-01至2018-04-30为验证期，2018-05-07至2018-07-30为测试期。
+
+模型调参与参数\(K\)推荐只使用训练期和验证期；测试期在规则确定后用于一次性评价。对数RMSE和MAE衡量典型预测误差，\(R^2\)衡量相对均值基线的解释比例，WAPE保留原始GMV金额尺度。本文不以单一预测指标替代统计选择，而是检验入选集合是否保留足够的时间外信息。
+
+\chapter{多粒度可控维度选择方法}
+
+第3章构建了月度和周度面板，并说明了混合边际、共线性和稀疏性。针对这些特征，本章建立由确认性选择、参数化展示、面板结构检验、深度交换性诊断和跨粒度复核组成的统一方法体系。
+
+\section{Copula-MVR Knockoff与确认性选择}
+
+预处理首先对连续变量实施1\%和99\%分位缩尾，对非负偏态变量取\texttt{log(1+x)}，随后以中位数插补并标准化。为处理离散值和并列秩，第\(j\)个变量通过固定随机种子打散并列值，再映射为近似标准正态：
+
+\[
+Z_{ij}=\Phi^{-1}\left(\frac{r_{ij}-0.5}{n}\right).
+\]
+
+在潜在高斯空间中，使用Ledoit-Wolf收缩协方差\(\widehat\Sigma\)，并按MVR准则确定对角矩阵\(S\)。条件高斯形式为
+
+\[
+\widetilde Z\mid Z
+\sim \mathcal N\left(
+Z-Z\widehat\Sigma^{-1}S,\,
+2S-S\widehat\Sigma^{-1}S
+\right).
+\]
+
+将\([Z,\widetilde Z]\)共同输入Lasso，得到真实和仿制变量系数，构造\(W_j=|\widehat\beta_j|-|\widehat\beta_{j+p}|\)。每轮按Knockoff+计算阈值并形成e-value，60轮平均后实施e-BH。月度主分析在\(\alpha_{\mathrm{eBH}}=0.20\)下承担正式逐变量结论；0.10和0.30仅用于阈值敏感性。
+
+\section{\texorpdfstring{参数\(K\)与时间外预测验证}{参数K与时间外预测验证}}
+
+确认性程序解决``哪些变量获得受控证据''，参数\(K\)解决``页面最终显示多少项''。设月度确认集合为\(S_{\mathrm{FDR}}\)，训练期XGBoost在验证集上得到平均绝对TreeSHAP排序\(\pi\)，则
+
+\[
+S(K)=\{\pi_1,\ldots,\pi_K\},\qquad K\in\{1,\ldots,|S_{\mathrm{FDR}}|\}.
+\]
+
+默认\(K\)取满足以下两个条件的最小值：累计验证SHAP贡献至少90\%，且验证RMSE不高于全部候选\(K\)中最优值的100.5\%。测试集不参与排序或默认值确定。\(K\)只改变展示长度，不重新计算FDR，也不把排名前列解释为更强的因果效应。
+
+预测模型包括Ridge、Lasso、Extra Trees、XGBoost和MLP，并与本期GMV直接外推的朴素基线比较。TreeSHAP、置换重要性和双向固定效应提供解释性证据；它们与Knockoff的统计目标不同，因此分别报告。
+
+\section{面板分层与业务组稳健性}
+
+为区分长期卖家差异与同一卖家短期变化，对每个时变特征实施
+
+\[
+X_{s,t}=\bar X_s+(X_{s,t}-\bar X_s).
+\]
+
+卖家间层以每个卖家的时间均值建模，卖家内层以离差建模。两个层级分别拟合Copula-MVR采样器、选择Lasso惩罚并重复40轮。时间不变特征在离差层成为零方差并自动排除。
+
+逐变量竞争可能把同一业务概念拆分到多个相关代理。本文事先把31项变量划分为12组，并以组内真实系数与仿制系数的\(L_2\)范数差构造组级\(W_g\)。组级分析重复60轮并报告0.20和0.30两个水平，用于评价业务模块是否整体包含信息。
+
+\section{深度生成诊断与轨迹重要性}
+
+噪声条件深度生成器以真实特征和同维高斯噪声为输入，联合优化多比例swap-MMD、边际、协方差、交叉对称与可重构性损失。进一步设置可微最坏swap对手，在每批次搜索可区分性较大的交换子集。经验边际校准只在生成器训练子集拟合，再应用于验证子集。
+
+生成器准入依赖多指标联合诊断。边际KS衡量单变量匹配，协方差误差与交叉非对称度衡量二阶结构；固定核MMD、深度核MMD与Extra Trees分类器检验联合交换差异。199次核置换的最小可达\(p\)值为0.005，99次分类器置换的最小可达\(p\)值为0.010。任一关键联合诊断明显失败时，该生成器的选择结果不作FDR声明。
+
+非线性重要性使用配对竞争MLP。网络为每个真实/仿制变量设置成对入口权重，并通过共享下游结构保持交换反对称性。轨迹版本在4个\(L_1\)强度与4个组正则强度上循环采样，沿优化轨迹累计真实与仿制入口活跃度之差。数值交换测试用于确认统计量在交换后变号。
+
+\section{基准比较与组件消融}
+
+基准比较遵循``同一信息集、同一截止时间、同一预测器、同一变量预算''的原则。所有方法仅使用2018年4月及以前的数据完成选维，以12项为匹配预算。比较对象包括去随机化Knockoff、Elastic Net、稳定性选择、影子变量树模型和XGBoost-SHAP。各方法选出的12项变量均输入相同参数的XGBoost，并在2018年5月至7月测试集上评价。选择稳定性另采用30组配对的卖家子样本：每组对所有方法使用完全相同的70\%卖家，保留入选卖家的全部月份，在子样本内完整重算各方法Top-12，并计算其与各自全样本Top-12的Jaccard。去随机化Knockoff在每个子样本内聚合60轮。报告平均Jaccard、标准差和95\%置信区间。固定全数据仅更换仿制变量所得的0.969只作为算法随机性诊断，不再与样本稳定性混为一列。
+
+组件消融保持其余流程不变，分别替换S矩阵准则（MVR、SDP、等相关）、边际处理（Copula与原始高斯）、重要性统计量（Lasso与XGBoost），并使用同一60轮W矩阵的前1、5、10、20、40和60轮检验聚合结果随重复次数的变化。模拟比较从真实特征矩阵抽取4000行，设置10个真信号，重复20个响应数据集；报告平均FDP、FDP超过0.20的概率、Power和平均发现数。Elastic Net、稳定性选择和影子变量方法属于筛选基线，不宣称具有与Knockoff相同的FDR保证。
+
+\section{周度粒度稳健性}
+
+周度分析完整复用31项候选维度、Copula-MVR、Lasso竞争、60轮e-value和e-BH流程，并重跑高斯生成、同周GMV、截尾窗口、下一周客单价、测试期前样本和XGBoost统计量。聚类分层、业务组、轨迹重要性、固定效应和预测模型也在周度面板上重新估计。
+
+该设计用于隔离时间聚合粒度的影响，而不是把月度和周度结果合并为一个更大的确认集合。月周重合程度使用交集数量和Jaccard系数评价：
+
+\[
+J(S_m,S_w)=\frac{|S_m\cap S_w|}{|S_m\cup S_w|}.
+\]
+
+两种粒度均采用``最终已送达订单按购买周期归属''的回溯口径，以保证统计比较的一致性。物流和评价信息在周期结束时未必已经完全可见，因此周度实验不是严格的在线部署回放；实际部署需按事件真实可见时间归属或设置滞后。
+
+\chapter{实证结果}
+
+第4章给出了统一方法体系。本章按照``数据质量与生成诊断---月度确认性结果---预测与参数化展示---结构和深度稳健性---周度粒度复核''的顺序报告结果。每项分析均区分正式发现、稳定性描述和探索性证据。
+
+\section{数据质量与Knockoff诊断}
+
+月度面板包含14,677行，样本GMV为12.342百万雷亚尔，最大缺失率为1.49\%。面板主键无重复，处理后GMV与原始已送达商品明细一致。月度面板SHA-256为\texttt{{\scriptsize\seqsplit{7212bf462a8b23ba6455bed5fe7354481b43d3e3a0f633a13ced1a97c3046a1e}}}。
+
+Copula生成器的平均边际KS为0.013，最大KS为0.037，协方差相对误差为0.027，交叉协方差非对称度为0.033。原始高斯生成器的平均边际KS为0.200。Copula明显改善混合边际匹配，因此确认性分析采用Copula-MVR。
+
+\begin{longtable}[]{@{}lllll@{}}
+\caption{深度与基线生成器的联合诊断}\tabularnewline
+\toprule\noalign{}
+方法 & 平均KS & 协方差误差 & 深度核拒绝率 & 分类AUC \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+方法 & 平均KS & 协方差误差 & 深度核拒绝率 & 分类AUC \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Copula-MVR & 0.026 & 0.091 & 0\% & 0.777 \\
+基础深度生成器（训练集校准） & 0.018 & 0.166 & 100\% & 0.902 \\
+最坏swap深度生成器（训练集校准） & 0.019 & 0.188 & 100\% & 0.937 \\
+\end{longtable}
+
+基础深度生成器和最坏swap生成器虽然取得较小的边际KS，但深度核MMD在全部交换比例上拒绝，分类器AUC也明显高于0.5。两类生成器均未通过预设准入，故其形式上的选择集合只作为失败诊断，不进入FDR结论。该结果表明，边际匹配不能替代联合交换性。
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={生成器联合交换性诊断}]{figures/fig13_exchangeability.png}}
+\caption{生成器联合交换性诊断}
+\end{figure}
+
+\section{月度确认集合与参数化展示}
+
+月度主分析在最终FDR水平0.20下入选14项：成交订单数、平均商品价格、独立顾客数、成交件数、买家州数量、平均审核至承运天数、平均运费、活跃品类数、平均预计提前送达天数、平均商品标题长度、平均商品高度、卖家所在州频率、平均商品描述长度、平均下单至送达天数。其中10项的单轮入选频率不低于90\%：成交订单数、平均商品价格、独立顾客数、成交件数、买家州数量、平均审核至承运天数、平均运费、活跃品类数、平均预计提前送达天数、平均商品标题长度。
+
+\begin{longtable}[]{@{}llllll@{}}
+\caption{月度主分析前20项变量}\tabularnewline
+\toprule\noalign{}
+变量 & 平均W & W为正比例 & 单轮入选频率 & 平均e-value & e-BH \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+变量 & 平均W & W为正比例 & 单轮入选频率 & 平均e-value & e-BH \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+成交订单数 & 0.144 & 1.000 & 95.0\% & 28.675 & 通过 \\
+平均商品价格 & 0.142 & 1.000 & 95.0\% & 28.675 & 通过 \\
+独立顾客数 & 0.140 & 1.000 & 95.0\% & 28.675 & 通过 \\
+成交件数 & 0.117 & 1.000 & 95.0\% & 28.675 & 通过 \\
+买家州数量 & 0.097 & 1.000 & 95.0\% & 28.675 & 通过 \\
+平均审核至承运天数 & 0.053 & 1.000 & 95.0\% & 28.675 & 通过 \\
+平均运费 & 0.027 & 1.000 & 95.0\% & 28.675 & 通过 \\
+活跃品类数 & 0.023 & 1.000 & 95.0\% & 28.675 & 通过 \\
+平均预计提前送达天数 & 0.021 & 1.000 & 95.0\% & 28.675 & 通过 \\
+平均商品标题长度 & 0.022 & 1.000 & 91.7\% & 27.642 & 通过 \\
+平均商品高度 & 0.013 & 1.000 & 80.0\% & 24.025 & 通过 \\
+卖家所在州频率 & 0.014 & 1.000 & 76.7\% & 22.992 & 通过 \\
+平均商品描述长度 & 0.009 & 0.950 & 50.0\% & 14.725 & 通过 \\
+平均下单至送达天数 & 0.007 & 0.933 & 41.7\% & 12.142 & 通过 \\
+第一大买家州占比 & 0.007 & 0.883 & 33.3\% & 9.558 & 未通过 \\
+平均支付序列数 & 0.005 & 0.900 & 26.7\% & 7.492 & 未通过 \\
+借记卡支付占比 & 0.004 & 0.817 & 21.7\% & 5.942 & 未通过 \\
+信用卡支付占比 & 0.001 & 0.667 & 13.3\% & 3.358 & 未通过 \\
+平均评价得分 & 0.001 & 0.733 & 6.7\% & 1.292 & 未通过 \\
+是否匹配营销成交线索 & 0.000 & 0.617 & 5.0\% & 1.033 & 未通过 \\
+\end{longtable}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={月度主分析平均e-value}]{figures/fig03_knockoff_evalues.png}}
+\caption{月度主分析平均e-value}
+\end{figure}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={月度主分析单轮入选频率}]{figures/fig04_selection_frequency.png}}
+\caption{月度主分析单轮入选频率}
+\end{figure}
+
+在0.10水平下，严格发现为0项；在0.30水平下，严格发现为17项。阈值变化见表5-3。结果从0项跳至14项，反映\(p=31\)时Knockoff+的离散门槛，不能通过临时降低FDR水平稳定地获得任意长度的集合。
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\caption{月度FDR水平敏感性}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+最终FDR水平
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+单轮水平
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格入选数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格入选变量
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+最终FDR水平
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+单轮水平
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格入选数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格入选变量
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0.10 & 0.05 & 0 & 无 \\
+0.20（主分析） & 0.10 & 14 & 成交订单数、平均商品价格、独立顾客数、成交件数、买家州数量、平均审核至承运天数、平均运费、活跃品类数、平均预计提前送达天数、平均商品标题长度、平均商品高度、卖家所在州频率、平均商品描述长度、平均下单至送达天数 \\
+0.30 & 0.15 & 17 & 平均商品价格、平均运费、平均商品高度、平均商品标题长度、平均商品描述长度、平均支付序列数、借记卡支付占比、平均下单至送达天数、平均审核至承运天数、平均预计提前送达天数、成交件数、成交订单数、活跃品类数、独立顾客数、买家州数量、第一大买家州占比、卖家所在州频率 \\
+\end{longtable}
+
+确认集合内部的验证集TreeSHAP排序形成参数\(K\)路径。默认规则推荐\(K=10\)，对应维度为独立顾客数、成交订单数、平均商品价格、平均审核至承运天数、平均预计提前送达天数、买家州数量、平均下单至送达天数、成交件数、平均运费、平均商品标题长度。
+
+\begin{longtable}[]{@{}lllll@{}}
+\caption{默认参数K的维度与证据}\tabularnewline
+\toprule\noalign{}
+排序 & 维度 & 单轮频率 & 贡献占比 & 累计贡献 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+排序 & 维度 & 单轮频率 & 贡献占比 & 累计贡献 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & 独立顾客数 & 95.0\% & 30.0\% & 30.0\% \\
+2 & 成交订单数 & 95.0\% & 20.8\% & 50.8\% \\
+3 & 平均商品价格 & 95.0\% & 15.2\% & 66.1\% \\
+4 & 平均审核至承运天数 & 95.0\% & 6.0\% & 72.1\% \\
+5 & 平均预计提前送达天数 & 95.0\% & 5.3\% & 77.4\% \\
+6 & 买家州数量 & 95.0\% & 3.5\% & 80.9\% \\
+7 & 平均下单至送达天数 & 41.7\% & 3.4\% & 84.3\% \\
+8 & 成交件数 & 95.0\% & 2.8\% & 87.1\% \\
+9 & 平均运费 & 95.0\% & 2.8\% & 89.9\% \\
+10 & 平均商品标题长度 & 91.7\% & 2.7\% & 92.6\% \\
+\end{longtable}
+
+\begin{longtable}[]{@{}lllll@{}}
+\caption{代表性K档位}\tabularnewline
+\toprule\noalign{}
+档位 & K & 累计贡献 & 验证RMSE & 测试RMSE \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+档位 & K & 累计贡献 & 验证RMSE & 测试RMSE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+极简 & 4 & 72.1\% & 2.335 & 2.388 \\
+均衡 & 8 & 87.1\% & 2.341 & 2.389 \\
+默认推荐 & 10 & 92.6\% & 2.343 & 2.385 \\
+完整确认集 & 14 & 100.0\% & 2.343 & 2.384 \\
+\end{longtable}
+
+默认\(K=10\)的测试RMSE为2.385，全31维XGBoost为2.388，相对变化-0.097\%。结果说明在确认集合内进一步压缩展示数量，不会明显损失时间外预测性能。
+
+\section{时间外预测、SHAP与固定效应}
+
+月度时间外预测结果见表5-6。最佳模型为XGBoost，测试RMSE为2.388、\(R^2\)为0.291，相对本月GMV朴素基线改善17.5\%。树模型与线性模型误差接近，深度MLP未形成稳定优势，说明当前样本的主要信息可由较平滑的表格模型捕获。
+
+\begin{longtable}[]{@{}llllll@{}}
+\caption{月度时间外预测表现}\tabularnewline
+\toprule\noalign{}
+模型 & 测试N & RMSE(log) & MAE(log) & R2 & WAPE \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+模型 & 测试N & RMSE(log) & MAE(log) & R2 & WAPE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+XGBoost & 3508 & 2.388 & 1.914 & 0.291 & 67.2\% \\
+Ridge & 3508 & 2.389 & 1.949 & 0.291 & 73.1\% \\
+Lasso & 3508 & 2.389 & 1.949 & 0.290 & 73.1\% \\
+ExtraTrees & 3508 & 2.390 & 1.914 & 0.290 & 65.9\% \\
+XGBoost-Knockoff-selected & 3508 & 2.391 & 1.914 & 0.289 & 67.2\% \\
+MLP & 3508 & 2.429 & 1.947 & 0.267 & 74.5\% \\
+Naive-current-GMV & 3508 & 2.895 & 1.981 & -0.042 & 79.2\% \\
+PyTorch-Residual-MLP & 3508 & 2.414 & 1.927 & 0.276 & 71.8\% \\
+\end{longtable}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={月度时间外预测比较}]{figures/fig10_predictive_models.png}}
+\caption{月度时间外预测比较}
+\end{figure}
+
+测试期XGBoost的SHAP前五项为成交订单数、独立顾客数、平均商品价格、平均审核至承运天数、买家州数量。Knockoff确认集合与SHAP前十项的交集为成交订单数、平均商品价格、独立顾客数、买家州数量、平均审核至承运天数、平均运费、平均预计提前送达天数、平均商品标题长度、卖家所在州频率、平均商品描述长度，这些变量同时获得条件选择和非线性预测证据；其余确认变量为成交件数、活跃品类数、平均商品高度、平均下单至送达天数，适合在一级指标异常后下钻。
+
+\begin{longtable}[]{@{}lll@{}}
+\caption{XGBoost SHAP重要性}\tabularnewline
+\toprule\noalign{}
+变量 & 平均绝对SHAP & 平均SHAP \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+变量 & 平均绝对SHAP & 平均SHAP \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+成交订单数 & 0.544 & -0.072 \\
+独立顾客数 & 0.530 & -0.064 \\
+平均商品价格 & 0.350 & 0.015 \\
+平均审核至承运天数 & 0.147 & 0.056 \\
+买家州数量 & 0.136 & -0.027 \\
+平均预计提前送达天数 & 0.088 & 0.037 \\
+平均商品标题长度 & 0.064 & 0.008 \\
+卖家所在州频率 & 0.063 & 0.003 \\
+平均运费 & 0.054 & -0.023 \\
+平均商品描述长度 & 0.053 & 0.001 \\
+平均下单至送达天数 & 0.045 & -0.023 \\
+成交件数 & 0.041 & -0.006 \\
+平均商品高度 & 0.035 & 0.002 \\
+平均下单至审核天数 & 0.033 & 0.012 \\
+平均商品重量 & 0.029 & 0.009 \\
+\end{longtable}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={XGBoost SHAP重要性}]{figures/fig06_xgboost_shap.png}}
+\caption{XGBoost SHAP重要性}
+\end{figure}
+
+双向固定效应控制卖家和月份效应，标准误按卖家聚类。5\%水平显著的动态变量为平均审核至承运天数、Boleto支付占比、借记卡支付占比、信用卡支付占比。固定效应系数只描述同一卖家随时间变化的条件关联，不能排除未观测的促销、曝光、库存和竞争变化。
+
+\begin{longtable}[]{@{}llllll@{}}
+\caption{月度双向固定效应中p值最低的15项}\tabularnewline
+\toprule\noalign{}
+变量 & 系数 & 聚类SE & p值 & 95\%CI下限 & 95\%CI上限 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+变量 & 系数 & 聚类SE & p值 & 95\%CI下限 & 95\%CI上限 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+平均审核至承运天数 & -0.185 & 0.034 & 0.000 & -0.251 & -0.120 \\
+Boleto支付占比 & 0.370 & 0.166 & 0.025 & 0.046 & 0.695 \\
+借记卡支付占比 & 0.106 & 0.049 & 0.031 & 0.010 & 0.203 \\
+信用卡支付占比 & 0.342 & 0.173 & 0.048 & 0.003 & 0.681 \\
+成交件数 & -0.214 & 0.122 & 0.080 & -0.453 & 0.025 \\
+代金券支付占比 & 0.113 & 0.071 & 0.109 & -0.025 & 0.252 \\
+买家州数量 & 0.128 & 0.081 & 0.112 & -0.030 & 0.286 \\
+平均运费 & -0.067 & 0.048 & 0.159 & -0.161 & 0.026 \\
+平均预计提前送达天数 & 0.046 & 0.038 & 0.230 & -0.029 & 0.121 \\
+平均卖家-买家距离 & -0.048 & 0.042 & 0.254 & -0.130 & 0.034 \\
+平均商品描述长度 & 0.047 & 0.042 & 0.268 & -0.036 & 0.130 \\
+平均下单至审核天数 & -0.032 & 0.029 & 0.270 & -0.089 & 0.025 \\
+活跃品类数 & 0.034 & 0.031 & 0.270 & -0.027 & 0.095 \\
+平均支付序列数 & 0.026 & 0.025 & 0.286 & -0.022 & 0.074 \\
+平均商品图片数 & 0.044 & 0.043 & 0.306 & -0.041 & 0.130 \\
+\end{longtable}
+
+\section{基准比较、组件消融与结构稳健性}
+
+\subsection{统一预算的真实数据基准}
+
+测试期前去随机化Knockoff原生入选12项。为避免``入选越多越容易预测''的不公平比较，五种方法均按各自分数截取前12项。表5-9报告集合重合，以及在30组相同70\%卖家子样本下得到的配对稳定性。
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\caption{同预算选择集合与稳定性}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+方法
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+原生入选
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+同预算K
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+与主集重合
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Jaccard
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+配对稳定性（95\%CI）
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+方法
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+原生入选
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+同预算K
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+与主集重合
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Jaccard
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+配对稳定性（95\%CI）
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+去随机化Knockoff & 12 & 12 & 12 & 1.000 & 0.855 {[}0.823, 0.887{]} \\
+Elastic Net & 14 & 12 & 10 & 0.714 & 0.873 {[}0.845, 0.901{]} \\
+稳定性选择 & 11 & 12 & 10 & 0.714 & 0.814 {[}0.779, 0.849{]} \\
+影子变量树模型 & 8 & 12 & 10 & 0.714 & 0.832 {[}0.798, 0.867{]} \\
+XGBoost-SHAP & 12 & 12 & 8 & 0.500 & 0.686 {[}0.645, 0.726{]} \\
+\end{longtable}
+
+Elastic Net、稳定性选择和影子变量树模型均与Knockoff重合10项，XGBoost-SHAP重合8项。统一子抽样实验中，Elastic Net的平均稳定性为0.873{[}0.845, 0.901{]}，去随机化Knockoff为0.855{[}0.823, 0.887{]}，两者配对均值差为-0.018，置信区间{[}-0.065, 0.028{]}包含0；XGBoost-SHAP为0.686。因此，Knockoff与Elastic Net在当前协议下均较稳定，不能宣称Knockoff单独最优；Knockoff相对XGBoost-SHAP的配对差异为0.169，置信区间为{[}0.120, 0.218{]}。
+
+\begin{longtable}[]{@{}llllll@{}}
+\caption{同预算集合的统一XGBoost测试结果}\tabularnewline
+\toprule\noalign{}
+方法 & 测试N & RMSE(log) & MAE(log) & R2 & WAPE \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+方法 & 测试N & RMSE(log) & MAE(log) & R2 & WAPE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+XGBoost-SHAP & 3508 & 2.383 & 1.920 & 0.294 & 67.7\% \\
+影子变量树模型 & 3508 & 2.387 & 1.915 & 0.292 & 66.6\% \\
+稳定性选择 & 3508 & 2.390 & 1.916 & 0.290 & 67.7\% \\
+Elastic Net & 3508 & 2.390 & 1.916 & 0.290 & 67.2\% \\
+全部31维 & 3508 & 2.391 & 1.917 & 0.290 & 67.3\% \\
+去随机化Knockoff & 3508 & 2.392 & 1.915 & 0.289 & 67.3\% \\
+\end{longtable}
+
+XGBoost-SHAP取得最低RMSE 2.383，去随机化Knockoff为2.392。两者差异很小，但目标不同：前者优化预测贡献，后者提供FDR框架下的条件发现。本文据此不宣称Knockoff在预测精度上全面领先。
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={配对卖家子抽样的集合稳定性}]{figures/fig22_fair_stability.png}}
+\caption{配对卖家子抽样的集合稳定性}
+\end{figure}
+
+\subsection{主流程组件消融}
+
+\begin{longtable}[]{@{}lllllll@{}}
+\caption{Copula、S矩阵、统计量与重复次数消融}\tabularnewline
+\toprule\noalign{}
+消融维度 & 设定 & 重复数 & 严格数 & 与主集重合 & Jaccard & 中位频率 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+消融维度 & 设定 & 重复数 & 严格数 & 与主集重合 & Jaccard & 中位频率 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+S矩阵 & mvr & 30 & 16 & 14 & 0.875 & 96.7\% \\
+S矩阵 & sdp & 30 & 16 & 13 & 0.765 & 100.0\% \\
+S矩阵 & equicorrelated & 30 & 12 & 12 & 0.857 & 85.0\% \\
+重复次数 & M=1 & 1 & 12 & 12 & 0.857 & 100.0\% \\
+重复次数 & M=5 & 5 & 16 & 14 & 0.875 & 100.0\% \\
+重复次数 & M=10 & 10 & 15 & 14 & 0.933 & 100.0\% \\
+重复次数 & M=20 & 20 & 17 & 14 & 0.824 & 100.0\% \\
+重复次数 & M=40 & 40 & 16 & 14 & 0.875 & 95.0\% \\
+重复次数 & M=60 & 60 & 14 & 14 & 1.000 & 95.0\% \\
+边际与统计量 & Copula-MVR-Lasso & 60 & 14 & 14 & 1.000 & 95.0\% \\
+边际与统计量 & 原始高斯-MVR-Lasso & 40 & 12 & 11 & 0.733 & 57.5\% \\
+边际与统计量 & Copula-MVR-XGBoost & 25 & 0 & 0 & 0.000 & 0.0\% \\
+\end{longtable}
+
+使用原始高斯边际时严格集合降至12项，与主集Jaccard为0.733；等相关S矩阵得到12项，SDP和30轮MVR均得到16项。重复次数从1增加到60时，严格数依次为12、16、15、17、16和14，只有60轮结果与正式主集完全一致。XGBoost统计量在当前低维样本和阈值下没有形成严格发现，说明更复杂的重要性统计量不自动带来更高功效。
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={重复次数消融}]{figures/fig20_repetition_ablation.png}}
+\caption{重复次数消融}
+\end{figure}
+
+\subsection{统一模拟比较}
+
+\begin{longtable}[]{@{}lllll@{}}
+\caption{真实协方差模拟的FDP与Power}\tabularnewline
+\toprule\noalign{}
+方法 & 平均FDP & FDP\textgreater0.20概率 & 平均Power & 平均发现数 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+方法 & 平均FDP & FDP\textgreater0.20概率 & 平均Power & 平均发现数 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+去随机化Knockoff & 0.054 & 10.0\% & 1.000 & 10.65 \\
+单次Knockoff & 0.145 & 35.0\% & 1.000 & 12.05 \\
+Elastic Net & 0.644 & 100.0\% & 1.000 & 28.15 \\
+稳定性选择 & 0.090 & 5.0\% & 1.000 & 11.05 \\
+影子变量树模型 & 0.566 & 100.0\% & 1.000 & 23.10 \\
+\end{longtable}
+
+在20轮、10个真信号的模拟中，去随机化Knockoff平均FDP为0.054、Power为1.000；单次Knockoff平均FDP为0.145、Power为1.000。Elastic Net和影子变量树模型均保持高Power，但平均FDP明显偏高；稳定性选择在该设定下也取得较低FDP，但不提供与Model-X相同的有限样本目标保证。
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={模拟FDP与Power比较}]{figures/fig21_simulation_fdp_power.png}}
+\caption{模拟FDP与Power比较}
+\end{figure}
+
+\subsection{面板结构、业务组与非线性结果}
+
+月度卖家均值---离差分层结果见下表。卖家间层在0.20水平入选16项，卖家内层为0项。整表信号主要对应卖家长期经营位置差异；当前19个月的面板不足以支持非空的卖家内严格集合。
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\caption{月度卖家间与卖家内分层结果}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+层级
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+p
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+稳定数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格集合
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+层级
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+p
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+稳定数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格集合
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+卖家间均值层 & 2793 & 31 & 16 & 9 & 平均商品价格、平均运费、平均商品标题长度、平均支付序列数、代金券支付占比、借记卡支付占比、平均下单至送达天数、平均下单至审核天数、平均预计提前送达天数、成交件数、成交订单数、活跃品类数、独立顾客数、买家州数量、跨州交易占比、平均卖家-买家距离 \\
+卖家内离差层 & 14677 & 28 & 0 & 0 & 无 \\
+\end{longtable}
+
+十二业务组在0.20水平入选0组，在0.30水平入选10组：价格成本、商品物理属性、商品内容、支付过程、支付方式、履约、交易规模、市场集中度、市场覆盖、卖家地域。低组数设计中的Knockoff+离散门槛限制了0.20水平功效，因此0.30结果只作为业务模块敏感性证据。
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\caption{月度业务组Knockoff结果}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+最终水平
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+单轮水平
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格组数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格业务组
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+高稳定组
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+最终水平
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+单轮水平
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格组数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格业务组
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+高稳定组
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0.200 & 0.100 & 0 & 无 & 无 \\
+0.300 & 0.150 & 10 & 价格成本、商品物理属性、商品内容、支付过程、支付方式、履约、交易规模、市场集中度、市场覆盖、卖家地域 & 价格成本、商品内容、履约、交易规模、市场覆盖、卖家地域 \\
+\end{longtable}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={聚类分层与业务组稳定性}]{figures/fig12_cluster_group.png}}
+\caption{聚类分层与业务组稳定性}
+\end{figure}
+
+轨迹聚合统计量的交换反对称最大误差为0.000e+00。在0.20水平入选0项，在0.30水平入选5项：平均商品价格、平均审核至承运天数、成交件数、成交订单数、独立顾客数。该结果说明二维正则轨迹能够在宽松水平恢复部分非线性信号，但不能改写0.20水平的确认结论。
+
+\begin{longtable}[]{@{}lllll@{}}
+\caption{轨迹聚合重要性}\tabularnewline
+\toprule\noalign{}
+维度 & 平均W & 0.20单轮频率 & 0.20平均e-value & 0.30入选 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+维度 & 平均W & 0.20单轮频率 & 0.20平均e-value & 0.30入选 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+平均商品价格 & 0.708 & 20.0\% & 5.425 & 是 \\
+平均审核至承运天数 & 0.345 & 20.0\% & 5.425 & 是 \\
+独立顾客数 & 0.302 & 20.0\% & 5.425 & 是 \\
+成交订单数 & 0.250 & 20.0\% & 5.425 & 是 \\
+成交件数 & 0.235 & 20.0\% & 5.425 & 是 \\
+平均商品标题长度 & 0.226 & 20.0\% & 5.425 & 否 \\
+买家州数量 & 0.114 & 10.0\% & 2.325 & 否 \\
+卖家所在州频率 & 0.103 & 20.0\% & 5.425 & 否 \\
+平均预计提前送达天数 & 0.098 & 10.0\% & 3.100 & 否 \\
+平均支付序列数 & 0.088 & 10.0\% & 2.325 & 否 \\
+平均商品宽度 & 0.083 & 5.0\% & 0.775 & 否 \\
+平均商品描述长度 & 0.072 & 10.0\% & 2.325 & 否 \\
+第一大买家州占比 & 0.071 & 10.0\% & 2.325 & 否 \\
+平均商品图片数 & 0.064 & 5.0\% & 0.775 & 否 \\
+活跃品类数 & 0.057 & 10.0\% & 2.325 & 否 \\
+\end{longtable}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={轨迹聚合平均W}]{figures/fig14_grip_importance.png}}
+\caption{轨迹聚合平均W}
+\end{figure}
+
+真实特征矩阵上的稀疏模拟进一步显示，去随机化e-BH的平均FDP为0.000、平均功效为0.000；单轮Knockoff+的平均FDP为0.197、功效为1.000。当仅设置5个真信号时，聚合程序因离散门槛得到零发现。本文保留该不利结果，以说明方法在低维且极稀疏任务中的功效边界。
+
+\section{周度粒度稳健性}
+
+周度面板包含33,190行、2,834个卖家和83周，GMV合计12.531百万雷亚尔。下一周零成交率为40.5\%，明显高于月度。周度Copula平均边际KS为0.012，原始高斯为0.234，因此周度主分析同样采用Copula-MVR。
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={周度GMV变化}]{figures/fig15_weekly_gmv.png}}
+\caption{周度GMV变化}
+\end{figure}
+
+在0.20水平，周度严格入选18项：平均商品价格、平均运费、平均商品重量、平均商品高度、平均商品宽度、平均商品图片数、平均商品标题长度、Boleto支付占比、平均审核至承运天数、成交件数、成交订单数、活跃品类数、独立顾客数、买家州数量、第一大买家州占比、卖家所在州频率、营销来源频率、是否匹配营销成交线索。其中13项的单轮频率不低于90\%。
+
+\begin{longtable}[]{@{}lllll@{}}
+\caption{周度严格入选变量}\tabularnewline
+\toprule\noalign{}
+维度 & 平均W & 单轮频率 & 平均e-value & 月度同时入选 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+维度 & 平均W & 单轮频率 & 平均e-value & 月度同时入选 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+独立顾客数 & 0.1546 & 100.0\% & 30.742 & 是 \\
+成交订单数 & 0.1391 & 100.0\% & 30.742 & 是 \\
+平均商品价格 & 0.0925 & 100.0\% & 30.742 & 是 \\
+成交件数 & 0.0859 & 100.0\% & 30.742 & 是 \\
+买家州数量 & 0.0837 & 100.0\% & 30.742 & 是 \\
+活跃品类数 & 0.0305 & 100.0\% & 30.742 & 是 \\
+平均审核至承运天数 & 0.0299 & 100.0\% & 30.742 & 是 \\
+平均运费 & 0.0299 & 100.0\% & 30.742 & 是 \\
+第一大买家州占比 & 0.0220 & 100.0\% & 30.742 & 否 \\
+平均商品标题长度 & 0.0167 & 100.0\% & 30.742 & 是 \\
+平均商品宽度 & 0.0173 & 98.3\% & 30.225 & 否 \\
+是否匹配营销成交线索 & 0.0118 & 95.0\% & 29.192 & 否 \\
+卖家所在州频率 & 0.0099 & 91.7\% & 28.158 & 是 \\
+营销来源频率 & 0.0088 & 85.0\% & 26.092 & 否 \\
+Boleto支付占比 & 0.0086 & 85.0\% & 26.092 & 否 \\
+平均商品图片数 & 0.0058 & 58.3\% & 17.825 & 否 \\
+平均商品高度 & 0.0041 & 41.7\% & 12.658 & 是 \\
+平均商品重量 & 0.0039 & 36.7\% & 11.108 & 否 \\
+\end{longtable}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={周度单轮入选频率}]{figures/fig16_weekly_selection.png}}
+\caption{周度单轮入选频率}
+\end{figure}
+
+月度14项与周度18项共同入选11项，Jaccard系数为0.524。共同集合为平均商品价格、平均运费、平均商品高度、平均商品标题长度、平均审核至承运天数、成交件数、成交订单数、活跃品类数、独立顾客数、买家州数量、卖家所在州频率；其中同时满足周度频率不低于90\%的跨粒度高稳定核心有10项：平均商品价格、平均运费、平均商品标题长度、平均审核至承运天数、成交件数、成交订单数、活跃品类数、独立顾客数、买家州数量、卖家所在州频率。月度特有3项为平均商品描述长度、平均下单至送达天数、平均预计提前送达天数；周度特有7项为平均商品重量、平均商品宽度、平均商品图片数、Boleto支付占比、第一大买家州占比、营销来源频率、是否匹配营销成交线索。
+
+\begin{longtable}[]{@{}llll@{}}
+\caption{月度与周度入选集合对照}\tabularnewline
+\toprule\noalign{}
+维度 & 粒度证据 & 月度频率 & 周度频率 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+维度 & 粒度证据 & 月度频率 & 周度频率 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+平均商品价格 & 月周共同 & 95.0\% & 100.0\% \\
+平均运费 & 月周共同 & 95.0\% & 100.0\% \\
+平均审核至承运天数 & 月周共同 & 95.0\% & 100.0\% \\
+成交件数 & 月周共同 & 95.0\% & 100.0\% \\
+成交订单数 & 月周共同 & 95.0\% & 100.0\% \\
+活跃品类数 & 月周共同 & 95.0\% & 100.0\% \\
+独立顾客数 & 月周共同 & 95.0\% & 100.0\% \\
+买家州数量 & 月周共同 & 95.0\% & 100.0\% \\
+平均商品标题长度 & 月周共同 & 91.7\% & 100.0\% \\
+卖家所在州频率 & 月周共同 & 76.7\% & 91.7\% \\
+平均商品高度 & 月周共同 & 80.0\% & 41.7\% \\
+平均预计提前送达天数 & 仅月度 & 95.0\% & 0.0\% \\
+平均商品描述长度 & 仅月度 & 50.0\% & 0.0\% \\
+平均下单至送达天数 & 仅月度 & 41.7\% & 0.0\% \\
+第一大买家州占比 & 仅周度 & 33.3\% & 100.0\% \\
+平均商品宽度 & 仅周度 & 0.0\% & 98.3\% \\
+是否匹配营销成交线索 & 仅周度 & 5.0\% & 95.0\% \\
+Boleto支付占比 & 仅周度 & 0.0\% & 85.0\% \\
+营销来源频率 & 仅周度 & 0.0\% & 85.0\% \\
+平均商品图片数 & 仅周度 & 0.0\% & 58.3\% \\
+平均商品重量 & 仅周度 & 0.0\% & 36.7\% \\
+\end{longtable}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={月度与周度入选频率}]{figures/fig17_monthly_weekly_frequency.png}}
+\caption{月度与周度入选频率}
+\end{figure}
+
+周度敏感性结果见表5-18。同周GMV对照入选29项，说明件数、订单数和价格参与GMV定义会造成近乎全选。测试期前样本入选14项，与完整周度主集重合13项；XGBoost统计量入选16项，与主集重合15项；下一周客单价情景入选15项且全部属于周度主集。
+
+\begin{longtable}[]{@{}llll@{}}
+\caption{周度敏感性结果}\tabularnewline
+\toprule\noalign{}
+情景 & 重复数 & 严格数 & 与主集重合 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+情景 & 重复数 & 严格数 & 与主集重合 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+周度主分析 & 60 & 18 & 18 \\
+原始高斯生成 & 40 & 12 & 12 \\
+同周GMV对照 & 40 & 29 & 17 \\
+截尾时间窗 & 40 & 20 & 16 \\
+下一周客单价 & 40 & 15 & 15 \\
+测试期前样本 & 40 & 14 & 13 \\
+XGBoost统计量 & 25 & 16 & 15 \\
+\end{longtable}
+
+周度卖家间层入选12项，卖家内层为0项；十二业务组在0.20水平入选10组；轨迹统计量在0.20水平为0项，在0.30水平为12项。提高时间频率没有形成卖家内严格发现，表明短序列和零膨胀仍限制动态识别。
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\caption{周度卖家间与卖家内分层结果}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+层级
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+p
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格集合
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+层级
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+p
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+严格集合
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+卖家间均值层 & 2834 & 31 & 12 & 平均商品价格、平均支付序列数、信用卡支付占比、Boleto支付占比、代金券支付占比、借记卡支付占比、平均下单至送达天数、成交件数、成交订单数、活跃品类数、独立顾客数、买家州数量 \\
+卖家内离差层 & 33190 & 28 & 0 & 无 \\
+\end{longtable}
+
+周度最佳预测模型为Extra Trees，测试RMSE为2.416，相对本周GMV朴素基线改善29.0\%。只使用周度18项的XGBoost RMSE为2.421，相对全31维XGBoost变化0.02\%，表明维度压缩后预测性能基本保留。
+
+\begin{longtable}[]{@{}llllll@{}}
+\caption{周度时间外预测表现}\tabularnewline
+\toprule\noalign{}
+模型 & 测试N & RMSE(log) & MAE(log) & R2 & WAPE \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+模型 & 测试N & RMSE(log) & MAE(log) & R2 & WAPE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Extra Trees & 7515 & 2.416 & 2.146 & 0.254 & 78.0\% \\
+XGBoost & 7515 & 2.420 & 2.160 & 0.251 & 79.6\% \\
+XGBoost（周度18项） & 7515 & 2.421 & 2.157 & 0.251 & 79.2\% \\
+Lasso & 7515 & 2.433 & 2.189 & 0.244 & 82.7\% \\
+Ridge & 7515 & 2.434 & 2.185 & 0.243 & 82.8\% \\
+MLP & 7515 & 2.443 & 2.167 & 0.238 & 81.0\% \\
+本周GMV朴素基线 & 7515 & 3.401 & 2.600 & -0.478 & 110.8\% \\
+\end{longtable}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={周度时间外预测比较}]{figures/fig18_weekly_prediction.png}}
+\caption{周度时间外预测比较}
+\end{figure}
+
+综合来看，月度能够降低低频卖家的偶发噪声，适合承担确认性选择；周度提供更多时间点和短期变化，但零膨胀与相关代理更强。月周共同11项构成跨粒度证据，周度特有7项只能作为观察变量，不能自动升级为确认指标。
+
+\chapter{讨论与经营应用}
+
+第5章给出了月度、周度、结构分层和非线性分支的实证结果。本章不再重复表格，而是讨论这些证据如何共同回答研究问题，并将统计结论转化为可执行的指标治理规则。
+
+\section{基准比较与多目标权衡}
+
+统一预算比较表明，不存在对所有评价目标都占优的单一方法。XGBoost-SHAP以2.383取得最低测试RMSE，去随机化Knockoff为2.392，差值仅为0.008；在统一卖家子抽样下，两者的平均集合稳定性分别为0.686和0.855。Elastic Net以0.873取得最高均值，但与Knockoff的配对差异区间包含0。因此，响应驱动的树模型排序更接近纯预测目标，Elastic Net和Knockoff的集合更稳定，而Knockoff另提供Model-X框架下的目标FDR解释。
+
+模拟结果进一步说明，预测能力、筛选功效与错误发现比例不能混为一个指标。去随机化Knockoff与单次Knockoff的平均Power均为1.000，但平均FDP分别为0.054和0.145；Elastic Net和影子变量树模型虽然保持高Power，却通过选择更多变量承担了较高FDP。稳定性选择在当前模拟中取得较低FDP，说明它是有竞争力的经验基线，但其阈值含义与Model-X有限样本FDR目标不同，不能仅凭单一模拟场景宣布一种方法普遍优越。
+
+组件消融支持主流程各环节具有实质作用。原始高斯边际、SDP与等相关S矩阵均改变严格集合；重复次数从1增加到60时，发现数并非单调变化，只有60轮与正式14项集合完全一致；XGBoost竞争统计量在当前设定下没有形成严格发现。由此，Copula、MVR、Lasso与60轮聚合不是并列堆叠的算法清单，而是分别处理混合边际、相关变量可重构性、反对称竞争和随机结果聚合的组件。消融结果并不证明每个组件在所有数据上最优，但说明当前结论对组件选择存在可测量的敏感性。
+
+\section{条件信息、稳定性与粒度差异}
+
+月度确认集合覆盖交易规模、价格成本、履约、商品内容和市场覆盖。订单数、件数和独立顾客数同时入选，说明它们在当前候选集下仍各自保留增量预测信息；但三者高度相关，产品展示时不宜平铺为三个同等级卡片。统计候选保留与业务界面合并属于不同决策层。
+
+月周共同集合集中在规模、价格、承运准备、标题和区域覆盖。该重合说明这些信号不依赖单一时间聚合口径。月度特有的送达时长、预计提前量和描述长度变化较慢；周度特有的商品物理属性、支付结构和营销标记更易受单周订单构成影响。当前证据不能确定差异来源于真实时间机制还是聚合噪声，因此周度特有变量应进入观察池而非确认层。
+
+\section{\texorpdfstring{参数\(K\)与看板维度治理}{参数K与看板维度治理}}
+
+统计层先通过e-BH形成14项月度确认池，展示层再通过参数\(K\)控制页面容量。默认\(K=10\)兼顾验证贡献和预测误差；\(K=4\)适合极简经营总览，\(K=8\)适合常规首页，\(K=14\)适合完整确认页。该设计避免为了获得更短列表而事后调整FDR水平。
+
+看板可按五类业务问题组织。交易规模模块以订单数为主，并下钻件数和独立顾客数；价格成本模块包含平均商品价格和运费；履约模块包含审核至承运、送达时长和预计偏差；供给内容模块包含品类与文本完整度；市场覆盖模块包含买家州数量和地域基准。每个指标同时记录统计证据、稳定频率、模型排名和更新时间。
+
+\section{深度方法与负结果的解释}
+
+深度生成器将边际KS降低到与Copula接近的水平，但深度核MMD和分类器仍能识别交换后的联合样本。该结果表明，复杂模型能够拟合单变量分布，却未必自动满足Knockoff所需的联合可交换性。生成器未通过准入并非计算失败，而是诊断体系发挥了否决作用。
+
+轨迹聚合重要性满足反对称性，并在0.30水平恢复部分信号，但在0.20水平仍无发现。深度方法在本研究中的价值主要体现在检验非线性可能性和暴露生成器缺陷，而不是取得优于统计基线的结论。预测分支中MLP也未超过树模型，说明在当前样本规模和表格结构下，模型复杂度本身不能保证更好的泛化。
+
+\section{预测证据与因果决策}
+
+Knockoff、TreeSHAP和固定效应回答不同问题。Knockoff识别给定其他变量后的条件预测信息；TreeSHAP描述已拟合模型如何使用变量；固定效应衡量控制卖家与周期效应后的动态关联。三类结果均不能排除全部时变混杂，因此不能直接推出干预收益。
+
+对于履约时长、商品内容和运费策略等可行动变量，应通过A/B实验、分层随机实验或准实验验证。订单数、件数和顾客数更适合作为状态与预警变量，而非干预处方。将预测信号与因果杠杆区分开，是指标治理能够支持决策而不产生误导的必要条件。
+
+\section{应用边界与实施建议}
+
+标准Model-X理论依赖观测独立和有效可交换性，而卖家面板存在组内相关，Copula-MVR也只近似混合联合分布。因此，0.20应解释为模型假设成立下的目标FDR水平，不是具体集合错误比例的确定承诺。卖家内层无严格发现进一步提示，当前结果更适合跨卖家风险分层，而非卖家自身短期变化归因。
+
+周度面板沿用最终已送达订单按购买周归属的回溯口径。实际部署时，应按支付发生时间、承运时间和评价创建时间重构特征，并进行滚动时间外回测。建议每季度固定候选集和阈值重新运行，连续多个窗口缺乏确认、稳定和预测证据的指标可退出常驻看板。
+
+\chapter{结论与展望}
+
+本章围绕绪论提出的四个研究问题总结主要发现，并说明研究贡献、局限与后续工作。结论只概括正文已经报告的证据，不引入新的模型或实证结果。
+
+\section{主要结论}
+
+本文以Olist全量公开数据为对象，建立了面向电商GMV监控的多粒度受控维度选择框架，得到以下结论。
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  自然粒度先聚合后连接能够避免支付、评价和商品明细多对多连接造成的金额膨胀。月度主面板包含14,677个卖家-月，周度面板包含33,190个卖家-周；下一周期目标避免了同周期GMV定义关系。
+\item
+  随机化秩高斯Copula显著改善混合边际匹配。60轮Knockoff的e-value聚合在0.20水平形成14项月度确认集合，参数化展示规则推荐\(K=10\)，测试RMSE为2.385。
+\item
+  周度分析形成18项集合，其中11项与月度重合，Jaccard系数为0.524。周度18项XGBoost的RMSE为2.421，与全31维模型基本一致。月度适合确认，周度适合稳健性和短期预警。
+\item
+  月度与周度卖家内层均无严格发现；深度生成器未通过联合交换性诊断；轨迹重要性只在较宽松水平恢复信号。上述负结果限定了结论适用范围，避免把模型复杂度或跨卖家差异误写为可靠的短期动态机制。
+\item
+  在测试期前选维、相同12项预算和统一XGBoost预测器下，XGBoost-SHAP以2.383取得最低测试RMSE，去随机化Knockoff为2.392。30组配对卖家子抽样中，Elastic Net与Knockoff的平均稳定性分别为0.873和0.855，差异区间包含0。20轮模拟中，去随机化Knockoff平均FDP由单次方法的0.145降至0.054，且Power保持1.000。基准与消融共同表明，本文方法的主要价值是预测性能接近最优、集合较稳定且具有错误率目标解释，而非宣称在所有指标上领先。
+\end{enumerate}
+
+\section{研究贡献}
+
+本文的贡献定位为应用统计研究设计创新，而非提出新的Knockoff定理。正式推断只有一条主线：Copula-MVR Model-X Knockoff、反对称统计量、e-value聚合与e-BH。其余模型均受限于展示、比较、诊断或稳健性角色。在此基础上形成四项相互闭合的贡献。第一，将去随机化Model-X Knockoff用于经营看板维度准入，在多轮随机生成下控制目标错误发现率。第二，把确认性统计选择与参数\(K\)展示路径分离，使统计风险偏好不受页面容量反向影响。第三，通过卖家间/内分层、业务组竞争、深度联合诊断和周度完整重跑建立多层证据体系，并规定未通过交换性诊断的生成器不得形成FDR结论。第四，建立统一信息窗口、统一变量预算、统一预测器和统一测试期的比较协议，并以真实数据预测、重抽样稳定性、组件消融和已知真值模拟共同评价方法，避免用单一预测指标替代统计选择质量。
+
+\section{研究局限}
+
+研究存在五方面限制。第一，公开数据缺少曝光、广告、库存、促销和竞争强度等关键时变变量。第二，面板组内相关与Copula高阶近似使有限样本FDR保证依赖模型条件。第三，样本仅覆盖19个月，周度卖家活跃序列中位数也较短，不适合复杂长序列模型。第四，周度履约和评价特征采用最终结果回溯归属，不能直接视为周期结束时可见的信息。第五，统一模拟仅重复20个响应数据集，真信号数、效应函数和相关结构来自单一预设；稳定性选择、影子变量树模型等基线也依赖阈值与重抽样规则。因此，模拟结果用于验证当前设计下的相对行为，不能外推为方法的普遍排序。
+
+\section{后续研究}
+
+后续研究可从四个方向推进。其一，在更长企业面板上使用滚动Knockoff、在线e-value和簇级交叉拟合，重点提高卖家内动态识别能力。其二，使用显式离散似然、条件normalizing flow或diffusion生成器改善混合变量联合建模，并保持独立交换性准入。其三，扩大模拟重复次数并系统改变稀疏度、信号强度、非线性形式和相关结构，报告Monte Carlo标准误。其四，对履约、商品内容和价格策略开展随机实验或准实验，将条件预测信息进一步转化为可干预效应。
+
+\backmatter
+\begin{thebibliography}{99}
+\bibitem{ref1} Benjamini Y, Hochberg Y. Controlling the false discovery rate: a practical and powerful approach to multiple testing[J]. Journal of the Royal Statistical Society: Series B, 1995, 57(1): 289-300.
+\bibitem{ref2} Barber R F, Candès E J. Controlling the false discovery rate via knockoffs[J]. The Annals of Statistics, 2015, 43(5): 2055-2085.
+\bibitem{ref3} Candès E, Fan Y, Janson L, Lv J. Panning for gold: Model-X knockoffs for high-dimensional controlled variable selection[J]. Journal of the Royal Statistical Society: Series B, 2018, 80(3): 551-577.
+\bibitem{ref4} Romano Y, Sesia M, Candès E. Deep knockoffs[J]. Journal of the American Statistical Association, 2020, 115(532): 1861-1872.
+\bibitem{ref5} Ren Z, Barber R F. Derandomised knockoffs: leveraging e-values for false discovery rate control[J]. Journal of the Royal Statistical Society Series B, 2024, 86(1): 122-154.
+\bibitem{ref6} Wang R, Ramdas A. False discovery rate control with e-values[J]. Journal of the Royal Statistical Society Series B, 2022, 84(3): 822-852.
+\bibitem{ref7} Tibshirani R. Regression shrinkage and selection via the lasso[J]. Journal of the Royal Statistical Society: Series B, 1996, 58(1): 267-288.
+\bibitem{ref8} Zou H, Hastie T. Regularization and variable selection via the elastic net[J]. Journal of the Royal Statistical Society: Series B, 2005, 67(2): 301-320.
+\bibitem{ref9} Ledoit O, Wolf M. A well-conditioned estimator for large-dimensional covariance matrices[J]. Journal of Multivariate Analysis, 2004, 88(2): 365-411.
+\bibitem{ref10} Spector A, Janson L. Powerful knockoffs via minimizing reconstructability[J]. The Annals of Statistics, 2022, 50(1): 252-276.
+\bibitem{ref11} Breiman L. Random forests[J]. Machine Learning, 2001, 45: 5-32.
+\bibitem{ref12} Friedman J H. Greedy function approximation: a gradient boosting machine[J]. The Annals of Statistics, 2001, 29(5): 1189-1232.
+\bibitem{ref13} Chen T, Guestrin C. XGBoost: a scalable tree boosting system[C]//Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. 2016: 785-794.
+\bibitem{ref14} Lundberg S M, Lee S I. A unified approach to interpreting model predictions[C]//Advances in Neural Information Processing Systems. 2017, 30.
+\bibitem{ref15} Lim B, Arık S Ö, Loeff N, Pfister T. Temporal fusion transformers for interpretable multi-horizon time series forecasting[J]. International Journal of Forecasting, 2021, 37(4): 1748-1764.
+\bibitem{ref16} Hastie T, Tibshirani R, Friedman J. The elements of statistical learning[M]. 2nd ed. New York: Springer, 2009.
+\bibitem{ref17} Wooldridge J M. Econometric analysis of cross section and panel data[M]. 2nd ed. Cambridge, MA: MIT Press, 2010.
+\bibitem{ref18} Arellano M. Computing robust standard errors for within-groups estimators[J]. Oxford Bulletin of Economics and Statistics, 1987, 49(4): 431-434.
+\bibitem{ref19} Varian H R. Big data: new tricks for econometrics[J]. Journal of Economic Perspectives, 2014, 28(2): 3-28.
+\bibitem{ref20} Mullainathan S, Spiess J. Machine learning: an applied econometric approach[J]. Journal of Economic Perspectives, 2017, 31(2): 87-106.
+\bibitem{ref21} Molnar C. Interpretable machine learning[M/OL]. 2nd ed. 2022. \url{https://christophm.github.io/interpretable-ml-book/}.
+\bibitem{ref22} Pedregosa F, Varoquaux G, Gramfort A, et al. Scikit-learn: machine learning in Python[J]. Journal of Machine Learning Research, 2011, 12: 2825-2830.
+\bibitem{ref23} McKinney W. Data structures for statistical computing in Python[C]//Proceedings of the 9th Python in Science Conference. 2010: 56-61.
+\bibitem{ref24} Harris C R, Millman K J, van der Walt S J, et al. Array programming with NumPy[J]. Nature, 2020, 585: 357-362.
+\bibitem{ref25} Virtanen P, Gommers R, Oliphant T E, et al. SciPy 1.0: fundamental algorithms for scientific computing in Python[J]. Nature Methods, 2020, 17: 261-272.
+\bibitem{ref26} Seabold S, Perktold J. Statsmodels: econometric and statistical modeling with Python[C]//Proceedings of the 9th Python in Science Conference. 2010: 92-96.
+\bibitem{ref27} Olist. Brazilian E-Commerce Public Dataset by Olist[DB/OL]. Kaggle, 2018. \url{https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce}.
+\bibitem{ref28} Olist. Marketing Funnel by Olist[DB/OL]. Kaggle, 2018. \url{https://www.kaggle.com/datasets/olistbr/marketing-funnel-olist}.
+\bibitem{ref29} Little R J A, Rubin D B. Statistical analysis with missing data[M]. 3rd ed. Hoboken: Wiley, 2019.
+\bibitem{ref30} Hyndman R J, Athanasopoulos G. Forecasting: principles and practice[M/OL]. 3rd ed. Melbourne: OTexts, 2021.
+\bibitem{ref31} Meinshausen N, Bühlmann P. Stability selection[J]. Journal of the Royal Statistical Society: Series B, 2010, 72(4): 417-473.
+\bibitem{ref32} Vovk V, Wang R. E-values: calibration, combination and applications[J]. The Annals of Statistics, 2021, 49(3): 1736-1754.
+\bibitem{ref33} Sudarshan M, Tansey W, Ranganath R. Deep direct likelihood knockoffs[C]//Advances in Neural Information Processing Systems. 2020, 33: 5036-5046.
+\bibitem{ref34} Shen A, Yan Y, Zhao P. Deep dependency regularized knockoff for controlling false discovery rates[C]//International Conference on Learning Representations. 2024.
+\bibitem{ref35} Zhu Z, Fan Y, Kong Y, Lv J, Sun F. DeepLINK: deep learning inference using knockoffs with applications to genomics[J]. Proceedings of the National Academy of Sciences, 2021, 118(36): e2104683118.
+\bibitem{ref36} Hollmann N, Müller S, Purucker L, et al. Accurate predictions on small data with a tabular foundation model[J]. Nature, 2025, 637(8045): 319-326.
+\bibitem{ref37} Borisov V, Leemann T, Seßler K, et al. Deep neural networks and tabular data: a survey[J]. IEEE Transactions on Neural Networks and Learning Systems, 2024, 35(6): 7499-7519.
+\bibitem{ref38} Hansen L, Manzo M, Regier J. Normalizing flows for knockoff-free controlled feature selection[C]//Advances in Neural Information Processing Systems. 2022, 35.
+\bibitem{ref39} Fischer L, Sechidis K. Choosing the nominal level post-hoc with knockoffs using e-values[EB/OL]. arXiv:2511.11166, 2025.
+\bibitem{ref40} PyTorch Contributors. PyTorch 2.8 documentation[EB/OL]. 2025. \url{https://pytorch.org/docs/2.8/}.
+\bibitem{ref41} Sawaya K. Provable FDR control for deep feature selection: deep MLPs and beyond[EB/OL]. arXiv:2512.04696, 2025.
+\bibitem{ref42} Zou B J, Tian L. GRIP2: a robust and powerful deep knockoff method for feature selection[EB/OL]. arXiv:2602.00218, 2026.
+\bibitem{ref43} Bacci S, Grilli L, Rampichini C. Variable selection via knockoffs for clustered data[EB/OL]. arXiv:2602.19398, 2026.
+\bibitem{ref44} Liu F, Xu W, Lu J, Zhang G, Gretton A, Sutherland D J. Learning deep kernels for non-parametric two-sample tests[C]//Proceedings of the 37th International Conference on Machine Learning. 2020: 6316-6326.
+\bibitem{ref45} Dai R, Barber R F. The knockoff filter for FDR control in group-sparse and multitask regression[C]//Proceedings of the 33rd International Conference on Machine Learning. 2016: 1851-1859.
+\end{thebibliography}
+
+\begin{landscape}
+\chapterx{附录A 全部变量描述统计}
+\chapterxname{附录A 全部变量描述统计}
+
+\small
+本附录列出31项建模变量的完整描述统计。正文只展示关键变量，完整表用于复核样本量、缺失率、尺度和与下一期GMV的边际相关。
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+变量名
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+中文含义
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+缺失率
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+均值
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+标准差
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+中位数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Spearman相关
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\path{avg_price} & 平均商品价格 & 14677 & 0.00\% & 158.080 & 258.195 & 90.256 & 0.201 \\
+\path{avg_freight} & 平均运费 & 14677 & 0.00\% & 22.586 & 18.367 & 17.696 & 0.094 \\
+\path{avg_product_weight_g} & 平均商品重量 & 14676 & 0.01\% & 2,534.012 & 4,295.328 & 900.000 & 0.116 \\
+\path{avg_product_length_cm} & 平均商品长度 & 14676 & 0.01\% & 31.298 & 16.551 & 26.000 & 0.068 \\
+\path{avg_product_height_cm} & 平均商品高度 & 14676 & 0.01\% & 17.638 & 13.436 & 14.250 & 0.078 \\
+\path{avg_product_width_cm} & 平均商品宽度 & 14676 & 0.01\% & 23.293 & 11.277 & 20.000 & 0.083 \\
+\path{avg_product_photos_qty} & 平均商品图片数 & 14459 & 1.49\% & 2.280 & 1.592 & 2.000 & 0.075 \\
+\path{avg_product_name_length} & 平均商品标题长度 & 14459 & 1.49\% & 47.307 & 9.602 & 49.094 & 0.076 \\
+\path{avg_product_description_length} & 平均商品描述长度 & 14459 & 1.49\% & 841.506 & 631.332 & 670.500 & 0.074 \\
+\path{avg_payment_installments} & 平均支付分期期数 & 14677 & 0.00\% & 3.126 & 2.282 & 2.500 & 0.170 \\
+\path{avg_payment_sequential} & 平均支付序列数 & 14677 & 0.00\% & 1.026 & 0.146 & 1.000 & 0.227 \\
+\path{credit_card_ratio} & 信用卡支付占比 & 14677 & 0.00\% & 0.759 & 0.304 & 0.857 & -0.125 \\
+\path{boleto_ratio} & Boleto支付占比 & 14677 & 0.00\% & 0.194 & 0.285 & 0.000 & 0.164 \\
+\path{voucher_ratio} & 代金券支付占比 & 14677 & 0.00\% & 0.033 & 0.119 & 0.000 & 0.221 \\
+\path{debit_card_ratio} & 借记卡支付占比 & 14677 & 0.00\% & 0.014 & 0.086 & 0.000 & 0.170 \\
+\path{avg_review_score} & 平均评价得分 & 14653 & 0.16\% & 4.162 & 0.960 & 4.400 & -0.121 \\
+\path{avg_delivery_days} & 平均下单至送达天数 & 14674 & 0.02\% & 12.748 & 8.174 & 11.262 & 0.074 \\
+\path{avg_approval_days} & 平均下单至审核天数 & 14676 & 0.01\% & 0.424 & 0.586 & 0.253 & 0.172 \\
+\path{avg_ship_days} & 平均审核至承运天数 & 14600 & 0.52\% & 3.015 & 3.431 & 2.032 & -0.018 \\
+\path{avg_estimate_gap_days} & 平均预计提前送达天数 & 14674 & 0.02\% & 11.982 & 9.114 & 12.076 & 0.001 \\
+\path{item_count} & 成交件数 & 14677 & 0.00\% & 7.000 & 14.798 & 3.000 & 0.550 \\
+\path{order_count} & 成交订单数 & 14677 & 0.00\% & 6.206 & 12.948 & 2.000 & 0.572 \\
+\path{category_count} & 活跃品类数 & 14677 & 0.00\% & 1.480 & 1.114 & 1.000 & 0.331 \\
+\path{unique_customer_count} & 独立顾客数 & 14677 & 0.00\% & 6.173 & 12.850 & 2.000 & 0.572 \\
+\path{buyer_state_diversity} & 买家州数量 & 14677 & 0.00\% & 2.959 & 2.747 & 2.000 & 0.551 \\
+\path{dominant_customer_state_share} & 第一大买家州占比 & 14677 & 0.00\% & 0.687 & 0.277 & 0.667 & -0.443 \\
+\path{interstate_ratio} & 跨州交易占比 & 14677 & 0.00\% & 0.674 & 0.357 & 0.750 & -0.081 \\
+\path{avg_distance_km} & 平均卖家-买家距离 & 14617 & 0.41\% & 626.901 & 460.658 & 534.101 & 0.088 \\
+\path{seller_state_frequency} & 卖家所在州频率 & 14677 & 0.00\% & 0.393 & 0.257 & 0.597 & 0.051 \\
+\path{marketing_origin_frequency} & 营销来源频率 & 14677 & 0.00\% & 0.012 & 0.054 & 0.000 & -0.040 \\
+\path{has_marketing_deal} & 是否匹配营销成交线索 & 14677 & 0.00\% & 0.053 & 0.224 & 0.000 & -0.042 \\
+\end{longtable}
+\end{landscape}
+
+\chapterx{附录B 可复现环境与数据指纹}
+\chapterxname{附录B 可复现环境与数据指纹}
+
+本研究固定随机种子，并记录软件版本和月度、周度面板指纹。表B-1用于确认数据和计算环境是否发生变化。
+
+\textbf{表B-1 可复现环境}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+项目
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+记录值
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+随机种子 & 20260823 \\
+月度面板SHA-256 & {\scriptsize\seqsplit{7212bf462a8b23ba6455bed5fe7354481b43d3e3a0f633a13ced1a97c3046a1e}} \\
+周度面板SHA-256 & {\scriptsize\seqsplit{bef6bd6f902d076de1e3dcda5234acf02163ba8d650e34c43b2d7972b22a48ff}} \\
+Python & 3.9.6 \\
+NumPy & 2.0.2 \\
+pandas & 2.3.3 \\
+scikit-learn & 1.6.1 \\
+XGBoost & 2.1.4 \\
+PyTorch & 2.8.0 \\
+计算设备 & mps \\
+\end{longtable}
+
+原始输入、月度面板和周度面板已统一存放于项目的``论文实际使用数据汇总''目录，并附文件级SHA-256清单。每轮Knockoff统计量、选择结果、预测结果和诊断元数据均保留为CSV或JSON。
+
+\chapterx{附录C 核心算法伪代码}
+\chapterxname{附录C 核心算法伪代码}
+
+本附录以伪代码概括确认性选择和参数化展示流程，便于在其他业务数据上复现。
+
+\begin{verbatim}
+输入：特征矩阵 X，下一期目标 y，最终水平 q，重复次数 M
+输出：FDR确认集合 S_FDR，参数化展示集合 S(K)
+
+1. 对 X 完成缩尾、偏态变换、插补和标准化
+2. 对并列值随机打散并映射到秩高斯空间 Z
+3. 估计 Ledoit-Wolf 协方差并构造 MVR Knockoff
+4. 对 m = 1,...,M：
+   4.1 生成仿制矩阵 Z_tilde
+   4.2 联合拟合 [Z, Z_tilde] 的 Lasso
+   4.3 计算 W_j = |beta_j| - |beta_tilde_j|
+   4.4 以 alpha_kn = q/2 计算 Knockoff+ 阈值
+   4.5 将本轮选择转换为 e-value
+5. 平均 M 轮 e-value，并在水平 q 上实施 e-BH
+6. 得到确认集合 S_FDR
+7. 在训练期拟合 XGBoost，在验证集计算 S_FDR 内的TreeSHAP排序
+8. 根据累计贡献与验证RMSE规则推荐 K，并输出前 K 项
+\end{verbatim}
+
+\chapterx{附录D 提交前检查清单}
+\chapterxname{附录D 提交前检查清单}
+
+本清单用于在学校正式提交前完成格式与学术边界复核。
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  按学校最新模板补充封面、原创性声明、授权书、分类号、密级和答辩信息。
+\item
+  核对中文摘要字数、英文摘要对应关系、关键词数量和术语一致性。
+\item
+  逐项核对参考文献原文、DOI、页码及学校要求的GB/T 7714版本。
+\item
+  在Word中更新目录、图表题注、公式编号和交叉引用域。
+\item
+  确认盲审版删除作者、导师、致谢、项目来源及其他身份信息。
+\item
+  核对所有结果数字与CSV/JSON一致，并保留数据指纹和运行日志。
+\item
+  由导师确认FDR水平、预测而非因果的表述以及业务建议边界。
+\end{enumerate}
+
+\chapterx{致谢}
+感谢指导教师在研究选题、统计方法与论文写作方面提供的指导，感谢学院教师和同学在学习与研究过程中给予的帮助。感谢Olist公开匿名数据，使本研究能够完成可复核的实证分析。论文中的不足由作者承担。
+
+\end{document}

@@ -1,0 +1,19 @@
+note: Running TeX ...
+note: downloading needspace.sty
+note: Rerunning TeX because "研究报告.aux" changed ...
+note: Running xdvipdfmx ...
+note: Writing `研究报告.log` (28.5458984375 KiB)
+note: Writing `研究报告.pdf` (284.0732421875 KiB)
+note: Skipped writing 2 intermediate files (use --keep-intermediates to keep them)
+warning: accessing absolute path `/System/Library/Fonts/Menlo.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Songti.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/54a2ad3dac6cac875ad675d7d273dc425010a877.asset/AssetData/Kaiti.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/f0706a236683628e16427c6569e441423faaaa93.asset/AssetData/STXIHEI.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/eb257c12d1a51c8c661b89f30eec56cacf9b8987.asset/AssetData/STHEITI.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman Bold.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman Bold Italic.ttf`; build may not be reproducible in other environments
+warning: 研究报告.tex:522: Overfull \hbox (0.62007pt too wide) in paragraph at lines 521--522
+warning: 研究报告.tex:522: Overfull \hbox (0.62007pt too wide) in paragraph at lines 521--522
+warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.

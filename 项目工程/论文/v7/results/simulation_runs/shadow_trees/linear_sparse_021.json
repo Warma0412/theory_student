@@ -1,0 +1,131 @@
+{
+  "status": "ok",
+  "method": "shadow_trees",
+  "scenario": {
+    "name": "linear_sparse",
+    "signals": 5,
+    "snr": 3.0,
+    "response": "linear"
+  },
+  "rep": 21,
+  "data_hash": "2a7d3952ef33a2d4520f4bbb73d68672cc7ba0b081b4edcd1e57f26f28848926",
+  "truth": [
+    1,
+    6,
+    20,
+    9,
+    5
+  ],
+  "score": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.75,
+    1.0,
+    1.0,
+    1.0,
+    0.25,
+    0.0,
+    0.0,
+    0.25,
+    0.0,
+    0.0,
+    0.125,
+    0.25,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.125,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "order": [
+    5,
+    6,
+    1,
+    20,
+    4,
+    2,
+    9,
+    19,
+    3,
+    0,
+    21,
+    10,
+    8,
+    7,
+    18,
+    11,
+    14,
+    26,
+    17,
+    22,
+    12,
+    16,
+    13,
+    24,
+    28,
+    25,
+    23,
+    15,
+    29,
+    30,
+    27
+  ],
+  "metrics": [
+    {
+      "rule": "top4",
+      "FDP": 0.0,
+      "power": 0.8,
+      "discoveries": 4,
+      "FDP_gt_0.2": false
+    },
+    {
+      "rule": "top8",
+      "FDP": 0.375,
+      "power": 1.0,
+      "discoveries": 8,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top10",
+      "FDP": 0.5,
+      "power": 1.0,
+      "discoveries": 10,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top12",
+      "FDP": 0.5833333333333334,
+      "power": 1.0,
+      "discoveries": 12,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top14",
+      "FDP": 0.6428571428571429,
+      "power": 1.0,
+      "discoveries": 14,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "native",
+      "FDP": 0.6428571428571429,
+      "power": 1.0,
+      "discoveries": 14,
+      "FDP_gt_0.2": true
+    }
+  ],
+  "rmse_at_12": 0.6083788912944359,
+  "seconds": 5.274173708865419
+}

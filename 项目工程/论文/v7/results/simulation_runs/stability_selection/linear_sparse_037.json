@@ -1,0 +1,133 @@
+{
+  "status": "ok",
+  "method": "stability_selection",
+  "scenario": {
+    "name": "linear_sparse",
+    "signals": 5,
+    "snr": 3.0,
+    "response": "linear"
+  },
+  "rep": 37,
+  "data_hash": "f27fa563b78d86450f530d6702b8c3bdb6e62e1f426087532a9173727e69b087",
+  "truth": [
+    5,
+    27,
+    7,
+    24,
+    22
+  ],
+  "score": [
+    1.0,
+    0.975,
+    0.875,
+    1.0,
+    0.95,
+    1.0,
+    0.9,
+    1.0,
+    1.0,
+    1.0,
+    0.95,
+    1.0,
+    1.0,
+    0.9,
+    1.0,
+    0.95,
+    1.0,
+    0.95,
+    0.925,
+    0.9,
+    0.925,
+    0.9,
+    1.0,
+    0.975,
+    1.0,
+    0.9,
+    0.875,
+    1.0,
+    0.975,
+    0.975,
+    0.95
+  ],
+  "response_hash": "92e118963e80c83919e0839ef6fd91fd87d2cdf6a42f0525e3d88962e63faff1",
+  "response_scaling": "training mean and population standard deviation",
+  "order": [
+    27,
+    24,
+    22,
+    5,
+    7,
+    0,
+    11,
+    14,
+    9,
+    16,
+    12,
+    8,
+    3,
+    23,
+    1,
+    29,
+    28,
+    15,
+    17,
+    4,
+    10,
+    30,
+    18,
+    20,
+    19,
+    21,
+    25,
+    13,
+    6,
+    26,
+    2
+  ],
+  "metrics": [
+    {
+      "rule": "top4",
+      "FDP": 0.0,
+      "power": 0.8,
+      "discoveries": 4,
+      "FDP_gt_0.2": false
+    },
+    {
+      "rule": "top8",
+      "FDP": 0.375,
+      "power": 1.0,
+      "discoveries": 8,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top10",
+      "FDP": 0.5,
+      "power": 1.0,
+      "discoveries": 10,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top12",
+      "FDP": 0.5833333333333334,
+      "power": 1.0,
+      "discoveries": 12,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top14",
+      "FDP": 0.6428571428571429,
+      "power": 1.0,
+      "discoveries": 14,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "native",
+      "FDP": 0.8275862068965517,
+      "power": 1.0,
+      "discoveries": 29,
+      "FDP_gt_0.2": true
+    }
+  ],
+  "rmse_at_12": 0.5779344517215093,
+  "seconds": 0.043181458953768015
+}

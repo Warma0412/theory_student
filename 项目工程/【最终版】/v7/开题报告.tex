@@ -1,0 +1,260 @@
+\documentclass[UTF8,11pt,a4paper]{ctexart}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{amsmath,amssymb,graphicx,hyperref,setspace,tabularx,enumitem}
+\setCJKmainfont{Songti SC}\setmainfont{Times New Roman}
+\setstretch{1.18}\hypersetup{hidelinks}
+
+\usepackage{fontspec,longtable,booktabs,array,calc,url,seqsplit,etoolbox,pdflscape}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\setlength{\LTleft}{0pt plus 1fill}
+\setlength{\LTright}{0pt plus 1fill}
+\renewcommand{\arraystretch}{1.12}
+\setlength{\emergencystretch}{2em}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>.70\textheight .70\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\urlstyle{same}
+
+\usepackage{xurl,needspace,fancyvrb}
+\setmonofont{Menlo}
+\setCJKmonofont{Songti SC}
+\setlength{\tabcolsep}{4pt}
+\AddToHook{cmd/section/before}{\Needspace{6\baselineskip}}
+
+\begin{document}
+\thispagestyle{empty}
+\begingroup
+\small
+\begin{center}
+{\zihao{2}\bfseries 上海财经大学}\\[0.5em]
+{\zihao{2}\bfseries 研究生申请学位论文开题报告表}
+\end{center}
+\vspace{0.5cm}
+\renewcommand{\arraystretch}{1.5}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\noindent
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{2.1cm}|Y|>{\centering\arraybackslash}p{2.1cm}|Y|}
+\hline
+姓名 & 吴优 & 学院 & 统计与数据科学学院\\
+\hline
+学号 & 2025213385 & 导师姓名 & 张吕欧\\
+\hline
+专业 & 应用统计 & 培养层次 & 专业硕士\\
+\hline
+\multicolumn{2}{|c|}{同意开题} & \multicolumn{2}{l|}{导师签字：}\\
+\hline
+\end{tabularx}
+\vspace{0.2cm}
+\noindent
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{2.5cm}|Y|}
+\hline
+论文题目 & 面向电商经营指标筛选的非线性方法与交换对称损失研究\\
+\hline
+开题时间 & \hspace{3.4cm}开题地点：\\
+\hline
+与会专家姓名、单位（3--5人） & \rule{0pt}{2.0cm}\\
+\hline
+开题报告情况 & \rule{0pt}{2.7cm}专家主要意见：\\
+\hline
+开题结果（划圈） &
+开题通过，同意进入论文写作阶段。\quad/\quad
+开题未通过，不同意进入论文写作阶段。\newline
+\vspace{0.4cm}开题报告会专家组组长签名：\newline
+导师签名：\hfill 年\quad 月\quad 日\\
+\hline
+\end{tabularx}
+\vfill
+{\zihao{-5}注：开题意见、结果与签名由相关教师和专家填写。附：上海财经大学研究生学位论文开题报告书。}
+\endgroup
+\newpage
+\thispagestyle{empty}
+\begin{center}
+\vspace*{1.2cm}
+{\zihao{2}\bfseries 上海财经大学}\\[0.6em]
+{\zihao{2}\bfseries 研究生学位论文开题报告书}\\[1.8cm]
+{\zihao{3}\bfseries 论文题目：面向电商经营指标筛选的}\\[0.4em]
+{\zihao{3}\bfseries 非线性方法与交换对称损失研究}
+\end{center}
+\vspace{1.8cm}
+\renewcommand{\arraystretch}{1.8}
+\begin{center}
+\begin{tabular}{rl}
+姓\quad 名： & 吴优\\
+学\quad 号： & 2025213385\\
+院系所： & 统计与数据科学学院\\
+专\quad 业： & 应用统计\\
+培养层次： & 专业硕士\\
+导师姓名： & 张吕欧\\
+\end{tabular}
+\end{center}
+\vfill
+\begin{center}{\zihao{4}二〇二六年九月}\end{center}
+\newpage
+\begin{center}\large\bfseries \end{center}\section{选题背景与研究问题}
+
+研究从31项电商经营指标中筛选少量具有下一月签收确认金额预测信息的指标，同时评价名单稳定性与错误发现风险。预测筛选不同于当期金额拆分与因果归因。问题重点是近期非线性方法是否带来可检验增量，以及损失比较的对称性和生成有效性如何影响结论。
+
+\section{文献依据}
+
+Deep Lasso的输入梯度正则、TabM参数高效集成、VTFS序列生成和EntryPrune动态输入层提供不同机制\cite{deeplasso2023,tabm2025,vtfs2024,entryprune2025}。DeepPINK、DeepPIG和GRIP2说明成对深度选择已有先例\cite{deeppink2018,deeppig2024,grip2026}。CPI与Semi-knockoffs分别研究条件损失和双侧条件重建\cite{cpi2021,semiko2026}。本研究不把既有机制组合直接称为首创。
+
+\section{数据与公平原则}
+
+Olist十张表按自然层级聚合，并按月末已发生事件截断，形成13,754行、2,723名卖家、31项指标。目标为下一自然月签收确认商品金额log1p，不含运费。静态快照和同卖家跨期依赖仍有局限。
+
+{\def\LTcaptype{none} % do not increment counter
+{
+\footnotesize
+\begin{longtable}[]{@{}llll@{}}
+\toprule\noalign{}
+阶段 & 目标月份 & 行数 & 主要用途 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+训练 & 2017-02至2017-12 & 6567 & 预处理与基础拟合 \\
+调参 & 2018-01至2018-02 & 1831 & 选参数/轮次后重拟合 \\
+评分 & 2018-03至2018-04 & 1943 & 协议A可早停；协议B固定模型评分 \\
+测试 & 2018-05至2018-07 & 3413 & 仅评价；已经历探索 \\
+\end{longtable}
+}
+}
+
+所有方法读取同一卖家抽样名单：30组互补50\%、20个70\%、20个80\%，另10组固定数据随机性和完整参考，共111例。主预算12项、敏感性8项；共同XGBoost和TabM评价，同集合使用相同列顺序和预测。真实测试期已经探索查看，不是新外部确认。
+
+\section{拟研究的方法与性质}
+
+固定预测器SCPL构造不依赖真假命名的min/max背景，逐变量比较真假值的平方损失差。交换任意真假列对后，背景不变，被交换统计量反号，其余不变；这使其在独立评分与精确生成器条件下可调用已有Knockoff+理论，不是新FDR定理。
+
+四种背景/评分消融接入相同XGBoost和TabM。进一步研究Semi-knockoffs的条件均值与条件尺度扩展，拆分Ridge、非线性均值、条件尺度和联合版本。估计条件矩不能自动获得oracle保证。
+
+\section{已完成结果}
+
+基础与机制实验包含八基线和十项改动；SCPL有14种评分、800份八场景模拟，MVR敏感性另有111个真实案例；条件矩补充计算八种评分、同800份模拟和32组真实预测。
+
+{\def\LTcaptype{none} % do not increment counter
+{
+\footnotesize
+\begin{longtable}[]{@{}llllll@{}}
+\toprule\noalign{}
+生成条件 & 方法 & XGB误差 & TabM误差 & J & Nogueira \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+等相关 & XGBoost-SHAP & 1.8466 & 1.8571 & 0.7682 & 0.7439 \\
+等相关 & Deep Lasso & 1.8468 & 1.8567 & 0.8394 & 0.8012 \\
+等相关 & TabM-中点差 & 1.8577 & 1.8776 & 0.3934 & 0.2009 \\
+等相关 & TabM-随机对称差 & 1.8577 & 1.8776 & 0.3912 & 0.1993 \\
+等相关 & TabM-标准化对称差 & 2.0964 & 2.0886 & 0.3249 & 0.1248 \\
+MVR追加 & XGBoost-SHAP & 1.8466 & 1.8571 & 0.7682 & 0.7439 \\
+MVR追加 & Deep Lasso & 1.8468 & 1.8567 & 0.8394 & 0.8012 \\
+MVR追加 & TabM-中点差 & 1.8431 & 1.8575 & 0.4988 & 0.4509 \\
+MVR追加 & TabM-随机对称差 & 1.8630 & 1.8732 & 0.4874 & 0.4675 \\
+MVR追加 & TabM-标准化对称差 & 1.8493 & 1.8645 & 0.4696 & 0.3947 \\
+\end{longtable}
+}
+}
+
+SCPL标准化TabM在强非线性Power为.794、纯交互为.934，匹配线性对照为.087和.003。但未标准化更强，高相关线性是反例，真实稳定性也较弱。
+
+{\def\LTcaptype{none} % do not increment counter
+{
+\footnotesize
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+方法 & XGB-RMSE & TabM-RMSE & 半样本J & Nogueira \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+XGBoost-SHAP & 1.8466 & 1.8571 & 0.7682 & 0.7439 \\
+TabM置换 & 1.8458 & 1.8586 & 0.7288 & 0.6841 \\
+Deep Lasso & 1.8468 & 1.8567 & 0.8394 & 0.8012 \\
+XGB-SKO-Ridge & 1.8794 & 1.8669 & 0.4511 & 0.2696 \\
+XGB-SKO-非线性均值 & 1.8612 & 1.8722 & 0.3828 & 0.2228 \\
+XGB-SKO-尺度 & 1.8813 & 1.8731 & 0.3927 & 0.3007 \\
+XGB-SKO-均值尺度 & 1.8508 & 1.8654 & 0.4407 & 0.2568 \\
+TabM-SKO-Ridge & 1.8996 & 1.9130 & 0.4397 & 0.3115 \\
+TabM-SKO-非线性均值 & 1.8837 & 1.9010 & 0.4224 & 0.3103 \\
+TabM-SKO-尺度 & 1.8793 & 1.9009 & 0.4713 & 0.3617 \\
+TabM-SKO-均值尺度 & 1.8965 & 1.9033 & 0.4099 & 0.3497 \\
+\end{longtable}
+}
+}
+
+预定主候选的XGB评价RMSE为1.8965，同TabM的Ridge机制适配为1.8996；其半样本参考Jaccard为0.4099。相对SHAP的RMSE差为0.0499，卖家簇Bootstrap点态95\%区间为{[}0.0308,0.0697{]}。区间跨零时不能宣称已证实提升，也不能声称已证明等价。
+
+强非线性下主候选Power为0.8660，Ridge适配为0.1290；主候选平均FDP为0.1313。平均FDP超过名义.20的场景检查：所列场景未出现高于.20的点估计，但有限模拟不证明总体控制。检出增多须与误选同时解释。条件尺度建模不自动产生交换有效性，任何经验失控都必须保留，不因其真实预测较好而隐去。
+
+该实验补足了近期双侧条件重建的机制比较，但仅是固定参数、有限基函数的适配。当前没有把条件均值/尺度扩展称为已证明原创的新方法。
+
+\textbf{独立组件判断。} 强非线性中只用非线性均值的Power已为.856，联合尺度后为.866；纯交互中为.959与.966。大部分检出改进来自非线性条件均值，而不是尺度项。联合项减非线性均值的配对差如下，Holm校正限于同场景、同规则、同指标的比较族，不能解释为跨所有场景筛选后的确认结论。
+
+{
+\footnotesize
+\begin{longtable}[]{@{}llll@{}}
+\caption{条件尺度相对非线性均值的检出增量}\tabularnewline
+\toprule\noalign{}
+场景 & 加入尺度的Power差 & 95\%区间 & Holm p \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+场景 & 加入尺度的Power差 & 95\%区间 & Holm p \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+强非线性 & 0.0100 & {[}-0.0240,0.0440{]} & 0.561 \\
+弱非线性 & 0.0440 & {[}-0.0083,0.0963{]} & 0.09793 \\
+纯交互 & 0.0070 & {[}-0.0029,0.0169{]} & 0.3252 \\
+已知混合变换 & 0.0360 & {[}0.0074,0.0646{]} & 0.01401 \\
+高相关线性 & 0.0080 & {[}-0.0140,0.0300{]} & 1 \\
+\end{longtable}
+}
+
+联合TabM真实RMSE约1.8965，SHAP为1.8466，误差差区间完全为正；参考Jaccard约.4099，也低于SHAP的.7682。联合方法没有形成真实应用优势。此外，未标准化SCPL随机对称TabM在强非线性、弱非线性和纯交互中的Power仍更高，因此不能把相对Ridge适配的巨大提高写成超越所有非线性方法。
+
+\section{研究计划与限制}
+
+当前已经完成数据、机制、性质与配对实验，但不将负结果写成成功创新。下一步优先补足未使用真实数据的冻结验证、近期非线性受控筛选基线，以及条件矩/生成误差对符号与FDR的影响。完成这些证据后，再判断统计贡献与适用范围。学校开题意见和签字由相关人员填写，不由研究程序预填。
+\begin{thebibliography}{99}
+\bibitem{lasso1996} Tibshirani R. Regression shrinkage and selection via the lasso[J]. Journal of the Royal Statistical Society, Series B, 58(1), 267-288, 1996. \url{https://doi.org/10.1111/j.2517-6161.1996.tb02080.x}.
+\bibitem{elastic2005} Zou H, Hastie T. Regularization and variable selection via the elastic net[J]. Journal of the Royal Statistical Society, Series B, 67(2), 301-320, 2005. \url{https://doi.org/10.1111/j.1467-9868.2005.00503.x}.
+\bibitem{stability2010} Meinshausen N, Buhlmann P. Stability selection[J]. Journal of the Royal Statistical Society, Series B, 72(4), 417-473, 2010. \url{https://doi.org/10.1111/j.1467-9868.2010.00740.x}.
+\bibitem{cpss2013} Shah R D, Samworth R J. Variable selection with error control: another look at stability selection[J]. Journal of the Royal Statistical Society, Series B, 75(1), 55-80, 2013. \url{https://doi.org/10.1111/j.1467-9868.2011.01034.x}.
+\bibitem{xgb2016} Chen T, Guestrin C. XGBoost: A Scalable Tree Boosting System[C]. Proceedings of KDD, 785-794, 2016. \url{https://doi.org/10.1145/2939672.2939785}.
+\bibitem{shap2017} Lundberg S M, Lee S I. A Unified Approach to Interpreting Model Predictions[C]. Advances in Neural Information Processing Systems, 30, 2017. \url{https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions}.
+\bibitem{treeshap2020} Lundberg S M, Erion G, Chen H, et al. From local explanations to global understanding with explainable AI for trees[J]. Nature Machine Intelligence, 2, 56-67, 2020. \url{https://doi.org/10.1038/s42256-019-0138-9}.
+\bibitem{extratrees2006} Geurts P, Ernst D, Wehenkel L. Extremely randomized trees[J]. Machine Learning, 63, 3-42, 2006. \url{https://doi.org/10.1007/s10994-006-6226-1}.
+\bibitem{boruta2010} Kursa M B, Rudnicki W R. Feature Selection with the Boruta Package[J]. Journal of Statistical Software, 36(11), 1-13, 2010. \url{https://doi.org/10.18637/jss.v036.i11}.
+\bibitem{deeplasso2023} Cherepanova V, Levin R, Somepalli G, et al. A Performance-Driven Benchmark for Feature Selection in Tabular Deep Learning[C]. NeurIPS Datasets and Benchmarks Track, 2023. \url{https://openreview.net/forum?id=v4PMCdSaAT}.
+\bibitem{vtfs2024} Ying W, Wang D, Chen H, Fu Y. Feature Selection as Deep Sequential Generative Learning[J]. ACM Transactions on Knowledge Discovery from Data, 18(9), Article 221, 2024. \url{https://doi.org/10.1145/3687485}.
+\bibitem{tabm2025} Gorishniy Y, Kotelnikov A, Babenko A. TabM: Advancing Tabular Deep Learning with Parameter-Efficient Ensembling[C]. International Conference on Learning Representations, 2025. \url{https://openreview.net/forum?id=Sd4wYYOhmY}.
+\bibitem{entryprune2025} Zimmer F, Okanovic P, Hoefler T. EntryPrune: Neural Network Feature Selection using First Impressions[EB/OL]. arXiv:2410.02344v4, preprint, 2025. \url{https://arxiv.org/abs/2410.02344v4}.
+\bibitem{stg2020} Yamada Y, Lindenbaum O, Negahban S, Kluger Y. Feature Selection using Stochastic Gates[C]. Proceedings of Machine Learning Research, 119, 10648-10659, 2020. \url{https://proceedings.mlr.press/v119/yamada20a.html}.
+\bibitem{snvs2018} Gregorova M, Kalousis A, Marchand-Maillet S. Structured Nonlinear Variable Selection[C]. Uncertainty in Artificial Intelligence, 2018. \url{https://auai.org/uai2018/proceedings/papers/17.pdf}.
+\bibitem{deeppink2018} Lu Y, Fan Y, Lv J, Noble W S. DeepPINK: reproducible feature selection in deep neural networks[C]. Advances in Neural Information Processing Systems, 2018. \url{https://arxiv.org/abs/1809.01185}.
+\bibitem{deeppig2024} Oh E, Lee H. DeepPIG: deep neural network architecture with pairwise connected layers and stochastic gates using knockoff frameworks for feature selection[J]. Scientific Reports, 14, Article 15582, 2024. \url{https://doi.org/10.1038/s41598-024-66061-6}.
+\bibitem{grip2026} Zou B J, Tian L. GRIP2: A Robust and Powerful Deep Knockoff Method for Feature Selection[EB/OL]. arXiv:2602.00218v1, preprint, 2026. \url{https://arxiv.org/abs/2602.00218v1}.
+\bibitem{deepdrk2024} Shen H, Yan Y, Zhao Z. DeepDRK: Deep Dependency Regularized Knockoff for Feature Selection[C]. Advances in Neural Information Processing Systems, 2024. \url{https://openreview.net/forum?id=ibKpPabHVn}.
+\bibitem{tabpfn2025} Hollmann N, Muller S, Purucker L, et al. Accurate predictions on small data with a tabular foundation model[J]. Nature, 637, 319-326, 2025. \url{https://doi.org/10.1038/s41586-024-08328-6}.
+\bibitem{bh1995} Benjamini Y, Hochberg Y. Controlling the false discovery rate: a practical and powerful approach to multiple testing[J]. Journal of the Royal Statistical Society, Series B, 57(1), 289-300, 1995. \url{https://doi.org/10.1111/j.2517-6161.1995.tb02031.x}.
+\bibitem{knockoff2015} Barber R F, Candes E J. Controlling the false discovery rate via knockoffs[J]. The Annals of Statistics, 43(5), 2055-2085, 2015. \url{https://doi.org/10.1214/15-AOS1337}.
+\bibitem{modelx2018} Candes E, Fan Y, Janson L, Lv J. Panning for gold: model-X knockoffs for high dimensional controlled variable selection[J]. Journal of the Royal Statistical Society, Series B, 80(3), 551-577, 2018. \url{https://doi.org/10.1111/rssb.12265}.
+\bibitem{mvr2022} Spector A, Janson L. Powerful knockoffs via minimizing reconstructability[J]. The Annals of Statistics, 50(1), 252-276, 2022. \url{https://doi.org/10.1214/21-AOS2104}.
+\bibitem{derand2024} Ren Z, Barber R F. Derandomised knockoffs: leveraging e-values for false discovery rate control[J]. Journal of the Royal Statistical Society, Series B, 86(1), 122-154, 2024. \url{https://doi.org/10.1093/jrsssb/qkad085}.
+\bibitem{ebh2022} Wang R, Ramdas A. False discovery rate control with e-values[J]. Journal of the Royal Statistical Society, Series B, 84(3), 822-852, 2022. \url{https://doi.org/10.1111/rssb.12489}.
+\bibitem{knockofffail2025} Blain A, Reyero Lobo A, Linhart J, Thirion B, Neuvial P. When knockoffs fail: diagnosing and fixing non-exchangeability of knockoffs[EB/OL]. arXiv:2407.06892, revised preprint, 2025. \url{https://arxiv.org/abs/2407.06892}.
+\bibitem{cpi2021} Watson D S, Wright M N. Testing conditional independence in supervised learning algorithms[J]. Machine Learning, 110, 2107-2129, 2021. \url{https://doi.org/10.1007/s10994-021-06030-6}.
+\bibitem{semiko2026} Reyero-Lobo A, Thirion B, Neuvial P. Semi-knockoffs: a model-agnostic conditional independence testing method with finite-sample guarantees[C]. International Conference on Machine Learning; arXiv:2601.23124v2, 2026. \url{https://arxiv.org/abs/2601.23124v2}.
+\bibitem{olist2018} Olist. Brazilian E-Commerce Public Dataset by Olist[DB/OL]. Kaggle dataset, 2018. \url{https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce}.
+\bibitem{funnel2018} Olist. Marketing Funnel by Olist[DB/OL]. Kaggle dataset, 2018. \url{https://www.kaggle.com/datasets/olistbr/marketing-funnel-olist}.
+\bibitem{nogueira2018} Nogueira S, Sechidis K, Brown G. On the Stability of Feature Selection Algorithms[J]. Journal of Machine Learning Research, 18(174), 1-54, 2018. \url{https://www.jmlr.org/papers/v18/17-514.html}.
+\bibitem{morris2019} Morris T P, White I R, Crowther M J. Using simulation studies to evaluate statistical methods[J]. Statistics in Medicine, 38(11), 2074-2102, 2019. \url{https://doi.org/10.1002/sim.8086}.
+\bibitem{ledoit2004} Ledoit O, Wolf M. A well-conditioned estimator for large-dimensional covariance matrices[J]. Journal of Multivariate Analysis, 88(2), 365-411, 2004. \url{https://doi.org/10.1016/S0047-259X(03)00096-4}.
+\end{thebibliography}
+\end{document}

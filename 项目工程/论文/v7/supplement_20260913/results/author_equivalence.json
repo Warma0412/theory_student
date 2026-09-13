@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "max_score_error": 2.0122792321330962e-16,
+  "raw_source_sha": "a945c72aaabbcf86aa6ef5fe0b289ecc279cd73d17137df5fa3b1a855b0b8020",
+  "source_commit": "ff51ec239529620300e92efd9988eb69490eb3ac",
+  "threshold_source": "author AST function without unrelated imports",
+  "scope": "Ridge fit/predict, permutation order, vectorized score; native threshold corrected to paper equation",
+  "author_threshold_no_solution_bug": {
+    "W": [
+      1.0,
+      2.0,
+      3.0,
+      4.0
+    ],
+    "q": 0.2,
+    "author_threshold": 4.0,
+    "author_selected": [
+      3
+    ],
+    "correct_selected": []
+  },
+  "not_an_algorithmic_innovation": true
+}

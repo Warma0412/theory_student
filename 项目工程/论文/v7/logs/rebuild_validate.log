@@ -1,0 +1,22 @@
+{
+  "thesis": {
+    "pages": 42,
+    "out_of_page_spans": 0
+  },
+  "report": {
+    "pages": 7,
+    "out_of_page_spans": 0
+  },
+  "slides": {
+    "pages": 20,
+    "out_of_page_spans": 0
+  },
+  "condensed": {
+    "pages": 14,
+    "out_of_page_spans": 0
+  },
+  "brief": {
+    "pages": 4,
+    "out_of_page_spans": 0
+  }
+}

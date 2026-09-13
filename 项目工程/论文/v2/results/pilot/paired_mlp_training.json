@@ -1,0 +1,14 @@
+[
+  {
+    "seed": 20410823,
+    "epochs": 8,
+    "best_validation_mse": 0.7125351428985596,
+    "swapped_pair_count": 16
+  },
+  {
+    "seed": 20410824,
+    "epochs": 8,
+    "best_validation_mse": 0.6597837209701538,
+    "swapped_pair_count": 12
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "sample_size": 2600,
+  "test_feature": "avg_price",
+  "max_absolute_error": 0.0,
+  "mean_absolute_error": 0.0,
+  "relative_l2_error": 0.0,
+  "passed_tolerance_1e_5": true
+}

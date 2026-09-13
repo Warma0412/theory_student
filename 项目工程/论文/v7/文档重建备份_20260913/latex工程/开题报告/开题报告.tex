@@ -1,0 +1,290 @@
+\documentclass[UTF8,12pt,a4paper]{ctexart}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,graphicx,hyperref,fancyhdr,setspace,tabularx,enumitem}
+\setCJKmainfont{Songti SC}
+\setCJKsansfont{STHeiti}
+\setmainfont{Times New Roman}
+\hypersetup{hidelinks}
+\setstretch{1.32}
+\setlength{\parindent}{2em}
+\setlist{nosep}
+\pagestyle{fancy}\fancyhf{}\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\usepackage{fontspec,longtable,booktabs,array,calc,url,seqsplit,etoolbox,pdflscape}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\setlength{\LTleft}{0pt plus 1fill}
+\setlength{\LTright}{0pt plus 1fill}
+\renewcommand{\arraystretch}{1.12}
+\setlength{\emergencystretch}{2em}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>.70\textheight .70\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\urlstyle{same}
+
+\begin{document}
+\thispagestyle{empty}
+\begingroup
+\small
+\begin{center}
+{\zihao{2}\bfseries 上海财经大学}\\[0.5em]
+{\zihao{2}\bfseries 研究生申请学位论文开题报告表}
+\end{center}
+\vspace{0.5cm}
+\renewcommand{\arraystretch}{1.5}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\noindent
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{2.1cm}|Y|>{\centering\arraybackslash}p{2.1cm}|Y|}
+\hline
+姓名 & 吴优 & 学院 & 统计与数据科学学院\\
+\hline
+学号 & 2025213385 & 导师姓名 & 张吕欧\\
+\hline
+专业 & 应用统计 & 培养层次 & 专业硕士\\
+\hline
+\multicolumn{2}{|c|}{同意开题} & \multicolumn{2}{l|}{导师签字：}\\
+\hline
+\end{tabularx}
+\vspace{0.2cm}
+\noindent
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{2.5cm}|Y|}
+\hline
+论文题目 & 面向电商GMV监控的深度特征选择与稳定性评价研究\\
+\hline
+开题时间 & \hspace{3.4cm}开题地点：\\
+\hline
+与会专家姓名、单位（3--5人） & \rule{0pt}{2.0cm}\\
+\hline
+开题报告情况 & \rule{0pt}{2.7cm}专家主要意见：\\
+\hline
+开题结果（划圈） &
+开题通过，同意进入论文写作阶段。\quad/\quad
+开题未通过，不同意进入论文写作阶段。\newline
+\vspace{0.4cm}开题报告会专家组组长签名：\newline
+导师签名：\hfill 年\quad 月\quad 日\\
+\hline
+\end{tabularx}
+\vfill
+{\zihao{-5}注：开题意见、结果与签名由相关教师和专家填写。附：上海财经大学研究生学位论文开题报告书。}
+\endgroup
+\newpage
+\thispagestyle{empty}
+\begin{center}
+\vspace*{1.2cm}
+{\zihao{2}\bfseries 上海财经大学}\\[0.6em]
+{\zihao{2}\bfseries 研究生学位论文开题报告书}\\[1.8cm]
+{\zihao{3}\bfseries 论文题目：面向电商GMV监控的}\\[0.4em]
+{\zihao{3}\bfseries 深度特征选择与稳定性评价研究}
+\end{center}
+\vspace{1.8cm}
+\renewcommand{\arraystretch}{1.8}
+\begin{center}
+\begin{tabular}{rl}
+姓\quad 名： & 吴优\\
+学\quad 号： & 2025213385\\
+院系所： & 统计与数据科学学院\\
+专\quad 业： & 应用统计\\
+培养层次： & 专业硕士\\
+导师姓名： & 张吕欧\\
+\end{tabular}
+\end{center}
+\vfill
+\begin{center}{\zihao{4}二〇二六年九月}\end{center}
+\newpage
+\section{选题背景与研究问题}
+
+电商经营看板包含交易、商品、支付、履约和市场覆盖等大量指标。研究拟在有限展示容量下选择值得持续监控的指标，并评价名单对卖家样本变化的敏感性。本文以本月31项指标与下一月签收确认商品金额的预测关系为评价基础，不将预测重要性解释为当期金额拆解或因果效应。
+
+近期深度特征选择提供了输入梯度正则、序列子集搜索和参数高效集成等新工具，但其在真实电商面板上的增量价值仍需要与稀疏回归、树模型和Knockoff对照检验。研究不预设复杂方法必须胜出，而围绕信息保留、稳定性和误选边界建立统一评价。
+
+\section{文献依据与方法}
+
+Lasso与Elastic Net提供可解释的稀疏基准\cite{lasso1996,elastic2005}；稳定性选择与互补半样本为样本扰动设计提供依据\cite{stability2010,cpss2013}；Nogueira指标用于机会校正稳定性\cite{nogueira2018}。Model-X、MVR、多轮e-value与e-BH构成带有明确假设的Knockoff参照\cite{modelx2018,mvr2022,derand2024,ebh2022}。
+
+深度候选包括2023年的Deep Lasso、2024年的VTFS与DeepDRK，以及2025年的TabM和TabPFN v2\cite{deeplasso2023,vtfs2024,deepdrk2024,tabm2025,tabpfn2025}。Deep Lasso调用官方输入梯度惩罚；TabM使用官方网络并附加验证置换排序；VTFS使用官方Transformer骨干进行定额适配。DeepDRK完成三种子训练后出现生成诊断警告；TabPFN在完整样本上出现MPS内存错误，均不冒充完成全部比较。
+
+{
+\footnotesize
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\caption{方法及完成范围}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+方法
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+文献年份
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+本研究输出/范围
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+方法
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+文献年份
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+本研究输出/范围
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Copula-MVR聚合 & 2018/2022/2024 & 生成负对照、原生名单和排名；诊断有警告 \\
+Elastic Net & 2005 & 非零集合与系数排名 \\
+稳定性选择 & 2010/2013 & Lasso频率阈值与排名，经验适配 \\
+影子变量树 & 2006/2010 & Extra Trees影子比较，不是完整Boruta \\
+XGBoost-SHAP & 2016/2017/2020 & 树模型解释排名 \\
+Deep Lasso & 2023 & 官方输入梯度惩罚与MLP训练 \\
+VTFS定额适配 & 2024 & 官方Transformer骨干；固定预算和语料适配 \\
+TabM置换 & 2025 & 官方集成网络；额外置换排名 \\
+DeepDRK适配 & 2024 & 三种子训练和诊断后退出完整比较 \\
+TabPFN v2 & 2025 & 预训练模型；MPS兼容失败 \\
+attention-like过滤法 & 2024 & 仅文献核验，未计入训练结果 \\
+\end{longtable}
+}
+
+\section{数据与信息时间}
+
+数据来自Olist电商与营销漏斗公开数据集\cite{olist2018,funnel2018}。十张原始表中包含99,441条订单和112,650条商品明细。支付、评价先按自然层级聚合，商品金额由明细价格求和，运费不计入目标，避免多对多连接放大金额。
+
+物流与评价仅使用月末已发生的事件，营销成交按成交日期截断。最终得到13,754个卖家月、2,723名卖家、18个特征月份与31项指标，下一月零值率17.8784\%。主目标为下一月按真实签收月份确认的商品金额的log(1+GMV)，不是按购买月份回溯的最终送达金额。支付与元数据没有完整修订时间，其购买时可得性仍是工作假设。
+
+{
+\footnotesize
+\begin{longtable}[]{@{}lllll@{}}
+\caption{研究窗口}\tabularnewline
+\toprule\noalign{}
+阶段 & 目标月份 & 行数 & 卖家数 & 用途 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+阶段 & 目标月份 & 行数 & 卖家数 & 用途 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+训练 & 2017-02至2017-12 & 6567 & 1694 & 预处理与模型拟合 \\
+调参 & 2018-01至2018-02 & 1831 & 1175 & 冻结配置 \\
+排序 & 2018-03至2018-04 & 1943 & 1219 & 名单、早停、开发选择 \\
+测试 & 2018-05至2018-07 & 3413 & 1680 & 仅评价 \\
+\end{longtable}
+}
+
+\section{核心方法与公平原则}
+
+所有方法使用相同卖家抽样清单。30组互补50\%样本产生60个半样本，另运行20个70\%和20个80\%样本。同一卖家保留全部相应月份。主预算为12项，另比较4、8、10和14项；下游XGBoost与TabM配置对所有选择器一致。固定数据的10组种子试验与样本扰动结果分别报告。
+
+Deep Lasso优化预测损失及输入梯度组惩罚：
+
+\[
+\mathcal L_{DL}=\mathcal L_B+
+\lambda\sum_j\left\|\partial\mathcal L_B/\partial X_{B,j}\right\|_2.
+\]
+
+TabM的8个集成成员分别计算训练损失，推断时平均；验证列置换增加的MSE作为重要性。VTFS用96个随机子集效用训练编码器和解码器，在不超过128次查询内按预设K形成名单，明确保留随机语料回退与固定编号顺序的适配限制。
+
+Knockoff采用真假系数绝对值差W，60轮证据聚合后用e-BH生成原生名单。单轮0.10、最终0.20和高频入选是不同概念；强制Top-K集合不自动继承FDR保证。所有实际FDR声明还依赖生成有效性与依赖结构条件。
+
+\section{已完成的实证与模拟}
+
+八种方法各完成111个真实选择案例和600个模拟案例，形成82组统一预测产物。测试结果没有支持近期深度模型全面领先。
+
+{
+\footnotesize
+\begin{longtable}[]{@{}llllll@{}}
+\caption{主预算测试表现}\tabularnewline
+\toprule\noalign{}
+选择方法 & XGB-RMSE & TabM-RMSE & XGB-MAE & XGB-R² & XGB-WAPE \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+选择方法 & XGB-RMSE & TabM-RMSE & XGB-MAE & XGB-R² & XGB-WAPE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Copula-MVR & 1.8663 & 1.8945 & 1.3566 & 0.4894 & 0.5269 \\
+Elastic Net & 1.8626 & 1.8737 & 1.3542 & 0.4914 & 0.5279 \\
+稳定性选择 & 1.8931 & 1.8840 & 1.3620 & 0.4746 & 0.5308 \\
+影子变量树 & 1.8606 & 1.8634 & 1.3494 & 0.4925 & 0.5281 \\
+XGBoost-SHAP & 1.8464 & 1.8572 & 1.3442 & 0.5003 & 0.5276 \\
+Deep Lasso & 1.8467 & 1.8600 & 1.3467 & 0.5001 & 0.5248 \\
+TabM-置换 & 1.8443 & 1.8597 & 1.3435 & 0.5014 & 0.5232 \\
+VTFS-定额适配 & 1.8625 & 1.8851 & 1.3592 & 0.4915 & 0.5312 \\
+全维基线 & 1.8649 & 1.8588 & 1.3404 & 0.4902 & 0.5232 \\
+\end{longtable}
+}
+
+TabM置换与Deep Lasso在XGBoost评价器下接近最优，但在TabM评价器下XGBoost-SHAP仍很强。开发期选出的VTFS适配模型没有保持样本外优势，不在测试后更换主方法以制造胜出结论。
+
+{
+\footnotesize
+\begin{longtable}[]{@{}lllll@{}}
+\caption{样本稳定性}\tabularnewline
+\toprule\noalign{}
+方法 & 50\%均值{[}组级95\%区间{]} & 70\%均值 & 80\%均值 & 50\% Nogueira \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+方法 & 50\%均值{[}组级95\%区间{]} & 70\%均值 & 80\%均值 & 50\% Nogueira \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Copula-MVR & 0.7355 {[}0.7131, 0.7578{]} & 0.7508 & 0.8077 & 0.6798 \\
+Elastic Net & 0.7244 {[}0.6979, 0.7509{]} & 0.8385 & 0.9088 & 0.6185 \\
+稳定性选择 & 0.5827 {[}0.5614, 0.6041{]} & 0.6619 & 0.7018 & 0.4788 \\
+影子变量树 & 0.9388 {[}0.9233, 0.9544{]} & 0.9615 & 0.9923 & 0.9210 \\
+XGBoost-SHAP & 0.7682 {[}0.7501, 0.7862{]} & 0.8470 & 0.8220 & 0.7439 \\
+Deep Lasso & 0.8230 {[}0.7962, 0.8498{]} & 0.8868 & 0.7615 & 0.7754 \\
+TabM-置换 & 0.7505 {[}0.7196, 0.7813{]} & 0.8780 & 0.8934 & 0.7304 \\
+VTFS-定额适配 & 0.4068 {[}0.3377, 0.4758{]} & 0.4814 & 0.2972 & 0.2733 \\
+\end{longtable}
+}
+
+影子变量树在半样本名单一致性上突出；固定数据种子稳定性与更换卖家的稳定性不可混同。完整样本的VTFS最终名单与随机语料回退相同，不能将这次选择收益归功于深度解码器。
+
+模拟包括六场景、每场景100次，已知真信号后分别评价原生名单和Top-K的FDP及Power。固定12项且只有5项真信号时，FDP至少为7/12，不能据此混用原生错误率与容量约束。Copula-MVR原生规则在六场景中的平均FDP范围为0.0000至0.0549，平均Power范围为0.0000至0.9960。这是当前有限场景、固定配置的经验结果；观察均值低于目标不能证明所有分布上的FDR控制，检出率低也必须与空名单和阈值约束结合解释。
+
+\section{可行性、限制与后续计划}
+
+数据处理、官方代码适配、重复实验与结果汇总均已实际完成，后续工作的重点转向外部验证与针对性方法改进。本文的应用统计工作是将时间可见性、相同样本扰动、双评价器、容量路径和生成诊断落实到同一研究任务，并明确它们分别回答的问题。
+
+当前需要注意三项边界：公开数据静态快照不能完全还原实时可见性；三个月测试期不足以验证长期漂移；Copula-MVR与本次DeepDRK均出现联合交换性诊断警告，真实数据不能无条件宣称FDR受控。
+
+后续优先补充新的时间外数据；进一步研究重新调参后的全流程稳定性；对VTFS实施独立K优化与等查询预算随机搜索对照；对生成器开展卖家层诊断及独立训练；最后评估月度名单在周度业务预警中的可迁移性。这些扩展尚待验证，不计入当前完成结论。
+\begin{thebibliography}{99}
+\bibitem{lasso1996} Tibshirani R. Regression shrinkage and selection via the lasso[J]. Journal of the Royal Statistical Society, Series B, 58(1), 267-288, 1996. \url{https://doi.org/10.1111/j.2517-6161.1996.tb02080.x}.
+\bibitem{elastic2005} Zou H, Hastie T. Regularization and variable selection via the elastic net[J]. Journal of the Royal Statistical Society, Series B, 67(2), 301-320, 2005. \url{https://doi.org/10.1111/j.1467-9868.2005.00503.x}.
+\bibitem{stability2010} Meinshausen N, Buhlmann P. Stability selection[J]. Journal of the Royal Statistical Society, Series B, 72(4), 417-473, 2010. \url{https://doi.org/10.1111/j.1467-9868.2010.00740.x}.
+\bibitem{cpss2013} Shah R D, Samworth R J. Variable selection with error control: another look at stability selection[J]. Journal of the Royal Statistical Society, Series B, 75(1), 55-80, 2013. \url{https://doi.org/10.1111/j.1467-9868.2011.01034.x}.
+\bibitem{nogueira2018} Nogueira S, Sechidis K, Brown G. On the Stability of Feature Selection Algorithms[J]. Journal of Machine Learning Research, 18(174), 1-54, 2018. \url{https://www.jmlr.org/papers/v18/17-514.html}.
+\bibitem{xgb2016} Chen T, Guestrin C. XGBoost: A Scalable Tree Boosting System[C]. Proceedings of KDD, 785-794, 2016. \url{https://doi.org/10.1145/2939672.2939785}.
+\bibitem{shap2017} Lundberg S M, Lee S I. A Unified Approach to Interpreting Model Predictions[C]. Advances in Neural Information Processing Systems, 30, 2017. \url{https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions}.
+\bibitem{treeshap2020} Lundberg S M, Erion G, Chen H, et al. From local explanations to global understanding with explainable AI for trees[J]. Nature Machine Intelligence, 2, 56-67, 2020. \url{https://doi.org/10.1038/s42256-019-0138-9}.
+\bibitem{boruta2010} Kursa M B, Rudnicki W R. Feature Selection with the Boruta Package[J]. Journal of Statistical Software, 36(11), 1-13, 2010. \url{https://doi.org/10.18637/jss.v036.i11}.
+\bibitem{extratrees2006} Geurts P, Ernst D, Wehenkel L. Extremely randomized trees[J]. Machine Learning, 63, 3-42, 2006. \url{https://doi.org/10.1007/s10994-006-6226-1}.
+\bibitem{bh1995} Benjamini Y, Hochberg Y. Controlling the false discovery rate: a practical and powerful approach to multiple testing[J]. Journal of the Royal Statistical Society, Series B, 57(1), 289-300, 1995. \url{https://doi.org/10.1111/j.2517-6161.1995.tb02031.x}.
+\bibitem{knockoff2015} Barber R F, Candes E J. Controlling the false discovery rate via knockoffs[J]. The Annals of Statistics, 43(5), 2055-2085, 2015. \url{https://doi.org/10.1214/15-AOS1337}.
+\bibitem{modelx2018} Candes E, Fan Y, Janson L, Lv J. Panning for gold: model-X knockoffs for high dimensional controlled variable selection[J]. Journal of the Royal Statistical Society, Series B, 80(3), 551-577, 2018. \url{https://doi.org/10.1111/rssb.12265}.
+\bibitem{mvr2022} Spector A, Janson L. Powerful knockoffs via minimizing reconstructability[J]. The Annals of Statistics, 50(1), 252-276, 2022. \url{https://doi.org/10.1214/21-AOS2104}.
+\bibitem{derand2024} Ren Z, Barber R F. Derandomised knockoffs: leveraging e-values for false discovery rate control[J]. Journal of the Royal Statistical Society, Series B, 86(1), 122-154, 2024. \url{https://doi.org/10.1093/jrsssb/qkad085}.
+\bibitem{ebh2022} Wang R, Ramdas A. False discovery rate control with e-values[J]. Journal of the Royal Statistical Society, Series B, 84(3), 822-852, 2022. \url{https://doi.org/10.1111/rssb.12489}.
+\bibitem{ledoit2004} Ledoit O, Wolf M. A well-conditioned estimator for large-dimensional covariance matrices[J]. Journal of Multivariate Analysis, 88(2), 365-411, 2004. \url{https://doi.org/10.1016/S0047-259X(03)00096-4}.
+\bibitem{deeplasso2023} Cherepanova V, Levin R, Somepalli G, et al. A Performance-Driven Benchmark for Feature Selection in Tabular Deep Learning[C]. NeurIPS Datasets and Benchmarks Track, 2023. \url{https://openreview.net/forum?id=v4PMCdSaAT}.
+\bibitem{vtfs2024} Ying W, Wang D, Chen H, Fu Y. Feature Selection as Deep Sequential Generative Learning[J]. ACM Transactions on Knowledge Discovery from Data, 18(9), Article 221, 2024. \url{https://doi.org/10.1145/3687485}.
+\bibitem{tabm2025} Gorishniy Y, Kotelnikov A, Babenko A. TabM: Advancing Tabular Deep Learning with Parameter-Efficient Ensembling[C]. International Conference on Learning Representations, 2025. \url{https://openreview.net/forum?id=Sd4wYYOhmY}.
+\bibitem{deepdrk2024} Shen H, Yan Y, Zhao Z. DeepDRK: Deep Dependency Regularized Knockoff for Feature Selection[C]. Advances in Neural Information Processing Systems, 2024. \url{https://openreview.net/forum?id=ibKpPabHVn}.
+\bibitem{tabpfn2025} Hollmann N, Muller S, Purucker L, et al. Accurate predictions on small data with a tabular foundation model[J]. Nature, 637, 319-326, 2025. \url{https://doi.org/10.1038/s41586-024-08328-6}.
+\bibitem{mafs2024} Pham H, Tan Y, Singh T, Pavlopoulos V, Patnayakuni R. A multi-head attention-like feature selection approach for tabular data[J]. Knowledge-Based Systems, 301, 112250, 2024. \url{https://doi.org/10.1016/j.knosys.2024.112250}.
+\bibitem{olist2018} Olist. Brazilian E-Commerce Public Dataset by Olist[DB/OL]. Kaggle dataset, 2018. \url{https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce}.
+\bibitem{funnel2018} Olist. Marketing Funnel by Olist[DB/OL]. Kaggle dataset, 2018. \url{https://www.kaggle.com/datasets/olistbr/marketing-funnel-olist}.
+\bibitem{morris2019} Morris T P, White I R, Crowther M J. Using simulation studies to evaluate statistical methods[J]. Statistics in Medicine, 38(11), 2074-2102, 2019. \url{https://doi.org/10.1002/sim.8086}.
+\end{thebibliography}
+\end{document}

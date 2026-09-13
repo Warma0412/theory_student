@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "real_comparator_runs": 888,
+  "simulation_comparator_runs": 4800,
+  "prediction_outputs": 82,
+  "common_fit_and_rank_row_hashes": "passed",
+  "common_simulation_x_truth_and_available_y_hashes": "passed",
+  "fixed_budget_fdp_power_recomputed": "passed",
+  "source_code_sha256": {
+    "build_panel.py": "378db4db20eae346037bec31a434cedce8584368b0f4d281c2da2efda4496fb1",
+    "check_documents.py": "bc4c7e0807ef8f090204088129da73f63e37737e339e8f8ab257ccb63f5e95ae",
+    "common.py": "fb9391f4148b410e7507d62fe112027cac9dc99f1de7a7fe708102f4ac4a7be8",
+    "deepdrk_adapter.py": "de17f985cf3fa9ac3ecc2160bd1efb81798cae99b8d76249adaf903b872f9a5e",
+    "generate_documents.py": "d41564a46b8677dd9562f72c4751404608e121489cfc8af0824b29d7dce80668",
+    "make_figures.py": "6718afad6e23d9ada8c8e89246e1612d9622f980e69646a0dbc365fb9f794904",
+    "models.py": "5a58a656172bbe2d224504b52a782cd06e323a6207b905bd2337f744f012831c",
+    "run_evaluation_suite.py": "90c0ef7b0d8fe7830085b9670939cbab5f8a1c6d6963f88deff819e64fb8d999",
+    "run_experiments.py": "4b4ec9b1d4f44c3429e6f7ceb7b38de3e2ea3f2d9b74576771e26df4f8802df2",
+    "supplementary_audit.py": "bccfffcd9a82cc5674e52b7eb83729a6c34d8ae540098b7b5cb9591a6f726cad",
+    "validate_and_summarize.py": "9501411bb1b54b8887b95922bd8a81f64128efe9607c18ab55914b6f3c9a4dc2",
+    "verify_references.py": "7ad2acda5cdf0a63f215a3a2dcc6871092a81f8d30b144e309605c51bf19d962",
+    "vtfs_adapter.py": "dce859d78bb572b2566e00cf007d6d847cb5d735ea7559e38bcc46edab5ce59e"
+  },
+  "protocol_sha256": "5f84de78a6c741559717075a31093cedb1c8f575189be899549ee9028df31604",
+  "panel_sha256": "f91dc49e3690e792c3f13e96b66ead25418bcef4abb07f3a7349b07983520a0f",
+  "sampling_manifest_sha256": "39b6437e405443634e0e78b6378fe8e8205f1117b46f3eb08d1f67f3d6985c51",
+  "note": "Diagnostic failures are not counted as successful full comparisons; run counts do not establish statistical validity."
+}

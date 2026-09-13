@@ -1,0 +1,238 @@
+[
+  {
+    "target": "log_gmv_next_month",
+    "generator": "copula",
+    "stat_model": "lasso",
+    "n": 14677,
+    "p": 31,
+    "repetitions": 60,
+    "lasso_alpha": 0.004374305300270019,
+    "alpha_kn_by_q": {
+      "0.1": 0.05,
+      "0.2": 0.1,
+      "0.3": 0.15
+    },
+    "selected_by_q": {
+      "0.1": [],
+      "0.2": [
+        "avg_price",
+        "avg_freight",
+        "avg_product_height_cm",
+        "avg_product_name_length",
+        "avg_product_description_length",
+        "avg_delivery_days",
+        "avg_ship_days",
+        "avg_estimate_gap_days",
+        "item_count",
+        "order_count",
+        "category_count",
+        "unique_customer_count",
+        "buyer_state_diversity",
+        "seller_state_frequency"
+      ],
+      "0.3": [
+        "avg_price",
+        "avg_freight",
+        "avg_product_height_cm",
+        "avg_product_name_length",
+        "avg_product_description_length",
+        "avg_payment_sequential",
+        "debit_card_ratio",
+        "avg_delivery_days",
+        "avg_ship_days",
+        "avg_estimate_gap_days",
+        "item_count",
+        "order_count",
+        "category_count",
+        "unique_customer_count",
+        "buyer_state_diversity",
+        "dominant_customer_state_share",
+        "seller_state_frequency"
+      ]
+    }
+  },
+  {
+    "target": "log_gmv_next_month",
+    "generator": "gaussian",
+    "stat_model": "lasso",
+    "n": 14677,
+    "p": 31,
+    "repetitions": 40,
+    "lasso_alpha": 0.004374305300270019,
+    "alpha_kn_by_q": {
+      "0.1": 0.05,
+      "0.2": 0.1,
+      "0.3": 0.15
+    },
+    "selected_by_q": {
+      "0.1": [],
+      "0.2": [
+        "avg_price",
+        "avg_freight",
+        "avg_product_height_cm",
+        "avg_product_name_length",
+        "avg_delivery_days",
+        "avg_ship_days",
+        "avg_estimate_gap_days",
+        "item_count",
+        "order_count",
+        "category_count",
+        "unique_customer_count",
+        "dominant_customer_state_share"
+      ],
+      "0.3": [
+        "avg_price",
+        "avg_freight",
+        "avg_product_height_cm",
+        "avg_product_name_length",
+        "avg_product_description_length",
+        "avg_delivery_days",
+        "avg_ship_days",
+        "avg_estimate_gap_days",
+        "item_count",
+        "order_count",
+        "category_count",
+        "unique_customer_count",
+        "dominant_customer_state_share",
+        "seller_state_frequency"
+      ]
+    }
+  },
+  {
+    "target": "log_gmv",
+    "generator": "copula",
+    "stat_model": "lasso",
+    "n": 14677,
+    "p": 31,
+    "repetitions": 40,
+    "lasso_alpha": 0.0016184187791840612,
+    "alpha_kn_by_q": {
+      "0.2": 0.1
+    },
+    "selected_by_q": {
+      "0.2": [
+        "avg_price",
+        "avg_freight",
+        "avg_product_weight_g",
+        "avg_product_photos_qty",
+        "avg_product_description_length",
+        "avg_payment_installments",
+        "avg_payment_sequential",
+        "boleto_ratio",
+        "voucher_ratio",
+        "debit_card_ratio",
+        "avg_review_score",
+        "avg_approval_days",
+        "avg_ship_days",
+        "item_count",
+        "order_count",
+        "category_count",
+        "unique_customer_count",
+        "buyer_state_diversity",
+        "dominant_customer_state_share",
+        "interstate_ratio",
+        "has_marketing_deal"
+      ]
+    }
+  },
+  {
+    "target": "log_gmv_next_month",
+    "generator": "copula_trimmed_period",
+    "stat_model": "lasso",
+    "n": 11653,
+    "p": 31,
+    "repetitions": 40,
+    "lasso_alpha": 0.009690889383776808,
+    "alpha_kn_by_q": {
+      "0.2": 0.1
+    },
+    "selected_by_q": {
+      "0.2": [
+        "avg_price",
+        "avg_product_name_length",
+        "avg_product_description_length",
+        "avg_ship_days",
+        "avg_estimate_gap_days",
+        "item_count",
+        "order_count",
+        "category_count",
+        "unique_customer_count",
+        "buyer_state_diversity",
+        "seller_state_frequency"
+      ]
+    }
+  },
+  {
+    "target": "log_aov_next_month",
+    "generator": "copula",
+    "stat_model": "lasso",
+    "n": 14677,
+    "p": 31,
+    "repetitions": 40,
+    "lasso_alpha": 0.006510830115721448,
+    "alpha_kn_by_q": {
+      "0.2": 0.1
+    },
+    "selected_by_q": {
+      "0.2": [
+        "avg_price",
+        "avg_freight",
+        "avg_product_height_cm",
+        "avg_product_name_length",
+        "avg_product_description_length",
+        "credit_card_ratio",
+        "avg_ship_days",
+        "avg_estimate_gap_days",
+        "item_count",
+        "order_count",
+        "category_count",
+        "unique_customer_count",
+        "buyer_state_diversity",
+        "dominant_customer_state_share"
+      ]
+    }
+  },
+  {
+    "target": "log_gmv_next_month",
+    "generator": "copula_ai_xgboost",
+    "stat_model": "xgboost",
+    "n": 14677,
+    "p": 31,
+    "repetitions": 25,
+    "lasso_alpha": null,
+    "alpha_kn_by_q": {
+      "0.2": 0.1
+    },
+    "selected_by_q": {
+      "0.2": []
+    }
+  },
+  {
+    "target": "log_gmv_next_month",
+    "generator": "copula_pretest",
+    "stat_model": "lasso",
+    "n": 11169,
+    "p": 31,
+    "repetitions": 40,
+    "lasso_alpha": 0.011822988651687074,
+    "alpha_kn_by_q": {
+      "0.2": 0.1
+    },
+    "selected_by_q": {
+      "0.2": [
+        "avg_price",
+        "avg_product_name_length",
+        "avg_product_description_length",
+        "avg_ship_days",
+        "avg_estimate_gap_days",
+        "item_count",
+        "order_count",
+        "category_count",
+        "unique_customer_count",
+        "buyer_state_diversity",
+        "dominant_customer_state_share",
+        "seller_state_frequency"
+      ]
+    }
+  }
+]

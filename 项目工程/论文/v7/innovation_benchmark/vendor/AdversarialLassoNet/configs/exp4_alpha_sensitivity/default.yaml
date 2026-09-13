@@ -1,0 +1,10 @@
+experiment: exp4_alpha_sensitivity
+dataset: MICE
+alphas:
+  - 0.0
+  - 0.2
+  - 0.4
+  - 0.6
+  - 0.8
+  - 1.0
+runs: 5

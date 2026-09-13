@@ -1,0 +1,12 @@
+2026-08-23 06:00:49,044 | INFO | Loaded panel n=14677 p=31
+2026-08-23 06:00:49,126 | INFO | Knockoff scenario target=log_gmv_next_month generator=copula stat=lasso n=14677 M=60
+2026-08-23 06:00:58,063 | INFO | Knockoff scenario target=log_gmv_next_month generator=gaussian stat=lasso n=14677 M=40
+2026-08-23 09:10:19,224 | INFO | Knockoff scenario target=log_gmv generator=copula stat=lasso n=14677 M=40
+2026-08-23 09:19:39,681 | INFO | Knockoff scenario target=log_gmv_next_month generator=copula stat=lasso n=11653 M=40
+2026-08-23 09:28:14,896 | INFO | Knockoff scenario target=log_aov_next_month generator=copula stat=lasso n=14677 M=40
+2026-08-23 09:36:05,416 | INFO | Knockoff scenario target=log_gmv_next_month generator=copula stat=xgboost n=14677 M=25
+2026-08-23 09:36:13,716 | INFO | Knockoff scenario target=log_gmv_next_month generator=copula stat=lasso n=11169 M=40
+2026-08-23 11:00:36,518 | INFO | Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-08-23 11:00:36,519 | INFO | Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-08-23 11:00:37,567 | INFO | Primary selected: ['avg_price', 'avg_freight', 'avg_product_height_cm', 'avg_product_name_length', 'avg_product_description_length', 'avg_delivery_days', 'avg_ship_days', 'avg_estimate_gap_days', 'item_count', 'order_count', 'category_count', 'unique_customer_count', 'buyer_state_diversity', 'seller_state_frequency']
+2026-08-23 11:00:37,567 | INFO | Completed in 17988.6 seconds

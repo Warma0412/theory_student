@@ -1,0 +1,22 @@
+[
+  {
+    "generator": "gaussian",
+    "mean_marginal_ks": 0.20031341554813656,
+    "max_marginal_ks": 0.5039176943517067,
+    "covariance_relative_error": 0.023073750875032807,
+    "cross_covariance_asymmetry": 0.025247121592523868,
+    "mean_original_knockoff_correlation": 0.7021476413669947,
+    "min_original_knockoff_correlation": 0.1480158106968679,
+    "max_original_knockoff_correlation": 0.9977928953161892
+  },
+  {
+    "generator": "copula",
+    "mean_marginal_ks": 0.012602557875279965,
+    "max_marginal_ks": 0.03726919670232337,
+    "covariance_relative_error": 0.027379881953171023,
+    "cross_covariance_asymmetry": 0.033295170743380495,
+    "mean_original_knockoff_correlation": 0.5157637421866728,
+    "min_original_knockoff_correlation": 0.13507751416646788,
+    "max_original_knockoff_correlation": 0.8876055439306346
+  }
+]

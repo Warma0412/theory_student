@@ -1,0 +1,68 @@
+\thispagestyle{empty}
+\begingroup
+\small
+\begin{center}
+{\zihao{2}\bfseries 上海财经大学}\\[0.5em]
+{\zihao{2}\bfseries 研究生申请学位论文开题报告表}
+\end{center}
+\vspace{0.5cm}
+\renewcommand{\arraystretch}{1.5}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\noindent
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{2.1cm}|Y|>{\centering\arraybackslash}p{2.1cm}|Y|}
+\hline
+姓名 & 吴优 & 学院 & 统计与数据科学学院\\
+\hline
+学号 & 2025213385 & 导师姓名 & 张吕欧\\
+\hline
+专业 & 应用统计 & 培养层次 & 专业硕士\\
+\hline
+\multicolumn{2}{|c|}{同意开题} & \multicolumn{2}{l|}{导师签字：}\\
+\hline
+\end{tabularx}
+\vspace{0.2cm}
+\noindent
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{2.5cm}|Y|}
+\hline
+论文题目 & @@TITLE@@\\
+\hline
+开题时间 & \hspace{3.4cm}开题地点：\\
+\hline
+与会专家姓名、单位（3--5人） & \rule{0pt}{2.0cm}\\
+\hline
+开题报告情况 & \rule{0pt}{2.7cm}专家主要意见：\\
+\hline
+开题结果（划圈） &
+开题通过，同意进入论文写作阶段。\quad/\quad
+开题未通过，不同意进入论文写作阶段。\newline
+\vspace{0.4cm}开题报告会专家组组长签名：\newline
+导师签名：\hfill 年\quad 月\quad 日\\
+\hline
+\end{tabularx}
+\vfill
+{\zihao{-5}注：开题意见、结果与签名由相关教师和专家填写。附：上海财经大学研究生学位论文开题报告书。}
+\endgroup
+\newpage
+\thispagestyle{empty}
+\begin{center}
+\vspace*{1.2cm}
+{\zihao{2}\bfseries 上海财经大学}\\[0.6em]
+{\zihao{2}\bfseries 研究生学位论文开题报告书}\\[1.8cm]
+{\zihao{3}\bfseries 论文题目：面向电商GMV监控的}\\[0.4em]
+{\zihao{3}\bfseries 深度特征选择与稳定性评价研究}
+\end{center}
+\vspace{1.8cm}
+\renewcommand{\arraystretch}{1.8}
+\begin{center}
+\begin{tabular}{rl}
+姓\quad 名： & 吴优\\
+学\quad 号： & 2025213385\\
+院系所： & 统计与数据科学学院\\
+专\quad 业： & 应用统计\\
+培养层次： & 专业硕士\\
+导师姓名： & 张吕欧\\
+\end{tabular}
+\end{center}
+\vfill
+\begin{center}{\zihao{4}二〇二六年九月}\end{center}
+\newpage

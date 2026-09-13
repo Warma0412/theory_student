@@ -1,0 +1,20 @@
+{
+  "method": "derandomized_knockoffs_eBH",
+  "repetitions": 30,
+  "knockoff_repetitions_per_dataset": 20,
+  "alpha_ebh": 0.2,
+  "alpha_kn": 0.1,
+  "true_features": [
+    "avg_price",
+    "avg_review_score",
+    "item_count",
+    "category_count",
+    "avg_delivery_days"
+  ],
+  "mean_fdp": 0.0,
+  "probability_fdp_above_q": 0.0,
+  "mean_power": 0.0,
+  "mean_discoveries": 0.0,
+  "single_knockoff_mean_fdp": 0.19730940355940355,
+  "single_knockoff_mean_power": 1.0
+}

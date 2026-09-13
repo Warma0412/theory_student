@@ -1,0 +1,23 @@
+{
+  "tests": [
+    {
+      "swap_fraction": 0.25,
+      "seller_disjoint_auc": 0.8782029366644751,
+      "absolute_auc_departure_from_half": 0.37820293666447513
+    },
+    {
+      "swap_fraction": 0.5,
+      "seller_disjoint_auc": 0.9139133610928484,
+      "absolute_auc_departure_from_half": 0.4139133610928484
+    },
+    {
+      "swap_fraction": 1.0,
+      "seller_disjoint_auc": 0.9466637446124626,
+      "absolute_auc_departure_from_half": 0.4466637446124626
+    }
+  ],
+  "interpretation": "engineering diagnostic, not a calibrated hypothesis test",
+  "passing_not_proof": true,
+  "theoretical_real_fdr_guarantee": false,
+  "train_test_split_by_seller": true
+}

@@ -1,0 +1,98 @@
+2026-09-08 08:08:29,599 Attempting HuggingFace download: tabpfn-v2-regressor.ckpt
+2026-09-08 08:08:40,539 Successfully downloaded to /Users/bytedance/Library/Caches/tabpfn/tabpfn-v2-regressor.ckpt
+2026-09-08 08:08:41,276 tabpfn_v2 reference failed
+Traceback (most recent call last):
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/code/run_experiments.py", line 114, in execute_case
+    result = run_selector(method, x, y, xv, yv, s, params, seeds=seeds,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/code/models.py", line 261, in run_selector
+    scores.append(permutation_scores(model.predict, xv, yv, seed))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/code/models.py", line 151, in permutation_scores
+    base = np.mean((predict(x) - y) ** 2)
+                    ^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.15/Frameworks/Python.framework/Versions/3.11/lib/python3.11/contextlib.py", line 81, in inner
+    return func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/regressor.py", line 649, in predict
+    for output, config in self.executor_.iter_outputs(
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/inference.py", line 316, in iter_outputs
+    MemoryUsageEstimator.reset_peak_memory_if_required(
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/model/memory.py", line 390, in reset_peak_memory_if_required
+    memory_available_after_batch = cls.estimate_memory_remainder_after_batch(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/model/memory.py", line 336, in estimate_memory_remainder_after_batch
+    max_free_mem = cls.get_max_free_memory(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/model/memory.py", line 296, in get_max_free_memory
+    raise NotImplementedError(
+NotImplementedError: Memory estimation for MPS devices is not currently supported. If you have experience with getting memory information for MPS devices, we would gladly appreciate a contribution!
+2026-09-08 08:08:41,278 tabpfn_v2 reference failed 12.4s
+2026-09-08 08:14:27,004 tabpfn_v2 reference failed
+Traceback (most recent call last):
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/code/run_experiments.py", line 114, in execute_case
+    result = run_selector(method, x, y, xv, yv, s, params, seeds=seeds,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/code/models.py", line 261, in run_selector
+    model.fit(x, y)
+  File "/opt/homebrew/Cellar/python@3.11/3.11.15/Frameworks/Python.framework/Versions/3.11/lib/python3.11/contextlib.py", line 81, in inner
+    return func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/regressor.py", line 532, in fit
+    self.executor_ = create_inference_engine(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/base.py", line 227, in create_inference_engine
+    engine = InferenceEngineCacheKV.prepare(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/inference.py", line 432, in prepare
+    ens_model.forward(
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/model/transformer.py", line 416, in forward
+    return self._forward(x, y, style=style, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/model/transformer.py", line 628, in _forward
+    encoder_out = self.transformer_encoder(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/model/transformer.py", line 89, in forward
+    x = layer(x, **kwargs)
+        ^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/model/layer.py", line 449, in forward
+    state = sublayer(state)
+            ^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/model/layer.py", line 363, in attn_between_items
+    new_x_train = self.self_attn_between_items(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/model/multi_head_attention.py", line 355, in forward
+    output: torch.Tensor = self._compute(
+                           ^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/model/memory.py", line 100, in method_
+    return x + method(self, x, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/model/multi_head_attention.py", line 504, in _compute
+    attention_head_outputs = MultiHeadAttention.compute_attention_heads(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/tabpfn/model/multi_head_attention.py", line 721, in compute_attention_heads
+    logits = torch.einsum("b q h d, b k h d -> b q k h", q, k)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/.venv/lib/python3.11/site-packages/torch/functional.py", line 422, in einsum
+    return _VF.einsum(equation, operands)  # type: ignore[attr-defined]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Invalid buffer size: 29.95 GiB
+2026-09-08 08:14:27,007 tabpfn_v2 reference failed 4.8s

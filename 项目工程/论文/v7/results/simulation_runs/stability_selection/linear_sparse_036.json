@@ -1,0 +1,133 @@
+{
+  "status": "ok",
+  "method": "stability_selection",
+  "scenario": {
+    "name": "linear_sparse",
+    "signals": 5,
+    "snr": 3.0,
+    "response": "linear"
+  },
+  "rep": 36,
+  "data_hash": "5acf60dd235476c51332ff63bd182f96b220c1e104d66aa1481b4fc3a807141f",
+  "truth": [
+    21,
+    12,
+    19,
+    10,
+    9
+  ],
+  "score": [
+    1.0,
+    0.9,
+    0.9,
+    0.975,
+    0.975,
+    1.0,
+    0.875,
+    0.95,
+    0.975,
+    1.0,
+    1.0,
+    0.975,
+    1.0,
+    1.0,
+    0.95,
+    0.975,
+    0.9,
+    0.95,
+    0.875,
+    1.0,
+    0.95,
+    1.0,
+    1.0,
+    0.975,
+    1.0,
+    0.875,
+    0.975,
+    1.0,
+    0.95,
+    0.975,
+    0.975
+  ],
+  "response_hash": "09e1e3c716555e85ba80f267c328ecdca7054c48b7f428e81b8eed4a97a0ec24",
+  "response_scaling": "training mean and population standard deviation",
+  "order": [
+    19,
+    12,
+    9,
+    21,
+    10,
+    24,
+    13,
+    22,
+    27,
+    5,
+    0,
+    26,
+    15,
+    4,
+    3,
+    23,
+    8,
+    11,
+    29,
+    30,
+    14,
+    17,
+    28,
+    7,
+    20,
+    1,
+    16,
+    2,
+    25,
+    6,
+    18
+  ],
+  "metrics": [
+    {
+      "rule": "top4",
+      "FDP": 0.0,
+      "power": 0.8,
+      "discoveries": 4,
+      "FDP_gt_0.2": false
+    },
+    {
+      "rule": "top8",
+      "FDP": 0.375,
+      "power": 1.0,
+      "discoveries": 8,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top10",
+      "FDP": 0.5,
+      "power": 1.0,
+      "discoveries": 10,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top12",
+      "FDP": 0.5833333333333334,
+      "power": 1.0,
+      "discoveries": 12,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top14",
+      "FDP": 0.6428571428571429,
+      "power": 1.0,
+      "discoveries": 14,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "native",
+      "FDP": 0.8214285714285714,
+      "power": 1.0,
+      "discoveries": 28,
+      "FDP_gt_0.2": true
+    }
+  ],
+  "rmse_at_12": 0.6666558250021118,
+  "seconds": 0.042741833021864295
+}

@@ -1,0 +1,4 @@
+experiment: exp2_spurious_colored_mnist
+runs: 5
+k: 50
+notes: Placeholder config for Colored MNIST comparison.

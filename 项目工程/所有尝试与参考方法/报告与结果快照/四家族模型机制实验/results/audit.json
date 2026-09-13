@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "new_primary_real_cases": 1110,
+  "new_secondary_reference_cases": 10,
+  "new_simulation_cases": 6000,
+  "new_prediction_files": 40,
+  "canonical_prediction_files_including_baselines": 74,
+  "canonical_simulation_evaluation_cases": 600,
+  "identical_selected_sets_have_identical_real_predictions": true,
+  "same_seller_rows_and_simulation_inputs": true,
+  "fixed_cardinality_and_metric_recalculation": true,
+  "protocol_hash": "46068614fc1b1a2ea7a2f7893ed6fe4e79e363d09337568e2d410b23293c00e3",
+  "current_code_hashes": {
+    "run_study.py": "4c7a25b81a54be5407ae8ebaa6cea9f87e6d79bf803f19a5acb78056cf60e546",
+    "build_report.py": "5b1a0ad8ce984f2df615a8414537698da87fbc81721f9325107077a9967fad9e",
+    "finalize_when_ready.py": "9640b1a5ba021b65401091c82a4eac622ddce4878ab4cf4d5fd1c440bd194669",
+    "canonical_evaluation.py": "de13867b6414052316e3318ccb66b099317795e5bd92a688f82a2ac3a4120ac3",
+    "predict_suite.py": "1bcc18c803598c9ed5bec4db78892b5fc5ae56086a28aea7840240a74160cced",
+    "mechanisms.py": "58cda60f4b71fe183ce5d38378ffb77a4b856934348108c92410668be0bd2ffd",
+    "analyze_study.py": "3a62f333a41429081871ea87f149474c8512502265e66c20ba07ea2780d65fce"
+  },
+  "historical_baselines_read_not_retrained": [
+    "copula_mvr",
+    "elastic_net",
+    "stability_selection",
+    "shadow_trees",
+    "xgboost_shap",
+    "deep_lasso",
+    "tabm",
+    "vtfs"
+  ],
+  "unchanged_parent_model_code_panel_sampling_manifest": true,
+  "post_v7_exploratory_not_an_external_validation": true
+}

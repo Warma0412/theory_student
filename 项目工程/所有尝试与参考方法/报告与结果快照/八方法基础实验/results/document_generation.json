@@ -1,0 +1,10 @@
+{
+  "title": "面向电商经营指标筛选的非线性方法与交换对称损失研究",
+  "reference_count": 34,
+  "slides": 20,
+  "source_template": "thesis_revised.md.in",
+  "source_hash": "28f2ffeb7b405ca18f6cb5c05cdfcd20c37af51f558de711b032d032d256257b",
+  "tables_from": "separate audited experiment designs; canonical Top8/12 predictions",
+  "unresolved_placeholders": 0,
+  "supplement_audit": "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/supplement_20260913/results/audit.json"
+}

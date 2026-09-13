@@ -1,0 +1,62 @@
+2026-09-01 19:25:40,551 | INFO | V4 analysis started device=mps
+2026-09-01 19:25:41,094 | INFO | Clustered level between_seller completed
+2026-09-01 19:26:01,267 | INFO | Clustered level within_seller completed
+2026-09-01 19:26:16,668 | INFO | Adversarial generator epoch=1 score=0.9353 ks=0.2411 cov=0.4844
+2026-09-01 19:26:18,099 | INFO | Adversarial generator epoch=3 score=0.6545 ks=0.2339 cov=0.2981
+2026-09-01 19:26:19,555 | INFO | Adversarial generator epoch=5 score=0.5889 ks=0.2189 cov=0.2592
+2026-09-01 19:26:20,960 | INFO | Adversarial generator epoch=7 score=0.5494 ks=0.2226 cov=0.2362
+2026-09-01 19:26:22,408 | INFO | Adversarial generator epoch=9 score=0.5401 ks=0.2139 cov=0.2346
+2026-09-01 19:26:23,815 | INFO | Adversarial generator epoch=11 score=0.5285 ks=0.2235 cov=0.2025
+2026-09-01 19:26:25,206 | INFO | Adversarial generator epoch=13 score=0.5103 ks=0.2154 cov=0.1948
+2026-09-01 19:26:26,626 | INFO | Adversarial generator epoch=15 score=0.5500 ks=0.2158 cov=0.2102
+2026-09-01 19:26:28,082 | INFO | Adversarial generator epoch=17 score=0.5096 ks=0.2158 cov=0.1958
+2026-09-01 19:26:29,481 | INFO | Adversarial generator epoch=19 score=0.4669 ks=0.2105 cov=0.1628
+2026-09-01 19:26:30,904 | INFO | Adversarial generator epoch=21 score=0.4846 ks=0.2062 cov=0.1690
+2026-09-01 19:26:32,308 | INFO | Adversarial generator epoch=23 score=0.4598 ks=0.2062 cov=0.1626
+2026-09-01 19:26:33,591 | INFO | Adversarial generator epoch=25 score=0.4738 ks=0.2124 cov=0.1718
+2026-09-01 19:26:34,899 | INFO | Adversarial generator epoch=27 score=0.4857 ks=0.2095 cov=0.1725
+2026-09-01 19:26:36,406 | INFO | Adversarial generator epoch=29 score=0.4746 ks=0.2074 cov=0.1653
+2026-09-01 19:26:37,704 | INFO | Adversarial generator epoch=31 score=0.4587 ks=0.2044 cov=0.1632
+2026-09-01 19:26:38,993 | INFO | Adversarial generator epoch=33 score=0.4809 ks=0.2065 cov=0.1759
+2026-09-01 19:26:40,261 | INFO | Adversarial generator epoch=35 score=0.4761 ks=0.2114 cov=0.1754
+2026-09-01 19:26:41,560 | INFO | Adversarial generator epoch=37 score=0.4803 ks=0.2161 cov=0.1690
+2026-09-01 19:26:42,944 | INFO | Adversarial generator epoch=39 score=0.4678 ks=0.2068 cov=0.1692
+2026-09-01 19:26:44,381 | INFO | Adversarial generator epoch=41 score=0.4484 ks=0.2102 cov=0.1504
+2026-09-01 19:26:45,725 | INFO | Adversarial generator epoch=43 score=0.4754 ks=0.2101 cov=0.1784
+2026-09-01 19:26:47,067 | INFO | Adversarial generator epoch=45 score=0.4620 ks=0.2111 cov=0.1489
+2026-09-01 19:26:48,363 | INFO | Adversarial generator epoch=47 score=0.4591 ks=0.2105 cov=0.1635
+2026-09-01 19:26:49,696 | INFO | Adversarial generator epoch=49 score=0.4988 ks=0.2139 cov=0.1863
+2026-09-01 19:26:51,013 | INFO | Adversarial generator epoch=51 score=0.4800 ks=0.2101 cov=0.1611
+2026-09-01 19:26:52,342 | INFO | Adversarial generator epoch=53 score=0.4803 ks=0.2135 cov=0.1757
+2026-09-01 19:26:53,606 | INFO | Adversarial generator epoch=55 score=0.4641 ks=0.2078 cov=0.1652
+2026-09-01 19:26:55,015 | INFO | Adversarial generator epoch=57 score=0.4665 ks=0.2118 cov=0.1681
+2026-09-01 19:26:56,292 | INFO | Adversarial generator epoch=59 score=0.4797 ks=0.2104 cov=0.1718
+2026-09-01 19:26:57,532 | INFO | Adversarial generator epoch=61 score=0.4743 ks=0.2099 cov=0.1727
+2026-09-01 19:26:58,900 | INFO | Adversarial generator epoch=63 score=0.4509 ks=0.2090 cov=0.1580
+2026-09-01 19:27:00,169 | INFO | Adversarial generator epoch=65 score=0.4693 ks=0.2109 cov=0.1643
+2026-09-01 19:27:01,498 | INFO | Adversarial generator epoch=67 score=0.4533 ks=0.2114 cov=0.1620
+2026-09-01 19:27:02,802 | INFO | Adversarial generator epoch=69 score=0.4595 ks=0.2143 cov=0.1577
+2026-09-01 19:27:26,594 | INFO | V4 diagnostics copula_mvr: {'mean_marginal_ks': 0.0257756877911576, 'max_marginal_ks': 0.04257493188010899, 'covariance_relative_error': 0.09099274286261144, 'cross_covariance_asymmetry': 0.1085818866910005, 'mean_real_knockoff_correlation': 0.5141650291085376, 'method': 'copula_mvr', 'deep_kernel_mmd_mean': 0.0013211502436679457, 'deep_kernel_rejection_rate_5pct': 0.0, 'classifier_auc_mean': 0.7765575557540615, 'classifier_rejection_rate_5pct': 1.0}
+2026-09-01 19:27:49,337 | INFO | V4 diagnostics v2_deep_train_calibrated: {'mean_marginal_ks': 0.018007822800386746, 'max_marginal_ks': 0.040190735694822885, 'covariance_relative_error': 0.16602739649945636, 'cross_covariance_asymmetry': 0.1969666518708013, 'mean_real_knockoff_correlation': 0.5565331449853091, 'method': 'v2_deep_train_calibrated', 'deep_kernel_mmd_mean': 0.2817586819672506, 'deep_kernel_rejection_rate_5pct': 1.0, 'classifier_auc_mean': 0.9020178201032566, 'classifier_rejection_rate_5pct': 1.0}
+2026-09-01 19:28:11,801 | INFO | V4 diagnostics v4_worst_swap_train_calibrated: {'mean_marginal_ks': 0.018754944185637695, 'max_marginal_ks': 0.036444141689373294, 'covariance_relative_error': 0.18841056224195335, 'cross_covariance_asymmetry': 0.22114202970059516, 'mean_real_knockoff_correlation': 0.5395398932441229, 'method': 'v4_worst_swap_train_calibrated', 'deep_kernel_mmd_mean': 0.6080761950507252, 'deep_kernel_rejection_rate_5pct': 1.0, 'classifier_auc_mean': 0.9369204113612619, 'classifier_rejection_rate_5pct': 1.0}
+2026-09-01 19:35:39,333 | INFO | GRIP2-style repetition 1 completed
+2026-09-01 19:35:42,891 | INFO | GRIP2-style repetition 2 completed
+2026-09-01 19:35:46,710 | INFO | GRIP2-style repetition 3 completed
+2026-09-01 19:35:50,151 | INFO | GRIP2-style repetition 4 completed
+2026-09-01 19:35:53,545 | INFO | GRIP2-style repetition 5 completed
+2026-09-01 19:35:57,611 | INFO | GRIP2-style repetition 6 completed
+2026-09-01 19:36:01,203 | INFO | GRIP2-style repetition 7 completed
+2026-09-01 19:36:04,712 | INFO | GRIP2-style repetition 8 completed
+2026-09-01 19:36:08,081 | INFO | GRIP2-style repetition 9 completed
+2026-09-01 19:36:11,616 | INFO | GRIP2-style repetition 10 completed
+2026-09-01 19:36:15,044 | INFO | GRIP2-style repetition 11 completed
+2026-09-01 19:36:18,472 | INFO | GRIP2-style repetition 12 completed
+2026-09-01 19:36:21,881 | INFO | GRIP2-style repetition 13 completed
+2026-09-01 19:36:25,116 | INFO | GRIP2-style repetition 14 completed
+2026-09-01 19:36:28,806 | INFO | GRIP2-style repetition 15 completed
+2026-09-01 19:36:32,472 | INFO | GRIP2-style repetition 16 completed
+2026-09-01 19:36:36,004 | INFO | GRIP2-style repetition 17 completed
+2026-09-01 19:36:39,631 | INFO | GRIP2-style repetition 18 completed
+2026-09-01 19:36:43,091 | INFO | GRIP2-style repetition 19 completed
+2026-09-01 19:36:47,278 | INFO | GRIP2-style repetition 20 completed
+2026-09-01 19:36:48,657 | INFO | V4 analysis completed: {'config': {'generator_epochs': 100, 'generator_patience': 14, 'clustered_repetitions': 40, 'group_repetitions': 60, 'generator_repetitions': 30, 'grip_repetitions': 20, 'grip_epochs': 90, 'deep_kernel_epochs': 45, 'diagnostic_permutations': 199}, 'seed': 20260823, 'device': 'mps', 'torch': '2.8.0', 'numpy': '2.0.2', 'scipy': '1.13.1', 'platform': 'macOS-15.7.3-arm64-arm-64bit', 'panel_rows': 14677, 'panel_sellers': 2793, 'clustered': {'between_seller': {'n': 2793, 'p': 31, 'repetitions': 40, 'lasso_alpha': 0.007057463628719894}, 'within_seller': {'n': 14677, 'p': 28, 'repetitions': 40, 'lasso_alpha': 0.007057463628719894}}, 'group': {'n': 14677, 'groups': 12, 'repetitions': 60, 'lasso_alpha': 0.00439787866493716}, 'v4_generator_passed_prespecified_diagnostics': False, 'v4_generator_diagnostic_rule': {'mean_marginal_ks_max': 0.05, 'covariance_relative_error_max': 0.2, 'mean_real_knockoff_correlation_max': 0.85, 'deep_kernel_rejection_rate_max': 0.4, 'classifier_auc_mean_max': 0.75}, 'marginal_calibration_fit_scope': 'generator_training_indices_only', 'diagnostic_permutations': 199, 'minimum_attainable_p': 0.005, 'grip2_style_antisymmetry': {'feature': 'avg_price', 'max_absolute_error': 0.0, 'mean_absolute_error': 0.0, 'passed_tolerance_1e_5': True}, 'panel_sha256': '7212bf462a8b23ba6455bed5fe7354481b43d3e3a0f633a13ced1a97c3046a1e'}

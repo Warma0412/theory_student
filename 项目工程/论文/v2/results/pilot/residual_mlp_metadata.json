@@ -1,0 +1,8 @@
+{
+  "architecture": "128-wide residual MLP with 3 residual blocks",
+  "optimizer": "AdamW",
+  "best_epoch": 2,
+  "epochs_run": 10,
+  "best_validation_mse_scaled": 0.6622422337532043,
+  "device": "mps"
+}

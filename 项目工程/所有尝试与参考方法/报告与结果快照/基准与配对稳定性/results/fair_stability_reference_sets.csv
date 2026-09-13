@@ -1,0 +1,61 @@
+method,feature,label_zh,matched_budget,native_count
+去随机化Knockoff,avg_price,平均商品价格,12,12
+去随机化Knockoff,avg_product_name_length,平均商品标题长度,12,12
+去随机化Knockoff,avg_product_description_length,平均商品描述长度,12,12
+去随机化Knockoff,avg_ship_days,平均审核至承运天数,12,12
+去随机化Knockoff,avg_estimate_gap_days,平均预计提前送达天数,12,12
+去随机化Knockoff,item_count,成交件数,12,12
+去随机化Knockoff,order_count,成交订单数,12,12
+去随机化Knockoff,category_count,活跃品类数,12,12
+去随机化Knockoff,unique_customer_count,独立顾客数,12,12
+去随机化Knockoff,buyer_state_diversity,买家州数量,12,12
+去随机化Knockoff,dominant_customer_state_share,第一大买家州占比,12,12
+去随机化Knockoff,seller_state_frequency,卖家所在州频率,12,12
+Elastic Net,avg_price,平均商品价格,12,14
+Elastic Net,avg_freight,平均运费,12,14
+Elastic Net,avg_product_height_cm,平均商品高度,12,14
+Elastic Net,avg_product_name_length,平均商品标题长度,12,14
+Elastic Net,avg_ship_days,平均审核至承运天数,12,14
+Elastic Net,avg_estimate_gap_days,平均预计提前送达天数,12,14
+Elastic Net,item_count,成交件数,12,14
+Elastic Net,order_count,成交订单数,12,14
+Elastic Net,category_count,活跃品类数,12,14
+Elastic Net,unique_customer_count,独立顾客数,12,14
+Elastic Net,dominant_customer_state_share,第一大买家州占比,12,14
+Elastic Net,seller_state_frequency,卖家所在州频率,12,14
+稳定性选择,avg_price,平均商品价格,12,10
+稳定性选择,avg_freight,平均运费,12,10
+稳定性选择,avg_product_height_cm,平均商品高度,12,10
+稳定性选择,avg_product_name_length,平均商品标题长度,12,10
+稳定性选择,avg_product_description_length,平均商品描述长度,12,10
+稳定性选择,avg_ship_days,平均审核至承运天数,12,10
+稳定性选择,avg_estimate_gap_days,平均预计提前送达天数,12,10
+稳定性选择,order_count,成交订单数,12,10
+稳定性选择,category_count,活跃品类数,12,10
+稳定性选择,unique_customer_count,独立顾客数,12,10
+稳定性选择,dominant_customer_state_share,第一大买家州占比,12,10
+稳定性选择,seller_state_frequency,卖家所在州频率,12,10
+影子变量树模型,avg_price,平均商品价格,12,8
+影子变量树模型,avg_product_photos_qty,平均商品图片数,12,8
+影子变量树模型,avg_product_name_length,平均商品标题长度,12,8
+影子变量树模型,avg_product_description_length,平均商品描述长度,12,8
+影子变量树模型,avg_payment_installments,平均支付分期期数,12,8
+影子变量树模型,avg_ship_days,平均审核至承运天数,12,8
+影子变量树模型,item_count,成交件数,12,8
+影子变量树模型,order_count,成交订单数,12,8
+影子变量树模型,unique_customer_count,独立顾客数,12,8
+影子变量树模型,buyer_state_diversity,买家州数量,12,8
+影子变量树模型,dominant_customer_state_share,第一大买家州占比,12,8
+影子变量树模型,seller_state_frequency,卖家所在州频率,12,8
+XGBoost-SHAP,avg_price,平均商品价格,12,12
+XGBoost-SHAP,avg_freight,平均运费,12,12
+XGBoost-SHAP,avg_product_height_cm,平均商品高度,12,12
+XGBoost-SHAP,avg_product_name_length,平均商品标题长度,12,12
+XGBoost-SHAP,avg_product_description_length,平均商品描述长度,12,12
+XGBoost-SHAP,avg_delivery_days,平均下单至送达天数,12,12
+XGBoost-SHAP,avg_ship_days,平均审核至承运天数,12,12
+XGBoost-SHAP,avg_estimate_gap_days,平均预计提前送达天数,12,12
+XGBoost-SHAP,order_count,成交订单数,12,12
+XGBoost-SHAP,unique_customer_count,独立顾客数,12,12
+XGBoost-SHAP,buyer_state_diversity,买家州数量,12,12
+XGBoost-SHAP,interstate_ratio,跨州交易占比,12,12

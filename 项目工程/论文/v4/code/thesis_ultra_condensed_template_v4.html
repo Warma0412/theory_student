@@ -1,0 +1,179 @@
+<meta charset="utf-8">
+<title>Olist GMV维度选择研究：v4方法升级版</title>
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; color: #171717; background: #fff; }
+body { font-family: "Songti SC", "STSong", serif; font-size: 9.8pt; line-height: 1.36; }
+.page { position: relative; width: 210mm; height: 297mm; padding: 14mm 18mm 16mm 20mm;
+  overflow: hidden; break-after: page; }
+.page:last-child { break-after: auto; }
+.page-number { position: absolute; bottom: 5.5mm; left: 0; width: 100%;
+  text-align: center; font: 9pt "Times New Roman", serif; }
+.doc-head { margin-bottom: 4mm; padding-bottom: 3mm; border-bottom: 1.4pt solid #8d2231; }
+.doc-head strong { display: block; font: 700 18pt/1.3 "Heiti SC", sans-serif; }
+.doc-head span { color: #666; font-size: 9pt; }
+h2, h3 { font-family: "Heiti SC", sans-serif; letter-spacing: 0; }
+h2 { margin: 0 0 3.5mm; padding-bottom: 2mm; border-bottom: 1.2pt solid #8d2231;
+  font-size: 15.5pt; }
+h3 { margin: 2.7mm 0 1.1mm; font-size: 11.5pt; }
+p { margin: 0 0 1.8mm; text-align: justify; }
+ul { margin: 0.8mm 0 2mm 4mm; padding-left: 4.2mm; }
+li { margin: 0.5mm 0; }
+.lead { margin-bottom: 2.5mm; padding: 2.7mm 3.5mm; border-left: 3pt solid #8d2231;
+  background: #f5f5f2; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2mm; margin: 2.5mm 0; }
+.stat { min-height: 16mm; padding: 2.2mm; border-top: 2pt solid #287271;
+  background: #f3f7f6; }
+.stat strong { display: block; color: #174f4e; font: 700 14pt "Times New Roman", sans-serif; }
+.stat span { font-size: 8.2pt; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; }
+.result-group { margin-bottom: 1.8mm; padding: 2.2mm 2.7mm; border-left: 2.5pt solid #287271;
+  background: #f3f7f6; }
+.result-group b { color: #174f4e; }
+.formula { margin: 1.8mm 0; padding: 2.2mm; border: 0.7pt solid #aaa;
+  background: #fafafa; text-align: center; font: 10.5pt "Times New Roman", serif; }
+.callout { margin: 2.3mm 0; padding: 2.7mm 3.5mm; color: #fff; background: #174f4e; }
+.warning { margin: 2mm 0; padding: 2.3mm 2.8mm; border: 1pt solid #c38d27;
+  background: #fffaf0; }
+table { width: 100%; border-collapse: collapse; margin: 1.3mm 0 2.5mm;
+  font-size: 7.7pt; line-height: 1.22; }
+th, td { border: 0.7pt solid #777; padding: 1mm 1.3mm; vertical-align: top; }
+th { background: #ececea; font-family: "Heiti SC", sans-serif; }
+.small { font-size: 8.4pt; line-height: 1.28; }
+.refs { margin-top: 2mm; padding-top: 1.7mm; border-top: 0.7pt solid #aaa;
+  font-size: 7.4pt; }
+</style>
+
+<section class="page">
+  <div class="doc-head">
+    <strong>Olist电商GMV维度选择研究</strong>
+    <span>v4 极限精简版 · 聚类、组级、深度核与轨迹重要性</span>
+  </div>
+  <h2>一、保留主线与V4升级目标</h2>
+  <div class="lead"><b>不推倒V3：</b>仍以32项构造、31项建模、Copula-MVR + Lasso + 60轮e-value、FDR 0.20下14项确认集为主线；默认K={{V3_DEFAULT_K}}仍用于展示。V4只针对已知软肋增加稳健性和诊断。</div>
+  <div class="stats">
+    <div class="stat"><strong>{{PANEL_ROWS}}</strong><span>卖家-月</span></div>
+    <div class="stat"><strong>{{PANEL_SELLERS}}</strong><span>卖家</span></div>
+    <div class="stat"><strong>{{PANEL_MONTHS}}</strong><span>月份</span></div>
+    <div class="stat"><strong>{{STRICT_COUNT}}</strong><span>主线确认维度</span></div>
+  </div>
+  <h3>1. V3五个软肋与V4对应方法</h3>
+  <table>
+    <thead><tr><th>软肋</th><th>V4方法</th><th>作用</th></tr></thead>
+    <tbody>
+      <tr><td>卖家-月组内相关</td><td>卖家均值/离差分层Knockoff</td><td>区分跨卖家与卖家内信号</td></tr>
+      <tr><td>共线代理稀释</td><td>十二业务组Group Knockoff</td><td>在业务组层控制FDR</td></tr>
+      <tr><td>深度生成联合失败</td><td>DDLK式最坏swap目标</td><td>直接攻击最坏交换子集</td></tr>
+      <tr><td>固定MMD功效不足</td><td>训练/检验分离的深度核MMD</td><td>提高两样本检验功效</td></tr>
+      <tr><td>配对MLP功效为0</td><td>GRIP2式二维正则轨迹积分</td><td>聚合不同正则几何</td></tr>
+    </tbody>
+  </table>
+  <h3>2. 两处严谨性修正</h3>
+  <ul>
+    <li>经验边际校准只在生成器80%训练子集拟合，再应用到验证集。</li>
+    <li>深度核199次置换的p值下限为0.005；分类器99次置换下限为0.010，按离散分辨率解释。</li>
+  </ul>
+  <div class="warning"><b>结论权限：</b>新增分支均为稳健性/诊断；只有原Copula-Lasso主线承担0.20 FDR声明。</div>
+  <div class="page-number">1</div>
+</section>
+
+<section class="page">
+  <h2>二、聚类分层与组级Knockoff</h2>
+  <h3>1. 卖家均值—离差分解</h3>
+  <div class="formula">Xₛₜ = X̄ₛ + (Xₛₜ − X̄ₛ)</div>
+  <p>卖家间层使用2,793个卖家均值；卖家内层使用14,677行离差并排除零方差静态项。两个层级分别构造Copula-MVR并重复40轮。</p>
+  {{V4_ULTRA_CLUSTER_TABLE}}
+  <div class="callout">0.20水平：卖家间层{{V4_BETWEEN_COUNT}}项，卖家内层{{V4_WITHIN_COUNT}}项。主信号主要来自卖家长期经营位置差异。</div>
+  <h3>2. 十二业务组</h3>
+  <div class="two-col">
+    <div>
+      <div class="result-group"><b>交易与商品</b><br>价格成本、商品物理、商品内容、交易规模</div>
+      <div class="result-group"><b>支付与口碑</b><br>支付过程、支付方式、口碑</div>
+    </div>
+    <div>
+      <div class="result-group"><b>履约与市场</b><br>履约、市场集中度、市场覆盖</div>
+      <div class="result-group"><b>卖家侧</b><br>卖家地域、营销</div>
+    </div>
+  </div>
+  {{V4_ULTRA_GROUP_TABLE}}
+  <p>仅12组时，0.20水平Knockoff+离散门槛较强而无严格发现；0.30水平出现{{V4_GROUP_Q30_COUNT}}组：{{V4_GROUP_Q30_LIST}}。</p>
+  <div class="warning small">逐变量结果回答“哪个指标”，组级结果回答“哪类信息”；0.30组级结果属于更宽松敏感性分析。</div>
+  <div class="page-number">2</div>
+</section>
+
+<section class="page">
+  <h2>三、最坏swap生成与深度核诊断</h2>
+  <h3>1. DDLK式最坏交换目标</h3>
+  <p>每批次用Gumbel-logistic软掩码搜索可区分性最大的swap子集，生成器最小化最坏swap-MMD、边际、协方差、交叉对称与可重构性损失。边际映射仅用训练子集拟合。</p>
+  <h3>2. 三类生成器诊断</h3>
+  {{V4_ULTRA_DIAGNOSTIC_TABLE}}
+  <ul>
+    <li>Copula-MVR：深度核MMD在5个比例均不拒绝；分类器AUC均值{{V4_COPULA_AUC}}。</li>
+    <li>V2训练集校准：平均KS {{V4_V2_TRAIN_KS}}，深度核5/5拒绝，AUC {{V4_V2_AUC}}。</li>
+    <li>V4最坏swap：平均KS {{V4_DEEP_KS}}，深度核5/5拒绝，AUC {{V4_DEEP_AUC}}。</li>
+  </ul>
+  <div class="callout">V4最坏swap生成器结论：{{V4_DEEP_DECISION}}。</div>
+  <h3>3. 诊断矛盾如何收口</h3>
+  <p>固定RBF-MMD对V2/V4深度分支仍多不拒绝；学习核后全部比例拒绝，并与分类器一致。说明V3的矛盾来自固定核功效不足，而不是分类器“误报”。</p>
+  <table>
+    <thead><tr><th>检验</th><th>置换数</th><th>最小p值</th><th>论文写法</th></tr></thead>
+    <tbody>
+      <tr><td>RBF/深度核MMD</td><td>199</td><td>0.005</td><td>≤0.005</td></tr>
+      <tr><td>分类器标签置换</td><td>99</td><td>0.010</td><td>≤0.010</td></tr>
+    </tbody>
+  </table>
+  <div class="warning small">深度分支形式上选出的维度为{{V4_DEEP_FORMAL_LIST}}，但生成器准入失败，因此全部只作诊断。</div>
+  <div class="page-number">3</div>
+</section>
+
+<section class="page">
+  <h2>四、GRIP2式轨迹重要性与V3参数K</h2>
+  <h3>1. 二维正则轨迹聚合</h3>
+  <div class="formula">Wⱼ = meanₜ,λ(|aⱼ|dⱼ − |ãⱼ|dⱼ)</div>
+  <p>在4个L1强度×4个组正则强度上循环采样，沿优化轨迹累计配对第一层活跃度。20轮Copula Knockoff独立训练；交换测试最大误差{{V4_GRIP_ERROR}}。</p>
+  {{V4_ULTRA_GRIP_TABLE}}
+  <div class="callout">GRIP2式结果：0.20水平{{V4_GRIP_Q20_COUNT}}项；0.30水平{{V4_GRIP_Q30_COUNT}}项——{{V4_GRIP_Q30_LIST}}。</div>
+  <h3>2. 与V2配对MLP比较</h3>
+  <table>
+    <thead><tr><th>方法</th><th>反对称</th><th>q=0.20</th><th>q=0.30</th></tr></thead>
+    <tbody>
+      <tr><td>V2单正则配对MLP</td><td>通过</td><td>0项</td><td>0项</td></tr>
+      <tr><td>V4轨迹聚合</td><td>通过</td><td>{{V4_GRIP_Q20_COUNT}}项</td><td>{{V4_GRIP_Q30_COUNT}}项</td></tr>
+    </tbody>
+  </table>
+  <h3>3. 参数K保持不变</h3>
+  <p>V3的K∈[1,14]展示路径继续保留：K=4极简、K=8均衡、默认K={{V3_DEFAULT_K}}、K=14完整。V4新增方法未获得足够主水平证据，因此不改写排序池。</p>
+  <div class="warning small">轨迹聚合提高了0.30水平功效，但主水平0.20仍无发现，不能包装为“深度方法已胜出”。</div>
+  <div class="page-number">4</div>
+</section>
+
+<section class="page">
+  <h2>五、V4结论与答辩口径</h2>
+  <div class="callout">V4没有推翻14项确认集，也没有放宽深度准入；其贡献是把组内相关、共线代理和诊断功效从“局限”升级为真实实验。</div>
+  <h3>1. 结果权限总表</h3>
+  <table>
+    <thead><tr><th>层级</th><th>真实结果</th><th>可作何种结论</th></tr></thead>
+    <tbody>
+      <tr><td>V1确认主线</td><td>q=0.20严格14项</td><td>唯一正式逐变量FDR集合</td></tr>
+      <tr><td>聚类分层</td><td>between {{V4_BETWEEN_COUNT}}；within {{V4_WITHIN_COUNT}}</td><td>主信号层级来源</td></tr>
+      <tr><td>组级Knockoff</td><td>q=.20为{{V4_GROUP_Q20_COUNT}}组；q=.30为{{V4_GROUP_Q30_COUNT}}组</td><td>业务模块敏感性</td></tr>
+      <tr><td>最坏swap生成</td><td>深度核与分类器均拒绝</td><td>不作FDR声明</td></tr>
+      <tr><td>GRIP2式重要性</td><td>q=.20为{{V4_GRIP_Q20_COUNT}}项；q=.30为{{V4_GRIP_Q30_COUNT}}项</td><td>非线性敏感性</td></tr>
+      <tr><td>参数K</td><td>默认K={{V3_DEFAULT_K}}，RMSE {{V3_RMSE}}</td><td>只控制展示数量</td></tr>
+    </tbody>
+  </table>
+  <h3>2. 关键解释</h3>
+  <ul>
+    <li>卖家内层0项说明当前数据更适合跨卖家风险分层，不足以支持卖家自身短期变化的严格发现。</li>
+    <li>组级0.20无发现不等于业务组无信息，而是12组与Knockoff+“+1”项造成离散门槛。</li>
+    <li>最坏swap训练没有通过准入，证明更强训练目标仍不能替代独立诊断。</li>
+    <li>深度核与分类器的一致拒绝，使联合交换性判据比V3更自洽。</li>
+  </ul>
+  <div class="warning"><b>最终建议：</b>继续使用V1确认集和V3参数K；V4聚类、组级和深度结果作为稳健性标签。若获得更长面板，再重点验证卖家内动态与在线e-value。</div>
+  <div class="refs">
+    <b>复现：</b>随机种子{{SEED}}；PyTorch {{V2_TORCH_VERSION}}；面板SHA-256：{{PANEL_SHA256}}；结果位于“论文/v4/results”。<br>
+    <b>新增文献：</b>Bacci et al. (2026) clustered knockoffs；Liu et al. (2020) deep-kernel MMD；Dai & Barber (2016) group knockoff。
+  </div>
+  <div class="page-number">5</div>
+</section>

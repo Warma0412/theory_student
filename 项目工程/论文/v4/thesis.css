@@ -1,0 +1,24 @@
+@page {
+  size: A4;
+  margin: 25mm 25mm 25mm 30mm;
+  @bottom-center { content: counter(page); font-size: 9pt; }
+}
+@page:first { @bottom-center { content: ""; } }
+body { font-family: "Songti SC", "STSong", serif; font-size: 12pt; line-height: 1.75; color: #111; max-width: 160mm; margin: 0 auto; }
+h1 { font-family: "Heiti SC", sans-serif; text-align: center; font-size: 18pt; page-break-before: always; margin-top: 0; }
+h2 { font-family: "Heiti SC", sans-serif; font-size: 15pt; margin-top: 1.2em; break-after: avoid-page; }
+h3 { font-family: "Heiti SC", sans-serif; font-size: 13pt; break-after: avoid-page; }
+p { text-align: justify; text-indent: 2em; margin: 0.35em 0; }
+p:has(+ table) { break-after: avoid-page; }
+li p, td p, th p { text-indent: 0; }
+a { color: #111; text-decoration: none; }
+table { border-collapse: collapse; width: 100%; font-size: 8.5pt; margin: 0.8em 0; page-break-inside: auto; }
+tr { page-break-inside: avoid; }
+th, td { border: 1px solid #555; padding: 4px 6px; vertical-align: top; }
+th { background: #f0f0f0; }
+img { display: block; max-width: 95%; max-height: 210mm; margin: 1em auto; page-break-inside: avoid; }
+.title { font-family: "Heiti SC", sans-serif; font-size: 24pt; text-align: center; margin-top: 52mm; }
+.subtitle { text-align: center; font-size: 16pt; }
+.author, .date { text-align: center; text-indent: 0; }
+#TOC { page-break-before: always; page-break-after: always; }
+#TOC::before { content: "目录"; display: block; font-family: "Heiti SC", sans-serif; font-size: 18pt; font-weight: bold; text-align: center; margin: 0 0 1.2em 0; }

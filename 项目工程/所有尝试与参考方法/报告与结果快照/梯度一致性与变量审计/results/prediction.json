@@ -1,0 +1,28 @@
+{
+  "k": 12,
+  "features": [
+    "avg_price",
+    "unique_customer_count",
+    "item_count",
+    "order_count",
+    "dominant_customer_state_share",
+    "buyer_state_diversity",
+    "avg_delivery_days",
+    "avg_review_score",
+    "avg_distance_km",
+    "avg_estimate_gap_days",
+    "interstate_ratio",
+    "avg_product_name_length"
+  ],
+  "xgboost": {
+    "validation_rmse": 1.6378336628243024,
+    "test_rmse": 1.8582620617949055
+  },
+  "tabm": {
+    "validation_rmse": 1.6178779756173722,
+    "test_rmse": 1.863230359495351
+  },
+  "post_v7_exploratory": true,
+  "test_not_used_for_tuning": true,
+  "existing_test_previously_observed": true
+}

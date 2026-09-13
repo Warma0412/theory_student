@@ -1,0 +1,65 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+
+# ---- Virtual environments ----
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# ---- IDE / editor ----
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ---- Project-specific outputs ----
+# Experiment artefacts: regenerate locally instead of committing.
+outputs/checkpoints/
+outputs/figures/
+outputs/results/
+outputs/exp1_main_benchmark/
+outputs/exp2_spurious_colored_mnist/
+outputs/exp3_ablation/
+outputs/exp4_alpha_sensitivity/
+*.pt
+*.pth
+*.ckpt
+*.pkl
+
+# ---- Data ----
+# Raw data is not redistributed; place CSV/NPZ here locally.
+data/*.csv
+data/*.npy
+data/*.npz
+data/*.tsv
+data/*.h5
+data/raw/**/*.csv
+data/raw/**/*.npy
+data/raw/**/*.npz
+data/raw/**/*.tsv
+data/raw/**/*.h5
+!data/.gitkeep
+!data/README.md
+
+# ---- Logs / temp ----
+*.log
+*.tmp
+*.bak
+.cache/

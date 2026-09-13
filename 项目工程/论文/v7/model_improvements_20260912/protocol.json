@@ -1,0 +1,103 @@
+{
+  "id": "multi_model_mechanism_study_20260912",
+  "status": "local_plan_before_new_model_results_not_external_preregistration",
+  "post_v7_exploratory": true,
+  "prior_test_exposure": true,
+  "data": "unchanged V7 month-end-available 31-column seller panel",
+  "no_test_covariates_or_targets_for_selection": true,
+  "primary_k": 12,
+  "secondary_k": 8,
+  "secondary_scope": "full development reference and two-evaluator predictions; stability and simulations use primary K only",
+  "families": {
+    "deep_lasso": {
+      "methods": ["dl_jacobian", "dl_jacobian_lossrank", "dl_score_only"],
+      "mechanism": "Replace loss-gradient group penalty by prediction-Jacobian RMS group penalty; cross ablate training and scoring",
+      "lambda_candidates": [0.001, 0.01, 0.1],
+      "architecture": "unchanged V7 Deep Lasso MLP",
+      "training": "MSE plus Jacobian group penalty, same optimizer, 100 epochs max, patience 12",
+      "score": "RMS prediction gradient; no claim that Jacobian saliency itself is new"
+    },
+    "tabm": {
+      "methods": ["tabm_budget_gate"],
+      "mechanism": "Shared exact-cardinality straight-through gate across all eight official TabM members",
+      "gate_lr_candidates": [0.001, 0.01, 0.05],
+      "warmup_epochs": 15,
+      "epochs": 100,
+      "patience": 12,
+      "gate_temperature": [1.0, 0.2],
+      "secondary_k_independently_trained": true,
+      "known_prior": "stochastic/continuous gates and straight-through estimators are existing ideas, not claimed inventions"
+    },
+    "entryprune": {
+      "methods": ["ep_regression", "ep_refresh", "ep_dispersion"],
+      "mechanism": "Official sticky entry maxima versus refreshed environment-gradient means and dispersion-adjusted means",
+      "dispersion_candidates": [0.25, 0.5, 1.0],
+      "candidate_fraction": 0.5,
+      "hidden_width": 64,
+      "learning_rate": 0.003,
+      "updates": 60,
+      "batches_per_update": 5,
+      "batch_size": 512,
+      "probe_rows_per_environment": 128,
+      "environments": "three chronological training blocks; simulation uses three fixed row blocks",
+      "adaptations_shared": ["regression MSE output", "CPU", "aligned best validation checkpoint", "all minibatches including remainder"],
+      "refresh_and_dispersion_shared_change": "reset Adam first-layer moments for regenerated candidate columns; both refreshed variants share this change",
+      "secondary_k_independently_trained": true,
+      "no_confidence_bound_claim": true
+    },
+    "vtfs": {
+      "methods": ["vtfs_cardinality", "vtfs_pairrank", "random_k_search"],
+      "mechanism": "Exact K corpus/decoding and pairwise utility ranking loss, compared against same-budget uniform subset search",
+      "fixed_pairrank_weight": 0.1,
+      "utility_queries_per_variant": 128,
+      "corpus_queries": 96,
+      "decoder_candidates_per_seed": 4,
+      "training_epochs": 100,
+      "utility_predictor": {"trees": 100, "depth": 3, "lr": 0.05, "seed": 101},
+      "shared_official_components": "V7 official variational Transformer encoder and decoder, epsilon=1 retained",
+      "secondary_k_independently_trained": true,
+      "attribution_check": "best neural candidate versus all queried non-neural fallbacks"
+    }
+  },
+  "tuning": {
+    "training_targets": "through 2017-12",
+    "early_stop_and_selector_ranking": "2018-01",
+    "config_scoring": "2018-02",
+    "score": "fixed V7 XGBoost K12 RMSE, fit through 2018-01, ties by smaller parameter",
+    "neural_seeds": [11, 29, 47],
+    "architecture_hyperparameters": "frozen V7 configs; local mechanism comparison, not equally optimized method performance bounds",
+    "selection_not_on_stability_or_simulation_truth": true
+  },
+  "evaluation": {
+    "real_cases_per_method": 111,
+    "sampling_manifest": "../data_processed/sampling_manifest.json",
+    "same_seller_draws_and_row_hash_checks": true,
+    "complementary_pairs": 30,
+    "fraction_70_repetitions": 20,
+    "fraction_80_repetitions": 20,
+    "seed_only_batches": 10,
+    "simulation_scenarios": ["linear_sparse", "linear_medium", "linear_weak", "linear_dense", "nonlinear", "nonlinear_panel"],
+    "simulation_repetitions_per_scenario": 100,
+    "shared_simulation_data": "../data_processed/simulations",
+    "simulation_n": 2000,
+    "simulation_split": [1200, 400, 400],
+    "primary_metrics": ["test_rmse_log", "reference_jaccard", "complementary_jaccard", "nogueira", "FDP_at_12", "Power_at_12"],
+    "secondary_metrics": ["mae_log", "r2_log", "wape_raw", "worst_test_month_rmse", "training_only_pairwise_redundancy", "runtime"],
+    "evaluators": ["xgboost", "tabm"],
+    "paired_cluster_bootstrap": 5000,
+    "bootstrap_unit": "seller, conditional on observed three test months",
+    "stability_ci_unit": "30 complementary groups, not 60 independent halves",
+    "multiplicity": "Bonferroni intervals within prespecified primary-K family; pointwise intervals labelled separately",
+    "simulation_ci": "paired Monte Carlo differences within each scene",
+    "native_fdr_for_new_methods": false,
+    "all_registered_variants_completed_even_if_unfavorable": true
+  },
+  "interpretation": {
+    "rmse_tolerance": "1% relative increase as an engineering tolerance, not proof of equivalence",
+    "stability_change_worth_following": 0.05,
+    "superiority_requires": "paired evidence versus parent AND strong XGBoost-SHAP baseline, with predictive and discovery tradeoffs reported",
+    "novelty": "candidate mechanisms only; limited literature search is not proof of novelty and empirical wins do not create originality",
+    "unavailable_models": "DeepDRK and TabPFN prior failures are retained; no further unsupported FDR or hardware-success claims",
+    "no_second_dataset_claim": true
+  }
+}

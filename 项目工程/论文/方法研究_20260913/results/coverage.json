@@ -1,0 +1,14 @@
+{
+  "real": {
+    "count": 111,
+    "ok": 111,
+    "required": 111,
+    "failed": []
+  },
+  "simulations": {
+    "count": 800,
+    "ok": 800,
+    "required": 800,
+    "failed": []
+  }
+}

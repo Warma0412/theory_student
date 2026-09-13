@@ -1,0 +1,156 @@
+method,feature,label_zh,score,rank,selected_native,selected_matched
+去随机化Knockoff,avg_price,平均商品价格,30.225,1,True,True
+去随机化Knockoff,avg_freight,平均运费,0.0,29,False,False
+去随机化Knockoff,avg_product_weight_g,平均商品重量,0.0,28,False,False
+去随机化Knockoff,avg_product_length_cm,平均商品长度,0.0,27,False,False
+去随机化Knockoff,avg_product_height_cm,平均商品高度,0.0,26,False,False
+去随机化Knockoff,avg_product_width_cm,平均商品宽度,0.0,25,False,False
+去随机化Knockoff,avg_product_photos_qty,平均商品图片数,0.0,24,False,False
+去随机化Knockoff,avg_product_name_length,平均商品标题长度,30.225,5,True,True
+去随机化Knockoff,avg_product_description_length,平均商品描述长度,13.175,12,True,True
+去随机化Knockoff,avg_payment_installments,平均支付分期期数,0.0,23,False,False
+去随机化Knockoff,avg_payment_sequential,平均支付序列数,0.0,22,False,False
+去随机化Knockoff,credit_card_ratio,信用卡支付占比,0.0,21,False,False
+去随机化Knockoff,boleto_ratio,Boleto支付占比,0.0,20,False,False
+去随机化Knockoff,voucher_ratio,代金券支付占比,0.0,19,False,False
+去随机化Knockoff,debit_card_ratio,借记卡支付占比,0.0,18,False,False
+去随机化Knockoff,avg_review_score,平均评价得分,0.0,17,False,False
+去随机化Knockoff,avg_delivery_days,平均下单至送达天数,0.0,16,False,False
+去随机化Knockoff,avg_approval_days,平均下单至审核天数,0.0,15,False,False
+去随机化Knockoff,avg_ship_days,平均审核至承运天数,30.225,10,True,True
+去随机化Knockoff,avg_estimate_gap_days,平均预计提前送达天数,30.225,9,True,True
+去随机化Knockoff,item_count,成交件数,30.225,8,True,True
+去随机化Knockoff,order_count,成交订单数,30.225,7,True,True
+去随机化Knockoff,category_count,活跃品类数,30.225,6,True,True
+去随机化Knockoff,unique_customer_count,独立顾客数,30.225,4,True,True
+去随机化Knockoff,buyer_state_diversity,买家州数量,30.225,3,True,True
+去随机化Knockoff,dominant_customer_state_share,第一大买家州占比,13.95,11,True,True
+去随机化Knockoff,interstate_ratio,跨州交易占比,0.0,14,False,False
+去随机化Knockoff,avg_distance_km,平均卖家-买家距离,0.0,13,False,False
+去随机化Knockoff,seller_state_frequency,卖家所在州频率,30.225,2,True,True
+去随机化Knockoff,marketing_origin_frequency,营销来源频率,0.0,30,False,False
+去随机化Knockoff,has_marketing_deal,是否匹配营销成交线索,0.0,31,False,False
+Elastic Net,avg_price,平均商品价格,0.38752548403105125,3,True,True
+Elastic Net,avg_freight,平均运费,0.059920514504720565,10,True,True
+Elastic Net,avg_product_weight_g,平均商品重量,0.0,16,False,False
+Elastic Net,avg_product_length_cm,平均商品长度,0.0,19,False,False
+Elastic Net,avg_product_height_cm,平均商品高度,0.04050315122115479,12,True,True
+Elastic Net,avg_product_width_cm,平均商品宽度,0.0,21,False,False
+Elastic Net,avg_product_photos_qty,平均商品图片数,0.0,23,False,False
+Elastic Net,avg_product_name_length,平均商品标题长度,0.06516899349005922,9,True,True
+Elastic Net,avg_product_description_length,平均商品描述长度,0.029463832689973015,13,True,False
+Elastic Net,avg_payment_installments,平均支付分期期数,0.0,30,False,False
+Elastic Net,avg_payment_sequential,平均支付序列数,0.0,24,False,False
+Elastic Net,credit_card_ratio,信用卡支付占比,0.0,25,False,False
+Elastic Net,boleto_ratio,Boleto支付占比,0.0,26,False,False
+Elastic Net,voucher_ratio,代金券支付占比,0.0,22,False,False
+Elastic Net,debit_card_ratio,借记卡支付占比,0.0,15,False,False
+Elastic Net,avg_review_score,平均评价得分,0.0017667331185555765,14,True,False
+Elastic Net,avg_delivery_days,平均下单至送达天数,0.0,28,False,False
+Elastic Net,avg_approval_days,平均下单至审核天数,0.0,27,False,False
+Elastic Net,avg_ship_days,平均审核至承运天数,0.1905310744754248,5,True,True
+Elastic Net,avg_estimate_gap_days,平均预计提前送达天数,0.07015833455352206,8,True,True
+Elastic Net,item_count,成交件数,0.103821289869608,6,True,True
+Elastic Net,order_count,成交订单数,0.5993958886146399,2,True,True
+Elastic Net,category_count,活跃品类数,0.07680462618129309,7,True,True
+Elastic Net,unique_customer_count,独立顾客数,0.6112538648087861,1,True,True
+Elastic Net,buyer_state_diversity,买家州数量,0.0,20,False,False
+Elastic Net,dominant_customer_state_share,第一大买家州占比,0.2667558740070513,4,True,True
+Elastic Net,interstate_ratio,跨州交易占比,0.0,18,False,False
+Elastic Net,avg_distance_km,平均卖家-买家距离,0.0,17,False,False
+Elastic Net,seller_state_frequency,卖家所在州频率,0.04427678569747761,11,True,True
+Elastic Net,marketing_origin_frequency,营销来源频率,0.0,29,False,False
+Elastic Net,has_marketing_deal,是否匹配营销成交线索,0.0,31,False,False
+稳定性选择,avg_price,平均商品价格,1.0000388700204212,1,True,True
+稳定性选择,avg_freight,平均运费,1.0000065254670685,6,True,True
+稳定性选择,avg_product_weight_g,平均商品重量,0.08000010916279775,26,False,False
+稳定性选择,avg_product_length_cm,平均商品长度,0.2600002683010086,17,False,False
+稳定性选择,avg_product_height_cm,平均商品高度,1.0000041668354578,8,True,True
+稳定性选择,avg_product_width_cm,平均商品宽度,0.20000030486403136,19,False,False
+稳定性选择,avg_product_photos_qty,平均商品图片数,0.10000010694932612,24,False,False
+稳定性选择,avg_product_name_length,平均商品标题长度,1.0000064824114052,7,True,True
+稳定性选择,avg_product_description_length,平均商品描述长度,0.9200025729869848,11,True,True
+稳定性选择,avg_payment_installments,平均支付分期期数,0.18000031323996515,20,False,False
+稳定性选择,avg_payment_sequential,平均支付序列数,0.48000050351556117,15,False,False
+稳定性选择,credit_card_ratio,信用卡支付占比,0.08000004596280562,27,False,False
+稳定性选择,boleto_ratio,Boleto支付占比,0.06000002737847694,28,False,False
+稳定性选择,voucher_ratio,代金券支付占比,0.14000016637247945,22,False,False
+稳定性选择,debit_card_ratio,借记卡支付占比,0.10000006730043635,25,False,False
+稳定性选择,avg_review_score,平均评价得分,0.5000006102030058,14,False,False
+稳定性选择,avg_delivery_days,平均下单至送达天数,0.3400005239681633,16,False,False
+稳定性选择,avg_approval_days,平均下单至审核天数,0.18000012072391167,21,False,False
+稳定性选择,avg_ship_days,平均审核至承运天数,1.0000193733528815,3,True,True
+稳定性选择,avg_estimate_gap_days,平均预计提前送达天数,1.0000067191126962,5,True,True
+稳定性选择,item_count,成交件数,0.6200044609115284,13,False,False
+稳定性选择,order_count,成交订单数,0.8400522569590692,12,False,True
+稳定性选择,category_count,活跃品类数,1.0000072012591845,4,True,True
+稳定性选择,unique_customer_count,独立顾客数,0.9600754102092957,9,True,True
+稳定性选择,buyer_state_diversity,买家州数量,0.0,30,False,False
+稳定性选择,dominant_customer_state_share,第一大买家州占比,1.0000261859816533,2,True,True
+稳定性选择,interstate_ratio,跨州交易占比,0.2400002658813328,18,False,False
+稳定性选择,avg_distance_km,平均卖家-买家距离,0.12000006055635304,23,False,False
+稳定性选择,seller_state_frequency,卖家所在州频率,0.9600040591148881,10,True,True
+稳定性选择,marketing_origin_frequency,营销来源频率,0.0,29,False,False
+稳定性选择,has_marketing_deal,是否匹配营销成交线索,0.0,31,False,False
+影子变量树模型,avg_price,平均商品价格,1.0000421230926286,6,True,True
+影子变量树模型,avg_freight,平均运费,6.866764092037681e-06,21,False,False
+影子变量树模型,avg_product_weight_g,平均商品重量,9.566958603185162e-06,13,False,False
+影子变量树模型,avg_product_length_cm,平均商品长度,7.921171659912107e-06,17,False,False
+影子变量树模型,avg_product_height_cm,平均商品高度,8.636653475259912e-06,15,False,False
+影子变量树模型,avg_product_width_cm,平均商品宽度,9.238409444039217e-06,14,False,False
+影子变量树模型,avg_product_photos_qty,平均商品图片数,0.25001088660955467,10,False,True
+影子变量树模型,avg_product_name_length,平均商品标题长度,0.025009565536890797,12,False,True
+影子变量树模型,avg_product_description_length,平均商品描述长度,0.05000956732414859,11,False,True
+影子变量树模型,avg_payment_installments,平均支付分期期数,0.9250126149622562,7,True,True
+影子变量树模型,avg_payment_sequential,平均支付序列数,1.2313417409349787e-06,28,False,False
+影子变量树模型,credit_card_ratio,信用卡支付占比,5.788057237070575e-06,25,False,False
+影子变量树模型,boleto_ratio,Boleto支付占比,5.309399347032404e-06,26,False,False
+影子变量树模型,voucher_ratio,代金券支付占比,1.5648747434889409e-06,27,False,False
+影子变量树模型,debit_card_ratio,借记卡支付占比,4.004905756351227e-07,29,False,False
+影子变量树模型,avg_review_score,平均评价得分,8.435041477325882e-06,16,False,False
+影子变量树模型,avg_delivery_days,平均下单至送达天数,7.063545813818401e-06,19,False,False
+影子变量树模型,avg_approval_days,平均下单至审核天数,6.637218138686877e-06,22,False,False
+影子变量树模型,avg_ship_days,平均审核至承运天数,0.9000139350818445,8,True,True
+影子变量树模型,avg_estimate_gap_days,平均预计提前送达天数,6.907674700896464e-06,20,False,False
+影子变量树模型,item_count,成交件数,1.0000868306161654,4,True,True
+影子变量树模型,order_count,成交订单数,1.000162236240188,2,True,True
+影子变量树模型,category_count,活跃品类数,6.204225530305946e-06,23,False,False
+影子变量树模型,unique_customer_count,独立顾客数,1.0001658878048183,1,True,True
+影子变量树模型,buyer_state_diversity,买家州数量,1.0001156836533565,3,True,True
+影子变量树模型,dominant_customer_state_share,第一大买家州占比,1.0000445144997296,5,True,True
+影子变量树模型,interstate_ratio,跨州交易占比,7.783755274189519e-06,18,False,False
+影子变量树模型,avg_distance_km,平均卖家-买家距离,6.1360941170504105e-06,24,False,False
+影子变量树模型,seller_state_frequency,卖家所在州频率,0.2750112930000857,9,False,True
+影子变量树模型,marketing_origin_frequency,营销来源频率,0.0,30,False,False
+影子变量树模型,has_marketing_deal,是否匹配营销成交线索,0.0,31,False,False
+XGBoost-SHAP,avg_price,平均商品价格,0.32905280590057373,3,True,True
+XGBoost-SHAP,avg_freight,平均运费,0.05011797696352005,9,True,True
+XGBoost-SHAP,avg_product_weight_g,平均商品重量,0.029424889013171196,18,False,False
+XGBoost-SHAP,avg_product_length_cm,平均商品长度,0.027941735461354256,19,False,False
+XGBoost-SHAP,avg_product_height_cm,平均商品高度,0.04613788425922394,10,True,True
+XGBoost-SHAP,avg_product_width_cm,平均商品宽度,0.013407277874648571,22,False,False
+XGBoost-SHAP,avg_product_photos_qty,平均商品图片数,0.008702142164111137,27,False,False
+XGBoost-SHAP,avg_product_name_length,平均商品标题长度,0.05518820136785507,8,True,True
+XGBoost-SHAP,avg_product_description_length,平均商品描述长度,0.04200248420238495,12,True,True
+XGBoost-SHAP,avg_payment_installments,平均支付分期期数,0.03217950463294983,17,False,False
+XGBoost-SHAP,avg_payment_sequential,平均支付序列数,0.0022969951387494802,28,False,False
+XGBoost-SHAP,credit_card_ratio,信用卡支付占比,0.011886430904269218,24,False,False
+XGBoost-SHAP,boleto_ratio,Boleto支付占比,0.01090725976973772,25,False,False
+XGBoost-SHAP,voucher_ratio,代金券支付占比,0.010149003006517887,26,False,False
+XGBoost-SHAP,debit_card_ratio,借记卡支付占比,0.0012810893822461367,29,False,False
+XGBoost-SHAP,avg_review_score,平均评价得分,0.041961345821619034,13,False,False
+XGBoost-SHAP,avg_delivery_days,平均下单至送达天数,0.06393899768590927,7,True,True
+XGBoost-SHAP,avg_approval_days,平均下单至审核天数,0.03747205808758736,15,False,False
+XGBoost-SHAP,avg_ship_days,平均审核至承运天数,0.1322721540927887,4,True,True
+XGBoost-SHAP,avg_estimate_gap_days,平均预计提前送达天数,0.11054571717977524,5,True,True
+XGBoost-SHAP,item_count,成交件数,0.041081152856349945,14,False,False
+XGBoost-SHAP,order_count,成交订单数,0.6049624085426331,1,True,True
+XGBoost-SHAP,category_count,活跃品类数,0.01711767539381981,21,False,False
+XGBoost-SHAP,unique_customer_count,独立顾客数,0.5915464162826538,2,True,True
+XGBoost-SHAP,buyer_state_diversity,买家州数量,0.06617111712694168,6,True,True
+XGBoost-SHAP,dominant_customer_state_share,第一大买家州占比,0.013380715623497963,23,False,False
+XGBoost-SHAP,interstate_ratio,跨州交易占比,0.04235200583934784,11,True,True
+XGBoost-SHAP,avg_distance_km,平均卖家-买家距离,0.02659454569220543,20,False,False
+XGBoost-SHAP,seller_state_frequency,卖家所在州频率,0.03715325891971588,16,False,False
+XGBoost-SHAP,marketing_origin_frequency,营销来源频率,0.0,30,False,False
+XGBoost-SHAP,has_marketing_deal,是否匹配营销成交线索,0.0,31,False,False

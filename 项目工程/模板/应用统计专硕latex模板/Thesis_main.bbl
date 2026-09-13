@@ -1,0 +1,40 @@
+\begin{thebibliography}{4}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{#1}
+\expandafter\ifx\csname urlstyle\endcsname\relax\else
+  \urlstyle{same}\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \DeclareUrlCommand\doi{\urlstyle{rm}}
+  \def\eprint#1#2{#2}
+\else
+  \def\doi#1{\href{https://doi.org/#1}{\nolinkurl{#1}}}
+  \let\eprint\href
+\fi
+
+\bibitem[姜礼尚(2003)]{jls2003}
+姜礼尚.
+\newblock 期权定价的数学模型和方法\allowbreak[M].
+\newblock 北京: 高等教育出版社, 2003.
+
+\bibitem[Grisvard(1985)]{Grisvard1985}
+GRISVARD P.
+\newblock Monographs and studies in mathematics: Vol.~24\quad elliptic problems
+  in nonsmooth domains\allowbreak[M].
+\newblock Boston: Pitman (Advanced Publishing Program), 1985: xiv+410.
+
+\bibitem[Agnelli et~al.(2017)Agnelli, De~Cezaro, Leit\~Ao, and
+  Marques~Alves]{Agnelli2017}
+AGNELLI J~P, DE~CEZARO A, LEIT\~AO A, et~al.
+\newblock On the identification of piecewise constant coefficients in optical
+  diffusion tomography by level set\allowbreak[J/OL].
+\newblock ESAIM Control Optim. Calc. Var., 2017, 23\allowbreak (2): 663-683.
+\newblock \url{https://doi.org/10.1051/cocv/2016007}.
+
+\bibitem[Ammari et~al.(2008)Ammari, Garapon, Kang, and Lee]{Ammari2007}
+AMMARI H, GARAPON P, KANG H, et~al.
+\newblock A method of biological tissues elasticity reconstruction using
+  magnetic resonance elastography measurements\allowbreak[J/OL].
+\newblock Quart. Appl. Math., 2008, 66\allowbreak (1): 139-175.
+\newblock \url{https://doi.org/10.1090/S0033-569X-07-01089-8}.
+
+\end{thebibliography}

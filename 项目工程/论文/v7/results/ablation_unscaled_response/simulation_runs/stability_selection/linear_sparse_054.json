@@ -1,0 +1,131 @@
+{
+  "status": "ok",
+  "method": "stability_selection",
+  "scenario": {
+    "name": "linear_sparse",
+    "signals": 5,
+    "snr": 3.0,
+    "response": "linear"
+  },
+  "rep": 54,
+  "data_hash": "d6c312f9ae32ffc7b0eab94d1ecfc2f991a3c495f929f5a2ad4336438c88e523",
+  "truth": [
+    24,
+    15,
+    4,
+    27,
+    12
+  ],
+  "score": [
+    0.975,
+    1.0,
+    0.975,
+    0.975,
+    1.0,
+    1.0,
+    0.925,
+    0.925,
+    0.95,
+    0.925,
+    0.95,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.9,
+    0.925,
+    0.9,
+    0.95,
+    0.975,
+    0.975,
+    0.95,
+    1.0,
+    0.975,
+    0.95,
+    1.0,
+    0.925,
+    0.975,
+    0.975
+  ],
+  "order": [
+    15,
+    24,
+    27,
+    12,
+    4,
+    14,
+    13,
+    5,
+    11,
+    16,
+    1,
+    30,
+    3,
+    0,
+    22,
+    29,
+    25,
+    21,
+    2,
+    23,
+    8,
+    20,
+    10,
+    26,
+    9,
+    18,
+    28,
+    7,
+    6,
+    17,
+    19
+  ],
+  "metrics": [
+    {
+      "rule": "top4",
+      "FDP": 0.0,
+      "power": 0.8,
+      "discoveries": 4,
+      "FDP_gt_0.2": false
+    },
+    {
+      "rule": "top8",
+      "FDP": 0.375,
+      "power": 1.0,
+      "discoveries": 8,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top10",
+      "FDP": 0.5,
+      "power": 1.0,
+      "discoveries": 10,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top12",
+      "FDP": 0.5833333333333334,
+      "power": 1.0,
+      "discoveries": 12,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top14",
+      "FDP": 0.6428571428571429,
+      "power": 1.0,
+      "discoveries": 14,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "native",
+      "FDP": 0.8387096774193549,
+      "power": 1.0,
+      "discoveries": 31,
+      "FDP_gt_0.2": true
+    }
+  ],
+  "rmse_at_12": 0.6829444424581966,
+  "seconds": 0.03894995804876089
+}

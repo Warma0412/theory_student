@@ -1,0 +1,59 @@
+2026-08-27 16:26:40,147 | INFO | V2 deep analysis mode=full device=mps
+2026-08-27 16:26:40,271 | INFO | Reused generator checkpoint with best validation score 0.39382
+2026-08-27 16:26:44,772 | INFO | Diagnostics copula_mvr: {'mean_marginal_ks': 0.025621868682429463, 'max_marginal_ks': 0.04189373297002725, 'covariance_relative_error': 0.08135593164198371, 'cross_covariance_asymmetry': 0.09449707711174853, 'mean_real_knockoff_correlation': 0.5120059959844547, 'coverage_90_mean': 0.897941021358882, 'coverage_90_minimum': 0.8811307901907357, 'coverage_95_mean': 0.9474268260525623, 'coverage_95_minimum': 0.9305177111716622, 'correlation_relative_error': 0.07808801382702635, 'method': 'copula_mvr', 'swap_mmd_mean': 0.0009414745410997849, 'swap_classifier_auc_mean': 0.7881003118896578, 'swap_mmd_rejection_rate_5pct': 0.0, 'swap_classifier_rejection_rate_5pct': 1.0}
+2026-08-27 16:26:47,981 | INFO | Diagnostics gaussian_mvr: {'mean_marginal_ks': 0.19958029357475607, 'max_marginal_ks': 0.510558583106267, 'covariance_relative_error': 0.07184739575947044, 'cross_covariance_asymmetry': 0.08049036878387596, 'mean_real_knockoff_correlation': 0.7001132578469325, 'coverage_90_mean': 0.9266172980574844, 'coverage_90_minimum': 0.8712534059945504, 'coverage_95_mean': 0.9628307110837655, 'coverage_95_minimum': 0.9311989100817438, 'correlation_relative_error': 0.06787642564891788, 'method': 'gaussian_mvr', 'swap_mmd_mean': 0.0009425085975793834, 'swap_classifier_auc_mean': 0.9733330557616314, 'swap_mmd_rejection_rate_5pct': 0.0, 'swap_classifier_rejection_rate_5pct': 1.0}
+2026-08-27 16:26:51,283 | INFO | Diagnostics deep_knockoff_raw: {'mean_marginal_ks': 0.21155620989716095, 'max_marginal_ks': 0.5136239782016349, 'covariance_relative_error': 0.10526720174237594, 'cross_covariance_asymmetry': 0.14513157666881035, 'mean_real_knockoff_correlation': 0.5083981841813442, 'coverage_90_mean': 0.9204205853915794, 'coverage_90_minimum': 0.8712534059945504, 'coverage_95_mean': 0.948932055902259, 'coverage_95_minimum': 0.9039509536784741, 'correlation_relative_error': 0.09473426227483399, 'method': 'deep_knockoff_raw', 'swap_mmd_mean': 0.0012389058834454403, 'swap_classifier_auc_mean': 0.9904943678178322, 'swap_mmd_rejection_rate_5pct': 0.0, 'swap_classifier_rejection_rate_5pct': 1.0}
+2026-08-27 16:26:54,563 | INFO | Diagnostics deep_knockoff_calibrated: {'mean_marginal_ks': 0.015788432803023646, 'max_marginal_ks': 0.03474114441416894, 'covariance_relative_error': 0.1604107815785111, 'cross_covariance_asymmetry': 0.18695829269421932, 'mean_real_knockoff_correlation': 0.5553925205062721, 'coverage_90_mean': 0.9393513228443351, 'coverage_90_minimum': 0.8824931880108992, 'coverage_95_mean': 0.9713456974597874, 'coverage_95_minimum': 0.9376702997275205, 'correlation_relative_error': 0.16039006445909676, 'method': 'deep_knockoff_calibrated', 'swap_mmd_mean': 0.0011075222031954545, 'swap_classifier_auc_mean': 0.9223756226437947, 'swap_mmd_rejection_rate_5pct': 0.0, 'swap_classifier_rejection_rate_5pct': 1.0}
+2026-08-27 16:26:54,567 | INFO | Using fixed V1 primary Lasso alpha 0.004374305300 for deep-generator comparison
+2026-08-27 16:27:19,414 | INFO | Deep-generator Lasso repetition=1/30
+2026-08-27 16:27:46,462 | INFO | Deep-generator Lasso repetition=2/30
+2026-08-27 16:28:16,562 | INFO | Deep-generator Lasso repetition=3/30
+2026-08-27 16:28:49,965 | INFO | Deep-generator Lasso repetition=4/30
+2026-08-27 16:29:17,815 | INFO | Deep-generator Lasso repetition=5/30
+2026-08-27 16:29:50,962 | INFO | Deep-generator Lasso repetition=6/30
+2026-08-27 16:30:25,819 | INFO | Deep-generator Lasso repetition=7/30
+2026-08-27 16:30:52,641 | INFO | Deep-generator Lasso repetition=8/30
+2026-08-27 16:31:18,662 | INFO | Deep-generator Lasso repetition=9/30
+2026-08-27 16:31:51,047 | INFO | Deep-generator Lasso repetition=10/30
+2026-08-27 16:32:21,324 | INFO | Deep-generator Lasso repetition=11/30
+2026-08-27 16:32:47,704 | INFO | Deep-generator Lasso repetition=12/30
+2026-08-27 16:33:11,033 | INFO | Deep-generator Lasso repetition=13/30
+2026-08-27 16:33:40,961 | INFO | Deep-generator Lasso repetition=14/30
+2026-08-27 16:34:09,510 | INFO | Deep-generator Lasso repetition=15/30
+2026-08-27 16:34:32,764 | INFO | Deep-generator Lasso repetition=16/30
+2026-08-27 16:34:54,185 | INFO | Deep-generator Lasso repetition=17/30
+2026-08-27 16:35:27,238 | INFO | Deep-generator Lasso repetition=18/30
+2026-08-27 16:35:45,671 | INFO | Deep-generator Lasso repetition=19/30
+2026-08-27 16:36:12,258 | INFO | Deep-generator Lasso repetition=20/30
+2026-08-27 16:36:36,750 | INFO | Deep-generator Lasso repetition=21/30
+2026-08-27 16:37:03,267 | INFO | Deep-generator Lasso repetition=22/30
+2026-08-27 16:37:24,666 | INFO | Deep-generator Lasso repetition=23/30
+2026-08-27 16:37:57,362 | INFO | Deep-generator Lasso repetition=24/30
+2026-08-27 16:38:27,389 | INFO | Deep-generator Lasso repetition=25/30
+2026-08-27 16:38:53,872 | INFO | Deep-generator Lasso repetition=26/30
+2026-08-27 16:39:15,043 | INFO | Deep-generator Lasso repetition=27/30
+2026-08-27 16:39:39,125 | INFO | Deep-generator Lasso repetition=28/30
+2026-08-27 16:40:00,204 | INFO | Deep-generator Lasso repetition=29/30
+2026-08-27 16:40:29,049 | INFO | Deep-generator Lasso repetition=30/30
+2026-08-27 16:40:32,423 | INFO | Paired MLP repetition=1 validation=0.65358 epochs=15
+2026-08-27 16:40:33,787 | INFO | Paired MLP repetition=2 validation=0.65608 epochs=14
+2026-08-27 16:40:35,906 | INFO | Paired MLP repetition=3 validation=0.68514 epochs=23
+2026-08-27 16:40:37,191 | INFO | Paired MLP repetition=4 validation=0.67546 epochs=14
+2026-08-27 16:40:38,881 | INFO | Paired MLP repetition=5 validation=0.69477 epochs=19
+2026-08-27 16:40:40,436 | INFO | Paired MLP repetition=6 validation=0.69272 epochs=17
+2026-08-27 16:40:41,736 | INFO | Paired MLP repetition=7 validation=0.68292 epochs=14
+2026-08-27 16:40:43,191 | INFO | Paired MLP repetition=8 validation=0.68316 epochs=16
+2026-08-27 16:40:44,465 | INFO | Paired MLP repetition=9 validation=0.69756 epochs=14
+2026-08-27 16:40:45,881 | INFO | Paired MLP repetition=10 validation=0.71226 epochs=16
+2026-08-27 16:40:47,216 | INFO | Paired MLP repetition=11 validation=0.69461 epochs=15
+2026-08-27 16:40:48,627 | INFO | Paired MLP repetition=12 validation=0.69237 epochs=16
+2026-08-27 16:40:49,997 | INFO | Paired MLP repetition=13 validation=0.71368 epochs=15
+2026-08-27 16:40:51,481 | INFO | Paired MLP repetition=14 validation=0.68833 epochs=15
+2026-08-27 16:40:52,947 | INFO | Paired MLP repetition=15 validation=0.68911 epochs=16
+2026-08-27 16:40:54,121 | INFO | Paired MLP repetition=16 validation=0.68603 epochs=13
+2026-08-27 16:40:55,533 | INFO | Paired MLP repetition=17 validation=0.69547 epochs=16
+2026-08-27 16:40:57,166 | INFO | Paired MLP repetition=18 validation=0.71620 epochs=18
+2026-08-27 16:40:58,514 | INFO | Paired MLP repetition=19 validation=0.70132 epochs=15
+2026-08-27 16:40:59,829 | INFO | Paired MLP repetition=20 validation=0.69433 epochs=15
+2026-08-27 16:41:00,361 | INFO | Paired MLP antisymmetry check: {'sample_size': 2600, 'test_feature': 'avg_price', 'max_absolute_error': 0.0, 'mean_absolute_error': 0.0, 'relative_l2_error': 0.0, 'passed_tolerance_1e_5': True}
+2026-08-27 16:41:02,446 | INFO | V2 deep analysis completed: {'config': {'mode': 'full', 'generator_epochs': 90, 'generator_patience': 12, 'generator_repetitions': 30, 'paired_mlp_repetitions': 20, 'paired_mlp_epochs': 100, 'predictor_epochs': 180, 'diagnostic_permutations': 99}, 'seed': 20260823, 'device': 'mps', 'torch': '2.8.0', 'numpy': '2.0.2', 'scipy': '1.13.1', 'platform': 'macOS-15.7.3-arm64-arm-64bit', 'n': 14677, 'p': 31, 'deep_generator_lasso_alpha': 0.004374305300270019, 'deep_generator_passed_prespecified_diagnostics': False, 'diagnostic_rule': {'mean_marginal_ks_max': 0.05, 'swap_classifier_auc_max': 0.75, 'covariance_relative_error_max': 0.2, 'mean_real_knockoff_correlation_max': 0.85, 'swap_mmd_rejection_rate_max': 0.4}, 'paired_mlp_antisymmetry': {'sample_size': 2600, 'test_feature': 'avg_price', 'max_absolute_error': 0.0, 'mean_absolute_error': 0.0, 'relative_l2_error': 0.0, 'passed_tolerance_1e_5': True}, 'v1_panel_sha256': '7212bf462a8b23ba6455bed5fe7354481b43d3e3a0f633a13ced1a97c3046a1e'}

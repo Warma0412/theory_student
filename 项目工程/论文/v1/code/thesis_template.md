@@ -1,0 +1,655 @@
+---
+title: 面向电商GMV监控的可控错误发现维度选择研究
+subtitle: 基于Olist卖家月度面板的去随机化Model-X Knockoff与可解释机器学习（v1）
+author: |
+  学校：【待填写】  
+  学院：【待填写】  
+  专业：【待填写】  
+  研究生：【待填写】  
+  学号：【待填写】  
+  指导教师：【待填写】
+date: 二〇二六年八月
+lang: zh-CN
+---
+
+# 原创性与使用说明
+
+本文档为研究生学位论文 v1 完整稿。原始交易数据来自公开的 Olist Brazilian E-Commerce Public Dataset 与 Marketing Funnel by Olist；数据、代码、随机种子、处理后面板摘要、模型结果和图表均保存在本项目 `论文/v1` 目录。封面中的学校、学院、专业、姓名、学号和导师信息需由作者按实际情况填写。正式提交前，还应以所在学校当年发布的学位论文模板替换封面、授权声明、页眉和参考文献细则。
+
+本文使用程序辅助完成数据清洗、统计计算、图表制作和初稿排版。所有实证数字均由本地原始 CSV 全量运行得到，不使用示例数字。作者应按照学校关于人工智能辅助研究与写作的规定进行披露，并对研究问题、模型设定、文献引用、结果解释和最终文字承担责任。
+
+# 摘要
+
+电商经营看板通常同时展示价格、交易规模、供给、支付、履约、口碑、地域和营销等大量维度。若仅依据边际相关系数、单变量显著性或单次机器学习重要性排序决定看板字段，既容易把高度共线的代理变量重复当作独立发现，也无法回答“入选指标中有多大比例可能是假发现”。针对这一问题，本文以 Olist 公开的巴西电商全链路数据为研究对象，构建面向 GMV 监控的可控错误发现维度选择框架。
+
+研究首先在订单、商品明细、支付、评价、商品、卖家、顾客、地理位置和营销漏斗各表的自然粒度上分别聚合，再形成卖家-月份面板，避免商品明细、支付和评价多对多连接造成 GMV 重复计算。主分析期为 {{PANEL_START}} 至 {{PANEL_END}}，最终得到 {{PANEL_ROWS}} 个卖家-月观测、{{PANEL_SELLERS}} 个卖家和 {{PANEL_MONTHS}} 个月，样本期已送达商品 GMV 合计 {{GMV_MILLION}} 百万巴西雷亚尔。为避免成交件数、订单数和均价对同月 GMV 的机械解释，主因变量定义为次月 `log(1+GMV)`；若卖家本月活跃而次月没有已送达订单，则次月 GMV 记为零，此类观测占 {{ZERO_RATE}}。
+
+本文共构造 {{CANDIDATE_COUNT}} 个候选维度，其中“{{EXCLUDED_FEATURES}}”在分析面板中为零方差，按预先定义的数据质量规则排除，实际进入模型的变量为 {{ANALYSIS_COUNT}} 个。方法上，对连续变量实施 1% 与 99% 分位缩尾、偏态变换、中位数插补和标准化，并采用带并列值随机化的秩高斯 Copula 处理离散与混合边际。基于 Ledoit-Wolf 收缩协方差和最小方差重构准则生成二阶 Model-X Knockoff，使用 Lasso 真实变量与仿制变量系数绝对值之差构造统计量。主分析生成 60 组独立 Knockoff，按 Ren 和 Barber 的去随机化方法设置最终 `α_eBH=0.20`、单轮 `α_kn=0.10`，聚合 e-value 后实施 e-BH。研究同时报告单轮 Knockoff 入选频率，但不把频率阈值等同于正式 FDR 保证。
+
+实证结果显示，Copula Knockoff 的平均边际 Kolmogorov-Smirnov 距离为 {{COPULA_MEAN_KS}}，明显低于原始高斯生成器的 {{GAUSSIAN_MEAN_KS}}，表明秩高斯处理显著改善了混合型业务变量的边际匹配。在主分析中，严格 e-BH 于最终 FDR 水平 0.20 下入选 {{STRICT_COUNT}} 个维度，包括{{STRICT_LIST}}；另有 {{STABLE_COUNT}} 个变量在单轮程序中达到至少 90% 的入选频率。时间外测试中，最佳模型为 {{BEST_MODEL}}，对数尺度 RMSE 为 {{BEST_RMSE}}，较直接使用本月 GMV 的朴素基线下降 {{RMSE_IMPROVEMENT}}。XGBoost 的 SHAP 结果与 Knockoff 在交易规模、价格、履约和市场覆盖等维度上形成交叉证据。双向固定效应回归则显示，部分动态变量在控制卖家和月份效应后仍与次月 GMV 显著相关，但本文不将其解释为因果效应。
+
+本文的主要贡献是：第一，将错误发现率控制引入电商看板维度治理；第二，通过自然粒度聚合和前瞻目标规避常见的数据膨胀与目标泄漏；第三，把严格 e-BH 结论、重复 Knockoff 稳定性、时间外预测、SHAP 解释和固定效应放入统一的证据分层框架；第四，提供从 11 张原始 CSV 到面板、模型、结果表、图和论文的完整可复现流程。研究结论可为电商指标准入、看板分层和后续实验设计提供方法依据。
+
+**关键词：** 电商 GMV；Model-X Knockoff；错误发现率；e-value；可解释机器学习；面板数据
+
+# Abstract
+
+E-commerce dashboards often contain many correlated dimensions describing price, transaction scale, assortment, payment, fulfillment, reputation, geography, and marketing. Selecting permanent dashboard dimensions using marginal correlations or a single machine-learning importance ranking neither controls false discoveries nor distinguishes independent information from correlated proxies. This thesis develops an auditable dimension-selection framework with false discovery rate control using the public Brazilian Olist e-commerce data.
+
+All source tables are first aggregated at their natural grains before being joined, preventing the many-to-many multiplication of item values by payment and review records. The resulting seller-month panel contains {{PANEL_ROWS}} observations for {{PANEL_SELLERS}} sellers over {{PANEL_MONTHS}} months. The response is next-month `log(1+GMV)` rather than contemporaneous GMV, thereby avoiding mechanical leakage from current price, order count, and item count. Zero next-month sales are retained as genuine business interruptions.
+
+Thirty-two candidate dimensions are constructed; one constant feature is excluded and {{ANALYSIS_COUNT}} variables enter the analysis. A randomized rank-Gaussian copula is used to handle tied, discrete, and skewed marginals. Second-order Model-X knockoffs are generated from a Ledoit-Wolf covariance estimate using the minimum-variance-reconstructability criterion. Lasso coefficient differences define antisymmetric feature statistics. Sixty independent knockoff realizations are aggregated through e-values, with `α_kn=0.10` and a final e-BH level of `α_eBH=0.20`. Selection frequency is reported separately as a stability diagnostic.
+
+The copula generator achieves a mean marginal KS distance of {{COPULA_MEAN_KS}}, compared with {{GAUSSIAN_MEAN_KS}} for the untransformed Gaussian baseline. The primary e-BH analysis identifies {{STRICT_COUNT}} dimensions at a target FDR of 0.20, while {{STABLE_COUNT}} dimensions are selected in at least 90% of individual runs. In an out-of-time test, the best model, {{BEST_MODEL}}, obtains a log-scale RMSE of {{BEST_RMSE}}, improving on the current-GMV baseline by {{RMSE_IMPROVEMENT}}. XGBoost SHAP values and two-way fixed-effects regressions provide complementary predictive and within-seller evidence. The proposed governance framework separates confirmatory discoveries, stable monitoring candidates, and diagnostic variables, and explicitly avoids causal claims.
+
+**Key words:** E-commerce GMV; Model-X knockoffs; false discovery rate; e-values; interpretable machine learning; panel data
+
+# 第1章 绪论
+
+## 1.1 研究背景
+
+数字平台可以以较低成本记录从获客、浏览、下单、支付、发货到评价的完整经营链路，但记录能力的提升也带来了指标冗余。一个典型 GMV 看板往往同时包含订单数、件数、顾客数、客单价、商品价格、运费、品类数、支付结构、物流时效、评价、地域覆盖和营销来源。随着团队和业务场景扩张，新字段持续增加，而旧字段很少退出，最终形成展示密度高、解释重复、维护成本高的指标体系。
+
+看板维度治理的核心并非找出与 GMV 相关性最大的若干变量，而是识别在控制其他候选信息后仍有增量价值的维度，并约束误报比例。订单数、件数和独立顾客数天然高度相关；价格、运费和商品物理属性也可能共同反映商品结构。若逐项检验并以 0.05 为显著性标准，随着检验数量增加，至少出现一个偶然显著结果的概率迅速上升。若改用树模型重要性，虽然能够处理非线性和交互，却通常只给出排序，不能直接控制入选集合中的假发现比例。
+
+错误发现率（False Discovery Rate，FDR）关注全部“发现”中错误发现的期望占比。与严格控制任意一次错误的族错误率相比，FDR 更适合允许有限探索、但要求整体发现质量可控的业务指标筛选。Model-X Knockoff 为每个真实变量构造一个保留特征依赖结构、但不携带额外响应信息的仿制变量，以真实变量与其仿制变量的竞争结果估计假发现。本研究将这一负对照思想用于电商 GMV 维度准入。
+
+## 1.2 研究对象与现实问题
+
+Olist 是巴西电商平台服务商，其公开数据覆盖订单、商品、支付、履约、评价、卖家、顾客、地理和营销漏斗。数据既包含连续金额和时长，也包含计数、比例、二元状态和大量零值，具有真实商业数据的混合分布特征。一个订单可以包含多件商品并涉及不同卖家，支付和评价也可能一单多行；如果直接把所有表连接后再汇总，价格会被支付行和评价行重复，进而污染所有统计结果。因此，本研究同时处理“如何正确构造分析样本”和“如何在相关变量中控制错误发现”两个问题。
+
+本文将业务问题具体化为：在本月可观察的卖家经营维度中，哪些变量在控制其余候选变量后仍包含次月 GMV 的增量预测信息，并值得进入常驻监控体系？这一问题强调前瞻预测与监控价值，而非事后拆解同月 GMV 恒等式。
+
+## 1.3 研究问题
+
+本文回答以下五个问题：
+
+1. 如何在 Olist 多表数据中构造不重复计算 GMV 的卖家-月份面板？
+2. 在混合、偏态、离散且高度相关的业务变量中，Copula Model-X Knockoff 能否生成质量可接受的负对照？
+3. 在预先设定的 FDR 水平下，哪些维度通过去随机化 e-BH，哪些维度仅具有单轮稳定性？
+4. 入选维度在自然时间外推中是否保留预测价值，线性模型、树模型和神经网络的表现是否一致？
+5. 如何把严格推断、稳定性、预测解释和固定效应证据转化为可执行的看板分层规则？
+
+Model-X 的零假设定义为：
+
+$$
+H_{0j}: Y_{s,t+1} \perp X_{j,s,t}\mid X_{-j,s,t},
+$$
+
+其中，$Y_{s,t+1}$ 表示卖家 $s$ 在次月的对数 GMV，$X_{j,s,t}$ 表示本月第 $j$ 个候选维度。拒绝该假设只表示该变量包含其余候选变量未覆盖的条件预测信息，不表示主动改变该变量一定会改变 GMV。
+
+## 1.4 研究思路
+
+研究流程包括六个阶段。第一阶段审计 11 张原始表，在支付、评价、地理等自然粒度上先聚合。第二阶段构造卖家-月份面板和次月目标，完成主键、时间、缺失和 GMV 对账检查。第三阶段对 {{ANALYSIS_COUNT}} 个可分析变量进行稳健预处理，生成 Copula-MVR Knockoff。第四阶段以 Lasso 和 XGBoost 分别构造真伪变量竞争统计量，通过多次生成和 e-value 聚合实施 FDR 控制。第五阶段按自然月份划分训练、验证和测试集，比较多种预测模型，并用 SHAP 和双向固定效应进行补充解释。第六阶段把结果转化为三级看板治理建议，并保留理论边界和数据局限。
+
+## 1.5 可能创新
+
+第一，本文将研究目标从“给特征重要性排序”转化为“控制看板维度发现错误”，使指标治理具有明确的统计风险口径。第二，本文采用次月 GMV 作为主目标，避免同月订单数、件数和价格机械解释同月 GMV。第三，针对业务变量中的离散值与并列值，引入固定种子的随机化秩高斯 Copula，并对仿制变量进行边际和协方差诊断。第四，去随机化过程中明确区分最终 `α_eBH` 和单轮 `α_kn`，按照原方法建议设定 `α_kn=α_eBH/2`。第五，本文不以“是否使用最复杂深度模型”作为 AI 价值标准，而是依据数据长度选择 XGBoost、MLP 和 SHAP，在可解释性、样本支持和复现性之间取得平衡。
+
+## 1.6 论文结构
+
+第2章梳理 FDR、Knockoff、e-value、机器学习解释和面板模型文献；第3章说明数据来源、连接规则、变量构造与样本质量；第4章给出 Copula-MVR Knockoff、去随机化 e-BH、预测模型、固定效应和模拟设计；第5章报告完整实证结果；第6章提出指标分层与运营应用；第7章总结并提出后续研究方向。
+
+# 第2章 文献综述与理论基础
+
+## 2.1 多重检验与错误发现率
+
+经典假设检验通常控制单项第一类错误概率。当研究者同时检验多个变量时，即使每项检验的显著性水平不变，整体误报数量也会随检验数增加。Bonferroni 方法控制族错误率，但在变量数量较多或信号相关时可能过于保守。Benjamini 和 Hochberg 提出的 FDR 定义为
+
+$$
+\mathrm{FDR}=\mathbb{E}\left[\frac{V}{R\vee 1}\right],
+$$
+
+其中 $V$ 为错误发现数，$R$ 为总发现数。FDR 允许在整体质量受控的前提下保留更多真实信号，因此适用于指标筛选、组学分析和大规模实验等场景[1]。
+
+Lasso 通过 $L_1$ 惩罚实现稀疏估计[7]，Elastic Net 在高度相关变量下改善稳定性[8]。但交叉验证选择的惩罚参数以预测误差为目标，并不自动提供 FDR 保证。后选择推断可以对特定线性模型进行修正，但实际电商变量往往混合分布且关系非线性，模型设定不确定性较高。
+
+## 2.2 Knockoff 的负对照思想
+
+Barber 和 Candès 首先在固定设计线性模型中提出 Knockoff 过滤器[2]，Candès 等进一步提出 Model-X Knockoff[3]。Model-X 不要求正确指定 $Y\mid X$，其关键要求是能够构造满足成对可交换性的仿制变量 $\widetilde X$：
+
+$$
+(X,\widetilde X)_{\mathrm{swap}(S)}
+\overset{d}{=}(X,\widetilde X),\qquad
+\widetilde X\perp Y\mid X.
+$$
+
+这里 $\mathrm{swap}(S)$ 表示对任意变量子集交换真实变量与对应仿制变量。仿制变量并非简单随机打乱，也不是向原变量增加独立噪声，而是在保留特征依赖结构的同时充当负对照。
+
+把真实特征和仿制特征共同输入预测器，得到重要性 $Z_j$ 与 $\widetilde Z_j$，可构造反对称统计量
+
+$$
+W_j=|Z_j|-|\widetilde Z_j|.
+$$
+
+对于零变量，$W_j$ 的符号在满足模型条件时具有对称性；真实变量显著胜过仿制变量时，$W_j$ 倾向于为较大的正值。Knockoff+ 阈值定义为
+
+$$
+T=\min\left\{t>0:
+\frac{1+\#\{j:W_j\le -t\}}
+{\max(\#\{j:W_j\ge t\},1)}
+\le \alpha_{\mathrm{kn}}\right\}.
+$$
+
+单轮入选集合为 $\widehat S=\{j:W_j\ge T\}$。
+
+## 2.3 非高斯特征与 Knockoff 生成
+
+二阶高斯 Knockoff 根据均值和协方差构造仿制变量，计算透明且易于诊断。然而，电商数据中的支付占比、是否匹配营销、订单数和品类数存在大量零值与并列值，直接套用高斯分布会破坏边际匹配。Deep Knockoffs 使用深度生成模型逼近交换不变分布，为复杂非高斯数据提供了重要方向[4]。
+
+本文没有将年代较早的 DeepKnockoffs 实现直接移植到现代环境后宣称得到理论有效的深度仿制变量。公开实现依赖较早的软件版本，而本研究样本是短面板、混合边际和强离散数据；一个未经充分诊断的深度生成器可能只产生外观相似的数据。本文采用更可审计的折中方案：使用随机化秩高斯 Copula 把每个边际映射至近似标准正态，再以 Ledoit-Wolf 收缩协方差[9]和 MVR 准则[10]构造二阶 Knockoff。AI 部分由 XGBoost Knockoff、时间外预测、MLP 和 SHAP 承担。
+
+## 2.4 去随机化 Knockoff 与 e-value
+
+Knockoff 生成本身含随机性，同一数据使用不同随机种子可能产生不同选择集合。仅以“入选频率超过某阈值”聚合，虽然直观，却不能自动继承 FDR 控制。Ren 和 Barber 发现 Knockoff 可以表示为 e-value，并可将多次运行的 e-value 取平均后使用 e-BH[5]。
+
+第 $m$ 次运行中，第 $j$ 个变量的 e-value 为
+
+$$
+e_j^{(m)}
+=p\,
+\frac{\mathbf{1}\{W_j^{(m)}\ge T^{(m)}\}}
+{1+\sum_{k=1}^{p}\mathbf{1}\{W_k^{(m)}\le -T^{(m)}\}}.
+$$
+
+聚合值为
+
+$$
+\bar e_j=\frac{1}{M}\sum_{m=1}^{M}e_j^{(m)}.
+$$
+
+将 $\bar e_j$ 降序排列，取最大的 $k$ 使
+
+$$
+\bar e_{(k)}\ge \frac{p}{\alpha_{\mathrm{eBH}}k},
+$$
+
+即可得到最终集合。`α_eBH` 决定最终 FDR 水平，`α_kn` 决定各轮生成 e-value 的阈值。Ren 和 Barber 的模拟建议在多轮聚合时设置 `α_kn=α_eBH/2`，其理由是把二者设为相同值可能降低 e-BH 的功效[5]。本文主设定为 `α_eBH=0.20`、`α_kn=0.10`。
+
+## 2.5 可解释机器学习
+
+随机森林和极端随机树通过多个树模型降低方差[11]，梯度提升通过逐步拟合残差建立强预测器[12]，XGBoost 进一步提供正则化、并行计算和缺失值处理[13]。多层感知机可以拟合一般非线性函数，但其参数量和稳定性依赖样本结构。本文使用这些模型检验 Knockoff 结论在非线性预测中的外部价值。
+
+SHAP 基于合作博弈的 Shapley 值分解单次预测，并可将绝对贡献在样本上取平均形成全局重要性[14]。SHAP 解释的是已拟合模型如何使用变量，不是条件独立检验，更不是因果效应。本文把 SHAP 与 Knockoff 的交集视为“统计筛选和预测模型均支持”的较高优先级证据。
+
+## 2.6 面板固定效应与识别边界
+
+卖家具有难以观测且随时间相对稳定的特征，例如管理能力、产品定位和长期供应关系；月份则包含宏观季节、平台增长和节假日冲击。双向固定效应通过卖家效应和月份效应消除这两类因素[17]，标准误按卖家聚类以允许同一卖家内部相关[18]。但固定效应仍可能受到时变促销、广告、库存和竞争的遗漏影响，因此只能提供同一卖家随时间变化的关联证据。
+
+## 2.7 文献评述
+
+现有电商研究大量关注销售预测、用户分群和可视化，而对指标准入中的多重比较与错误发现控制关注不足。Knockoff 文献强调统计保证，却较少处理业务数据中的自然粒度聚合、前瞻目标和看板治理。本文在两者之间建立连接：先保证样本构造正确，再以负对照约束发现，以时间外机器学习检验预测价值，最后将不同证据类型映射到产品决策层。
+
+# 第3章 数据来源、变量与研究设计
+
+## 3.1 数据来源
+
+主数据来自 Olist 在 Kaggle 发布的 Brazilian E-Commerce Public Dataset[27]，营销信息来自 Marketing Funnel by Olist[28]。本地原始目录中的 11 张 CSV 全部存在且可读取，因此无需用来源不明的第三方文件补齐。各表实际读取规模见表3-1。
+
+**表3-1 原始数据表及实际读取行数**
+
+{{SOURCE_TABLE}}
+
+数据覆盖约 10 万笔匿名订单，包含订单状态、购买与履约时间戳、商品价格、运费、支付、评价、商品属性、顾客与卖家位置。地理表提供邮编前缀到经纬度的映射，营销漏斗提供线索来源与成交卖家映射。
+
+## 3.2 自然粒度聚合与连接
+
+数据处理遵循“先在自然粒度聚合，再连接”的原则。支付表可能一单多行，先在订单级汇总支付金额，并用支付金额加权计算分期数，同时计算信用卡、Boleto、代金券和借记卡占比。评价表可能一单多条，先在订单级取平均评分。地理表同一邮编前缀可能对应多个坐标，先取纬度和经度中位数。商品明细保留原始价格行，用于 GMV、件数、均价、运费和商品属性聚合。
+
+订单主表与顾客表按 `customer_id` 连接，同时保留 `customer_unique_id`。前者是订单级顾客键，后者才是可跨订单识别的匿名顾客键；因此独立顾客数使用 `customer_unique_id` 去重。该修正避免把“独立顾客数”错误地构造成“订单数”的完全复制。
+
+在商品明细与订单、商品、卖家连接后，按 `seller_id × month` 聚合交易特征；订单级支付、评价和物流特征则先对卖家-订单去重，再聚合到卖家-月份。最终只在相同面板主键上连接两类结果。样本期已送达订单为 {{DELIVERED_ORDERS}} 笔，对应商品明细 {{DELIVERED_ITEMS}} 行。处理后 GMV 与原始已送达商品明细在研究期内逐笔对账一致，面板主键重复数为零。
+
+## 3.3 样本区间与分析单位
+
+主分析单位为卖家 $s$ 在月份 $t$ 的经营状态。特征月份从 {{PANEL_START}} 至 {{PANEL_END}}，合计 {{PANEL_MONTHS}} 个月。之所以从 2017 年开始，是因为 2016 年起始月份交易稀疏；特征期止于 2018 年 7 月，则保证公开数据中仍有 2018 年 8 月可用于构造次月目标。最终面板包含 {{PANEL_ROWS}} 行和 {{PANEL_SELLERS}} 个卖家。
+
+![图3-1 Olist主分析期月度GMV](figures/fig01_monthly_gmv.png)
+
+月度 GMV 在 {{PEAK_MONTH}} 达到样本期最高值 {{PEAK_GMV_THOUSAND}} 千雷亚尔。平台规模和活跃卖家数随时间明显变化，说明共同趋势可能同时推高多个变量；这也是后续引入月份固定效应和自然时间外推的原因。
+
+## 3.4 目标变量
+
+主目标定义为：
+
+$$
+Y_{s,t+1}=\log(1+\mathrm{GMV}_{s,t+1}).
+$$
+
+若卖家在月份 $t$ 活跃、月份 $t+1$ 没有已送达订单，则次月 GMV 记为零，而不是删除该行。次月零成交率为 {{ZERO_RATE}}。零值包含低频经营、暂时退出或观测期内未成交等状态，保留它们能够避免只研究连续活跃卖家的选择偏差。
+
+采用次月而非同月 GMV 有两点好处。第一，同月 GMV 本身等于商品价格求和，订单数、件数和均价会产生近似恒等式，变量选择只是在重新发现定义关系。第二，前瞻目标更接近经营监控场景：看板使用本月信息提示下月风险与机会。稳健性分析另使用同月 GMV 和次月客单价，以识别目标口径变化的影响。
+
+![图3-2 次月对数GMV分布](figures/fig02_target_distribution.png)
+
+## 3.5 候选变量
+
+本文构造价格、运费、商品物理属性、内容丰富度、支付结构、评价、物流时效、供给、顾客覆盖、地理和营销共 {{CANDIDATE_COUNT}} 个候选维度。数据质量检查发现“{{EXCLUDED_FEATURES}}”在研究面板中恒为零，无法估计任何条件信息，故在看到响应结果前按零方差规则排除。最终 {{ANALYSIS_COUNT}} 个变量进入 Knockoff、预测和描述分析。
+
+**表3-2 候选变量及处理状态**
+
+{{FEATURE_TABLE}}
+
+统计建模阶段保留订单数、件数、独立顾客数等相关变量，让 Knockoff 在条件竞争中评价其增量信息。业务展示阶段可以把相关变量归入同一模块，以避免一组代理变量占据多个首页位置。统计候选保留与产品展示合并属于不同层级，不应混为一谈。
+
+## 3.6 时间与地理特征处理
+
+物流时长由订单时间戳计算。下单至送达保留 0 至 210 天，下单至审核保留 0 至 30 天，审核至承运保留 0 至 60 天；负值或明显不可能值设为缺失，随后由训练样本中位数插补。预计送达与实际送达之差允许为负，因为负数表示实际逾期。
+
+地理表先限制在巴西合理经纬度范围，再按邮编前缀取坐标中位数。卖家与买家距离使用 Haversine 球面距离计算，超过 5,000 公里的异常值设为缺失。地域维度还包括买家州数量、第一大买家州占比、跨州交易占比和卖家所在州频率。
+
+## 3.7 缺失、异常与变换
+
+分析特征最大缺失率为 {{MISSING_MAX}}，主要来自少量商品属性、地理坐标或物流时间戳。连续变量在 1% 与 99% 分位缩尾，非负金额、计数、距离和时长取 `log(1+x)`，再以中位数插补和标准化。预测任务的所有分位点、中位数和标准化参数只在训练期拟合，随后应用到验证和测试期，防止未来信息泄漏。
+
+## 3.8 描述统计
+
+**表3-3 关键变量描述统计**
+
+{{KEY_DESC_TABLE}}
+
+**表3-4 与次月对数GMV绝对相关最高的变量**
+
+{{TOP_CORR_TABLE}}
+
+订单数、独立顾客数、件数和买家州数量与次月 GMV 有较高边际相关，反映经营规模的延续性。第一大买家州占比通常与买家州数量负相关，可能表示市场集中度。边际相关只用于描述，不能判断控制其他变量后的独立贡献。
+
+# 第4章 研究方法
+
+## 4.1 预处理与秩高斯 Copula
+
+对经过缩尾、变换和插补的特征 $X_j$，按样本排序得到秩 $r_{ij}$，再映射为
+
+$$
+Z_{ij}=\Phi^{-1}\left(\frac{r_{ij}-0.5}{n}\right).
+$$
+
+对于大量并列值，程序使用固定随机种子打散并列次序。这样既保持变量的单调顺序，也避免二元和比例变量在正态变换后仍形成大块质量点。变换后每列再标准化。
+
+随机化处理并不等价于假定原始变量真实服从高斯分布，而是使用高斯 Copula 近似其依赖结构。该近似能否满足 Knockoff 所需的成对可交换性仍需通过边际 KS 距离、协方差相对误差和交叉协方差对称性进行经验诊断。
+
+## 4.2 MVR 二阶 Model-X Knockoff
+
+本文使用 Ledoit-Wolf 方法估计变换后特征的协方差矩阵 $\widehat\Sigma$，以降低样本协方差的病态问题。给定对角矩阵 $S$，高斯二阶 Knockoff 的条件分布为
+
+$$
+\widetilde Z\mid Z
+\sim N\left(
+Z(I-\widehat\Sigma^{-1}S),
+2S-S\widehat\Sigma^{-1}S
+\right).
+$$
+
+MVR 准则通过降低真实变量被其仿制变量重构的程度来改善统计功效。程序使用 `knockpy` 的 MVR GaussianSampler，且每轮重新抽取 $\widetilde Z$。原始高斯基线不做秩高斯 Copula，用于检验混合边际失配带来的影响。
+
+## 4.3 Lasso 竞争统计量
+
+把 $[Z,\widetilde Z]$ 合并后拟合 Lasso：
+
+$$
+\widehat\beta
+=\arg\min_\beta
+\left\{
+\frac{1}{2n}\|Y-[Z,\widetilde Z]\beta\|_2^2
++\lambda\|\beta\|_1
+\right\}.
+$$
+
+惩罚系数 $\lambda$ 由五折交叉验证选择，并在同一分析情景的后续 Knockoff 轮次中固定。第 $j$ 个变量的统计量为
+
+$$
+W_j=|\widehat\beta_j|-|\widehat\beta_{j+p}|.
+$$
+
+该定义满足交换真实变量与其仿制变量时统计量变号的反对称要求。主分析重复 60 次，其余稳健性情景重复 25 或 40 次。
+
+## 4.4 e-value 聚合与两类结论
+
+主分析预先设定最终 FDR 水平 `α_eBH=0.20`，并按照去随机化 Knockoff 文献建议设置单轮 `α_kn=0.10`。每轮根据 `α_kn` 得到阈值和 e-value，60 轮取平均后在 `α_eBH` 下实施 e-BH。
+
+本文同时给出两类结果：
+
+1. **严格确认集**：通过聚合 e-value 与 e-BH 的变量，可在模型条件近似成立时作 FDR 声明。
+2. **稳定候选集**：单轮 Knockoff 入选频率至少 90% 的变量，用于描述随机生成稳定性，不单独继承聚合后的 FDR 保证。
+
+两类集合可能不同。e-BH 使用按每轮负向统计量数量加权的证据，频率阈值则对每次入选等权；因此不能把“90% 稳定”写成“FDR 已控制”。
+
+## 4.5 XGBoost Knockoff
+
+为检验线性重要性遗漏非线性与交互的可能，本文另以 XGBoost 增益重要性构造 Knockoff 统计量。每轮随机交换每对真实变量与仿制变量在设计矩阵中的左右位置，模型拟合后再映射回原变量，以降低树算法可能存在的列位置偏好。该情景重复 25 次，作为 AI 重要性稳健性分析，不取代 Lasso 主结果。
+
+## 4.6 时间外预测设计
+
+预测样本按自然月份划分：训练期 2017 年 1 月至 12 月，共 {{TRAIN_N}} 行；验证期 2018 年 1 月至 4 月，共 {{VALID_N}} 行；测试期 2018 年 5 月至 7 月，共 {{TEST_N}} 行。模型和超参数只用训练与验证期确定，测试期一次性评估。
+
+比较模型包括：
+
+1. 本月 GMV 直接预测次月 GMV 的朴素基线；
+2. Ridge 与 Lasso；
+3. Extra Trees；
+4. XGBoost；
+5. 两层多层感知机；
+6. 仅使用测试期开始前 Knockoff 严格集合的精简 XGBoost。
+
+评价指标为对数尺度 RMSE、MAE、$R^2$ 和原始 GMV 尺度的 WAPE。对数指标降低极端大卖家对误差的支配，WAPE 则保留业务金额解释。
+
+参考资料提出的 Temporal Fusion Transformer 适合较长序列和多步预测[15]。本数据单卖家最多仅有 19 个特征月份，多数卖家序列更短；强行使用参数量较大的 TFT 难以获得可靠时序表示。因此，本文用 MLP 和 XGBoost 完成非线性 AI 验证，并把 TFT 留作拥有更长企业面板后的扩展。这一取舍依据样本支持，而非为了追求模型名称。
+
+## 4.7 SHAP 解释
+
+最终 XGBoost 在测试集上计算 TreeSHAP。对第 $i$ 个样本，预测分解为基准值与各特征贡献之和；全局重要性取测试集平均绝对 SHAP。平均 SHAP 用于描述总体方向，但相关变量之间的贡献会受树结构和条件路径影响，故只作为预测解释。
+
+## 4.8 双向固定效应
+
+补充模型写为
+
+$$
+Y_{s,t+1}=\alpha_s+\lambda_t+X_{s,t}'\beta+\varepsilon_{s,t},
+$$
+
+其中 $\alpha_s$ 为卖家固定效应，$\lambda_t$ 为月份固定效应，标准误按卖家聚类。卖家所在州频率、营销匹配和营销来源等时间不变变量会被卖家固定效应完全吸收，因此不进入该回归。模型通过交替去除卖家均值和月份均值实现双向去均值。
+
+## 4.9 稳健性情景
+
+本文设置以下稳健性分析：
+
+1. 最终 FDR 水平在 0.10、0.20 和 0.30 间变化，同时保持 `α_kn=α_eBH/2`；
+2. 以原始高斯生成器替代 Copula 生成器；
+3. 以同月 GMV 替代次月 GMV，展示机械关联的影响；
+4. 以次月客单价替代次月 GMV；
+5. 截去首尾稀疏月份；
+6. 以 XGBoost 替代 Lasso 构造重要性；
+7. 只使用测试期开始前样本选维，防止预测评估使用测试期信息。
+
+## 4.10 模拟校准
+
+模拟在真实 Copula 特征矩阵上指定平均商品价格、平均评价、件数、品类数和平均送达天数为 5 个真实信号，加入独立高斯噪声。共生成 {{SIM_REPETITIONS}} 个响应数据集，每个数据集聚合 {{SIM_KNOCKOFF_REPETITIONS}} 组 Knockoff，并同时记录单轮 Knockoff+ 与去随机化 e-BH。
+
+该设计刻意保留低维稀疏场景。由于 `p={{ANALYSIS_COUNT}}` 且 `α_kn=0.10`，单轮 Knockoff+ 的离散阈值通常至少需要约 10 个正向发现；当真实信号只有 5 个时，去随机化程序可能零功效。这不是代码错误，而是低维稀疏情形下 Knockoff+ 的已知离散性。模拟因此用于同时检验错误控制和功效边界，而不是只展示有利结果。
+
+# 第5章 实证结果
+
+## 5.1 样本质量与规模
+
+最终面板覆盖 {{PANEL_START}} 至 {{PANEL_END}}，包含 {{PANEL_ROWS}} 个卖家-月和 {{PANEL_SELLERS}} 个卖家，样本 GMV 为 {{GMV_MILLION}} 百万雷亚尔。主键重复数为零，面板文件 SHA-256 摘要为 `{{PANEL_SHA256}}`。所有结果表与图片均由该面板生成。
+
+数据质量复核显示：独立顾客数使用 `customer_unique_id` 后，有部分卖家月不再与订单数相等；不合理的负物流时长已转为缺失；最大特征缺失率仅为 {{MISSING_MAX}}；申报月收入在本分析面板中无变异，已在进入模型前排除。这些检查避免数据定义问题被模型误当成业务规律。
+
+## 5.2 Knockoff 生成诊断
+
+Copula 生成器的平均边际 KS 距离为 {{COPULA_MEAN_KS}}，最大 KS 距离为 {{COPULA_MAX_KS}}，协方差相对误差为 {{COPULA_COV_ERROR}}，交叉协方差非对称度为 {{COPULA_CROSS_ASYM}}。原始高斯基线的平均边际 KS 为 {{GAUSSIAN_MEAN_KS}}。Copula 的边际误差显著更低，因此主结论基于 Copula-MVR，原始高斯仅作为失配对照。
+
+需要强调，较小的边际与二阶误差并不能证明高阶联合分布完全可交换。本文结论仍依赖近似 Model-X 条件，相关风险在局限性中保留。
+
+## 5.3 主变量选择结果
+
+**表5-1 主分析前20项变量结果（`α_eBH=0.20`，`α_kn=0.10`）**
+
+{{PRIMARY_TABLE}}
+
+主分析严格 e-BH 集合包含 {{STRICT_COUNT}} 个变量：{{STRICT_LIST}}。单轮入选频率至少 90% 的稳定候选包含 {{STABLE_COUNT}} 个变量：{{STABLE_LIST}}。
+
+![图5-1 主分析平均e-value](figures/fig03_knockoff_evalues.png)
+
+![图5-2 主分析单轮入选频率](figures/fig04_selection_frequency.png)
+
+严格集合比 90% 稳定集合更大并不矛盾。严格 e-BH 使用每轮入选与负向统计量数量共同形成的加权证据，一些变量虽然未达到人为设定的 90% 频率线，但其平均 e-value 仍可能与其他强变量共同满足 e-BH 阶梯阈值。频率阈值只是稳定性描述，严格集合才对应预先设定的聚合程序。
+
+从变量内容看，严格集合覆盖四类信息。第一类是交易基础，包括件数、订单数、独立顾客数和品类数；第二类是价格与运费；第三类是履约速度和预计提前量；第四类是内容、商品结构、市场覆盖和卖家地域代理。这说明次月 GMV 既有明显的规模延续性，也受到价格带、履约状态和需求覆盖的条件信息影响。
+
+## 5.4 FDR 水平敏感性
+
+**表5-2 不同最终FDR水平下的严格结果**
+
+{{SENSITIVITY_TABLE}}
+
+在更严格的 0.10 水平下，入选 {{Q10_COUNT}} 项：{{Q10_LIST}}。在 0.30 水平下，入选 {{Q30_COUNT}} 项：{{Q30_LIST}}。变量数量随容忍的错误发现水平变化，说明看板准入需要把误报成本显式纳入，而不能把阈值看作纯技术参数。本文把 0.20 作为主结果，0.10 和 0.30 只用于边界分析。
+
+## 5.5 模拟结果
+
+在 5 个真实信号的稀疏模拟中，去随机化 e-BH 的平均 FDP 为 {{SIM_FDP}}，平均功效为 {{SIM_POWER}}，平均发现数为 {{SIM_DISCOVERIES}}，单次 FDP 超过 0.20 的比例为 {{SIM_ABOVE_Q}}。单轮 Knockoff+ 的平均 FDP 为 {{BASE_SIM_FDP}}、平均功效为 {{BASE_SIM_POWER}}。
+
+聚合程序零功效反映了 `α_kn=0.10` 在低维稀疏设计中的离散门槛：只有 5 个真信号时，单轮程序若不引入额外假发现，难以达到阈值所需的正向变量数量。与此相对，单轮 `q=0.20` 能找到信号，但平均 FDP 接近目标上界且随机性更强。真实数据主分析存在超过门槛的广泛条件信号，因此得到非空严格集合。模拟结果提示，Knockoff 不适合在“变量很少且预期只有极少信号”的任务中机械使用；组 Knockoff、无 `+1` 的 mFDR 版本或其他受控推断方法可作为后续比较。
+
+## 5.6 时间外预测表现
+
+**表5-3 时间外测试集预测性能**
+
+{{METRIC_TABLE}}
+
+最佳模型为 {{BEST_MODEL}}，测试集对数 RMSE 为 {{BEST_RMSE}}、$R^2$ 为 {{BEST_R2}}。朴素基线 RMSE 为 {{NAIVE_RMSE}}，最佳模型相对下降 {{RMSE_IMPROVEMENT}}。Ridge、Lasso、XGBoost 和 Extra Trees 的 RMSE 接近，说明本数据的主要可预测结构来自较平滑的经营规模延续，复杂非线性模型并未在 RMSE 上形成压倒性优势。
+
+![图5-3 时间外预测模型比较](figures/fig05_model_performance.png)
+
+![图5-4 XGBoost测试集实际值与预测值](figures/fig07_actual_vs_predicted.png)
+
+原始尺度 WAPE 高于对数误差所呈现的相对表现，反映大卖家 GMV 的重尾和次月零成交给金额预测带来难度。看板应用中宜把模型用于风险分层和异常提醒，而不是把点预测当作精确预算。
+
+## 5.7 XGBoost 与 SHAP
+
+**表5-4 XGBoost测试集SHAP重要性前15项**
+
+{{SHAP_TABLE}}
+
+![图5-5 XGBoost SHAP重要性](figures/fig06_xgboost_shap.png)
+
+SHAP 前五项为{{TOP_SHAP_5}}。这些变量说明模型主要依赖当前交易基础、价格和履约信息判断次月状态。主 Knockoff 严格集合与 SHAP 前十项的交集被本文定义为一级监控候选：{{CORE_LIST}}。严格集合中其余项目列为二级诊断候选：{{SECONDARY_LIST}}。
+
+这一分层不是因果优先级。订单数和独立顾客数有较高 SHAP，首先说明经营规模具有持续性；它们适合做趋势监控，但“提高订单数”本身不是一个可直接执行的干预。发货准备时长、内容质量和物流承诺更接近可行动过程指标，仍需实验或准实验确认干预效应。
+
+## 5.8 双向固定效应
+
+**表5-5 双向固定效应中p值最低的15项**
+
+{{FIXED_TABLE}}
+
+在 5% 水平显著的动态变量为{{SIGNIFICANT_FE}}。固定效应结果使用同一卖家随时间的变化，并控制共同月份冲击，能排除部分稳定异质性。若审核至承运时间系数为负，可解释为同一卖家发货准备变慢与次月 GMV 下行相关；支付结构系数则可能反映顾客构成或订单类型变化。由于促销、曝光、库存和竞争强度不可观测，这些系数不应转写为因果收益。
+
+## 5.9 稳健性结果
+
+**表5-6 全部Knockoff情景汇总**
+
+{{SCENARIO_TABLE}}
+
+测试期开始前样本的严格集合为 {{PRETEST_COUNT}} 项：{{PRETEST_LIST}}。该集合用于训练精简 XGBoost，避免测试期信息进入变量筛选。截尾时间窗的严格集合为{{TRIMMED_LIST}}；次月客单价情景为{{AOV_LIST}}；XGBoost Knockoff 情景为{{AI_LIST}}。
+
+同月 GMV 情景通常会比次月目标选择更多规模变量，因为件数、订单数和均价直接参与同月 GMV 定义。该结果不是更强的业务发现，而是目标泄漏的对照。原始高斯生成器虽然也可能产生非空集合，但其边际 KS 明显更差，不能只因结果相似就忽略生成诊断。
+
+## 5.10 结果小结
+
+主分析形成三层证据：
+
+1. **严格确认层**：{{STRICT_LIST}}，由预先设定的 Copula-MVR、60 次 Knockoff、`α_kn=0.10` 和 `α_eBH=0.20` 得出。
+2. **高稳定层**：{{STABLE_LIST}}，用于评价随机生成的复现性。
+3. **预测解释层**：以 SHAP、时间外误差和固定效应提供补充方向，不独立承担 FDR 声明。
+
+这种分层避免了常见的两种错误：一是把机器学习重要性直接写成显著发现；二是因严格结果不符合预期而事后改变阈值或只报告有利随机种子。
+
+# 第6章 业务应用与讨论
+
+## 6.1 看板维度分层
+
+一级监控建议优先包含{{CORE_LIST}}。这些变量同时得到主 Knockoff 严格结果和 XGBoost 预测解释支持，适合在看板首页持续展示趋势、环比、同比和异常状态。
+
+二级诊断建议包含{{SECONDARY_LIST}}。它们通过严格 e-BH，但在 SHAP 前十中的优先级相对较低，适合在一级指标异常后用于定位商品结构、内容、履约承诺或地域差异。
+
+其余变量不等于“永远无用”。未入选只表示在当前数据、当前候选集和次月 GMV 目标下，没有获得足够的条件证据。支付方式、评价、距离和营销变量仍可用于专题分析、数据质量监控或特定业务实验，但不应仅凭边际相关常驻首页。
+
+## 6.2 展示模块设计
+
+统计建模保留相关变量，产品展示则应按经营问题组织：
+
+1. **交易规模模块**：订单数、件数、独立顾客数，以一个主指标配合两个下钻指标，避免重复卡片。
+2. **价格与成本模块**：平均商品价格、平均运费，并提供价格带和品类分布。
+3. **履约模块**：审核至承运天数、下单至送达天数、预计提前送达天数，区分过程时效和承诺偏差。
+4. **供给与内容模块**：活跃品类数、标题和描述长度、商品结构指标。
+5. **市场覆盖模块**：买家州数量、第一大州占比、跨州比例和卖家地域基准。
+
+首页只保留能够回答“规模是否变化、价格是否变化、履约是否异常、覆盖是否收缩”的少量信号，二级页面承担解释。
+
+## 6.3 指标准入流程
+
+建议建立可复现的指标准入机制。新指标进入候选池时，先完成定义、粒度、数据质量和可行动性评审；随后加入固定版本候选集，按滚动时间窗重新生成 Knockoff；统计结果记录严格 e-BH、稳定频率、时间外增益和解释一致性；最终由业务方结合监控成本和行动路径决定展示层级。
+
+指标退出也应有规则。若连续多个滚动窗口未进入严格或稳定集合、对预测无增益且没有明确诊断用途，可从常驻看板移至专题层。不能因单月随机变化频繁增删字段，也不能因为某指标历史上重要而永久保留。
+
+## 6.4 从预测证据到实验
+
+Knockoff 与 SHAP 识别的是条件预测信息。对于可行动变量，应进一步设计实验。履约时长可以通过仓内流程、承运商分配或截单时间调整开展分层实验；商品内容可通过属性完整度、图片质量和描述结构开展 A/B 测试；价格和运费涉及选择偏差与需求弹性，宜采用随机优惠、工具变量或差分方法。
+
+对于不可直接干预的规模指标，如订单数和顾客数，更适合作为状态变量、分层变量和预警信号，而非 KPI 处方。将预测变量错误解释为因果杠杆，会使看板从监控工具变成误导性决策工具。
+
+## 6.5 方法适用边界
+
+Model-X Knockoff 的理论保证依赖观测独立和仿制变量有效可交换。卖家-月面板存在同一卖家内相关，本文的 Copula 也只是对混合联合分布的近似。因此，“FDR=0.20”应理解为在模型条件和实现近似成立下的目标控制水平，而不是对这一次具体集合中错误比例的确定性承诺。
+
+低维稀疏情形还存在离散门槛。模拟表明，当只有 5 个强信号时，`α_kn=0.10` 的 Knockoff+ 可能无法形成非空聚合集合。若业务候选仅有十余项且预期真实信号很少，应考虑组 Knockoff、提高预先设定的最终水平、增加有效候选组数量，或采用其他有保证的推断方法，而不是在看到结果后临时改阈值。
+
+## 6.6 AI 方法的合理定位
+
+AI 在本研究中承担三个角色。第一，XGBoost Knockoff 检验非线性重要性；第二，XGBoost、Extra Trees 和 MLP 比较时间外预测；第三，TreeSHAP解释测试期模型依赖。深度生成 Knockoff 和 TFT 没有被形式化地列为已完成模型，因为现有数据长度和软件验证不足以支撑可靠声明。
+
+这并不削弱论文的 AI 内容。模型复杂度应服从数据结构和验证要求。一个经过时间外测试、负对照比较和生成诊断的中等复杂模型，比一个未经充分样本支持的深度网络更符合统计研究的可信性要求。
+
+## 6.7 管理建议
+
+第一，在指标平台记录每个字段的数据口径、粒度、证据等级、模型版本和最近更新时间。第二，把严格确认、稳定候选和业务诊断设置为不同元数据标签。第三，每季度或每获得一个足够长的新时间窗后滚动重跑。第四，对金额和订单类指标保留自动对账检查。第五，对希望解释为因果的变量建立实验排期。第六，将分析代码、环境版本和结果摘要与看板版本绑定，确保后续复核。
+
+# 第7章 结论与展望
+
+## 7.1 主要结论
+
+本文使用 Olist 全量公开数据完成从原始表审计、自然粒度聚合、卖家-月面板、Model-X Knockoff、e-value 去随机化、AI 预测、SHAP、固定效应到论文生成的完整研究流程。主面板包含 {{PANEL_ROWS}} 个卖家-月、{{PANEL_SELLERS}} 个卖家和 {{PANEL_MONTHS}} 个月，GMV 合计 {{GMV_MILLION}} 百万雷亚尔。主目标采用次月对数 GMV，避免同月定义泄漏。
+
+生成诊断显示，随机化秩高斯 Copula 将平均边际 KS 从原始高斯的 {{GAUSSIAN_MEAN_KS}} 降至 {{COPULA_MEAN_KS}}。在 `α_eBH=0.20`、`α_kn=0.10` 下，主分析严格入选 {{STRICT_COUNT}} 项：{{STRICT_LIST}}。其中与 SHAP 前十重叠的一级候选为{{CORE_LIST}}，其余严格项目可作为二级诊断。时间外最佳模型 {{BEST_MODEL}} 的 RMSE 为 {{BEST_RMSE}}，较朴素基线下降 {{RMSE_IMPROVEMENT}}。
+
+## 7.2 理论启示
+
+第一，变量重要性排序与受控发现是不同问题。重要性可以支持预测，却不能自动说明假发现比例。第二，去随机化方法中的单轮水平与最终水平应分开设置；正确参数化会影响功效，但最终保证由 e-BH 水平决定。第三，低维稀疏设计下 Knockoff+ 的离散门槛不可忽略，零发现可能是方法性质而非程序故障。第四，Model-X 的有效性高度依赖特征联合分布建模，因此生成诊断必须与入选结果同时报告。
+
+## 7.3 实践启示
+
+电商看板不应无限增加字段，而应建立“候选、严格确认、稳定监控、专题诊断、退出”的生命周期。交易规模、价格、履约和市场覆盖是当前数据中最主要的前瞻信息来源，但展示时需要按模块合并相关代理。任何可行动建议都应在预测筛选后进入实验验证。
+
+## 7.4 局限性
+
+第一，公开数据缺少曝光、点击、广告、库存、佣金、促销和竞争等关键时变因素，条件独立结论只相对于已观测候选集成立。第二，卖家-月行存在组内相关，标准 Model-X 的独立样本条件为近似。第三，Copula 二阶 Knockoff 不能保证刻画所有尾部和高阶依赖。第四，样本只有 19 个特征月份，限制了长期时序模型和跨周期稳定性检验。第五，营销成交线索只覆盖部分卖家，申报收入在研究面板中无变异。第六，固定效应和 SHAP 都不能替代随机实验。
+
+## 7.5 后续研究
+
+未来可从五方面扩展。第一，获得更长的企业面板后使用滚动窗口和在线 e-value 检验指标进入与退出。第二，针对交易规模、履约、内容和地域定义业务组，采用 group knockoff 减轻代理变量分摊。第三，开发适用于连续、计数、比例和二元混合特征的现代 Deep Knockoff，并用交换检验、分类器两样本检验和条件诊断验证生成质量。第四，在更长序列上比较 TFT、N-BEATS 与序列树模型。第五，引入实验、工具变量、双重机器学习或因果森林，把“有预测信息”进一步转化为“可干预效应”。
+
+# 参考文献
+
+[1] Benjamini Y, Hochberg Y. Controlling the false discovery rate: a practical and powerful approach to multiple testing[J]. Journal of the Royal Statistical Society: Series B, 1995, 57(1): 289-300.
+
+[2] Barber R F, Candès E J. Controlling the false discovery rate via knockoffs[J]. The Annals of Statistics, 2015, 43(5): 2055-2085.
+
+[3] Candès E, Fan Y, Janson L, Lv J. Panning for gold: Model-X knockoffs for high-dimensional controlled variable selection[J]. Journal of the Royal Statistical Society: Series B, 2018, 80(3): 551-577.
+
+[4] Romano Y, Sesia M, Candès E. Deep knockoffs[J]. Journal of the American Statistical Association, 2020, 115(532): 1861-1872.
+
+[5] Ren Z, Barber R F. Derandomised knockoffs: leveraging e-values for false discovery rate control[J]. Journal of the Royal Statistical Society Series B, 2024, 86(1): 122-154.
+
+[6] Wang R, Ramdas A. False discovery rate control with e-values[J]. Journal of the Royal Statistical Society Series B, 2022, 84(3): 822-852.
+
+[7] Tibshirani R. Regression shrinkage and selection via the lasso[J]. Journal of the Royal Statistical Society: Series B, 1996, 58(1): 267-288.
+
+[8] Zou H, Hastie T. Regularization and variable selection via the elastic net[J]. Journal of the Royal Statistical Society: Series B, 2005, 67(2): 301-320.
+
+[9] Ledoit O, Wolf M. A well-conditioned estimator for large-dimensional covariance matrices[J]. Journal of Multivariate Analysis, 2004, 88(2): 365-411.
+
+[10] Spector A, Janson L. Powerful knockoffs via minimizing reconstructability[J]. The Annals of Statistics, 2022, 50(1): 252-276.
+
+[11] Breiman L. Random forests[J]. Machine Learning, 2001, 45: 5-32.
+
+[12] Friedman J H. Greedy function approximation: a gradient boosting machine[J]. The Annals of Statistics, 2001, 29(5): 1189-1232.
+
+[13] Chen T, Guestrin C. XGBoost: a scalable tree boosting system[C]//Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. 2016: 785-794.
+
+[14] Lundberg S M, Lee S I. A unified approach to interpreting model predictions[C]//Advances in Neural Information Processing Systems. 2017, 30.
+
+[15] Lim B, Arık S Ö, Loeff N, Pfister T. Temporal fusion transformers for interpretable multi-horizon time series forecasting[J]. International Journal of Forecasting, 2021, 37(4): 1748-1764.
+
+[16] Hastie T, Tibshirani R, Friedman J. The elements of statistical learning[M]. 2nd ed. New York: Springer, 2009.
+
+[17] Wooldridge J M. Econometric analysis of cross section and panel data[M]. 2nd ed. Cambridge, MA: MIT Press, 2010.
+
+[18] Arellano M. Computing robust standard errors for within-groups estimators[J]. Oxford Bulletin of Economics and Statistics, 1987, 49(4): 431-434.
+
+[19] Varian H R. Big data: new tricks for econometrics[J]. Journal of Economic Perspectives, 2014, 28(2): 3-28.
+
+[20] Mullainathan S, Spiess J. Machine learning: an applied econometric approach[J]. Journal of Economic Perspectives, 2017, 31(2): 87-106.
+
+[21] Molnar C. Interpretable machine learning[M/OL]. 2nd ed. 2022. https://christophm.github.io/interpretable-ml-book/.
+
+[22] Pedregosa F, Varoquaux G, Gramfort A, et al. Scikit-learn: machine learning in Python[J]. Journal of Machine Learning Research, 2011, 12: 2825-2830.
+
+[23] McKinney W. Data structures for statistical computing in Python[C]//Proceedings of the 9th Python in Science Conference. 2010: 56-61.
+
+[24] Harris C R, Millman K J, van der Walt S J, et al. Array programming with NumPy[J]. Nature, 2020, 585: 357-362.
+
+[25] Virtanen P, Gommers R, Oliphant T E, et al. SciPy 1.0: fundamental algorithms for scientific computing in Python[J]. Nature Methods, 2020, 17: 261-272.
+
+[26] Seabold S, Perktold J. Statsmodels: econometric and statistical modeling with Python[C]//Proceedings of the 9th Python in Science Conference. 2010: 92-96.
+
+[27] Olist. Brazilian E-Commerce Public Dataset by Olist[DB/OL]. Kaggle, 2018. https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce.
+
+[28] Olist. Marketing Funnel by Olist[DB/OL]. Kaggle, 2018. https://www.kaggle.com/datasets/olistbr/marketing-funnel-olist.
+
+[29] Little R J A, Rubin D B. Statistical analysis with missing data[M]. 3rd ed. Hoboken: Wiley, 2019.
+
+[30] Hyndman R J, Athanasopoulos G. Forecasting: principles and practice[M/OL]. 3rd ed. Melbourne: OTexts, 2021.
+
+[31] Meinshausen N, Bühlmann P. Stability selection[J]. Journal of the Royal Statistical Society: Series B, 2010, 72(4): 417-473.
+
+[32] Vovk V, Wang R. E-values: calibration, combination and applications[J]. The Annals of Statistics, 2021, 49(3): 1736-1754.
+
+# 附录A 全部变量描述统计
+
+{{APPENDIX_DESC_TABLE}}
+
+# 附录B 可复现环境与运行顺序
+
+本研究固定随机种子为 {{SEED}}。主要软件版本为 Python {{PYTHON_VERSION}}、NumPy {{NUMPY_VERSION}}、pandas {{PANDAS_VERSION}}、SciPy {{SCIPY_VERSION}}、scikit-learn {{SKLEARN_VERSION}}、statsmodels {{STATSMODELS_VERSION}} 和 XGBoost {{XGBOOST_VERSION}}。处理后面板 SHA-256 为：
+
+`{{PANEL_SHA256}}`
+
+在项目根目录依次执行：
+
+```bash
+论文/v1/.venv/bin/python 论文/v1/code/build_panel.py
+论文/v1/.venv/bin/python 论文/v1/code/run_analysis.py
+论文/v1/.venv/bin/python 论文/v1/code/generate_thesis.py
+```
+
+第一条命令读取全量原始 CSV、构造面板并完成 GMV 对账；第二条命令运行全部 Knockoff 情景、预测、SHAP、固定效应、模拟和图表；第三条命令从机器可读结果生成 Markdown、DOCX、HTML 和 PDF。每次 Knockoff 的 W 统计量保存在 `results/knockoff_runs`，聚合结果保存在 `results`，运行日志保存在 `logs`。
+
+# 附录C 核心算法伪代码
+
+```text
+输入：卖家-月特征 X，次月对数 GMV y，最终水平 alpha_eBH
+设置：alpha_kn = alpha_eBH / 2，重复次数 M
+
+1. 对 X 缩尾、插补、偏态变换并执行随机化秩高斯映射
+2. 用 Ledoit-Wolf 估计协方差，以 MVR 构造 Knockoff 采样器
+3. 对 m = 1,...,M：
+   a. 重新生成 X_tilde
+   b. 在 [X, X_tilde] 上拟合 Lasso 或 XGBoost
+   c. 计算每对变量的反对称统计量 W
+   d. 以 alpha_kn 计算 Knockoff+ 阈值
+   e. 把入选结果转换为 e-value
+4. 对每个变量平均 M 次 e-value
+5. 在 alpha_eBH 下实施 e-BH，输出严格集合
+6. 同时输出 W、单轮入选频率、生成诊断和随机种子
+```
+
+# 附录D v1提交前检查清单
+
+1. 将封面的学校、学院、专业、姓名、学号和导师替换为真实信息。
+2. 按学校最新模板补充原创性声明、授权书、分类号、密级和答辩日期。
+3. 由作者逐项核对参考文献原文、DOI、页码和学校要求的 GB/T 7714 格式。
+4. 根据学校规定披露 AI 辅助范围，并由作者完成最终学术责任确认。
+5. 确认盲审版删除姓名、导师、致谢、项目来源和其他身份信息。
+6. 在 Word 中更新目录、公式编号、图表题注和交叉引用域。
+7. 由导师确认标题、FDR 水平、预测而非因果的表述及业务建议边界。

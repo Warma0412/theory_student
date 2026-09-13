@@ -1,0 +1,511 @@
+\documentclass[UTF8,11pt,a4paper]{ctexart}
+\usepackage[left=1.7cm,right=1.7cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{amsmath,amssymb,graphicx,longtable,booktabs,array,calc,hyperref,xurl,seqsplit,setspace}
+\setmainfont{Times New Roman}
+\setCJKmainfont{Songti SC}
+\hypersetup{hidelinks}
+\setlength{\LTleft}{0pt plus 1fill}
+\setlength{\LTright}{0pt plus 1fill}
+\setlength{\emergencystretch}{3em}
+\setstretch{1.15}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\begin{document}
+\begin{center}\Large\bfseries 近期模型算法改动的完整配对实验\end{center}\section{结论性质与范围}\label{ux7ed3ux8bbaux6027ux8d28ux4e0eux8303ux56f4}
+
+本研究是已观察V7结果之后的探索，不是外部预注册验证。新改动均完整执行，不能把一次改动的局部收益说成世界首创或跨数据集普遍优势。V7原论文、CSV、模型和失败记录没有覆盖。
+
+新增十个方法/消融配置，各完成111个主预算真实案例、一个8项参考案例及600个模拟案例，合计1,120个新真实选择案例、6,000个新模拟案例、40组初始预测文件。旧八方法的选择结果作为历史基线读取，不冒充选择器重新训练。所有18种方法与全维基线随后共同按规范列顺序重评，形成74组预测文件。完整原始表构建的13,754行卖家月面板未抽小；外层抽样是评价的一部分。
+
+\section{四条模型改动}\label{ux56dbux6761ux6a21ux578bux6539ux52a8}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Deep Lasso-Jacobian}：原梯度分数同时乘有残差，容易使误差大的样本支配重要性。改为预测函数Jacobian的按列RMS稀疏目标，并用相同Jacobian排序。另做``只改排序''和``改训练但保留原排名''两项消融。导数正则已有长期文献，不能称为首次提出。
+\item
+  \textbf{TabM-预算门}：在官方8成员TabM前加入共享的精确K硬门，反向传播使用约束sigmoid软门的直通梯度；15轮全变量预热后开始预算训练。解决训练看31项、最终只留K项的不一致。输入门与直通估计均有先例，本实现是局部预算约束适配。
+\item
+  \textbf{EntryPrune-刷新/环境波动惩罚}：原发布代码记住候选历史最高进入分数。刷新版用三个训练时间块的当前梯度均分并重置再生列Adam动量，波动版再扣除环境间标准差。刷新版和波动版共享除波动项之外的改动；这不是具有覆盖保证的置信下界。回归输出和对齐最佳检查点是共同适配，不列为创新。
+\item
+  \textbf{VTFS-固定K/成对损失}：固定K语料与定长唯一token解码消除不同长度和任意前缀造成的预算偏差；新增按效用差加权的成对logistic排序损失。用同样128次子集查询的随机搜索检验Transformer是否带来额外收益。固定K修复本身不冒称原论文的新发现。
+\end{enumerate}
+
+官方组件：Deep Lasso官方正则与V7 MLP；TabM 0.0.3；EntryPrune锁定commit；VTFS官方编码/解码骨干（仍保留epsilon=1）。所有路径与摘要见source\_manifest.json。
+
+\section{公平条件与限制}\label{ux516cux5e73ux6761ux4ef6ux4e0eux9650ux5236}
+
+各方法使用同一30组互补50\%卖家、20个70\%、20个80\%样本，另有10组固定数据种子变化。半样本区间以30组计算。拟合与排序行摘要逐项核对，选择器不读测试X或Y。模型新增参数在2017年训练、2018年1月早停/排序、2月评价后冻结；最终名单以训练加调参期拟合、3至4月排序。
+
+{\def\LTcaptype{none} % do not increment counter
+{
+\footnotesize
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+模型家族 & 选定参数 & 选择依据 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+deep & 0.001 & 1月排序；2月XGB误差 \\
+gate & 0.05 & 1月排序；2月XGB误差 \\
+entry & 0.25 & 1月排序；2月XGB误差 \\
+subset & None & 协议固定 \\
+\end{longtable}
+}
+}
+
+主比较K=12；K=8仅完整参考与预测敏感性，门控、EntryPrune和VTFS独立按8项训练。XGBoost和TabM评价器配置、三个训练种子与全开发窗口重拟合对所有名单一致。方法自身计算量并不完全相等。冻结的V7架构参数、局部有限搜索不代表每一种模型的充分调参性能上界。
+
+所有新方法只输出排名/固定预算名单，不提供原生FDR保证。FDP与Power在模拟真值下计算；固定K和真信号数时二者一一对应，不能当作两份独立成功证据。六场景各100次等权汇总只用于总览，逐场景表必须同时阅读。
+
+执行审计发现两项Deep Lasso排名消融的完整样本Top-12与原版相同，但不同列顺序会影响随机列抽样和网络初始化。为消除伪差异，本报告最终预测统一按特征编号排序后重算，初始预测保留。该修订不改变选择名单、参数、FDP、Power或稳定性。相同集合在相同评价器中必须给出相同预测，并已纳入断言。参数仍沿用原先冻结的开发期选择，不因重评结果调整。
+
+模拟下游预测也统一使用标准化表示和规范列顺序，保留各方法原名单。这同时纠正了历史Copula模拟评价器使用秩高斯表示的问题；新评价保存在canonical\_simulation\_evaluation，不覆盖V7，也不计为新增选择算法案例。
+
+\section{主预算总览}\label{ux4e3bux9884ux7b97ux603bux89c8}
+
+{\def\LTcaptype{none} % do not increment counter
+{
+\footnotesize
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+方法
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+XGB-RMSE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+TabM-RMSE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+50\% Jaccard
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nogueira
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\href{mailto:FDP@12}{\nolinkurl{FDP@12}}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\href{mailto:Power@12}{\nolinkurl{Power@12}}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Copula-MVR & 1.8650 & 1.8967 & 0.7355 & 0.6798 & 0.3218 & 0.8305 \\
+Elastic Net & 1.8625 & 1.8806 & 0.7244 & 0.6185 & 0.3251 & 0.8265 \\
+稳定性选择 & 1.8937 & 1.8885 & 0.5827 & 0.4788 & 0.3383 & 0.8107 \\
+影子变量树 & 1.8611 & 1.8612 & 0.9388 & 0.9210 & 0.3361 & 0.8261 \\
+XGBoost-SHAP & 1.8466 & 1.8571 & 0.7682 & 0.7439 & 0.2315 & 0.9403 \\
+Deep Lasso & 1.8450 & 1.8594 & 0.8230 & 0.7754 & 0.2687 & 0.8947 \\
+TabM-置换 & 1.8458 & 1.8586 & 0.7505 & 0.7304 & 0.2656 & 0.8981 \\
+VTFS-定额适配 & 1.8622 & 1.8783 & 0.4068 & 0.2733 & 0.5306 & 0.5876 \\
+Deep Lasso-Jacobian & 1.8461 & 1.8600 & 0.8618 & 0.7889 & 0.2657 & 0.8978 \\
+Jacobian训练+原排名 & 1.8450 & 1.8594 & 0.7722 & 0.7591 & 0.2686 & 0.8943 \\
+原Deep Lasso+Jacobian排名 & 1.8450 & 1.8594 & 0.8147 & 0.7994 & 0.2656 & 0.8986 \\
+TabM-预算门 & 1.8450 & 1.8594 & 0.8071 & 0.7172 & 0.2793 & 0.8826 \\
+EntryPrune-回归适配 & 1.8812 & 1.8744 & 0.6271 & 0.4893 & 0.2869 & 0.8729 \\
+EntryPrune-刷新 & 2.0418 & 2.0350 & 0.4596 & 0.2742 & 0.5203 & 0.6107 \\
+EntryPrune-环境波动惩罚 & 1.8706 & 1.8897 & 0.4498 & 0.2726 & 0.5074 & 0.6263 \\
+VTFS-固定K & 1.8676 & 1.8921 & 0.4540 & 0.3047 & 0.4593 & 0.6815 \\
+VTFS-固定K+成对损失 & 1.8653 & 1.8949 & 0.4333 & 0.3167 & 0.4531 & 0.6901 \\
+等预算随机子集搜索 & 1.8661 & 1.8926 & 0.4368 & 0.2835 & 0.4911 & 0.6412 \\
+\end{longtable}
+}
+}
+
+RMSE越低越好，Jaccard/Nogueira/Power越高越好，FDP越低越好。Jaccard是相对各自完整开发名单；算法种子稳定性另存，不与样本稳定性混用。平均低FDP不代表实际Olist错误率已控。
+
+\subsection{各改动的实际判断}\label{ux5404ux6539ux52a8ux7684ux5b9eux9645ux5224ux65ad}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Deep Lasso-Jacobian：有局部价值，尚非全面提升。} 相对完整名单的半样本Jaccard从原版0.8230升至0.8618，但相对父方法的互补半样本增量区间跨0，参考Jaccard增量经族内校正后也跨0。相对SHAP的两种Jaccard差异较明确；其平均FDP为0.2657、Power为0.8978，仍弱于SHAP的0.2315和0.9403。适合跟进稳定性取舍，不支持全面优胜或新定理。
+\item
+  \textbf{TabM预算门：不支持综合改善。} 参考Jaccard从0.7505升至0.8071，但互补一致性和Nogueira没有同步提高，模拟FDP从0.2656升至0.2793。不能只选参考Jaccard作为成功标准。
+\item
+  \textbf{EntryPrune刷新与波动惩罚：本实现不宜作为提升主线。} 波动版相对回归父实现的参考Jaccard从0.6271降至0.4498，Power从0.8729降至0.6263。即使一个评价器的误差点估计更低，也不能掩盖选择质量恶化。刷新涉及分数与动量两项变化，不能将失败单独归因于其中一项。
+\item
+  \textbf{VTFS：预算匹配有模拟收益，成对损失独立证据较弱。} 原适配、固定K、固定K加成对损失的平均FDP依次为0.5306、0.4593、0.4531，Power依次为0.5876、0.6815、0.6901。主要收益来自预算修正；成对损失较固定K版本仅小幅增量。二者真实数据预测与稳定性尚未形成优势，修复旧适配不应包装成原创模型成功。
+\end{enumerate}
+
+结论：没有发现同时在预测、两类样本稳定性与模拟检出方面全面超过强基线的新算法。计算完成和某项指标变好，都不能自动证明论文原创性。
+
+\section{对父方法的配对差异}\label{ux5bf9ux7236ux65b9ux6cd5ux7684ux914dux5bf9ux5deeux5f02}
+
+下表差为``改动减对照''，RMSE差负数有利于改动。卖家簇Bootstrap 5,000次，以三个已观察测试月份为条件。校正区间覆盖预先列出的比较对与两个评价器；不能解读为独立外部确认。尾部分位数仍有Monte Carlo误差。
+
+{\def\LTcaptype{none} % do not increment counter
+{
+\footnotesize
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+改动
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+父/对照
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+评价器
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RMSE差
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+点区间95\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+族内校正区间
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Deep Lasso-Jacobian & Deep Lasso & xgboost & +0.0010 & {[}-0.0009, 0.0030{]} & {[}-0.0021, 0.0042{]} \\
+Deep Lasso-Jacobian & Deep Lasso & tabm & +0.0006 & {[}-0.0022, 0.0035{]} & {[}-0.0042, 0.0054{]} \\
+Jacobian训练+原排名 & Deep Lasso & xgboost & +0.0000 & {[}0.0000, 0.0000{]} & {[}0.0000, 0.0000{]} \\
+Jacobian训练+原排名 & Deep Lasso & tabm & +0.0000 & {[}0.0000, 0.0000{]} & {[}0.0000, 0.0000{]} \\
+原Deep Lasso+Jacobian排名 & Deep Lasso & xgboost & +0.0000 & {[}0.0000, 0.0000{]} & {[}0.0000, 0.0000{]} \\
+原Deep Lasso+Jacobian排名 & Deep Lasso & tabm & +0.0000 & {[}0.0000, 0.0000{]} & {[}0.0000, 0.0000{]} \\
+TabM-预算门 & TabM-置换 & xgboost & -0.0008 & {[}-0.0057, 0.0042{]} & {[}-0.0084, 0.0074{]} \\
+TabM-预算门 & TabM-置换 & tabm & +0.0008 & {[}-0.0029, 0.0046{]} & {[}-0.0054, 0.0068{]} \\
+EntryPrune-刷新 & EntryPrune-回归适配 & xgboost & +0.1606 & {[}0.1298, 0.1924{]} & {[}0.1137, 0.2072{]} \\
+EntryPrune-刷新 & EntryPrune-回归适配 & tabm & +0.1606 & {[}0.1322, 0.1895{]} & {[}0.1135, 0.2075{]} \\
+EntryPrune-环境波动惩罚 & EntryPrune-回归适配 & xgboost & -0.0106 & {[}-0.0237, 0.0022{]} & {[}-0.0323, 0.0098{]} \\
+EntryPrune-环境波动惩罚 & EntryPrune-回归适配 & tabm & +0.0152 & {[}-0.0015, 0.0326{]} & {[}-0.0098, 0.0441{]} \\
+VTFS-固定K & VTFS-定额适配 & xgboost & +0.0054 & {[}-0.0085, 0.0193{]} & {[}-0.0168, 0.0279{]} \\
+VTFS-固定K & VTFS-定额适配 & tabm & +0.0139 & {[}-0.0053, 0.0330{]} & {[}-0.0156, 0.0464{]} \\
+VTFS-固定K+成对损失 & VTFS-固定K & xgboost & -0.0023 & {[}-0.0107, 0.0063{]} & {[}-0.0170, 0.0116{]} \\
+VTFS-固定K+成对损失 & VTFS-固定K & tabm & +0.0027 & {[}-0.0034, 0.0088{]} & {[}-0.0072, 0.0122{]} \\
+等预算随机子集搜索 & VTFS-定额适配 & xgboost & +0.0039 & {[}-0.0094, 0.0177{]} & {[}-0.0159, 0.0286{]} \\
+等预算随机子集搜索 & VTFS-定额适配 & tabm & +0.0144 & {[}-0.0035, 0.0325{]} & {[}-0.0159, 0.0444{]} \\
+\end{longtable}
+}
+}
+
+不能因为点区间跨0就宣称等价；1\%容忍度只是预设的工程参考。即便优于较弱父方法，仍需与XGBoost-SHAP、影子树等强基线比较，并查看检出率及稳定性代价。
+
+预测Bootstrap条件于当前已拟合的三种子集成，不包含重新训练、重调参数或换到新时间环境的不确定性。TabM门控试验同时改变了预热和预算训练日程，因此即使发现收益，也不能在缺少额外日程消融时把全部效果只归功于门本身。
+
+\section{逐场景模拟}\label{ux9010ux573aux666fux6a21ux62df}
+
+\subsection{linear\_sparse}\label{linear_sparse}
+
+{\def\LTcaptype{none} % do not increment counter
+{
+\footnotesize
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+方法 & 平均FDP & FDP MCSE & Power & XGB-RMSE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Copula-MVR & 0.5833 & 0.0000 & 1.0000 & 0.6371 \\
+Elastic Net & 0.5833 & 0.0000 & 1.0000 & 0.6358 \\
+稳定性选择 & 0.5833 & 0.0000 & 1.0000 & 0.6356 \\
+影子变量树 & 0.5875 & 0.0018 & 0.9900 & 0.6399 \\
+XGBoost-SHAP & 0.5833 & 0.0000 & 1.0000 & 0.6386 \\
+Deep Lasso & 0.5833 & 0.0000 & 1.0000 & 0.6381 \\
+TabM-置换 & 0.5833 & 0.0000 & 1.0000 & 0.6364 \\
+VTFS-定额适配 & 0.6767 & 0.0072 & 0.7760 & 0.7120 \\
+Deep Lasso-Jacobian & 0.5833 & 0.0000 & 1.0000 & 0.6367 \\
+Jacobian训练+原排名 & 0.5833 & 0.0000 & 1.0000 & 0.6372 \\
+原Deep Lasso+Jacobian排名 & 0.5833 & 0.0000 & 1.0000 & 0.6379 \\
+TabM-预算门 & 0.5833 & 0.0000 & 1.0000 & 0.6380 \\
+EntryPrune-回归适配 & 0.5833 & 0.0000 & 1.0000 & 0.6363 \\
+EntryPrune-刷新 & 0.6167 & 0.0046 & 0.9200 & 0.6577 \\
+EntryPrune-环境波动惩罚 & 0.6092 & 0.0042 & 0.9380 & 0.6543 \\
+VTFS-固定K & 0.6083 & 0.0038 & 0.9400 & 0.6514 \\
+VTFS-固定K+成对损失 & 0.6033 & 0.0036 & 0.9520 & 0.6483 \\
+等预算随机子集搜索 & 0.6350 & 0.0044 & 0.8760 & 0.6709 \\
+\end{longtable}
+}
+}
+
+\subsection{linear\_medium}\label{linear_medium}
+
+{\def\LTcaptype{none} % do not increment counter
+{
+\footnotesize
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+方法 & 平均FDP & FDP MCSE & Power & XGB-RMSE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Copula-MVR & 0.1667 & 0.0000 & 1.0000 & 1.0727 \\
+Elastic Net & 0.1667 & 0.0000 & 1.0000 & 1.0724 \\
+稳定性选择 & 0.1675 & 0.0008 & 0.9990 & 1.0715 \\
+影子变量树 & 0.3292 & 0.0063 & 0.8050 & 1.0956 \\
+XGBoost-SHAP & 0.1742 & 0.0024 & 0.9910 & 1.0740 \\
+Deep Lasso & 0.1700 & 0.0016 & 0.9960 & 1.0723 \\
+TabM-置换 & 0.1692 & 0.0019 & 0.9970 & 1.0721 \\
+VTFS-定额适配 & 0.5325 & 0.0112 & 0.5610 & 1.1557 \\
+Deep Lasso-Jacobian & 0.1667 & 0.0000 & 1.0000 & 1.0724 \\
+Jacobian训练+原排名 & 0.1667 & 0.0000 & 1.0000 & 1.0723 \\
+原Deep Lasso+Jacobian排名 & 0.1700 & 0.0016 & 0.9960 & 1.0723 \\
+TabM-预算门 & 0.1983 & 0.0046 & 0.9620 & 1.0756 \\
+EntryPrune-回归适配 & 0.1675 & 0.0008 & 0.9990 & 1.0715 \\
+EntryPrune-刷新 & 0.4967 & 0.0111 & 0.6040 & 1.1437 \\
+EntryPrune-环境波动惩罚 & 0.4792 & 0.0116 & 0.6250 & 1.1354 \\
+VTFS-固定K & 0.4308 & 0.0093 & 0.6830 & 1.1210 \\
+VTFS-固定K+成对损失 & 0.4167 & 0.0088 & 0.7000 & 1.1163 \\
+等预算随机子集搜索 & 0.4633 & 0.0087 & 0.6440 & 1.1318 \\
+\end{longtable}
+}
+}
+
+\subsection{linear\_weak}\label{linear_weak}
+
+{\def\LTcaptype{none} % do not increment counter
+{
+\footnotesize
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+方法 & 平均FDP & FDP MCSE & Power & XGB-RMSE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Copula-MVR & 0.1867 & 0.0041 & 0.9760 & 1.8831 \\
+Elastic Net & 0.1842 & 0.0036 & 0.9790 & 1.8829 \\
+稳定性选择 & 0.2083 & 0.0066 & 0.9500 & 1.8851 \\
+影子变量树 & 0.3583 & 0.0077 & 0.7700 & 1.9023 \\
+XGBoost-SHAP & 0.2208 & 0.0058 & 0.9350 & 1.8873 \\
+Deep Lasso & 0.2483 & 0.0068 & 0.9020 & 1.8882 \\
+TabM-置换 & 0.2275 & 0.0064 & 0.9270 & 1.8848 \\
+VTFS-定额适配 & 0.5400 & 0.0097 & 0.5520 & 1.9339 \\
+Deep Lasso-Jacobian & 0.2125 & 0.0063 & 0.9450 & 1.8841 \\
+Jacobian训练+原排名 & 0.2108 & 0.0062 & 0.9470 & 1.8834 \\
+原Deep Lasso+Jacobian排名 & 0.2458 & 0.0067 & 0.9050 & 1.8879 \\
+TabM-预算门 & 0.2400 & 0.0066 & 0.9120 & 1.8881 \\
+EntryPrune-回归适配 & 0.1950 & 0.0051 & 0.9660 & 1.8830 \\
+EntryPrune-刷新 & 0.5517 & 0.0106 & 0.5380 & 1.9405 \\
+EntryPrune-环境波动惩罚 & 0.5300 & 0.0116 & 0.5640 & 1.9357 \\
+VTFS-固定K & 0.4917 & 0.0092 & 0.6100 & 1.9232 \\
+VTFS-固定K+成对损失 & 0.4850 & 0.0097 & 0.6180 & 1.9209 \\
+等预算随机子集搜索 & 0.5142 & 0.0090 & 0.5830 & 1.9255 \\
+\end{longtable}
+}
+}
+
+\subsection{linear\_dense}\label{linear_dense}
+
+{\def\LTcaptype{none} % do not increment counter
+{
+\footnotesize
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+方法 & 平均FDP & FDP MCSE & Power & XGB-RMSE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Copula-MVR & 0.0000 & 0.0000 & 0.8000 & 1.0984 \\
+Elastic Net & 0.0000 & 0.0000 & 0.8000 & 1.1012 \\
+稳定性选择 & 0.0000 & 0.0000 & 0.8000 & 1.1019 \\
+影子变量树 & 0.2033 & 0.0083 & 0.6373 & 1.1177 \\
+XGBoost-SHAP & 0.0225 & 0.0042 & 0.7820 & 1.0962 \\
+Deep Lasso & 0.0083 & 0.0025 & 0.7933 & 1.0942 \\
+TabM-置换 & 0.0017 & 0.0012 & 0.7987 & 1.0959 \\
+VTFS-定额适配 & 0.3942 & 0.0112 & 0.4847 & 1.1635 \\
+Deep Lasso-Jacobian & 0.0000 & 0.0000 & 0.8000 & 1.0981 \\
+Jacobian训练+原排名 & 0.0000 & 0.0000 & 0.8000 & 1.0987 \\
+原Deep Lasso+Jacobian排名 & 0.0083 & 0.0025 & 0.7933 & 1.0940 \\
+TabM-预算门 & 0.0167 & 0.0036 & 0.7867 & 1.0929 \\
+EntryPrune-回归适配 & 0.0083 & 0.0025 & 0.7933 & 1.0927 \\
+EntryPrune-刷新 & 0.3758 & 0.0110 & 0.4993 & 1.1534 \\
+EntryPrune-环境波动惩罚 & 0.3542 & 0.0109 & 0.5167 & 1.1524 \\
+VTFS-固定K & 0.3150 & 0.0091 & 0.5480 & 1.1338 \\
+VTFS-固定K+成对损失 & 0.3158 & 0.0089 & 0.5473 & 1.1354 \\
+等预算随机子集搜索 & 0.3625 & 0.0078 & 0.5100 & 1.1458 \\
+\end{longtable}
+}
+}
+
+\subsection{nonlinear}\label{nonlinear}
+
+{\def\LTcaptype{none} % do not increment counter
+{
+\footnotesize
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+方法 & 平均FDP & FDP MCSE & Power & XGB-RMSE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Copula-MVR & 0.5125 & 0.0106 & 0.5850 & 1.2440 \\
+Elastic Net & 0.5108 & 0.0088 & 0.5870 & 1.2338 \\
+稳定性选择 & 0.5325 & 0.0104 & 0.5610 & 1.2366 \\
+影子变量树 & 0.2642 & 0.0068 & 0.8830 & 1.1721 \\
+XGBoost-SHAP & 0.1967 & 0.0048 & 0.9640 & 1.1717 \\
+Deep Lasso & 0.3075 & 0.0079 & 0.8310 & 1.1751 \\
+TabM-置换 & 0.2975 & 0.0081 & 0.8430 & 1.1752 \\
+VTFS-定额适配 & 0.5125 & 0.0087 & 0.5850 & 1.2234 \\
+Deep Lasso-Jacobian & 0.3242 & 0.0089 & 0.8110 & 1.1784 \\
+Jacobian训练+原排名 & 0.3308 & 0.0093 & 0.8030 & 1.1798 \\
+原Deep Lasso+Jacobian排名 & 0.2975 & 0.0073 & 0.8430 & 1.1748 \\
+TabM-预算门 & 0.3150 & 0.0080 & 0.8220 & 1.1767 \\
+EntryPrune-回归适配 & 0.3858 & 0.0093 & 0.7370 & 1.1976 \\
+EntryPrune-刷新 & 0.5392 & 0.0095 & 0.5530 & 1.2243 \\
+EntryPrune-环境波动惩罚 & 0.5242 & 0.0094 & 0.5710 & 1.2189 \\
+VTFS-固定K & 0.4592 & 0.0082 & 0.6490 & 1.2006 \\
+VTFS-固定K+成对损失 & 0.4483 & 0.0084 & 0.6620 & 1.1979 \\
+等预算随机子集搜索 & 0.4875 & 0.0078 & 0.6150 & 1.2094 \\
+\end{longtable}
+}
+}
+
+\subsection{nonlinear\_panel}\label{nonlinear_panel}
+
+{\def\LTcaptype{none} % do not increment counter
+{
+\footnotesize
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+方法 & 平均FDP & FDP MCSE & Power & XGB-RMSE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Copula-MVR & 0.4817 & 0.0104 & 0.6220 & 1.2160 \\
+Elastic Net & 0.5058 & 0.0113 & 0.5930 & 1.2099 \\
+稳定性选择 & 0.5383 & 0.0111 & 0.5540 & 1.2095 \\
+影子变量树 & 0.2742 & 0.0075 & 0.8710 & 1.1437 \\
+XGBoost-SHAP & 0.1917 & 0.0042 & 0.9700 & 1.1418 \\
+Deep Lasso & 0.2950 & 0.0075 & 0.8460 & 1.1453 \\
+TabM-置换 & 0.3142 & 0.0081 & 0.8230 & 1.1466 \\
+VTFS-定额适配 & 0.5275 & 0.0098 & 0.5670 & 1.1970 \\
+Deep Lasso-Jacobian & 0.3075 & 0.0081 & 0.8310 & 1.1483 \\
+Jacobian训练+原排名 & 0.3200 & 0.0088 & 0.8160 & 1.1493 \\
+原Deep Lasso+Jacobian排名 & 0.2883 & 0.0073 & 0.8540 & 1.1450 \\
+TabM-预算门 & 0.3225 & 0.0086 & 0.8130 & 1.1546 \\
+EntryPrune-回归适配 & 0.3817 & 0.0104 & 0.7420 & 1.1686 \\
+EntryPrune-刷新 & 0.5417 & 0.0098 & 0.5500 & 1.1989 \\
+EntryPrune-环境波动惩罚 & 0.5475 & 0.0101 & 0.5430 & 1.1988 \\
+VTFS-固定K & 0.4508 & 0.0080 & 0.6590 & 1.1728 \\
+VTFS-固定K+成对损失 & 0.4492 & 0.0084 & 0.6610 & 1.1713 \\
+等预算随机子集搜索 & 0.4842 & 0.0083 & 0.6190 & 1.1808 \\
+\end{longtable}
+}
+}
+
+\section{组件是否真正贡献}\label{ux7ec4ux4ef6ux662fux5426ux771fux6b63ux8d21ux732e}
+
+{\def\LTcaptype{none} % do not increment counter
+{
+\footnotesize
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+方法
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+600模拟神经候选胜出比例
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+模拟平均开发效用增益
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+真实完整样本神经候选胜出
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+VTFS-固定K & 0.737 & 0.023210 & True \\
+VTFS-固定K+成对损失 & 0.805 & 0.027291 & True \\
+\end{longtable}
+}
+}
+
+``神经候选胜出''只是该次有限搜索中的来源标签，不自动证明相对全局随机搜索或样本外目标有优势。Deep Lasso的训练/排名交叉消融、EntryPrune扣波动前后比较、VTFS成对损失和等查询随机对照均保留于配对统计文件。
+
+\section{复现与剩余研究}\label{ux590dux73b0ux4e0eux5269ux4f59ux7814ux7a76}
+
+本轮仍然是一个电商数据集和预设模拟，未声称第二数据集验证。已有测试期被查看过，报告有利结果不能消除选择偏差。正式论文本体采纳某条改动之前，需要独立时间或数据集、相关先行研究对比及足够的理论/机制说明，不能以``跑赢''替代原创性判断。
+
+结果文件：coverage.csv、audit.json、prediction\_summary.csv、prediction\_paired.csv、stability\_summary.csv、stability\_paired.csv、simulation\_summary.csv、simulation\_paired.csv、vtfs\_decoder\_diagnostic.csv。逐样本结果及参考模型权重均保留。
+
+\section{附录：文献与新颖性}\label{ux9644ux5f55ux6587ux732eux4e0eux65b0ux9896ux6027}
+
+本轮不是证明所有改动``此前无人提出''。检索支持的是下列文献真实存在，以及所试验机制与既有研究的关系。未完成系统查重前，不使用``首创''\,``首次解决''等措辞。
+
+{\def\LTcaptype{none} % do not increment counter
+{
+\footnotesize
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+文献
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+核验入口
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+与本轮关系
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Cherepanova等，A Performance-Driven Benchmark for Feature Selection in Tabular Deep Learning，NeurIPS Datasets and Benchmarks 2023 & \url{https://openreview.net/forum?id=v4PMCdSaAT} & Deep Lasso父方法，输入损失梯度组惩罚 \\
+Gorishniy等，TabM: Advancing Tabular Deep Learning with Parameter-Efficient Ensembling，ICLR 2025 & \url{https://github.com/yandex-research/tabm} & 官方参数高效集成网络；门控是本轮附加机制 \\
+Ying等，Feature Selection as Deep Sequential Generative Learning，ACM TKDD 18(9), Article 221, 2024 & \url{https://doi.org/10.1145/3687485} & VTFS父方法，Transformer编码、效用预测与解码 \\
+Zimmer等，EntryPrune: Neural Network Feature Selection using First Impressions，arXiv:2410.02344v4, 2025 & \url{https://arxiv.org/abs/2410.02344} & 历史进入分数、动态输入层和随机再生；不擅自标为已发表顶会 \\
+Yamada等，Feature Selection using Stochastic Gates，ICML 2020, PMLR 119:10648-10659 & \url{https://proceedings.mlr.press/v119/yamada20a.html} & 说明神经网络可学习输入门已有先例，不是本轮发明 \\
+Gregorová等，Structured Nonlinear Variable Selection，UAI 2018 & \url{https://auai.org/uai2018/proceedings/papers/17.pdf} & 说明以函数偏导数构造稀疏正则已有先例，并非更换梯度就获得原创性 \\
+\end{longtable}
+}
+}
+
+\subsection{可以检验的机制问题}\label{ux53efux4ee5ux68c0ux9a8cux7684ux673aux5236ux95eeux9898}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  对平方损失，输入损失梯度是预测Jacobian与残差的乘积。较大残差样本可能放大某列分数。Jacobian稀疏/排名试验检验去除这一权重的收益与代价，不能先验保证其错误发现率更低。
+\item
+  普通TabM在全部31项上训练，再删除多数特征。固定K共享门把预算嵌入训练，检验减少训练与使用阶段不一致是否有收益。直通估计是有偏梯度近似，不能说本轮精确求解非凸最优子集。
+\item
+  EntryPrune的历史最大分数可能受到偶然梯度高分影响。刷新与波动惩罚尝试控制这一问题，但反复对同一批数据打分不产生独立统计证据，均值减标准差不是有效置信下界。
+\item
+  固定K语料首先纠正VTFS适配的预算不匹配；成对效用差损失尝试让连续表示更关注子集优劣。学习排序也是已有思想，必须以``固定K版本''作父对照，不能把修复带来的收益归给新增成对损失。
+\end{enumerate}
+
+\subsection{哪些不足以支撑论文创新}\label{ux54eaux4e9bux4e0dux8db3ux4ee5ux652fux6491ux8bbaux6587ux521bux65b0}
+
+\begin{itemize}
+\tightlist
+\item
+  调大网络、改学习率、换一个随机种子；
+\item
+  把已有正则、门控、相关聚类简单合并并另起名字；
+\item
+  修复当前实现问题后只与有问题的旧实现比较；
+\item
+  只报告一种指标、一个K或最有利模拟场景；
+\item
+  某次预测点估计较好，就声称稳定性或FDR理论也成立。
+\end{itemize}
+
+\subsection{进入正式论文的条件}\label{ux8fdbux5165ux6b63ux5f0fux8bbaux6587ux7684ux6761ux4ef6}
+
+机制必须有独立动机、相邻工作辨析、拆分消融和稳定的样本外证据。优于较弱父方法还不够，需要与XGBoost-SHAP等强基线对比。对新的真实数据进行冻结后验证仍是缺口。本轮结果可为``哪些机制值得继续研究''提供证据，不能替代导师对研究贡献与学位要求的判断。
+
+\end{document}

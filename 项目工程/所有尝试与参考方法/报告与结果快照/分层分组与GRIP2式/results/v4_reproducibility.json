@@ -1,0 +1,61 @@
+{
+  "config": {
+    "generator_epochs": 100,
+    "generator_patience": 14,
+    "clustered_repetitions": 40,
+    "group_repetitions": 60,
+    "generator_repetitions": 30,
+    "grip_repetitions": 20,
+    "grip_epochs": 90,
+    "deep_kernel_epochs": 45,
+    "diagnostic_permutations": 199
+  },
+  "seed": 20260823,
+  "device": "mps",
+  "torch": "2.8.0",
+  "numpy": "2.0.2",
+  "scipy": "1.13.1",
+  "platform": "macOS-15.7.3-arm64-arm-64bit",
+  "panel_rows": 14677,
+  "panel_sellers": 2793,
+  "clustered": {
+    "between_seller": {
+      "n": 2793,
+      "p": 31,
+      "repetitions": 40,
+      "lasso_alpha": 0.007057463628719894
+    },
+    "within_seller": {
+      "n": 14677,
+      "p": 28,
+      "repetitions": 40,
+      "lasso_alpha": 0.007057463628719894
+    }
+  },
+  "group": {
+    "n": 14677,
+    "groups": 12,
+    "repetitions": 60,
+    "lasso_alpha": 0.00439787866493716
+  },
+  "v4_generator_passed_prespecified_diagnostics": false,
+  "v4_generator_diagnostic_rule": {
+    "mean_marginal_ks_max": 0.05,
+    "covariance_relative_error_max": 0.2,
+    "mean_real_knockoff_correlation_max": 0.85,
+    "deep_kernel_rejection_rate_max": 0.4,
+    "classifier_auc_mean_max": 0.75
+  },
+  "marginal_calibration_fit_scope": "generator_training_indices_only",
+  "diagnostic_permutations": 199,
+  "minimum_attainable_p": 0.005,
+  "grip2_style_antisymmetry": {
+    "feature": "avg_price",
+    "max_absolute_error": 0.0,
+    "mean_absolute_error": 0.0,
+    "passed_tolerance_1e_5": true
+  },
+  "panel_sha256": "7212bf462a8b23ba6455bed5fe7354481b43d3e3a0f633a13ced1a97c3046a1e",
+  "classifier_permutations": 99,
+  "classifier_minimum_attainable_p": 0.01
+}

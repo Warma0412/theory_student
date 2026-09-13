@@ -1,0 +1,799 @@
+{
+  "passed": true,
+  "model": "full Olist three-seed TabM reference",
+  "score_rows": 32,
+  "tests": [
+    {
+      "swapped": [
+        0
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        0
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        0
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        1
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        1
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        1
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        2
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        2
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        2
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        3
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        3
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        3
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        4
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        4
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        4
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        5
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        5
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        5
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        6
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        6
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        6
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        7
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        7
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        7
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        8
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        8
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        8
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        9
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        9
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        9
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        10
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        10
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        10
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        11
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        11
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        11
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        12
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        12
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        12
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        13
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        13
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        13
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        14
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        14
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        14
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        15
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        15
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        15
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        16
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        16
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        16
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        17
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        17
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        17
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        18
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        18
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        18
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        19
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        19
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        19
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        20
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        20
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        20
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        21
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        21
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        21
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        22
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        22
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        22
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        23
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        23
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        23
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        24
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        24
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        24
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        25
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        25
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        25
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        26
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        26
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        26
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        27
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        27
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        27
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        28
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        28
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        28
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        29
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        29
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        29
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        30
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        30
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        30
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        0,
+        3,
+        15,
+        28
+      ],
+      "statistic": "midpoint",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        0,
+        3,
+        15,
+        28
+      ],
+      "statistic": "orbit",
+      "max_error": 0.0
+    },
+    {
+      "swapped": [
+        0,
+        3,
+        15,
+        28
+      ],
+      "statistic": "orbit_student",
+      "max_error": 0.0
+    }
+  ]
+}

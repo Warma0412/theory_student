@@ -1,0 +1,485 @@
+% !TEX program = xelatex
+\documentclass[UTF8,12pt,a4paper]{ctexart}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array,tabularx,longtable}
+\usepackage{fancyhdr,setspace,enumitem,hyperref}
+\setCJKmainfont{Songti SC}
+\setCJKsansfont{STHeiti}
+\setmainfont{Times New Roman}
+\hypersetup{hidelinks}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+\setstretch{1.42}
+\setlist{nosep,leftmargin=2em}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\thispagestyle{empty}
+\begingroup
+\small
+\begin{center}
+  {\zihao{2}\bfseries 上海财经大学}\\[0.5em]
+  {\zihao{2}\bfseries 研究生申请学位论文开题报告表}
+\end{center}
+\vspace{0.5cm}
+
+\renewcommand{\arraystretch}{1.5}
+\noindent
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{2.1cm}|Y|>{\centering\arraybackslash}p{2.1cm}|Y|}
+\hline
+姓名 & 吴优 & 学院 & 统计与数据科学学院 \\
+\hline
+学号 & 2025213385 & 导师姓名 & 张吕欧 \\
+\hline
+专业 & 应用统计 & 培养层次 & 专业硕士 \\
+\hline
+\multicolumn{2}{|c|}{同意开题} & \multicolumn{2}{l|}{导师签字：} \\
+\hline
+\end{tabularx}
+
+\vspace{0.2cm}
+\noindent
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{2.5cm}|Y|}
+\hline
+论文题目 &
+基于去随机化Model-X Knockoff的电商GMV多粒度受控维度选择研究 \\
+\hline
+开题时间 & \hspace{4cm} 开题地点： \\
+\hline
+与会专家姓名、单位（3--5人） & \rule{0pt}{2.2cm} \\
+\hline
+开题报告情况 & \rule{0pt}{3.2cm} 专家主要意见： \\
+\hline
+开题结果（划圈） &
+开题通过，同意进入论文写作阶段。\quad/\quad
+开题未通过，不同意进入论文写作阶段。\newline
+\vspace{0.5cm}开题报告会专家组组长签名：\newline
+导师签名：\hfill 年\quad 月\quad 日 \\
+\hline
+\end{tabularx}
+
+\vfill
+{\zihao{-5}注：填写本表1份，申请开题须经导师签字同意；开题结果由开题报告会专家组组长及导师签署并签字；交研究生秘书进入教学管理信息系统录入开题结果。附：上海财经大学研究生学位论文开题报告书（见下页），打印3--5份交学院安排开题。}
+\endgroup
+
+\newpage
+\thispagestyle{empty}
+\begin{center}
+  \vspace*{1.5cm}
+  {\zihao{2}\bfseries 上海财经大学}\\[0.6em]
+  {\zihao{2}\bfseries 研究生学位论文开题报告书}\\[2.0cm]
+  {\zihao{3}\bfseries 论文题目：基于去随机化Model-X Knockoff的}\\[0.4em]
+  {\zihao{3}\bfseries 电商GMV多粒度受控维度选择研究}
+\end{center}
+
+\vspace{2.1cm}
+\renewcommand{\arraystretch}{1.8}
+\begin{center}
+\begin{tabular}{rl}
+姓\quad 名： & 吴优\\
+学\quad 号： & 2025213385\\
+院系所： & 统计与数据科学学院\\
+专\quad 业： & 应用统计\\
+培养层次： & 专业硕士\\
+导师姓名： & 张吕欧\\
+\end{tabular}
+\end{center}
+\vfill
+\begin{center}
+  {\zihao{4}二〇二六年九月}
+\end{center}
+
+\newpage
+\setcounter{page}{3}
+\section*{1、选题背景、研究问题、理论意义与实用价值}
+
+电商平台能够连续记录获客、下单、支付、发货、送达和评价等经营过程。企业通常以GMV作为核心经营指标，并围绕交易规模、价格成本、供给、支付、履约、口碑、地域和营销建立多维监控看板。随着业务发展，指标数量持续增加，订单数、件数和顾客数等高度相关变量容易重复表达同一经营状态，管理者难以在有限时间内判断哪些维度真正具有独立信息。若使用边际相关或逐项显著性检验筛选指标，还会因多重比较累积假阳性；若仅依赖XGBoost等机器学习重要性，则只能得到相对排序，无法控制入选集合的误选比例。
+
+本文拟研究的核心问题是：给定卖家在当前周期的31项经营维度，哪些变量在控制其余候选信息后，仍包含下一周期GMV的增量预测信息，并值得进入持续监控体系。月度主分析的条件零假设为
+\[
+H_{0j}:Y_{s,t+1}\perp X_{j,s,t}\mid X_{-j,s,t},
+\]
+其中$Y_{s,t+1}$为卖家$s$次月的$\log(1+\mathrm{GMV})$，$X_{j,s,t}$为本月第$j$项候选维度。拒绝该假设表示变量具有条件预测信息，但不表示主动改变该变量必然改变GMV。
+
+理论上，本文把经营看板选维转化为Model-X Knockoff框架下的多重检验问题，以仿制变量作为负对照，并通过多轮e-value聚合控制目标错误发现率。研究同时讨论面板组内相关、共线业务组、非高斯联合分布和时间聚合粒度对选择结果的影响。
+
+实践上，研究将统计确认与页面展示分开。统计程序先形成可控误选的确认集合，再由参数$K$确定首页展示4项、8项、10项或完整集合。月度分析负责稳定确认，周度分析负责短期预警和粒度复核，从而为指标准入、下钻和退出提供可复核依据。
+
+本文围绕四个具体问题展开：
+\begin{enumerate}
+  \item 如何从十张不同自然粒度的业务表构造金额可对账、主键不重复的卖家面板；
+  \item 如何在31项混合且高度相关的候选变量中控制目标错误发现率；
+  \item 如何在不改变统计确认集合的前提下，通过参数$K$控制页面展示数量；
+  \item 月度结论在周度、卖家内变化、业务组竞争和非线性模型下是否保持稳定。
+\end{enumerate}
+
+\newpage
+\section*{2、国内外研究现状与发展趋势}
+
+Benjamini和Hochberg提出错误发现率控制方法，使多重检验能够在保留发现能力的同时约束错误发现比例\cite{bh1995}。Barber和Candès提出Knockoff过滤器，Candès等将其扩展到Model-X设定，通过构造与真实变量成对可交换的仿制变量实现受控变量选择\cite{barber2015,candes2018}。与Lasso等以预测误差为目标的稀疏估计不同，Knockoff直接针对发现集合的错误比例。
+
+Knockoff生成具有随机性。Ren和Barber将单轮结果表示为e-value，并通过e-BH聚合多轮Knockoff，从而降低随机种子对最终集合的影响\cite{ren2024}。Wang和Ramdas证明e-BH可在任意依赖的e-values下控制FDR\cite{wang2022}。Spector和Janson提出最小可重构性准则，以改善相关变量场景下的功效\cite{spector2022}。对于共线变量，Dai和Barber给出Group Knockoff，使统计竞争从单列扩展到预定义业务组\cite{dai2016}。
+
+复杂非高斯数据推动了深度Knockoff研究。Romano等使用深度生成网络逼近可交换联合分布\cite{romano2020}。然而，边际分布接近并不足以保证联合交换性。Liu等提出的深度核两样本检验能够提高高维分布差异的检测能力\cite{liu2020}，适合用作生成器准入诊断。本文据此将深度模型的生成能力与统计有效性分开评价。
+
+机器学习方法常用于销售预测和特征排序。Lasso和Elastic Net提供稀疏基线\cite{tibshirani1996,zou2005}，随机森林和梯度提升能够表达非线性\cite{breiman2001,friedman2001}，XGBoost进一步提供适合大规模稀疏表格数据的实现\cite{chen2016}。TreeSHAP可以一致地分解树模型预测贡献\cite{lundberg2017,lundberg2020}。但机器学习重要性不等于条件独立检验，也不提供因果效应。面板固定效应能够控制卖家不随时间变化的异质性\cite{wooldridge2010}，仍可能受到未观测时变混杂影响。
+
+现有方法分别覆盖多重检验、预测、解释或面板建模，但较少将受控发现、随机稳定性、可调展示数量和月周粒度复核纳入同一经营指标治理流程。本文拟在该交叉问题上形成完整实证框架。
+
+\newpage
+\section*{3、数据来源、变量与研究设计}
+
+\subsection*{3.1 原始数据与连接原则}
+
+本文使用Olist公开的订单、商品明细、支付、评价、商品、卖家、顾客、地理和营销漏斗数据。支付和评价先聚合至订单级，地理数据按邮编前缀聚合，再与商品明细连接，以避免多对多连接造成GMV膨胀。独立顾客数使用跨订单唯一顾客标识计算。
+
+月度面板包含14,677个卖家-月、2,793个卖家和19个月，下一月零成交率为25.86\%；周度面板包含33,190个卖家-周、2,834个卖家和83周，下一周零成交率为40.46\%。32项候选维度中，申报月收入对数因零方差排除，31项进入模型。
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{lrrrr}
+\toprule
+分析口径 & 面板行数 & 卖家数 & 期间数 & 下一期零值率\\
+\midrule
+月度主分析 & 14,677 & 2,793 & 19个月 & 25.86\%\\
+周度稳健性 & 33,190 & 2,834 & 83周 & 40.46\%\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{3.2 候选维度与业务概念}
+
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{1.18}
+\begin{tabularx}{0.98\textwidth}{p{2.5cm}p{1.2cm}Y}
+\toprule
+业务概念 & 列数 & 主要变量\\
+\midrule
+价格成本 & 2 & 平均商品价格、平均运费\\
+商品物理属性 & 4 & 重量、长度、高度、宽度\\
+商品内容 & 3 & 图片数、标题长度、描述长度\\
+支付与口碑 & 7 & 分期、序列、四种支付方式占比、评价得分\\
+履约 & 4 & 送达、审核、承运、预计偏差\\
+交易规模 & 4 & 件数、订单数、品类数、独立顾客数\\
+市场覆盖 & 4 & 买家州数、最大州占比、跨州占比、距离\\
+卖家与营销 & 3 & 卖家州频率、营销来源频率、成交线索匹配\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection*{3.3 目标、时间切分与评价}
+
+月度目标为$Y_{s,t+1}=\log(1+\mathrm{GMV}_{s,t+1})$，周度目标相应替换为下一周。若卖家当前期活跃而下一期无成交，则目标记为零。月度预测使用2017年训练、2018年1--4月验证、2018年5--7月测试；周度使用相同自然时间边界。主要评价指标为
+\[
+\mathrm{RMSE}=\sqrt{\frac{1}{n}\sum_{i=1}^n(y_i-\widehat y_i)^2},
+\qquad
+\mathrm{WAPE}=\frac{\sum_i|g_i-\widehat g_i|}{\sum_i g_i}.
+\]
+
+\newpage
+\section*{4、核心统计方法}
+
+\subsection*{4.1 随机化秩高斯与二阶Knockoff}
+
+首先对连续变量进行分位缩尾、偏态变换、中位数插补和标准化，再使用随机化秩高斯变换处理并列值：
+\[
+Z_{ij}=\Phi^{-1}\left(\frac{r_{ij}-0.5}{n}\right).
+\]
+设$\widehat\Sigma$为Ledoit-Wolf收缩协方差。仿制变量需要满足
+\[
+(X,\widetilde X)_{\mathrm{swap}(S)}\overset d=(X,\widetilde X),
+\qquad \widetilde X\perp Y\mid X.
+\]
+在潜在高斯空间中，按MVR准则确定对角矩阵$S$，条件采样分布为
+\[
+\widetilde Z\mid Z\sim
+\mathcal N\left(Z-Z\widehat\Sigma^{-1}S,\;
+2S-S\widehat\Sigma^{-1}S\right).
+\]
+
+\subsection*{4.2 Lasso竞争统计量与Knockoff+}
+
+将$[Z,\widetilde Z]$共同输入Lasso，构造反对称统计量
+\[
+W_j=|\widehat\beta_j|-|\widehat\beta_{j+p}|.
+\]
+Knockoff+阈值为
+\[
+T(q)=\min\left\{t>0:
+\frac{1+\#\{j:W_j\le -t\}}{\#\{j:W_j\ge t\}\vee1}\le q
+\right\},
+\quad \widehat S=\{j:W_j\ge T(q)\}.
+\]
+若真实变量持续胜过对应仿制变量，则$W_j$倾向于为正；负向统计量用于估计正向发现中的错误数量。
+
+\subsection*{4.3 去随机化e-value}
+
+主分析独立生成$M=60$组Knockoff。第$m$轮变量$j$的e-value定义为
+\[
+e_j^{(m)}
+=p\frac{\mathbf1\{W_j^{(m)}\ge T^{(m)}\}}
+{1+\sum_{k=1}^p\mathbf1\{W_k^{(m)}\le -T^{(m)}\}},
+\quad
+\bar e_j=\frac1M\sum_{m=1}^M e_j^{(m)}.
+\]
+本文以$\alpha_{\mathrm{kn}}=0.10$形成单轮e-value，并在最终$\alpha_{\mathrm{eBH}}=0.20$下实施e-BH。将$\bar e_j$从大到小排列，取满足
+\[
+\bar e_{(k)}\ge \frac{p}{\alpha_{\mathrm{eBH}}k}
+\]
+的最大$k$形成正式确认集合。单轮频率只作为随机稳定性描述。
+
+\section*{5、参数化展示与稳健性分支}
+
+\subsection*{5.1 参数$K$}
+
+确认集合$S_{\mathrm{FDR}}$固定后，使用训练期XGBoost和验证集TreeSHAP得到排序$\pi$：
+\[
+S(K)=\{\pi_1,\ldots,\pi_K\},\qquad
+K^*=\min\left\{K:C_K\ge90\%,\;
+\mathrm{RMSE}_{K}\le1.005\,\mathrm{RMSE}_{\min}\right\}.
+\]
+$K$仅改变页面展示长度，不重新计算FDR。
+
+\subsection*{5.2 卖家间/内与业务组}
+
+面板结构按
+\[
+X_{s,t}=\bar X_s+(X_{s,t}-\bar X_s)
+\]
+拆分为卖家间长期位置与卖家内短期离差。31项变量另划为12个业务组，组级统计量定义为
+\[
+W_g=\|\widehat\beta_g\|_2-\|\widehat\beta_{\widetilde g}\|_2.
+\]
+
+\subsection*{5.3 深度联合诊断与非线性重要性}
+
+深度生成器使用多比例swap-MMD、边际、协方差、交叉对称和可重构性损失。有效性由边际KS、协方差误差、深度核MMD和分类器两样本检验共同决定。未通过联合交换性诊断的生成器不进入FDR结论。非线性重要性使用配对竞争MLP，并在二维正则路径上累计真实与仿制入口活跃度之差。
+
+\subsection*{5.4 预测与解释}
+
+预测模型包括Ridge、Lasso、Extra Trees、XGBoost和MLP。测试集不参与参数选择。TreeSHAP用于确认集合内部排序；双向固定效应控制卖家和周期效应，标准误按卖家聚类。两者均为预测或条件关联证据，不解释为因果效应。
+
+\newpage
+\section*{6、月度确认性实证结果}
+
+Copula-MVR的平均边际KS为0.013，原始高斯为0.200，因此正式分析采用Copula-MVR。最终FDR水平0.20下入选14项；其中10项单轮频率不低于90\%。
+
+\begin{center}
+\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{r l r r r}
+\toprule
+排序 & 维度 & 平均$W$ & 单轮频率 & 平均e-value\\
+\midrule
+1 & 成交订单数 & 0.144 & 95.0\% & 28.675\\
+2 & 平均商品价格 & 0.142 & 95.0\% & 28.675\\
+3 & 独立顾客数 & 0.140 & 95.0\% & 28.675\\
+4 & 成交件数 & 0.117 & 95.0\% & 28.675\\
+5 & 买家州数量 & 0.097 & 95.0\% & 28.675\\
+6 & 平均审核至承运天数 & 0.053 & 95.0\% & 28.675\\
+7 & 平均运费 & 0.027 & 95.0\% & 28.675\\
+8 & 活跃品类数 & 0.023 & 95.0\% & 28.675\\
+9 & 平均预计提前送达天数 & 0.021 & 95.0\% & 28.675\\
+10 & 平均商品标题长度 & 0.022 & 91.7\% & 27.642\\
+11 & 平均商品高度 & 0.013 & 80.0\% & 24.025\\
+12 & 卖家所在州频率 & 0.014 & 76.7\% & 22.992\\
+13 & 平均商品描述长度 & 0.009 & 50.0\% & 14.725\\
+14 & 平均下单至送达天数 & 0.007 & 41.7\% & 12.142\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+在$q=0.10$时严格集合为空，$q=0.20$和$q=0.30$均为14项。该跳跃来自$p=31$时Knockoff+阈值的离散性，因此本文不通过事后调整$q$来获得任意长度列表。
+
+\newpage
+\section*{7、参数$K$与时间外预测结果}
+
+\begin{center}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+档位 & $K$ & 累计贡献 & 验证RMSE & 测试RMSE\\
+\midrule
+极简 & 4 & 72.1\% & 2.335 & 2.388\\
+均衡 & 8 & 87.1\% & 2.341 & 2.389\\
+默认推荐 & 10 & 92.6\% & 2.343 & 2.385\\
+完整确认集 & 14 & 100.0\% & 2.343 & 2.384\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+默认$K=10$包括独立顾客数、成交订单数、平均商品价格、平均审核至承运天数、平均预计提前送达天数、买家州数量、平均下单至送达天数、成交件数、平均运费和平均商品标题长度。
+
+\begin{center}
+\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{lrrrr}
+\toprule
+模型 & RMSE(log) & MAE(log) & $R^2$ & WAPE\\
+\midrule
+XGBoost & 2.388 & 1.914 & 0.291 & 67.2\%\\
+Ridge & 2.389 & 1.949 & 0.291 & 73.1\%\\
+Lasso & 2.389 & 1.949 & 0.290 & 73.1\%\\
+Extra Trees & 2.390 & 1.914 & 0.290 & 65.9\%\\
+XGBoost（确认集合） & 2.391 & 1.914 & 0.289 & 67.2\%\\
+残差MLP & 2.414 & 1.927 & 0.276 & 71.8\%\\
+MLP & 2.429 & 1.947 & 0.267 & 74.5\%\\
+本月GMV基线 & 2.895 & 1.981 & $-0.042$ & 79.2\%\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+最佳月度模型为XGBoost，较朴素基线RMSE改善17.5\%。默认$K=10$的测试RMSE为2.385，与全31维XGBoost基本一致，说明压缩展示数量未明显损失预测信息。MLP和残差MLP未优于树模型，表明当前样本下模型复杂度本身不能保证泛化收益。
+
+\newpage
+\section*{8、周度粒度与结构稳健性结果}
+
+周度分析在相同流程下入选18项，其中13项单轮频率不低于90\%。月度14项与周度18项共同入选11项，Jaccard系数为0.524。周度特有项主要涉及商品物理、支付结构和营销标记，应作为观察层而非直接升级为确认指标。
+
+\begin{center}
+\scriptsize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lrrr}
+\toprule
+场景 & 重复数 & 严格数 & 与周度主集重合\\
+\midrule
+周度主分析 & 60 & 18 & 18\\
+原始高斯生成 & 40 & 12 & 12\\
+同周GMV对照 & 40 & 29 & 17\\
+截尾时间窗 & 40 & 20 & 16\\
+下一周客单价 & 40 & 15 & 15\\
+测试期前样本 & 40 & 14 & 13\\
+XGBoost统计量 & 25 & 16 & 15\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{center}
+\scriptsize
+\begin{tabular}{lrrrr}
+\toprule
+周度模型 & RMSE(log) & MAE(log) & $R^2$ & WAPE\\
+\midrule
+Extra Trees & 2.416 & 2.146 & 0.254 & 78.0\%\\
+XGBoost & 2.420 & 2.160 & 0.251 & 79.6\%\\
+XGBoost（18项） & 2.421 & 2.157 & 0.251 & 79.2\%\\
+Lasso & 2.433 & 2.189 & 0.244 & 82.7\%\\
+Ridge & 2.434 & 2.185 & 0.243 & 82.8\%\\
+MLP & 2.443 & 2.167 & 0.238 & 81.0\%\\
+本周GMV基线 & 3.401 & 2.600 & $-0.478$ & 110.8\%\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+月度降低低频卖家的偶发噪声，适合作为确认性分析；周度提供更多时间点，但零膨胀和相关代理更强，适合作为短期预警和粒度复核。
+
+\newpage
+\section*{9、生成器诊断、组级结果与负结果}
+
+\begin{center}
+\scriptsize
+\begin{tabular}{lrrrr}
+\toprule
+生成器 & 平均KS & 协方差误差 & 深度核拒绝率 & 分类AUC\\
+\midrule
+Copula-MVR & 0.026 & 0.091 & 0\% & 0.777\\
+基础深度生成器 & 0.018 & 0.166 & 100\% & 0.902\\
+最坏swap深度生成器 & 0.019 & 0.188 & 100\% & 0.937\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+两类深度生成器虽然边际KS较小，但深度核MMD在所有交换比例下均拒绝，分类AUC显著高于0.5，因此不作FDR声明。该负结果说明边际匹配不能替代联合交换性。
+
+\begin{center}
+\scriptsize
+\begin{tabular}{lrrp{6.0cm}}
+\toprule
+分支 & 月度 & 周度 & 解释\\
+\midrule
+卖家间层$q=.20$ & 16项 & 12项 & 长期卖家差异包含主要信号\\
+卖家内层$q=.20$ & 0项 & 0项 & 当前序列不足以支持严格动态发现\\
+业务组$q=.20$ & 0组 & 10组 & 周度组级信息更强\\
+轨迹重要性$q=.20$ & 0项 & 0项 & 主水平未恢复非线性发现\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+真实特征矩阵上的稀疏模拟中，去随机化e-BH平均FDP为0、平均功效为0；单轮Knockoff+平均FDP为0.197、功效为1.000。低维且仅5个真信号时，聚合程序受到离散门槛限制。本文保留这一结果，作为方法功效边界而非删除不利证据。
+
+\newpage
+\section*{10、创新、可行性、范围与计划}
+
+\subsection*{10.1 研究创新与方法主线}
+
+本文不是把多个算法并列叠加，而是围绕“如何形成可信、精简且可复核的GMV监控维度”建立一条确认性主线：Copula-MVR Model-X Knockoff负责生成负对照，Lasso反对称统计量度量真实变量相对优势，60轮e-value与e-BH形成正式确认集合。其余方法不参与改写正式发现，只回答主结论是否依赖共线结构、面板层级、非线性生成器或时间粒度。
+
+研究创新主要体现在三个方面：第一，将随机Knockoff运行转化为e-value证据并进行正式聚合，避免用任意稳定频率替代错误率控制；第二，将FDR确认与参数$K$展示分离，使页面容量不反向决定统计结论；第三，建立“月度确认—周度复核—结构与生成诊断”的分层证据体系，并规定未通过交换性诊断的深度生成器不得用于FDR声明。
+
+严格而言，上述贡献属于面向经营指标治理的应用统计研究设计创新，而不是提出新的Knockoff定理。论文的价值在于把已有统计工具组织成具有明确职责、否决规则和解释边界的统一流程；不能将每个辅助分支分别包装成算法创新。
+
+\subsection*{10.2 可行性证据与范围限制}
+
+可行性由已完成的实证结果直接支持：月度程序得到14项确认集合，默认$K=10$的测试RMSE为2.385；周度得到18项并与月度重合11项；深度生成器未通过联合交换性诊断时被明确否决。该结果表明流程能够同时输出确认集合、压缩路径和失效诊断，而不是仅给出无法复核的变量排名。
+
+研究目标是下一期GMV的条件预测信息，不是因果效应。公开数据缺少曝光、广告、库存、促销和竞争强度；卖家面板存在组内相关；周度物流与评价变量采用最终结果回溯归属，不等同于实时部署。实际应用需要按字段真实可见时间重构并滚动回测。
+
+\subsection*{10.3 写作计划}
+
+\begin{center}
+\footnotesize
+\begin{tabularx}{0.96\textwidth}{p{2.6cm}Y}
+\toprule
+时间 & 主要任务\\
+\midrule
+2026年9月 & 完成开题、数据审计和完整实证结果整理\\
+2026年10月 & 完善理论、模拟、组级和深度诊断说明\\
+2026年11月 & 统一月度与周度结果、图表和文献\\
+2026年12月 & 完成论文初稿并根据导师意见修改\\
+2027年1月 & 完成格式终检、查重和答辩材料\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+论文拟分为绪论、理论基础、数据与设计、统一方法、实证结果、讨论与应用、结论与展望七章。若深度生成器未通过诊断，则坚持Copula主线；若周度零膨胀过强，则坚持月度确认、周度稳健性的预设分工。
+
+\newpage
+\renewcommand{\refname}{11、主要参考文献}
+\scriptsize
+\setstretch{1.0}
+\begin{thebibliography}{99}
+\bibitem{bh1995} Benjamini Y, Hochberg Y. Controlling the false discovery rate[J]. JRSS B, 1995, 57(1): 289--300.
+\bibitem{barber2015} Barber R F, Candès E J. Controlling the false discovery rate via knockoffs[J]. Annals of Statistics, 2015, 43(5): 2055--2085. DOI:10.1214/15-AOS1337.
+\bibitem{candes2018} Candès E, Fan Y, Janson L, Lv J. Panning for gold: Model-X knockoffs[J]. JRSS B, 2018, 80(3): 551--577. DOI:10.1111/rssb.12265.
+\bibitem{robust2020} Barber R F, Candès E J, Samworth R J. Robust inference with knockoffs[J]. Annals of Statistics, 2020, 48(3): 1409--1431. DOI:10.1214/19-AOS1852.
+\bibitem{ren2024} Ren Z, Barber R F. Derandomised knockoffs: leveraging e-values for FDR control[J]. JRSS B, 2024, 86(1): 122--154.
+\bibitem{wang2022} Wang R, Ramdas A. False discovery rate control with e-values[J]. JRSS B, 2022, 84(3): 822--852. DOI:10.1111/rssb.12489.
+\bibitem{vovk2021} Vovk V, Wang R. E-values: calibration, combination and applications[J]. Annals of Statistics, 2021, 49(3): 1736--1754.
+\bibitem{ledoit2004} Ledoit O, Wolf M. A well-conditioned estimator for large-dimensional covariance matrices[J]. Journal of Multivariate Analysis, 2004, 88(2): 365--411.
+\bibitem{spector2022} Spector A, Janson L. Powerful knockoffs via minimizing reconstructability[J]. Annals of Statistics, 2022, 50(1): 252--276.
+\bibitem{bates2021} Bates S, Candès E, Janson L, Wang W. Metropolized knockoff sampling[J]. JASA, 2021, 116(535): 1413--1427.
+\bibitem{romano2020} Romano Y, Sesia M, Candès E. Deep knockoffs[J]. JASA, 2020, 115(532): 1861--1872.
+\bibitem{dai2016} Dai R, Barber R F. The knockoff filter for FDR control in group-sparse regression[C]//ICML. 2016: 1851--1859.
+\bibitem{liu2020} Liu F, Xu W, Lu J, et al. Learning deep kernels for non-parametric two-sample tests[C]//ICML. 2020: 6316--6326.
+\bibitem{tibshirani1996} Tibshirani R. Regression shrinkage and selection via the lasso[J]. JRSS B, 1996, 58(1): 267--288.
+\bibitem{zou2005} Zou H, Hastie T. Regularization and variable selection via the elastic net[J]. JRSS B, 2005, 67(2): 301--320.
+\bibitem{breiman2001} Breiman L. Random forests[J]. Machine Learning, 2001, 45(1): 5--32.
+\bibitem{friedman2001} Friedman J H. Greedy function approximation: a gradient boosting machine[J]. Annals of Statistics, 2001, 29(5): 1189--1232.
+\bibitem{chen2016} Chen T, Guestrin C. XGBoost: a scalable tree boosting system[C]//KDD. 2016: 785--794. DOI:10.1145/2939672.2939785.
+\bibitem{lundberg2017} Lundberg S M, Lee S I. A unified approach to interpreting model predictions[C]//NeurIPS. 2017, 30.
+\bibitem{lundberg2020} Lundberg S M, Erion G, Chen H, et al. From local explanations to global understanding with explainable AI for trees[J]. Nature Machine Intelligence, 2020, 2: 56--67.
+\bibitem{wooldridge2010} Wooldridge J M. Econometric analysis of cross section and panel data[M]. 2nd ed. MIT Press, 2010.
+\bibitem{little2019} Little R J A, Rubin D B. Statistical analysis with missing data[M]. 3rd ed. Wiley, 2019.
+\bibitem{hyndman2021} Hyndman R J, Athanasopoulos G. Forecasting: principles and practice[M/OL]. 3rd ed. OTexts, 2021.
+\bibitem{olist2018} Olist. Brazilian E-Commerce Public Dataset by Olist[DB/OL]. Kaggle, 2018.
+\bibitem{olistfunnel2018} Olist. Marketing Funnel by Olist[DB/OL]. Kaggle, 2018.
+\end{thebibliography}
+
+\end{document}

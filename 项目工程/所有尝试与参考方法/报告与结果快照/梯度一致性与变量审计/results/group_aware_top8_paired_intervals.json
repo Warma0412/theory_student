@@ -1,0 +1,19 @@
+{
+  "xgboost": {
+    "difference_definition": "group-aware RMSE minus XGBoost-SHAP RMSE",
+    "point_difference": 0.007958733951331398,
+    "ci95_low": -3.8888830243249846e-05,
+    "ci95_high": 0.016347192743929012,
+    "seller_cluster_bootstrap_repetitions": 2000
+  },
+  "tabm": {
+    "difference_definition": "group-aware RMSE minus XGBoost-SHAP RMSE",
+    "point_difference": 0.004485196678868375,
+    "ci95_low": -0.0026964748189172104,
+    "ci95_high": 0.010795098531634755,
+    "seller_cluster_bootstrap_repetitions": 2000
+  },
+  "conditional_on_observed_three_test_months": true,
+  "existing_test_previously_observed": true,
+  "post_v7_exploratory": true
+}

@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "adversarial-lassonet"
+version = "0.1.0"
+description = "Reproducible experiment package for adversarial and SAM-style LassoNet benchmarks."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Jason Young" }
+]
+dependencies = [
+  "numpy>=1.23",
+  "pandas>=1.5",
+  "scipy>=1.10",
+  "scikit-learn>=1.2",
+  "matplotlib>=3.6",
+  "tqdm>=4.65",
+  "torch>=2.0",
+  "lassonet>=0.0.20",
+  "Pillow>=9.0",
+  "PyYAML>=6.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

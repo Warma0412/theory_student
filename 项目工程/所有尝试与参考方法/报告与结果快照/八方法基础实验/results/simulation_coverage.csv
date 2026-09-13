@@ -1,0 +1,9 @@
+method,completed,required
+copula_mvr,600,600
+elastic_net,600,600
+stability_selection,600,600
+shadow_trees,600,600
+xgboost_shap,600,600
+deep_lasso,600,600
+tabm,600,600
+vtfs,600,600

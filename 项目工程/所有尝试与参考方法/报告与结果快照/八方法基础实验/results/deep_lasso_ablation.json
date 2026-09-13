@@ -1,0 +1,30 @@
+{
+  "without_penalty": {
+    "mean": 0.8181684981684982,
+    "sd": 0.08820325660819114,
+    "se": 0.016103637763240964,
+    "ci_low": 0.7852328608689503,
+    "ci_high": 0.8511041354680462,
+    "n": 30
+  },
+  "with_penalty": {
+    "mean": 0.8230219780219781,
+    "sd": 0.07180249432382563,
+    "se": 0.013109281942098648,
+    "ci_low": 0.7962104860069229,
+    "ci_high": 0.8498334700370332,
+    "n": 30
+  },
+  "paired_with_minus_without": {
+    "mean": 0.004853479853479859,
+    "sd": 0.08743453126662003,
+    "se": 0.015963288359872842,
+    "ci_low": -0.027795110686044025,
+    "ci_high": 0.03750207039300374,
+    "n": 30
+  },
+  "full_top12_jaccard": 0.8461538461538461,
+  "post_protocol": true,
+  "hyperparameters_not_retuned": true,
+  "interpretation": "local regularization ablation at one frozen configuration; not an optimized MLP comparison"
+}

@@ -1,0 +1,25 @@
+{
+  "development_only": true,
+  "rolling_validation_months": [
+    "2017-09-01 00:00:00",
+    "2017-10-01 00:00:00",
+    "2017-11-01 00:00:00",
+    "2017-12-01 00:00:00",
+    "2018-01-01 00:00:00",
+    "2018-02-01 00:00:00",
+    "2018-03-01 00:00:00",
+    "2018-04-01 00:00:00"
+  ],
+  "selectors": [
+    "xgboost_shap",
+    "deep_lasso",
+    "tabm",
+    "shadow_trees"
+  ],
+  "common_evaluator": "frozen XGBoost; one fixed seed for the exploratory exhaustive swap audit",
+  "fixed_k": 12,
+  "core_rule": "selected by >=3/4 strong selectors; mean half-sample frequency >=0.70; full-model removal worsens >=60% months; nested historical replacement has positive mean regret",
+  "replaceable_rule": "selected by >=2/4 and max Spearman >=0.80 or nested replacement regret <=0",
+  "warning": "Categories are a transparent pilot admission rule, not probabilities of truth or causal effects.",
+  "post_v7_exploratory": true
+}

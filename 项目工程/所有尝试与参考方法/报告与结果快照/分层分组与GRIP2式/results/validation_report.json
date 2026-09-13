@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "clustered_q20": {
+    "between": 16,
+    "within": 0
+  },
+  "group_q20_count": 0,
+  "v4_generator_passed": false,
+  "deep_kernel_rejection_rate": 1.0,
+  "grip2_style": {
+    "antisymmetry_passed": true,
+    "q20_count": 0,
+    "q30_count": 5
+  },
+  "calibration_scope": "generator_training_indices_only",
+  "pdf_pages": {
+    "complete": 67,
+    "condensed": 25,
+    "ultra": 5
+  }
+}

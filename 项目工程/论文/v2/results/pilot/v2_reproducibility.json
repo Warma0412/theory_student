@@ -1,0 +1,38 @@
+{
+  "config": {
+    "mode": "pilot",
+    "generator_epochs": 6,
+    "generator_patience": 3,
+    "generator_repetitions": 3,
+    "paired_mlp_repetitions": 2,
+    "paired_mlp_epochs": 8,
+    "predictor_epochs": 10,
+    "diagnostic_permutations": 9
+  },
+  "seed": 20260823,
+  "device": "mps",
+  "torch": "2.8.0",
+  "numpy": "2.0.2",
+  "scipy": "1.13.1",
+  "platform": "macOS-15.7.3-arm64-arm-64bit",
+  "n": 3200,
+  "p": 31,
+  "deep_generator_lasso_alpha": 0.05119873836495647,
+  "deep_generator_passed_prespecified_diagnostics": false,
+  "diagnostic_rule": {
+    "mean_marginal_ks_max": 0.06638104838709678,
+    "swap_classifier_auc_max": 0.7349210778061224,
+    "covariance_relative_error_max": 0.26070310346018233,
+    "mean_real_knockoff_correlation_max": 0.85,
+    "swap_mmd_rejection_rate_max": 0.4
+  },
+  "paired_mlp_antisymmetry": {
+    "sample_size": 2600,
+    "test_feature": "avg_price",
+    "max_absolute_error": 0.0,
+    "mean_absolute_error": 0.0,
+    "relative_l2_error": 0.0,
+    "passed_tolerance_1e_5": true
+  },
+  "v1_panel_sha256": "7212bf462a8b23ba6455bed5fe7354481b43d3e3a0f633a13ced1a97c3046a1e"
+}

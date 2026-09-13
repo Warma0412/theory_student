@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "expected_files": 11,
+  "image_links_checked": 11,
+  "deep_generator_repetitions": 30,
+  "paired_mlp_repetitions": 20,
+  "panel_sha256_matches_v1": true,
+  "deep_generator_diagnostic_decision": "rejected",
+  "paired_mlp_antisymmetry": "passed",
+  "pdf_pages": {
+    "complete": 58,
+    "condensed": 22,
+    "ultra_condensed": 5
+  }
+}

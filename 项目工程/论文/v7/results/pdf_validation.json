@@ -1,0 +1,87 @@
+{
+  "thesis": {
+    "path": "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/latex工程/论文/论文.pdf",
+    "pages": 42,
+    "sha256": "c13296fc2d387bde84779c764974588952f15c8a287bb112d1ef436b482ff222",
+    "characters": 38835,
+    "out_of_page_spans": [],
+    "template_warnings": [
+      "Invalid UTF-8 byte or sequence at line 284 replaced by U+FFFD.",
+      "Invalid UTF-8 byte or sequence at line 299 replaced by U+FFFD.",
+      "Invalid UTF-8 byte or sequence at line 550 replaced by U+FFFD.",
+      "LaTeX Font Warning: Font shape `TU/STSong(1)/b/n' undefined",
+      "LaTeX Font Warning: Font shape `TU/STKaiti(0)/b/n' undefined",
+      "LaTeX Font Warning: Font shape `U/rsfs/m/n' in size <10.53937> not available",
+      "LaTeX Font Warning: Font shape `U/rsfs/m/n' in size <7.52812> not available",
+      "LaTeX Font Warning: Font shape `TU/STHeiti(0)/b/n' undefined",
+      "LaTeX Font Warning: Size substitutions with differences",
+      "LaTeX Font Warning: Some font shapes were not available, defaults substituted."
+    ],
+    "template_warning_scope": "retained; figures, page numbers and scientific content visually checked"
+  },
+  "report": {
+    "path": "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/latex工程/开题报告/开题报告.pdf",
+    "pages": 7,
+    "sha256": "70017c00cf377a056e149c493f910815150461462c7a6f88f816d8616acfdc2b",
+    "characters": 10438,
+    "out_of_page_spans": [],
+    "template_warnings": [
+      "LaTeX Font Warning: Font shape `TU/SongtiSC(0)/m/sl' undefined",
+      "LaTeX Font Warning: Some font shapes were not available, defaults substituted."
+    ],
+    "template_warning_scope": "retained; figures, page numbers and scientific content visually checked"
+  },
+  "slides": {
+    "path": "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/latex工程/开题汇报/开题汇报.pdf",
+    "pages": 20,
+    "sha256": "1d41bcd83393af4d96c4fa60a187c044c9ec6ed59ef312f680a3c09736456709",
+    "characters": 3492,
+    "out_of_page_spans": [],
+    "template_warnings": [
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!",
+      "Missing character: There is no 4 (\"34) in font nullfont!"
+    ],
+    "template_warning_scope": "retained; figures, page numbers and scientific content visually checked"
+  },
+  "condensed": {
+    "path": "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/论文_v7_精简版.pdf",
+    "pages": 14,
+    "sha256": "d3a2575da7d4613ace4e6619ea320315f67b3e6bc2bc7035026bd0dae10dbbe8",
+    "characters": 24003,
+    "out_of_page_spans": [],
+    "template_warnings": [
+      "LaTeX Font Warning: Font shape `TU/SongtiSC(0)/m/sl' undefined",
+      "LaTeX Font Warning: Some font shapes were not available, defaults substituted."
+    ],
+    "template_warning_scope": "retained; figures, page numbers and scientific content visually checked"
+  },
+  "brief": {
+    "path": "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/论文_v7_极限精简版.pdf",
+    "pages": 4,
+    "sha256": "7f12c181df3224776d381b1d79e0ac59ca5c650d5d4f0ec0ed82a7c17f195f65",
+    "characters": 2140,
+    "out_of_page_spans": [],
+    "template_warnings": [
+      "LaTeX Font Warning: Font shape `TU/SongtiSC(0)/m/sl' undefined",
+      "LaTeX Font Warning: Some font shapes were not available, defaults substituted."
+    ],
+    "template_warning_scope": "retained; figures, page numbers and scientific content visually checked"
+  }
+}

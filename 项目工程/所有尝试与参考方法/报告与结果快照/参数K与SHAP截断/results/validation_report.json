@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "formal_fdr_dimensions": 14,
+  "selection_parameter": "K in [1, 14]",
+  "recommended_default_k": 10,
+  "default_rule_checks": {
+    "strict_ebh_q20": true,
+    "cumulative_validation_contribution_ge_90pct": true,
+    "validation_rmse_within_0_5pct_of_best": true
+  },
+  "relative_rmse_change_vs_full_xgboost": -0.000974240593322086,
+  "pdf_pages": {
+    "complete": 61,
+    "condensed": 24,
+    "ultra": 5
+  }
+}

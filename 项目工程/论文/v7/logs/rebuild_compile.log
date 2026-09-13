@@ -1,0 +1,222 @@
+note: Running TeX ...
+note: Rerunning TeX because "论文.toc" changed ...
+note: Running xdvipdfmx ...
+note: Writing `论文.log` (48.4931640625 KiB)
+note: Writing `论文.pdf` (956.67578125 KiB)
+note: Skipped writing 3 intermediate files (use --keep-intermediates to keep them)
+note: Running TeX ...
+note: Rerunning TeX because "开题报告.aux" changed ...
+note: Running xdvipdfmx ...
+note: Writing `开题报告.log` (28.833984375 KiB)
+note: Writing `开题报告.pdf` (186.7099609375 KiB)
+note: Skipped writing 2 intermediate files (use --keep-intermediates to keep them)
+note: Running TeX ...
+note: Rerunning TeX because "开题汇报.aux" changed ...
+note: Running xdvipdfmx ...
+note: Writing `开题汇报.pdf` (169.7890625 KiB)
+note: Writing `开题汇报.log` (38.8076171875 KiB)
+note: Skipped writing 5 intermediate files (use --keep-intermediates to keep them)
+note: Running TeX ...
+note: Rerunning TeX because "论文_v7_精简版.out" changed ...
+note: Running xdvipdfmx ...
+note: Writing `论文_v7_精简版.log` (29.5107421875 KiB)
+note: Writing `论文_v7_精简版.pdf` (586.04296875 KiB)
+note: Skipped writing 2 intermediate files (use --keep-intermediates to keep them)
+note: Running TeX ...
+note: Rerunning TeX because "论文_v7_极限精简版.aux" changed ...
+note: Running xdvipdfmx ...
+note: Writing `论文_v7_极限精简版.pdf` (134.712890625 KiB)
+note: Writing `论文_v7_极限精简版.log` (28.7236328125 KiB)
+note: Skipped writing 2 intermediate files (use --keep-intermediates to keep them)
+Documents built in /Users/bytedance/Documents/trae_projects/theory_brazil/【最终版】/v7
+warning: accessing absolute path `/System/Library/Fonts/Menlo.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Songti.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/54a2ad3dac6cac875ad675d7d273dc425010a877.asset/AssetData/Kaiti.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/f0706a236683628e16427c6569e441423faaaa93.asset/AssetData/STXIHEI.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/eb257c12d1a51c8c661b89f30eec56cacf9b8987.asset/AssetData/STHEITI.ttf`; build may not be reproducible in other environments
+warning: algorithm2e.sty:284: 
+Invalid UTF-8 byte or sequence at line 284 replaced by U+FFFD.
+warning: algorithm2e.sty:299: Invalid UTF-8 byte or sequence at line 299 replaced by U+FFFD.
+warning: algorithm2e.sty:550: Invalid UTF-8 byte or sequence at line 550 replaced by U+FFFD.
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+warning: 论文.tex:40: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: 论文.tex:51: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: 论文.tex:75: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: 论文.tex:105: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: 论文.tex:496: Underfull \vbox (badness 7433) has occurred while \output is active
+warning: 论文.tex:638: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: 论文.tex:853: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: algorithm2e.sty:284: 
+Invalid UTF-8 byte or sequence at line 284 replaced by U+FFFD.
+warning: algorithm2e.sty:299: Invalid UTF-8 byte or sequence at line 299 replaced by U+FFFD.
+warning: algorithm2e.sty:550: Invalid UTF-8 byte or sequence at line 550 replaced by U+FFFD.
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+warning: 论文.tex:40: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: 论文.tex:51: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: 论文.toc:26: Underfull \vbox (badness 4316) has occurred while \output is active
+warning: 论文.tex:75: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: 论文.tex:105: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: 论文.tex:496: Underfull \vbox (badness 7433) has occurred while \output is active
+warning: 论文.tex:638: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: 论文.tex:853: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+warning: PDF file is tagged... Ignoring tags.
+warning: Object @page.1 already defined.
+warning: Object @page.2 already defined.
+warning: accessing absolute path `/System/Library/Fonts/Menlo.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Songti.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/54a2ad3dac6cac875ad675d7d273dc425010a877.asset/AssetData/Kaiti.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/f0706a236683628e16427c6569e441423faaaa93.asset/AssetData/STXIHEI.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/eb257c12d1a51c8c661b89f30eec56cacf9b8987.asset/AssetData/STHEITI.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman Bold.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman Bold Italic.ttf`; build may not be reproducible in other environments
+warning: 开题报告.tex:254: Underfull \hbox (badness 2042) in paragraph at lines 253--254
+warning: 开题报告.tex:254: Underfull \hbox (badness 2042) in paragraph at lines 253--254
+warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.
+warning: accessing absolute path `/System/Library/Fonts/Menlo.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Songti.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/54a2ad3dac6cac875ad675d7d273dc425010a877.asset/AssetData/Kaiti.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/f0706a236683628e16427c6569e441423faaaa93.asset/AssetData/STXIHEI.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/eb257c12d1a51c8c661b89f30eec56cacf9b8987.asset/AssetData/STHEITI.ttf`; build may not be reproducible in other environments
+warning: 开题汇报.tex:26: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning:   you may need to load the `fontspec` package and use (e.g.) \setmainfont to
+warning:   choose a different font that covers the unrepresentable character(s)
+warning: 开题汇报.tex:34: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:42: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:57: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:65: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:79: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:87: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:95: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:103: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:111: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:123: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:134: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:142: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:150: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:158: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:170: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:182: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:190: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:200: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:26: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning:   you may need to load the `fontspec` package and use (e.g.) \setmainfont to
+warning:   choose a different font that covers the unrepresentable character(s)
+warning: 开题汇报.tex:34: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:42: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:57: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:65: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:79: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:87: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:95: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:103: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:111: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:123: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:134: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:142: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:150: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:158: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:170: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:182: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:190: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: 开题汇报.tex:200: 
+Missing character: There is no 4 ("34) in font nullfont!
+warning: could not represent character "4" (0x34) in font "nullfont"
+warning: accessing absolute path `/System/Library/Fonts/Menlo.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Songti.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/54a2ad3dac6cac875ad675d7d273dc425010a877.asset/AssetData/Kaiti.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/f0706a236683628e16427c6569e441423faaaa93.asset/AssetData/STXIHEI.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/eb257c12d1a51c8c661b89f30eec56cacf9b8987.asset/AssetData/STHEITI.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman Bold.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman Bold Italic.ttf`; build may not be reproducible in other environments
+warning: 论文_v7_精简版.tex:747: Underfull \hbox (badness 2042) in paragraph at lines 746--747
+warning: 论文_v7_精简版.tex:747: Underfull \hbox (badness 2042) in paragraph at lines 746--747
+warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.
+warning: accessing absolute path `/System/Library/Fonts/Menlo.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Songti.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/54a2ad3dac6cac875ad675d7d273dc425010a877.asset/AssetData/Kaiti.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/f0706a236683628e16427c6569e441423faaaa93.asset/AssetData/STXIHEI.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/AssetsV2/com_apple_MobileAsset_Font7/eb257c12d1a51c8c661b89f30eec56cacf9b8987.asset/AssetData/STHEITI.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman Bold.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/System/Library/Fonts/Supplemental/Times New Roman Bold Italic.ttf`; build may not be reproducible in other environments

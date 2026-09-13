@@ -1,0 +1,52 @@
+                                 OLS Regression Results                                
+=======================================================================================
+Dep. Variable:     log_gmv_next_month   R-squared (uncentered):                   0.045
+Model:                            OLS   Adj. R-squared (uncentered):              0.043
+Method:                 Least Squares   F-statistic:                              20.67
+Date:                Sun, 23 Aug 2026   Prob (F-statistic):                    9.08e-94
+Time:                        09:46:14   Log-Likelihood:                         -30063.
+No. Observations:               14677   AIC:                                  6.018e+04
+Df Residuals:                   14649   BIC:                                  6.039e+04
+Df Model:                          28                                                  
+Covariance Type:              cluster                                                  
+==================================================================================================
+                                     coef    std err          z      P>|z|      [0.025      0.975]
+--------------------------------------------------------------------------------------------------
+avg_price                          0.0487      0.056      0.866      0.386      -0.062       0.159
+avg_freight                       -0.0673      0.048     -1.408      0.159      -0.161       0.026
+avg_product_weight_g              -0.0230      0.067     -0.344      0.731      -0.154       0.108
+avg_product_length_cm              0.0166      0.054      0.306      0.759      -0.090       0.123
+avg_product_height_cm              0.0064      0.057      0.112      0.910      -0.105       0.117
+avg_product_width_cm              -0.0150      0.054     -0.277      0.782      -0.121       0.091
+avg_product_photos_qty             0.0444      0.043      1.023      0.306      -0.041       0.130
+avg_product_name_length           -0.0300      0.040     -0.754      0.451      -0.108       0.048
+avg_product_description_length     0.0470      0.042      1.109      0.268      -0.036       0.130
+avg_payment_installments          -0.0066      0.032     -0.204      0.838      -0.070       0.056
+avg_payment_sequential             0.0262      0.025      1.068      0.286      -0.022       0.074
+credit_card_ratio                  0.3416      0.173      1.975      0.048       0.003       0.681
+boleto_ratio                       0.3702      0.166      2.235      0.025       0.046       0.695
+voucher_ratio                      0.1133      0.071      1.602      0.109      -0.025       0.252
+debit_card_ratio                   0.1065      0.049      2.160      0.031       0.010       0.203
+avg_review_score                   0.0113      0.025      0.446      0.656      -0.038       0.061
+avg_delivery_days                  0.0178      0.044      0.406      0.685      -0.068       0.104
+avg_approval_days                 -0.0320      0.029     -1.103      0.270      -0.089       0.025
+avg_ship_days                     -0.1853      0.034     -5.527      0.000      -0.251      -0.120
+avg_estimate_gap_days              0.0461      0.038      1.201      0.230      -0.029       0.121
+item_count                        -0.2138      0.122     -1.751      0.080      -0.453       0.025
+order_count                        0.4797      0.764      0.628      0.530      -1.017       1.976
+category_count                     0.0343      0.031      1.102      0.270      -0.027       0.095
+unique_customer_count              0.2979      0.752      0.396      0.692      -1.177       1.773
+buyer_state_diversity              0.1283      0.081      1.591      0.112      -0.030       0.286
+dominant_customer_state_share      0.0436      0.043      1.005      0.315      -0.041       0.129
+interstate_ratio                   0.0327      0.038      0.857      0.392      -0.042       0.108
+avg_distance_km                   -0.0479      0.042     -1.140      0.254      -0.130       0.034
+==============================================================================
+Omnibus:                     1357.001   Durbin-Watson:                   2.014
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1886.392
+Skew:                          -0.751   Prob(JB):                         0.00
+Kurtosis:                       3.911   Cond. No.                         83.1
+==============================================================================
+
+Notes:
+[1] R² is computed without centering (uncentered) since the model does not contain a constant.
+[2] Standard Errors are robust to cluster correlation (cluster)

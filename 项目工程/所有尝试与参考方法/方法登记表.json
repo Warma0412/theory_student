@@ -1,0 +1,570 @@
+[
+  {
+    "method": "Copula-MVR/e-value/e-BH",
+    "family": "基础选择器",
+    "status": "完整实测",
+    "source": "Model-X 2018; MVR 2022; Derandomised knockoffs 2024",
+    "evidence": "论文/v7",
+    "conclusion": "原生错误率规则有假设；真实生成失配，不授予FDR证书"
+  },
+  {
+    "method": "Elastic Net",
+    "family": "基础选择器",
+    "status": "完整实测",
+    "source": "Zou & Hastie 2005",
+    "evidence": "论文/v7",
+    "conclusion": "强线性基线；非零集合不等于FDR发现"
+  },
+  {
+    "method": "稳定性选择经验适配",
+    "family": "基础选择器",
+    "status": "完整实测",
+    "source": "Meinshausen & Buhlmann 2010; Shah & Samworth 2013",
+    "evidence": "论文/v7",
+    "conclusion": "内部Lasso频率阈值；不冒用原文PFER保证"
+  },
+  {
+    "method": "Extra Trees影子变量树",
+    "family": "基础选择器",
+    "status": "完整实测",
+    "source": "Geurts et al. 2006; Boruta 2010",
+    "evidence": "论文/v7",
+    "conclusion": "完整实测但不是完整Boruta；高稳定性不等于最佳预测"
+  },
+  {
+    "method": "XGBoost-SHAP",
+    "family": "基础选择器",
+    "status": "完整实测",
+    "source": "XGBoost 2016; SHAP 2017; TreeSHAP 2020",
+    "evidence": "论文/v7",
+    "conclusion": "强非线性排序基线，不是FDR检验"
+  },
+  {
+    "method": "Deep Lasso",
+    "family": "基础选择器",
+    "status": "完整实测",
+    "source": "NeurIPS Datasets and Benchmarks 2023",
+    "evidence": "论文/v7",
+    "conclusion": "官方正则函数；网络与任务适配明确"
+  },
+  {
+    "method": "TabM置换",
+    "family": "基础选择器",
+    "status": "完整实测",
+    "source": "TabM ICLR 2025; PFI",
+    "evidence": "论文/v7",
+    "conclusion": "官方网络加置换评分，不把附加评分说成TabM原生"
+  },
+  {
+    "method": "VTFS定额适配",
+    "family": "基础选择器",
+    "status": "完整实测",
+    "source": "ACM TKDD 2024, 10.1145/3687485",
+    "evidence": "论文/v7",
+    "conclusion": "官方编码器解码器；随机语料和固定K适配，参考名单来自回退"
+  },
+  {
+    "method": "Ridge/Lasso预测器",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v1/code/run_analysis.py",
+    "conclusion": "早期预测基线，非全部统一选维实验"
+  },
+  {
+    "method": "Extra Trees预测器",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v1/code/run_analysis.py",
+    "conclusion": "早期及周度预测基线"
+  },
+  {
+    "method": "卖家固定效应分析",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v1/code/run_analysis.py",
+    "conclusion": "关联分析而非因果识别，不计作选维模型"
+  },
+  {
+    "method": "深度Knockoff生成器",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v2",
+    "conclusion": "KS改善但联合交换性失败"
+  },
+  {
+    "method": "配对竞争MLP",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v2",
+    "conclusion": "反对称检查通过但原生空集"
+  },
+  {
+    "method": "残差表格MLP",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v2",
+    "conclusion": "旧面板预测不及XGBoost"
+  },
+  {
+    "method": "确认集合内SHAP及K截断",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v3",
+    "conclusion": "预算展示，不继承原生FDR"
+  },
+  {
+    "method": "卖家均值/卖家内离差分层Knockoff",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v4",
+    "conclusion": "均值层与组内层不同；不能混作新增面板定理"
+  },
+  {
+    "method": "业务Group Knockoff",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v4",
+    "conclusion": "组假设不等于变量假设；放宽q不算算法收益"
+  },
+  {
+    "method": "DDLK式最坏交换生成器",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v4",
+    "conclusion": "仅式实现；深度核和分类诊断失败"
+  },
+  {
+    "method": "深度核MMD与经验边际校准",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v4",
+    "conclusion": "诊断/校准组件，不是成功选择器"
+  },
+  {
+    "method": "GRIP2式二维正则轨迹",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v4",
+    "conclusion": "早期已有尝试；不是官方完整复现，q=.2无发现"
+  },
+  {
+    "method": "周度Copula-MVR/分层/分组/GRIP2式",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v5",
+    "conclusion": "周度旧口径；不能与月末可见面板数字混排"
+  },
+  {
+    "method": "高斯/Copula与MVR/SDP/等相关消融",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v6",
+    "conclusion": "生成与变换组件，不是多个原创模型"
+  },
+  {
+    "method": "Lasso/XGBoost竞争与重复次数消融",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v6",
+    "conclusion": "不同竞争器、重复预算和阈值结果分开"
+  },
+  {
+    "method": "同月互补卖家梯度一致性Deep Lasso",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v7/innovation_pilot",
+    "conclusion": "开发规则选择gamma=0，新增惩罚失败"
+  },
+  {
+    "method": "变量删除/替代/共识审计",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v7/innovation_pilot",
+    "conclusion": "变量质量分析，不是已获支持的模型创新"
+  },
+  {
+    "method": "概念分组Top-8",
+    "family": "早期与局部探索",
+    "status": "局部实测/旧口径",
+    "source": "对应工程方法说明",
+    "evidence": "论文/v7/innovation_pilot",
+    "conclusion": "曾使用全时期相关性；只作事后探索，不是独立验证"
+  },
+  {
+    "method": "Deep Lasso-Jacobian",
+    "family": "模型机制消融",
+    "status": "完整实测",
+    "source": "父方法原文与本地机制协议",
+    "evidence": "论文/v7/model_improvements_20260912",
+    "conclusion": "稳定性局部改善；相对父方法的互补稳定性与发现质量未共同改善"
+  },
+  {
+    "method": "Jacobian训练+原排名",
+    "family": "模型机制消融",
+    "status": "完整实测",
+    "source": "父方法原文与本地机制协议",
+    "evidence": "论文/v7/model_improvements_20260912",
+    "conclusion": "完整Top-12与父方法相同，预测不能另算增益"
+  },
+  {
+    "method": "原Deep Lasso+Jacobian排名",
+    "family": "模型机制消融",
+    "status": "完整实测",
+    "source": "父方法原文与本地机制协议",
+    "evidence": "论文/v7/model_improvements_20260912",
+    "conclusion": "完整Top-12相同；局部发现改进不等于预测改进"
+  },
+  {
+    "method": "TabM预算门",
+    "family": "模型机制消融",
+    "status": "完整实测",
+    "source": "父方法原文与本地机制协议",
+    "evidence": "论文/v7/model_improvements_20260912",
+    "conclusion": "参考Jaccard增加，互补J与模拟发现质量未改善"
+  },
+  {
+    "method": "EntryPrune回归适配",
+    "family": "模型机制消融",
+    "status": "完整实测",
+    "source": "父方法原文与本地机制协议",
+    "evidence": "论文/v7/model_improvements_20260912",
+    "conclusion": "不是原论文所有分类实验复现；真实效果弱于强基线"
+  },
+  {
+    "method": "EntryPrune刷新",
+    "family": "模型机制消融",
+    "status": "完整实测",
+    "source": "父方法原文与本地机制协议",
+    "evidence": "论文/v7/model_improvements_20260912",
+    "conclusion": "明显负结果"
+  },
+  {
+    "method": "EntryPrune环境波动惩罚",
+    "family": "模型机制消融",
+    "status": "完整实测",
+    "source": "父方法原文与本地机制协议",
+    "evidence": "论文/v7/model_improvements_20260912",
+    "conclusion": "未恢复强基线水平，不把均值减标准差称置信界"
+  },
+  {
+    "method": "VTFS固定K",
+    "family": "模型机制消融",
+    "status": "完整实测",
+    "source": "父方法原文与本地机制协议",
+    "evidence": "论文/v7/model_improvements_20260912",
+    "conclusion": "预算匹配修正，模拟改善但真实预测没有改善"
+  },
+  {
+    "method": "VTFS固定K+成对效用损失",
+    "family": "模型机制消融",
+    "status": "完整实测",
+    "source": "父方法原文与本地机制协议",
+    "evidence": "论文/v7/model_improvements_20260912",
+    "conclusion": "独立增量小，不能把预算修正收益归给损失"
+  },
+  {
+    "method": "等查询预算随机子集搜索",
+    "family": "模型机制消融",
+    "status": "完整实测",
+    "source": "父方法原文与本地机制协议",
+    "evidence": "论文/v7/model_improvements_20260912",
+    "conclusion": "检验深度解码是否真正优于搜索预算本身"
+  },
+  {
+    "method": "XGBoost-普通替换损失",
+    "family": "SCPL评分",
+    "status": "完整实测",
+    "source": "CPI; Model-X; 本地SCPL定义",
+    "evidence": "论文/方法研究_20260913",
+    "conclusion": "普通替换不满足完整符号翻转；其余有代数性质。非线性模拟收益不代表真实FDR或优先权"
+  },
+  {
+    "method": "XGBoost-中点对称损失",
+    "family": "SCPL评分",
+    "status": "完整实测",
+    "source": "CPI; Model-X; 本地SCPL定义",
+    "evidence": "论文/方法研究_20260913",
+    "conclusion": "普通替换不满足完整符号翻转；其余有代数性质。非线性模拟收益不代表真实FDR或优先权"
+  },
+  {
+    "method": "XGBoost-随机对称损失",
+    "family": "SCPL评分",
+    "status": "完整实测",
+    "source": "CPI; Model-X; 本地SCPL定义",
+    "evidence": "论文/方法研究_20260913",
+    "conclusion": "普通替换不满足完整符号翻转；其余有代数性质。非线性模拟收益不代表真实FDR或优先权"
+  },
+  {
+    "method": "XGBoost-标准化随机对称损失",
+    "family": "SCPL评分",
+    "status": "完整实测",
+    "source": "CPI; Model-X; 本地SCPL定义",
+    "evidence": "论文/方法研究_20260913",
+    "conclusion": "普通替换不满足完整符号翻转；其余有代数性质。非线性模拟收益不代表真实FDR或优先权"
+  },
+  {
+    "method": "TabM-普通替换损失",
+    "family": "SCPL评分",
+    "status": "完整实测",
+    "source": "CPI; Model-X; 本地SCPL定义",
+    "evidence": "论文/方法研究_20260913",
+    "conclusion": "普通替换不满足完整符号翻转；其余有代数性质。非线性模拟收益不代表真实FDR或优先权"
+  },
+  {
+    "method": "TabM-中点对称损失",
+    "family": "SCPL评分",
+    "status": "完整实测",
+    "source": "CPI; Model-X; 本地SCPL定义",
+    "evidence": "论文/方法研究_20260913",
+    "conclusion": "普通替换不满足完整符号翻转；其余有代数性质。非线性模拟收益不代表真实FDR或优先权"
+  },
+  {
+    "method": "TabM-随机对称损失",
+    "family": "SCPL评分",
+    "status": "完整实测",
+    "source": "CPI; Model-X; 本地SCPL定义",
+    "evidence": "论文/方法研究_20260913",
+    "conclusion": "普通替换不满足完整符号翻转；其余有代数性质。非线性模拟收益不代表真实FDR或优先权"
+  },
+  {
+    "method": "TabM-标准化随机对称损失",
+    "family": "SCPL评分",
+    "status": "完整实测",
+    "source": "CPI; Model-X; 本地SCPL定义",
+    "evidence": "论文/方法研究_20260913",
+    "conclusion": "普通替换不满足完整符号翻转；其余有代数性质。非线性模拟收益不代表真实FDR或优先权"
+  },
+  {
+    "method": "评分集成对Lasso",
+    "family": "SCPL对照",
+    "status": "完整实测",
+    "source": "标准方法/匹配信息对照",
+    "evidence": "论文/方法研究_20260913",
+    "conclusion": "用于区分预测器、训练信息和评分机制"
+  },
+  {
+    "method": "匹配训练样本线性对称评分",
+    "family": "SCPL对照",
+    "status": "完整实测",
+    "source": "标准方法/匹配信息对照",
+    "evidence": "论文/方法研究_20260913",
+    "conclusion": "用于区分预测器、训练信息和评分机制"
+  },
+  {
+    "method": "XGBoost置换",
+    "family": "SCPL对照",
+    "status": "完整实测",
+    "source": "标准方法/匹配信息对照",
+    "evidence": "论文/方法研究_20260913",
+    "conclusion": "用于区分预测器、训练信息和评分机制"
+  },
+  {
+    "method": "XGBoost-Semi-KO-Ridge均值",
+    "family": "条件矩扩展",
+    "status": "完整实测",
+    "source": "ICML 2026 Semi-knockoffs及条件抽样扩展",
+    "evidence": "论文/v7/supplement_20260913",
+    "conclusion": "纠正无解阈值返回值；估计条件矩不自动享有有限样本保证；不声称原创优先权"
+  },
+  {
+    "method": "XGBoost-Semi-KO-非线性均值",
+    "family": "条件矩扩展",
+    "status": "完整实测",
+    "source": "ICML 2026 Semi-knockoffs及条件抽样扩展",
+    "evidence": "论文/v7/supplement_20260913",
+    "conclusion": "纠正无解阈值返回值；估计条件矩不自动享有有限样本保证；不声称原创优先权"
+  },
+  {
+    "method": "XGBoost-Semi-KO-条件尺度",
+    "family": "条件矩扩展",
+    "status": "完整实测",
+    "source": "ICML 2026 Semi-knockoffs及条件抽样扩展",
+    "evidence": "论文/v7/supplement_20260913",
+    "conclusion": "纠正无解阈值返回值；估计条件矩不自动享有有限样本保证；不声称原创优先权"
+  },
+  {
+    "method": "XGBoost-Semi-KO-非线性均值+条件尺度",
+    "family": "条件矩扩展",
+    "status": "完整实测",
+    "source": "ICML 2026 Semi-knockoffs及条件抽样扩展",
+    "evidence": "论文/v7/supplement_20260913",
+    "conclusion": "纠正无解阈值返回值；估计条件矩不自动享有有限样本保证；不声称原创优先权"
+  },
+  {
+    "method": "TabM-Semi-KO-Ridge均值",
+    "family": "条件矩扩展",
+    "status": "完整实测",
+    "source": "ICML 2026 Semi-knockoffs及条件抽样扩展",
+    "evidence": "论文/v7/supplement_20260913",
+    "conclusion": "纠正无解阈值返回值；估计条件矩不自动享有有限样本保证；不声称原创优先权"
+  },
+  {
+    "method": "TabM-Semi-KO-非线性均值",
+    "family": "条件矩扩展",
+    "status": "完整实测",
+    "source": "ICML 2026 Semi-knockoffs及条件抽样扩展",
+    "evidence": "论文/v7/supplement_20260913",
+    "conclusion": "纠正无解阈值返回值；估计条件矩不自动享有有限样本保证；不声称原创优先权"
+  },
+  {
+    "method": "TabM-Semi-KO-条件尺度",
+    "family": "条件矩扩展",
+    "status": "完整实测",
+    "source": "ICML 2026 Semi-knockoffs及条件抽样扩展",
+    "evidence": "论文/v7/supplement_20260913",
+    "conclusion": "纠正无解阈值返回值；估计条件矩不自动享有有限样本保证；不声称原创优先权"
+  },
+  {
+    "method": "TabM-Semi-KO-非线性均值+条件尺度",
+    "family": "条件矩扩展",
+    "status": "完整实测",
+    "source": "ICML 2026 Semi-knockoffs及条件抽样扩展",
+    "evidence": "论文/v7/supplement_20260913",
+    "conclusion": "纠正无解阈值返回值；估计条件矩不自动享有有限样本保证；不声称原创优先权"
+  },
+  {
+    "method": "DeepDRK",
+    "family": "退出候选",
+    "status": "训练/运行后退出",
+    "source": "NeurIPS 2024",
+    "evidence": "论文/v7/vendor/DeepDRK",
+    "conclusion": "三种子真实训练，生成诊断失败；未完成全套模拟稳定性"
+  },
+  {
+    "method": "TabPFN v2",
+    "family": "退出候选",
+    "status": "训练/运行后退出",
+    "source": "Nature 2025",
+    "evidence": "论文/v7/logs",
+    "conclusion": "MPS内存失败；不是统计效果差，也不填零"
+  },
+  {
+    "method": "MAFS attention-like过滤法",
+    "family": "参考方法",
+    "status": "仅参考/代码已取得未完整实测",
+    "source": "10.1016/j.knosys.2024.112250",
+    "evidence": "论文/v7",
+    "conclusion": "仅文献核验，不是已训练的多头深度模型"
+  },
+  {
+    "method": "DeepPINK",
+    "family": "参考方法",
+    "status": "仅参考/代码已取得未完整实测",
+    "source": "https://arxiv.org/abs/1809.01185",
+    "evidence": "论文/v7",
+    "conclusion": "参考成对深度选择；未计作本轮完整基线"
+  },
+  {
+    "method": "DeepPIG",
+    "family": "参考方法",
+    "status": "仅参考/代码已取得未完整实测",
+    "source": "10.1038/s41598-024-66061-6",
+    "evidence": "论文/v7",
+    "conclusion": "成对层加随机门已有先例；未完整实测"
+  },
+  {
+    "method": "Stabl",
+    "family": "参考方法",
+    "status": "仅参考/代码已取得未完整实测",
+    "source": "10.1038/s41587-023-02033-x",
+    "evidence": "论文/v7",
+    "conclusion": "参考可靠性/稀疏性评价；未完整实测"
+  },
+  {
+    "method": "ChronoEpilogi",
+    "family": "参考方法",
+    "status": "仅参考/代码已取得未完整实测",
+    "source": "NeurIPS 2024；见局部探索文献说明",
+    "evidence": "论文/v7",
+    "conclusion": "多个等效特征集合；未完整实测"
+  },
+  {
+    "method": "ConsistentFeature",
+    "family": "参考方法",
+    "status": "仅参考/代码已取得未完整实测",
+    "source": "https://arxiv.org/abs/2412.01476v2",
+    "evidence": "论文/v7",
+    "conclusion": "跨子集一致性已有研究；未完整实测"
+  },
+  {
+    "method": "Stochastic Gates",
+    "family": "参考方法",
+    "status": "仅参考/代码已取得未完整实测",
+    "source": "https://proceedings.mlr.press/v119/yamada20a.html",
+    "evidence": "论文/v7",
+    "conclusion": "输入门并非本项目发明；未单独完整复现"
+  },
+  {
+    "method": "Structured Nonlinear Variable Selection",
+    "family": "参考方法",
+    "status": "仅参考/代码已取得未完整实测",
+    "source": "https://auai.org/uai2018/proceedings/papers/17.pdf",
+    "evidence": "论文/v7",
+    "conclusion": "偏导数正则已有文献；未单独完整复现"
+  },
+  {
+    "method": "LassoFlexNet",
+    "family": "参考方法",
+    "status": "仅参考/代码已取得未完整实测",
+    "source": "https://icml.cc/virtual/2026/poster/62560",
+    "evidence": "论文/v7",
+    "conclusion": "下载仓库只标code coming soon，没有实测结果"
+  },
+  {
+    "method": "Adversarial/SAM LassoNet",
+    "family": "参考方法",
+    "status": "仅参考/代码已取得未完整实测",
+    "source": "本地innovation_benchmark/vendor/AdversarialLassoNet",
+    "evidence": "论文/v7",
+    "conclusion": "下载了代码；无完整结果，不能冒认论文复现"
+  },
+  {
+    "method": "Temporal Modulation",
+    "family": "参考方法",
+    "status": "仅参考/代码已取得未完整实测",
+    "source": "本地innovation_benchmark/vendor/TemporalModulation",
+    "evidence": "论文/v7",
+    "conclusion": "下载代码但未有完整公平结果"
+  },
+  {
+    "method": "非参数顺序/并行残差Knockoff",
+    "family": "参考方法",
+    "status": "仅参考/代码已取得未完整实测",
+    "source": "https://arxiv.org/abs/2407.06892",
+    "evidence": "论文/v7/supplement_20260913/references",
+    "conclusion": "阅读生成诊断与近似条件；未本轮运行该生成器"
+  },
+  {
+    "method": "GRIP2原论文",
+    "family": "参考方法",
+    "status": "仅参考/代码已取得未完整实测",
+    "source": "https://arxiv.org/abs/2602.00218v1",
+    "evidence": "论文/v7/supplement_20260913/references",
+    "conclusion": "本轮阅读全文和实现细节；旧式实现不能等同官方完整复现"
+  },
+  {
+    "method": "HRT/dCRT/LOCO",
+    "family": "参考方法",
+    "status": "仅参考/代码已取得未完整实测",
+    "source": "Semi-knockoffs 2026相关工作与作者实验代码",
+    "evidence": "论文/v7/supplement_20260913/references",
+    "conclusion": "只研究比较关系，未在本轮统一运行"
+  }
+]

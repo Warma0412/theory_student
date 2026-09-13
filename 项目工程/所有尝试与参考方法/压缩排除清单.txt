@@ -1,0 +1,33 @@
+本无原始数据归档包主动排除以下内容：
+
+1. 原始数据/
+2. 所有Python虚拟环境：.venv/
+3. Python缓存：__pycache__/、*.pyc、*.pyo
+4. Git仓库历史：.git/
+5. macOS缓存：.DS_Store
+6. 月度、周度及其他建模面板：data_processed/*.csv、*.parquet
+7. 模拟和中间矩阵：*.npz、*.npy
+8. 模型权重和checkpoint：models/、*.pt、*.pth、*.ckpt、*.joblib、*.pkl
+9. 预测缓存：prediction_cache/、canonical_cache/
+10. 逐行预测目录：predictions/、predictions_mvr/、canonical_predictions/
+    - 以及历史目录中的`*test_predictions.csv`
+11. 第三方仓库附带数据：vendor/**/data/
+12. 第三方源码压缩包：*.zip、*.tar、*.tar.gz、*.tgz
+13. 大型重复计算日志：
+    - logs/full_xgboost_*.log
+    - logs/mvr-real_xgboost_*.log
+14. 临时构建中间文件：*.aux、*.out、*.toc、*.nav、*.snm、*.vrb、*.synctex.gz
+15. 第三方仓库批量实验输出：
+    - vendor/tabm/paper/exp/
+    - supplement_20260913/vendor/loss_based_KO/results/
+16. 第三方示例数据：
+    - AdversarialLassoNet/scripts/data/MNIST/raw/
+    - DeepDRK/soft-rank-energy-and-applications/dataset/
+
+保留汇总CSV、审计JSON、协议、源代码、论文、报告、图表、较小运行日志和参考文献。
+
+说明：
+- 本清单用于控制归档体积和避免分发数据，不代表这些文件在原工作区不存在。
+- 逐案例结果JSON原则上保留，以便审计模拟与稳定性汇总。
+- 原始数据的文件名、行列数、字节数和SHA256保存在数据文件清单中。
+- 如需完整从头复现，请按“数据来源与重建说明.md”自行下载公开数据。

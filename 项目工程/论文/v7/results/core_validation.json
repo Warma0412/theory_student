@@ -1,0 +1,8 @@
+{
+  "sign_flip_max_error": 5.822270043864819e-08,
+  "threshold_examples": "passed",
+  "ebh_example": "passed",
+  "jaccard_example": "passed",
+  "time_split_and_keys": "passed",
+  "training_only_cdf_batch_invariance": "passed"
+}

@@ -1,0 +1,13 @@
+/Users/bytedance/Documents/trae_projects/theory_brazil/论文/方法研究_20260913/code/run_experiment.py:211: RuntimeWarning: divide by zero encountered in matmul
+  z = rng.multivariate_normal(np.zeros(5), cov, 100000)
+/Users/bytedance/Documents/trae_projects/theory_brazil/论文/方法研究_20260913/code/run_experiment.py:211: RuntimeWarning: overflow encountered in matmul
+  z = rng.multivariate_normal(np.zeros(5), cov, 100000)
+/Users/bytedance/Documents/trae_projects/theory_brazil/论文/方法研究_20260913/code/run_experiment.py:211: RuntimeWarning: invalid value encountered in matmul
+  z = rng.multivariate_normal(np.zeros(5), cov, 100000)
+/Users/bytedance/Documents/trae_projects/theory_brazil/论文/方法研究_20260913/code/paired_loss.py:56: RuntimeWarning: divide by zero encountered in matmul
+  xk = mu + (x - mu) @ (np.eye(p) - s * inv) + noise @ chol.T
+/Users/bytedance/Documents/trae_projects/theory_brazil/论文/方法研究_20260913/code/paired_loss.py:56: RuntimeWarning: overflow encountered in matmul
+  xk = mu + (x - mu) @ (np.eye(p) - s * inv) + noise @ chol.T
+/Users/bytedance/Documents/trae_projects/theory_brazil/论文/方法研究_20260913/code/paired_loss.py:56: RuntimeWarning: invalid value encountered in matmul
+  xk = mu + (x - mu) @ (np.eye(p) - s * inv) + noise @ chol.T
+Algebra and sampler checks passed

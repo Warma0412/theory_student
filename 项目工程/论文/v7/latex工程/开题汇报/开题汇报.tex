@@ -1,0 +1,201 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{ctex,hyperref,amsmath,booktabs,array,graphicx}
+\usepackage{SUFE}
+\setbeamertemplate{navigation symbols}{}\setbeamertemplate{headline}{}
+\setbeamersize{text margin left=7mm,text margin right=7mm}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamerfont{frame number}{parent=author in head/foot}
+\setbeamertemplate{footline}{%
+\leavevmode\hbox{\begin{beamercolorbox}[wd=\paperwidth,ht=3ex,dp=1.2ex,leftskip=3mm,rightskip=3mm]{author in head/foot}
+\usebeamerfont{author in head/foot}吴优\quad 上海财经大学
+\hfill 非线性指标筛选与交换对称损失\hfill\insertframenumber/\inserttotalframenumber
+\end{beamercolorbox}}}
+\title[非线性指标筛选与交换对称损失]{面向电商经营指标筛选的非线性方法与交换对称损失研究}
+\subtitle{机制、实测结果与推断边界}
+\author{吴优\quad 2025213385}
+\institute[上海财经大学]{统计与数据科学学院\\指导教师：张吕欧}
+\date{2026年9月}
+\begin{document}
+\begin{frame}\titlepage\centering\includegraphics[width=.16\linewidth]{pic/sufe.png}\end{frame}
+\begin{frame}{研究问题：有限容量的经营指标}
+\begin{itemize}
+\item 31项指标中选择8或12项，保留下一月目标的预测信息。
+\item 同时评价预测、样本稳定性和模拟发现质量。
+\item 不把预测筛选说成当期GMV分解或因果归因。
+\end{itemize}
+\end{frame}
+\begin{frame}{文献与方法缺口}
+\begin{itemize}
+\item Deep Lasso 2023、VTFS 2024、TabM 2025提供不同非线性机制。
+\item CPI和Semi-knockoffs 2026研究条件损失及双侧重建。
+\item DeepPINK、DeepPIG、GRIP2已有成对深度研究。
+\item 研究具体评分性质与组件增量，不把模型改名当创新。
+\end{itemize}
+\end{frame}
+\begin{frame}{数据与时间可见性}
+\begin{itemize}
+\item Olist十张表，13,754个卖家月，2,723名卖家，31项指标。
+\item 目标：下一自然月签收确认商品金额log1p，不含运费。
+\item 物流、评价和营销按月末已发生事件截断。
+\item 静态元数据缺少修订历史，仍有可见性假设。
+\end{itemize}
+\end{frame}
+\begin{frame}{训练、评分与测试分工}
+\footnotesize\centering \begin{tabular}{lrr}
+\toprule
+阶段 & 行数 & 用途\\\midrule
+train & 6567 & 基础训练\\
+tune & 1831 & 选参/轮次\\
+rank & 1943 & 名单/条件重建\\
+test & 3413 & 仅评价\\
+\bottomrule
+\end{tabular}\begin{itemize}
+\item 固定预测器实验不使用rank响应训练或早停基础模型。
+\item 条件重建按算法定义使用rank响应，单独披露。
+\item 测试期已探索查看，不是新外部确认样本。
+\end{itemize}
+\end{frame}
+\begin{frame}{公共样本与评价规则}
+\begin{itemize}
+\item 30组互补50\%卖家样本，共60份；另20份70\%、20份80\%。
+\item 10组固定数据随机种子试验与样本稳定性分开。
+\item 共同XGBoost与TabM评价，规范列顺序，同集合共享预测。
+\item 原生q阈值与Top-K预算分别评价，空集不丢弃。
+\end{itemize}
+\end{frame}
+\begin{frame}{模型内部改动：局部收益与失败}
+\footnotesize\centering \begin{tabular}{lrrr}
+\toprule
+方法 & XGB误差 & J & 模拟Power@12\\\midrule
+XGBoost-SHAP & 1.8466 & 0.7682 & 0.9403\\
+Deep Lasso & 1.8450 & 0.8230 & 0.8947\\
+TabM-置换 & 1.8458 & 0.7505 & 0.8981\\
+Deep Lasso-Jacobian & 1.8461 & 0.8618 & 0.8978\\
+TabM-预算门 & 1.8450 & 0.8071 & 0.8826\\
+VTFS-固定K+成对损失 & 1.8653 & 0.4333 & 0.6901\\
+EntryPrune-刷新 & 2.0418 & 0.4596 & 0.6107\\
+\bottomrule
+\end{tabular}
+\end{frame}
+\begin{frame}{SCPL：背景不能偏袒真假身份}
+\begin{itemize}
+\item 固定训练好的预测器，评分集生成真假变量对。
+\item 逐对取min/max，四组掩码及补掩码构成八背景。
+\item 比较某列真假值时，其他列保持同一对称背景。
+\item 比较平方损失差，再按卖家汇总。
+\end{itemize}
+\end{frame}
+\begin{frame}{可证明的性质，不可越过的前提}
+\begin{itemize}
+\item 交换某列对：自身统计量反号，其他统计量不变。
+\item min/max背景逐路径不变，损失输入互换即可证明。
+\item 精确生成器下，随机背景边际与X同分布。
+\item 不证明预测更准、生成器正确或真实FDR已控。
+\end{itemize}
+\end{frame}
+\begin{frame}{机制消融与主候选}
+\begin{itemize}
+\item 同一预测器：普通、中点、随机对称、标准化四种评分。
+\item 分别接入XGBoost和TabM，保留匹配线性对照。
+\item 预定主候选是标准化TabM，不能事后换成最佳消融。
+\item 八背景不等于八组独立Knockoff。
+\end{itemize}
+\end{frame}
+\begin{frame}{模拟设计：800份而非挑选案例}
+\begin{itemize}
+\item 八场景各100次；n=2000，p=31，训练/评分/测试1200/400/400。
+\item 全无效、线性、强弱非线性、纯交互、高相关、混合变换、t错设。
+\item 七场景精确生成；t场景故意错设。
+\item 全无效Power不定义，FDP和Power共同解释。
+\end{itemize}
+\end{frame}
+\begin{frame}{非线性检出增加，但存在反例}
+\footnotesize\centering \begin{tabular}{lrrr}
+\toprule
+场景 & 线性Power & SCPL Power & SCPL FDP\\\midrule
+线性稀疏 & 1.000 & 0.970 & 0.196\\
+强非线性 & 0.087 & 0.794 & 0.167\\
+弱非线性 & 0.075 & 0.431 & 0.164\\
+纯交互 & 0.003 & 0.934 & 0.153\\
+高相关线性 & 0.859 & 0.584 & 0.177\\
+\bottomrule
+\end{tabular}
+\end{frame}
+\begin{frame}{真实数据：生成器影响很大}
+\footnotesize\centering \begin{tabular}{lrr}
+\toprule
+方法/生成条件 & XGB误差 & J\\\midrule
+SHAP & 1.8466 & .7682\\
+SCPL主候选/等相关 & 2.0964 & .3249\\
+SCPL主候选/MVR追加 & 1.8493 & .4696\\
+TabM中点/MVR追加 & 1.8431 & .4988\\
+\bottomrule
+\end{tabular}
+\end{frame}
+\begin{frame}{真实FDR为什么不能保证}
+\begin{itemize}
+\item 估计Copula的交换分类AUC明显偏离.5。
+\item 同卖家跨期相关，不满足简单独立评分理论。
+\item MVR在看到参考结果后追加，必须披露后验性质。
+\item 名义发现数增加不等于错误率控制更好。
+\end{itemize}
+\end{frame}
+\begin{frame}{近期原文：Semi-knockoffs}
+\begin{itemize}
+\item 一侧条件于其他特征，另一侧再条件于响应。
+\item 分别重建特征并打乱残差，比较固定预测器损失。
+\item oracle条件矩已知时与估计条件矩的保证不同。
+\item 作者代码无解阈值问题已纠正并保留反例。
+\end{itemize}
+\end{frame}
+\begin{frame}{条件均值与尺度扩展}
+\begin{itemize}
+\item Ridge均值、非线性均值、条件尺度、联合四机制。
+\item 针对仅靠线性均值可能漏掉平方与交互信息的问题。
+\item 同一XGBoost/TabM、同一置换、同一评分样本。
+\item 8项评分复算800份已有模拟，不冒称新800份数据。
+\end{itemize}
+\end{frame}
+\begin{frame}{条件矩扩展：真实结果}
+\footnotesize\centering \begin{tabular}{lrr}
+\toprule
+方法 & XGB误差 & J\\\midrule
+XGBoost-SHAP & 1.8466 & 0.7682\\
+TabM-SKO-Ridge & 1.8996 & 0.4397\\
+TabM-SKO-非线性均值 & 1.8837 & 0.4224\\
+TabM-SKO-尺度 & 1.8793 & 0.4713\\
+TabM-SKO-均值尺度 & 1.8965 & 0.4099\\
+\bottomrule
+\end{tabular}
+\end{frame}
+\begin{frame}{条件矩扩展：误选与检出}
+\footnotesize\centering \begin{tabular}{lrr}
+\toprule
+场景 & 平均FDP & Power\\\midrule
+全无效 & 0.0300 & 不定义\\
+强非线性 & 0.1313 & 0.8660\\
+纯交互 & 0.1493 & 0.9660\\
+高相关线性 & 0.1343 & 0.7640\\
+t生成错设 & 0.0999 & 0.2000\\
+\bottomrule
+\end{tabular}
+\end{frame}
+\begin{frame}{结论与下一步}
+\begin{itemize}
+\item 已形成明确算法问题、性质、拆分消融和完整实测。
+\item 没有证据支持复杂方法全面领先或真实FDR无条件受控。
+\item 补近期非线性受控基线及未使用真实数据的冻结验证。
+\item 所有尝试、失败和仅参考方法独立归档。
+\end{itemize}
+\end{frame}
+\begin{frame}{主要参考文献}
+\begin{itemize}
+\item Candes等，Model-X，JRSS B 2018；Ren与Barber，JRSS B 2024。
+\item Watson与Wright，CPI，Machine Learning 2021。
+\item Cherepanova等，Deep Lasso，NeurIPS D\&B 2023。
+\item Gorishniy等，TabM，ICLR 2025；Ying等，VTFS，TKDD 2024。
+\item Reyero-Lobo等，Semi-knockoffs，ICML 2026。
+\item Zou与Tian，GRIP2，2026预印本；完整来源见论文。
+\end{itemize}
+\end{frame}
+\end{document}

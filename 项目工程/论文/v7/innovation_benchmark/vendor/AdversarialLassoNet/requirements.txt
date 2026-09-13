@@ -1,0 +1,13 @@
+# Core scientific stack
+numpy>=1.23
+pandas>=1.5
+scipy>=1.10
+scikit-learn>=1.2
+matplotlib>=3.6
+tqdm>=4.65
+
+# Deep learning
+torch>=2.0
+
+# LassoNet (the baseline this project extends)
+lassonet>=0.0.20

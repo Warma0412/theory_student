@@ -1,0 +1,444 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{ctex,hyperref}
+\usepackage[T1]{fontenc}
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,array}
+\usepackage{graphicx}
+\usepackage{SUFE}
+
+\author{汇报人：吴优\quad 学号：2025213385}
+\title{基于去随机化Model-X Knockoff的电商GMV多粒度受控维度选择研究}
+\subtitle{月度确认、周度稳健性与参数化展示}
+\institute{上海财经大学·统计与数据科学学院\\指导教师：张吕欧}
+\date{开题报告·2026年9月}
+
+\AtBeginSection[]{}
+\AtBeginSubsection[]{}
+\setbeamertemplate{navigation symbols}{}
+\setbeamerfont{frame number}{parent=author in head/foot}
+\graphicspath{{figures/}{pic/}}
+\definecolor{deepred}{RGB}{124,67,76}
+\definecolor{deepgreen}{RGB}{40,114,113}
+
+\begin{document}
+
+\kaishu
+\begin{frame}
+  \titlepage
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.28\linewidth]{sufe.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{汇报提纲}
+  \tableofcontents
+\end{frame}
+
+\section{研究背景}
+
+\begin{frame}{研究背景：经营看板的维度过载}
+  \begin{block}{现实问题}
+    GMV看板同时包含交易规模、价格成本、供给、支付、履约、口碑、地域和营销等大量指标。指标越多，越难判断哪些变量真正提供了独立信息。
+  \end{block}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{常用做法}
+      \begin{itemize}
+        \item 业务经验筛选
+        \item 边际相关与逐项检验
+        \item 树模型重要性排序
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{主要不足}
+      \begin{itemize}
+        \item 高度相关代理重复入选
+        \item 多重比较累积误报
+        \item 重要性排序缺少错误比例控制
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \begin{alertblock}{研究目标}
+    在31项候选维度中筛选对下一期GMV具有增量预测信息的少数指标，并形成可调数量、可复核的监控集合。
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{研究问题与预期贡献}
+  \begin{enumerate}
+    \item 如何从多表交易数据构造不重复计算GMV的卖家面板？
+    \item 如何在混合分布、高度相关变量中控制目标错误发现率？
+    \item 如何在确认集合内通过参数$K$控制最终展示数量？
+    \item 月度结论在周度、卖家内变化、业务组和非线性模型下是否稳定？
+  \end{enumerate}
+  \vspace{0.3cm}
+  \begin{block}{预期贡献}
+    构建“受控确认—参数化展示—多粒度复核”的统一框架，严格区分统计发现、随机稳定性、模型解释与因果结论。
+  \end{block}
+\end{frame}
+
+\begin{frame}{相关研究与方法依据}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{受控变量选择}
+      \begin{itemize}
+        \item BH错误发现率控制 [1]
+        \item Knockoff过滤器 [2]
+        \item Model-X Knockoff [3]
+        \item 去随机化Knockoff [4]
+        \item e-BH与e-value [5]
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{生成、预测与解释}
+      \begin{itemize}
+        \item MVR最小可重构性 [6]
+        \item Deep Knockoffs [7]
+        \item 深度核两样本检验 [8]
+        \item XGBoost [9]
+        \item TreeSHAP [10]
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \begin{alertblock}{研究空白}
+    现有方法较少把受控发现、随机稳定性、展示数量和月周粒度复核纳入同一经营指标治理流程。
+  \end{alertblock}
+\end{frame}
+
+\section{数据与设计}
+
+\begin{frame}{Olist数据与样本构造}
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \textbf{实际读取10张CSV}
+      \begin{itemize}
+        \item 订单与商品明细
+        \item 支付与评价
+        \item 商品、卖家与顾客
+        \item 地理位置
+        \item 营销线索与成交线索
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \textbf{数据质量原则}
+      \begin{itemize}
+        \item 自然粒度先聚合后连接
+        \item GMV与明细逐笔对账
+        \item 独立顾客使用唯一顾客标识
+        \item 排除一项零方差变量
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lrrrr}
+      \toprule
+      口径 & 面板行 & 卖家 & 期间数 & 下一期零值率 \\
+      \midrule
+      月度主分析 & 14,677 & 2,793 & 19个月 & 25.86\% \\
+      周度稳健性 & 33,190 & 2,834 & 83周 & 40.46\% \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}{31项候选维度与前瞻目标}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{候选信息}
+      \begin{itemize}
+        \item 价格成本：价格、运费
+        \item 商品结构：尺寸、重量、图片、文本
+        \item 支付口碑：分期、支付方式、评分
+        \item 履约：审核、承运、送达、承诺偏差
+        \item 规模覆盖：订单、件数、顾客、品类、地域
+        \item 营销：来源频率、成交线索匹配
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{预测目标}
+      \begin{equation*}
+        Y_{s,t+1}=\log(1+\mathrm{GMV}_{s,t+1})
+      \end{equation*}
+      \begin{itemize}
+        \item 月度：本月预测次月
+        \item 周度：本周预测下一周
+        \item 下一期无成交时目标记为0
+        \item 避免同周期GMV定义泄漏
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{研究方法}
+
+\begin{frame}{统一方法框架}
+  \begin{center}
+    \large
+    原始多表数据
+    $\rightarrow$ 自然粒度聚合
+    $\rightarrow$ 卖家面板
+    $\rightarrow$ Copula-MVR Knockoff
+    $\rightarrow$ 60轮e-value
+    $\rightarrow$ e-BH确认集合
+    $\rightarrow$ 参数$K$
+  \end{center}
+  \vspace{0.5cm}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{确认性主线}
+      \begin{itemize}
+        \item 随机化秩高斯Copula
+        \item Ledoit-Wolf协方差
+        \item MVR二阶Knockoff
+        \item Lasso反对称统计量
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{补充验证}
+      \begin{itemize}
+        \item 时间外机器学习预测
+        \item TreeSHAP与固定效应
+        \item 卖家间/内与业务组
+        \item 深度交换性诊断
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[shrink=8]{Copula-MVR：从混合边际到有效负对照}
+  \begin{block}{秩高斯变换}
+    \begin{equation*}
+      Z_{ij}=\Phi^{-1}\left(\frac{r_{ij}-0.5}{n}\right)
+    \end{equation*}
+  \end{block}
+  \begin{block}{二阶条件生成}
+    \begin{equation*}
+      \widetilde Z\mid Z\sim
+      \mathcal N\left(
+        Z-Z\widehat\Sigma^{-1}S,\;
+        2S-S\widehat\Sigma^{-1}S
+      \right)
+    \end{equation*}
+  \end{block}
+  \begin{itemize}
+    \item $\widehat\Sigma$：Ledoit-Wolf收缩协方差
+    \item $S$：按MVR准则降低真变量与仿制变量可重构性
+    \item 交换要求：$(X,\widetilde X)_{\mathrm{swap}(A)}\overset d=(X,\widetilde X)$
+  \end{itemize}
+  \begin{alertblock}{解释边界}
+    $H_{0j}:Y\perp X_j\mid X_{-j}$；竞争统计量
+    $W_j=|\widehat\beta_j|-|\widehat\beta_{j+p}|$。拒绝零假设只表示条件预测信息。
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}[shrink=10]{e-value聚合、e-BH与参数$K$}
+  \begin{block}{第$m$轮变量$j$的e-value}
+    \begin{equation*}
+      e_j^{(m)}
+      =p\frac{\mathbf 1\{W_j^{(m)}\ge T^{(m)}\}}
+      {1+\sum_{k=1}^{p}\mathbf 1\{W_k^{(m)}\le-T^{(m)}\}}
+    \end{equation*}
+  \end{block}
+  \begin{equation*}
+    \bar e_j=\frac{1}{60}\sum_{m=1}^{60}e_j^{(m)},\qquad
+    \bar e_{(k)}\ge\frac{p}{\alpha_{\mathrm{eBH}}k}
+  \end{equation*}
+  \begin{itemize}
+    \item 单轮$\alpha_{\mathrm{kn}}=0.10$；最终$\alpha_{\mathrm{eBH}}=0.20$
+    \item e-BH承担正式FDR结论，单轮频率只描述随机稳定性
+    \item $K^*=\min\{K:C_K\ge90\%,\ \mathrm{RMSE}_K\le1.005\,\mathrm{RMSE}_{\min}\}$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{稳健性与诊断体系}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{p{0.29\textwidth}p{0.29\textwidth}p{0.32\textwidth}}
+      \toprule
+      风险 & 方法 & 回答的问题 \\
+      \midrule
+      卖家内相关 & 均值—离差分层 & 信号来自跨卖家还是卖家自身变化？ \\
+      共线代理 & 12业务组Knockoff & 哪类业务信息整体有效？ \\
+      非高斯联合分布 & 深度生成+深度核MMD & 生成器是否满足联合交换性？ \\
+      非线性重要性 & 轨迹聚合配对MLP & 非线性竞争能否恢复信号？ \\
+      粒度依赖 & 周度完整重跑 & 月度结论是否依赖聚合尺度？ \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\section{预分析结果}
+
+\begin{frame}[shrink=8]{月度确认性结果}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \includegraphics[width=\linewidth]{fig03_knockoff_evalues.png}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+      \textbf{$q=0.20$确认14项}
+      \begin{itemize}
+        \item 规模：订单数、件数、顾客数、品类数
+        \item 价格：平均价格、平均运费
+        \item 履约：承运、送达、预计偏差
+        \item 内容与覆盖：标题、描述、高度、买家州、卖家州
+      \end{itemize}
+      \textbf{高稳定项：}10项单轮频率$\geq90\%$
+    \end{column}
+  \end{columns}
+  \begin{alertblock}{阈值现象}
+    $q=0.10$为0项、$q=0.20$为14项，说明低维Knockoff+存在离散门槛。
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}[shrink=10]{参数$K$与月度预测}
+  \begin{columns}[T]
+    \begin{column}{0.46\textwidth}
+      \textbf{默认$K=10$}
+      \begin{enumerate}
+        \item 独立顾客数
+        \item 成交订单数
+        \item 平均商品价格
+        \item 审核至承运天数
+        \item 预计提前送达天数
+        \item 买家州数量
+        \item 下单至送达天数
+        \item 成交件数
+        \item 平均运费
+        \item 商品标题长度
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.52\textwidth}
+      \begin{block}{时间外结果}
+        \begin{itemize}
+          \item 默认$K=10$：RMSE=2.385
+          \item 全31维XGBoost：RMSE=2.388
+          \item 相对变化：$-0.097\%$
+          \item 维度压缩后性能基本保留
+        \end{itemize}
+      \end{block}
+      \includegraphics[width=\linewidth]{fig10_predictive_models.png}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[shrink=12]{周度稳健性结果}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \includegraphics[width=\linewidth]{fig17_monthly_weekly_frequency.png}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+      \begin{itemize}
+        \item 周度$q=0.20$入选18项
+        \item 与月度共同入选11项
+        \item Jaccard系数为0.524
+        \item 周度高稳定项13项
+        \item 周度18项XGBoost RMSE=2.421
+        \item 全31维XGBoost RMSE=2.420
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \begin{block}{跨粒度核心}
+    交易规模、平均价格与运费、承运准备、商品标题和区域覆盖在两种粒度下共同出现。
+  \end{block}
+\end{frame}
+
+\begin{frame}{结构检验与负结果}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lccp{0.36\textwidth}}
+      \toprule
+      分支 & 月度 & 周度 & 解释 \\
+      \midrule
+      卖家间层$q=.20$ & 16项 & 12项 & 长期卖家差异包含主要信号 \\
+      卖家内层$q=.20$ & 0项 & 0项 & 短期动态证据不足 \\
+      业务组$q=.20$ & 0组 & 10组 & 周度组级信息更强 \\
+      轨迹重要性$q=.20$ & 0项 & 0项 & 主水平未恢复非线性发现 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \begin{alertblock}{深度生成器准入}
+    边际KS较小，但深度核MMD拒绝率100\%、分类器AUC为0.902/0.937；因此不作FDR声明。
+  \end{alertblock}
+\end{frame}
+
+\section{计划与产出}
+
+\begin{frame}{研究创新与方法主线}
+  \begin{enumerate}
+    \item \textbf{单一确认主线：}Copula-MVR、反对称$W$、e-value与e-BH共同承担正式发现。
+    \item \textbf{确认—展示分离：}参数$K$只压缩确认池，不反向改变FDR阈值。
+    \item \textbf{分层证据：}月度确认，周度、业务组、卖家间/内与深度诊断负责复核。
+    \item \textbf{明确否决：}未通过交换性诊断的深度生成器不得用于FDR声明。
+  \end{enumerate}
+  \begin{block}{创新定位}
+    属于面向经营指标治理的应用统计研究设计创新，不宣称提出新的Knockoff定理。
+  \end{block}
+\end{frame}
+
+\begin{frame}{后续计划与预期成果}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lp{0.62\textwidth}}
+      \toprule
+      时间 & 工作内容 \\
+      \midrule
+      2026.09 & 完成研究设计、数据审计与预分析整理 \\
+      2026.10 & 完善理论推导、模拟设计和稳健性讨论 \\
+      2026.11 & 统一图表、核对文献与结果叙述 \\
+      2026.12 & 完成论文初稿、导师反馈与结构修改 \\
+      2027.01 & 完成格式终检、盲审稿与答辩材料 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \begin{block}{预期成果}
+    形成一篇数据可对账、代码可复现、统计结论边界明确的应用统计硕士学位论文，并给出可用于经营看板的维度准入与展示规则。
+  \end{block}
+\end{frame}
+
+\section{参考文献}
+
+\begin{frame}[shrink=6]{主要参考文献}
+  \tiny
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \begin{enumerate}
+        \item Benjamini \& Hochberg. JRSS B, 1995.
+        \item Barber \& Candès. Annals of Statistics, 2015.
+        \item Candès et al. JRSS B, 2018.
+        \item Ren \& Barber. JRSS B, 2024.
+        \item Wang \& Ramdas. JRSS B, 2022.
+        \item Spector \& Janson. Annals of Statistics, 2022.
+        \item Romano et al. JASA, 2020.
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \begin{enumerate}
+        \setcounter{enumi}{7}
+        \item Dai \& Barber. ICML, 2016.
+        \item Liu et al. ICML, 2020.
+        \item Chen \& Guestrin. KDD, 2016.
+        \item Lundberg \& Lee. NeurIPS, 2017.
+        \item Wooldridge. MIT Press, 2010.
+        \item Olist. Kaggle, 2018.
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    {\Huge Thank You}
+
+    \vspace{1cm}
+    \Large 敬请各位老师批评指正
+
+    \vspace{0.8cm}
+    \normalsize 上海财经大学·统计与数据科学学院
+  \end{center}
+\end{frame}
+
+\end{document}

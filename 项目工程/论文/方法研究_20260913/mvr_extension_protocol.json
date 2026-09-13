@@ -1,0 +1,19 @@
+{
+  "status": "posthoc_extension_after_primary_Olist_reference_diagnostic",
+  "reason": "equicorrelated S=0.003339 and approximately half pair entries identical; reference-only MVR sensitivity indicated substantial effect",
+  "no_change_primary_protocol_or_outputs": true,
+  "generator": "existing Spector-Janson MVR in same training-estimated Gaussian copula; not an invented sampler",
+  "inference_generation_only": true,
+  "methods": "same 14 methods, same predictors and model-training seeds",
+  "real_cases": 111,
+  "samples": "same V7 shared seller manifest and algorithm-seed-only cases",
+  "predictions": "Top12 only, both canonical-column XGBoost and TabM evaluators, three seeds",
+  "outcomes": ["Top12_RMSE","Top12_Jaccard","Nogueira","native_discovery_count","native_empty_frequency"],
+  "no_new_simulations_in_extension": true,
+  "no_real_fdr_guarantee": true,
+  "native_q": 0.2,
+  "not_confirmatory": true,
+  "no_tuning_generator_or_threshold_on_test": true,
+  "main_statistic_remains": "tabm_orbit_student",
+  "contrast": "separate primary-equicorrelated versus extension-MVR tables; no selection of favorable numbers between tables"
+}

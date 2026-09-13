@@ -1,0 +1,23 @@
+{
+  "method": "deepdrk",
+  "params": {
+    "width": 64,
+    "layers": 2,
+    "lr": 1e-05,
+    "epochs": 200
+  },
+  "trials": [
+    {
+      "trial": 0,
+      "params": {
+        "width": 64,
+        "layers": 2,
+        "lr": 1e-05,
+        "epochs": 200
+      },
+      "rmse_scaled": null,
+      "selection": "paper/default computational adaptation; no outcome-based search"
+    }
+  ],
+  "split": "train targets through 2017-12; tuning targets 2018-01..02"
+}

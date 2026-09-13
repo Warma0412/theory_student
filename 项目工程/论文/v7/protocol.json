@@ -1,0 +1,105 @@
+{
+  "protocol_version": "1.0",
+  "registered_before_training": true,
+  "master_seed": 20260908,
+  "data": {
+    "unit": "seller-month with purchases in the feature month",
+    "feature_period_start": "2017-01-01",
+    "feature_period_end": "2018-06-01",
+    "outcome": "log1p(sum of item price delivered to the customer in the next calendar month))",
+    "outcome_currency": "BRL; freight excluded",
+    "retrospective_secondary_outcome": "next purchase-month item price of ultimately delivered orders",
+    "train_target_end": "2017-12-01",
+    "tune_target_start": "2018-01-01",
+    "tune_target_end": "2018-02-01",
+    "ranking_target_start": "2018-03-01",
+    "ranking_target_end": "2018-04-01",
+    "test_target_start": "2018-05-01",
+    "test_target_end": "2018-07-01",
+    "feature_count": 31,
+    "known_limitations": [
+      "Payment entries and product/seller metadata are static snapshots without full revision histories; their availability at purchase is a working assumption, not proven live replay.",
+      "The primary target is delivery-month realized goods value, not the historical purchase-month retrospective target.",
+      "The final test period has been examined in prior exploratory work; this is not a pristine external confirmation sample.",
+      "Resampling sellers preserves within-seller rows but does not by itself prove Model-X exchangeability for dependent panel observations."
+    ]
+  },
+  "selection": {
+    "budgets": [4, 8, 10, 12, 14],
+    "primary_budget": 12,
+    "rank_ties": "fixed feature index after available method-native secondary scores",
+    "native_and_topk_separate": true,
+    "topk_inherits_fdr": false,
+    "q_knockoff": 0.1,
+    "q_ebh": 0.2,
+    "knockoff_draws_per_fit": 60,
+    "stability_inner_complementary_pairs": 20,
+    "stability_native_frequency": 0.9,
+    "shadow_inner_repeats": 8
+  },
+  "tuning": {
+    "max_trials_per_method": 30,
+    "planned_trials_for_trainable_predictors": 12,
+    "selection_metric": "tuning RMSE, never final test RMSE",
+    "post_tuning_parameters_frozen": true,
+    "deep_fit_seeds": [11, 29, 47],
+    "supervised_max_epochs": 100,
+    "supervised_patience": 12,
+    "generator_max_epochs": 200,
+    "generator_hyperparameters": "paper-prescribed default regularization; choose checkpoint using X-only held-out diagnostic loss",
+    "vtfs_subset_utility_budget": 128,
+    "vtfs_adaptation": "official variational transformer core; fixed-budget masked unique-token decoding and validation-only subset utilities are explicitly reported adaptations"
+  },
+  "stability": {
+    "primary": {"fraction": 0.5, "complementary_pairs": 30},
+    "sensitivity": [
+      {"fraction": 0.7, "repetitions": 20},
+      {"fraction": 0.8, "repetitions": 20}
+    ],
+    "same_seller_ids_for_all_methods": true,
+    "full_reference_built_by_same_procedure": true,
+    "metrics": ["reference_jaccard", "complementary_pair_jaccard", "nogueira_stability", "selection_frequency"],
+    "ci_unit": "resampling group, never treat the two complementary halves as independent",
+    "algorithm_seed_only_batches": 10,
+    "interpretation": "conditional sensitivity on the observed dataset, not population-wide certainty"
+  },
+  "prediction": {
+    "evaluators": ["xgboost", "tabm"],
+    "same_evaluator_configuration_for_all_feature_selectors": true,
+    "metrics": ["rmse_log", "mae_log", "r2_log", "wape_raw"],
+    "ci": "paired seller-cluster bootstrap; conditional on the observed three test months",
+    "bootstrap_repetitions": 2000,
+    "equivalence_margin_relative_rmse": 0.01,
+    "warning": "Overlapping marginal confidence intervals do not establish equivalence; use paired differences.",
+    "model_choice": "freeze on development data before opening test predictions"
+  },
+  "simulation": {
+    "repetitions_per_scenario": 100,
+    "p": 31,
+    "n": 2000,
+    "train_n": 1200,
+    "validation_n": 400,
+    "test_n": 400,
+    "scenarios": [
+      {"name": "linear_sparse", "signals": 5, "snr": 3.0, "response": "linear"},
+      {"name": "linear_medium", "signals": 10, "snr": 1.0, "response": "linear"},
+      {"name": "linear_weak", "signals": 10, "snr": 0.3, "response": "linear"},
+      {"name": "linear_dense", "signals": 15, "snr": 1.0, "response": "linear"},
+      {"name": "nonlinear", "signals": 10, "snr": 1.0, "response": "nonlinear"},
+      {"name": "nonlinear_panel", "signals": 10, "snr": 1.0, "response": "nonlinear_panel"}
+    ],
+    "all_methods_share_generated_data": true,
+    "native_metrics": ["FDP", "power", "discovery_count", "FDP_gt_0.2"],
+    "topk_metrics": ["FDP_at_K", "power_at_K", "rmse"],
+    "no_fdr_gate_for_unrestricted_topk": true,
+    "note": "At K=12 and 5 true signals, FDP is at least 7/12 even for an oracle. Native thresholds and fixed budgets must not be mixed."
+  },
+  "paper_fidelity": {
+    "sources_pinned": true,
+    "no_substitute_model_under_paper_name": true,
+    "runtime_adaptations_logged": true,
+    "unavailable_or_noncompliant_candidates_recorded": true,
+    "diagnostic_pass_not_a_proof": true,
+    "negative_results_retained": true
+  }
+}

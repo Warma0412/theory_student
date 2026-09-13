@@ -1,0 +1,33 @@
+2026-09-06 18:28:27,496 | INFO | Weekly panel loaded n=33190 sellers=2834 weeks=83
+2026-09-06 18:28:27,496 | INFO | Knockoff scenario target=log_gmv_next_week generator=copula stat=lasso n=33190 M=60
+2026-09-06 18:28:38,503 | INFO | Knockoff scenario target=log_gmv_next_week generator=gaussian stat=lasso n=33190 M=40
+2026-09-06 18:31:32,003 | INFO | Knockoff scenario target=log_gmv generator=copula stat=lasso n=33190 M=40
+2026-09-06 18:31:42,092 | INFO | Knockoff scenario target=log_gmv_next_week generator=copula stat=lasso n=26596 M=40
+2026-09-06 18:31:50,165 | INFO | Knockoff scenario target=log_aov_next_week generator=copula stat=lasso n=33190 M=40
+2026-09-06 18:31:58,073 | INFO | Knockoff scenario target=log_gmv_next_week generator=copula stat=lasso n=25675 M=40
+2026-09-06 18:32:05,592 | INFO | Knockoff scenario target=log_gmv_next_week generator=copula stat=xgboost n=33190 M=25
+2026-09-06 18:32:29,694 | INFO | Clustered level between_seller completed
+2026-09-06 18:33:11,087 | INFO | Clustered level within_seller completed
+2026-09-06 18:33:29,910 | INFO | GRIP2-style repetition 1 completed
+2026-09-06 18:33:36,962 | INFO | GRIP2-style repetition 2 completed
+2026-09-06 18:33:43,958 | INFO | GRIP2-style repetition 3 completed
+2026-09-06 18:33:50,948 | INFO | GRIP2-style repetition 4 completed
+2026-09-06 18:33:58,007 | INFO | GRIP2-style repetition 5 completed
+2026-09-06 18:34:05,064 | INFO | GRIP2-style repetition 6 completed
+2026-09-06 18:34:12,142 | INFO | GRIP2-style repetition 7 completed
+2026-09-06 18:34:19,192 | INFO | GRIP2-style repetition 8 completed
+2026-09-06 18:34:26,247 | INFO | GRIP2-style repetition 9 completed
+2026-09-06 18:34:33,228 | INFO | GRIP2-style repetition 10 completed
+2026-09-06 18:34:40,303 | INFO | GRIP2-style repetition 11 completed
+2026-09-06 18:34:47,429 | INFO | GRIP2-style repetition 12 completed
+2026-09-06 18:34:54,388 | INFO | GRIP2-style repetition 13 completed
+2026-09-06 18:35:01,398 | INFO | GRIP2-style repetition 14 completed
+2026-09-06 18:35:08,410 | INFO | GRIP2-style repetition 15 completed
+2026-09-06 18:35:15,421 | INFO | GRIP2-style repetition 16 completed
+2026-09-06 18:35:22,396 | INFO | GRIP2-style repetition 17 completed
+2026-09-06 18:35:29,935 | INFO | GRIP2-style repetition 18 completed
+2026-09-06 18:35:38,062 | INFO | GRIP2-style repetition 19 completed
+2026-09-06 18:35:46,050 | INFO | GRIP2-style repetition 20 completed
+2026-09-06 18:35:49,173 | INFO | Weekly strict features: ['avg_price', 'avg_freight', 'avg_product_weight_g', 'avg_product_height_cm', 'avg_product_width_cm', 'avg_product_photos_qty', 'avg_product_name_length', 'boleto_ratio', 'avg_ship_days', 'item_count', 'order_count', 'category_count', 'unique_customer_count', 'buyer_state_diversity', 'dominant_customer_state_share', 'seller_state_frequency', 'marketing_origin_frequency', 'has_marketing_deal']
+2026-09-06 18:35:49,173 | INFO | Weekly stable features: ['avg_price', 'avg_freight', 'avg_product_width_cm', 'avg_product_name_length', 'avg_ship_days', 'item_count', 'order_count', 'category_count', 'unique_customer_count', 'buyer_state_diversity', 'dominant_customer_state_share', 'seller_state_frequency', 'has_marketing_deal']
+2026-09-06 18:35:49,173 | INFO | V5 weekly analysis completed in 441.7s

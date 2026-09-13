@@ -1,0 +1,779 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>电商GMV受控维度选择研究：完整通俗介绍</title>
+<style>
+  :root {
+    --ink: #202124;
+    --muted: #62666c;
+    --line: #d7d9dc;
+    --paper: #ffffff;
+    --canvas: #f3f4f2;
+    --red: #7c434c;
+    --red-soft: #f4ebed;
+    --teal: #287271;
+    --teal-soft: #e9f3f1;
+    --gold: #b27a23;
+    --gold-soft: #fbf4e7;
+    --blue: #356a91;
+    --shadow: 0 8px 24px rgba(32, 33, 36, 0.08);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--canvas);
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: 16px;
+    line-height: 1.75;
+    letter-spacing: 0;
+  }
+  a { color: inherit; }
+  .shell {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 920px);
+    gap: 28px;
+    width: min(1240px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 24px 0 64px;
+    align-items: start;
+  }
+  .toc {
+    position: sticky;
+    top: 18px;
+    max-height: calc(100vh - 36px);
+    overflow: auto;
+    padding: 18px 16px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--paper);
+    box-shadow: var(--shadow);
+  }
+  .toc-title {
+    margin: 0 0 10px;
+    color: var(--red);
+    font-family: "STHeiti", "PingFang SC", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .toc a {
+    display: block;
+    padding: 5px 0;
+    color: #4f5358;
+    text-decoration: none;
+    font-family: "STHeiti", "PingFang SC", sans-serif;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .toc a:hover { color: var(--red); }
+  main {
+    min-width: 0;
+    background: var(--paper);
+    box-shadow: var(--shadow);
+  }
+  .cover {
+    min-height: 560px;
+    padding: 62px 64px 48px;
+    border-top: 10px solid var(--red);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .eyebrow {
+    color: var(--teal);
+    font-family: "STHeiti", "PingFang SC", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  h1, h2, h3, h4 {
+    font-family: "STHeiti", "PingFang SC", sans-serif;
+    letter-spacing: 0;
+  }
+  h1 {
+    max-width: 760px;
+    margin: 26px 0 18px;
+    font-size: 38px;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+  .subtitle {
+    max-width: 720px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 19px;
+    line-height: 1.75;
+  }
+  .cover-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-family: "STHeiti", "PingFang SC", sans-serif;
+    font-size: 14px;
+  }
+  .cover-meta strong { display: block; margin-bottom: 2px; color: var(--red); }
+  section {
+    padding: 42px 64px;
+    border-bottom: 1px solid var(--line);
+  }
+  section:last-child { border-bottom: 0; }
+  h2 {
+    margin: 0 0 22px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--red);
+    font-size: 25px;
+    line-height: 1.4;
+  }
+  h3 { margin: 28px 0 10px; font-size: 19px; }
+  h4 { margin: 18px 0 8px; font-size: 16px; }
+  p { margin: 0 0 14px; text-align: justify; }
+  .lead {
+    margin: 18px 0 24px;
+    padding: 18px 20px;
+    border-left: 4px solid var(--teal);
+    background: var(--teal-soft);
+    font-size: 18px;
+    line-height: 1.75;
+  }
+  .note, .warning, .definition {
+    margin: 18px 0;
+    padding: 14px 18px;
+    border: 1px solid var(--line);
+    border-left-width: 4px;
+    border-radius: 4px;
+  }
+  .note { border-left-color: var(--teal); background: var(--teal-soft); }
+  .warning { border-left-color: var(--gold); background: var(--gold-soft); }
+  .definition { border-left-color: var(--red); background: var(--red-soft); }
+  .note strong, .warning strong, .definition strong {
+    font-family: "STHeiti", "PingFang SC", sans-serif;
+  }
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .metric {
+    min-height: 112px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--teal);
+    border-radius: 4px;
+    background: var(--paper);
+  }
+  .metric:nth-child(2n) { border-top-color: var(--red); }
+  .metric strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--ink);
+    font-family: "STHeiti", "PingFang SC", sans-serif;
+    font-size: 24px;
+    line-height: 1.25;
+  }
+  .metric span { color: var(--muted); font-size: 13px; }
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin: 24px 0;
+  }
+  .flow-step {
+    position: relative;
+    min-height: 112px;
+    padding: 14px 10px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: #fff;
+    text-align: center;
+    font-family: "STHeiti", "PingFang SC", sans-serif;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .flow-step b {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--red);
+    font-size: 18px;
+  }
+  .flow-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    right: -9px;
+    width: 9px;
+    border-top: 2px solid var(--gold);
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .card {
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    background: #fff;
+  }
+  .card h3, .card h4 { margin-top: 0; }
+  table {
+    width: 100%;
+    margin: 16px 0 24px;
+    border-collapse: collapse;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  th, td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    color: #36393d;
+    background: #f0f1ef;
+    font-family: "STHeiti", "PingFang SC", sans-serif;
+    font-weight: 700;
+  }
+  tbody tr:nth-child(even) { background: #fafafa; }
+  .compact th, .compact td { padding: 7px 8px; font-size: 13px; }
+  .formula {
+    margin: 18px 0;
+    padding: 16px;
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    background: #fafafa;
+    text-align: center;
+    font: 18px/1.5 "Times New Roman", serif;
+  }
+  code {
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: #f0f1ef;
+    font-family: Menlo, monospace;
+    font-size: 0.88em;
+  }
+  ul, ol { margin: 10px 0 18px; padding-left: 24px; }
+  li { margin: 6px 0; }
+  .competition {
+    display: grid;
+    grid-template-columns: 1fr 72px 1fr;
+    gap: 14px;
+    margin: 22px 0;
+    align-items: stretch;
+  }
+  .fighter {
+    padding: 18px;
+    border: 2px solid var(--teal);
+    border-radius: 5px;
+    background: var(--teal-soft);
+  }
+  .fighter.fake {
+    border-color: var(--red);
+    background: var(--red-soft);
+  }
+  .versus {
+    display: grid;
+    place-items: center;
+    color: var(--gold);
+    font-family: "STHeiti", "PingFang SC", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .bar-chart { margin: 18px 0 26px; }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 145px 1fr 58px;
+    gap: 10px;
+    margin: 9px 0;
+    align-items: center;
+    font-size: 13px;
+  }
+  .track { height: 18px; background: #eceeeb; }
+  .bar { height: 100%; background: var(--teal); }
+  .bar.red { background: var(--red); }
+  .bar.gold { background: var(--gold); }
+  .bar.blue { background: var(--blue); }
+  .selected-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 18px;
+    margin: 18px 0;
+    counter-reset: selected;
+  }
+  .selected-item {
+    position: relative;
+    min-height: 42px;
+    padding: 9px 10px 9px 42px;
+    border-bottom: 1px solid var(--line);
+    counter-increment: selected;
+  }
+  .selected-item::before {
+    content: counter(selected);
+    position: absolute;
+    left: 6px;
+    top: 8px;
+    color: var(--red);
+    font-family: "STHeiti", "PingFang SC", sans-serif;
+    font-weight: 700;
+  }
+  .timeline {
+    margin: 18px 0;
+    border-left: 3px solid var(--teal);
+  }
+  .timeline-item {
+    position: relative;
+    padding: 4px 0 16px 22px;
+  }
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -8px;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--paper);
+    border-radius: 50%;
+    background: var(--red);
+  }
+  .timeline-item b {
+    display: block;
+    font-family: "STHeiti", "PingFang SC", sans-serif;
+  }
+  .footer {
+    padding: 28px 64px 42px;
+    color: var(--muted);
+    background: #f7f7f5;
+    font-size: 13px;
+  }
+  .no-break { break-inside: avoid; }
+  @media (max-width: 900px) {
+    .shell { display: block; width: 100%; padding: 0; }
+    .toc { position: relative; top: 0; max-height: none; border-radius: 0; box-shadow: none; }
+    main { box-shadow: none; }
+    .cover, section, .footer { padding-left: 24px; padding-right: 24px; }
+    h1 { font-size: 30px; }
+    .metrics, .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .flow { grid-template-columns: repeat(2, 1fr); }
+    .flow-step::after { display: none; }
+    .grid-2, .competition { grid-template-columns: 1fr; }
+    .versus { min-height: 42px; }
+    .cover-meta { grid-template-columns: 1fr; }
+  }
+  @media print {
+    @page { size: A4; margin: 13mm 14mm 15mm; }
+    body { background: #fff; font-size: 10.2pt; line-height: 1.55; }
+    .shell { display: block; width: auto; margin: 0; padding: 0; }
+    .toc { display: none; }
+    main { box-shadow: none; }
+    .cover {
+      min-height: 258mm;
+      padding: 26mm 12mm 16mm;
+      break-after: page;
+    }
+    .cover h1 { font-size: 26pt; }
+    .subtitle { font-size: 13pt; }
+    section {
+      padding: 8mm 5mm;
+      border: 0;
+    }
+    section.print-break { break-before: page; }
+    h2 { font-size: 18pt; }
+    h3 { font-size: 13.5pt; }
+    .metrics { grid-template-columns: repeat(4, 1fr); }
+    .metric { min-height: 25mm; padding: 3mm; }
+    .metric strong { font-size: 16pt; }
+    .flow { grid-template-columns: repeat(6, 1fr); }
+    .flow-step { min-height: 27mm; padding: 3mm 2mm; font-size: 8.2pt; }
+    .grid-2 { gap: 4mm; }
+    .card { padding: 3mm 4mm; }
+    table { font-size: 8.4pt; }
+    th, td { padding: 1.5mm 1.8mm; }
+    .compact th, .compact td { padding: 1.2mm 1.5mm; font-size: 7.8pt; }
+    .bar-row { grid-template-columns: 35mm 1fr 14mm; font-size: 8.2pt; }
+    .footer { padding: 8mm 5mm; }
+    a { text-decoration: none; }
+  }
+</style>
+
+<div class="shell">
+  <nav class="toc" aria-label="报告目录">
+    <div class="toc-title">内容导航</div>
+    <a href="#overview">01 研究到底要做什么</a>
+    <a href="#data">02 数据与31项维度</a>
+    <a href="#target">03 为什么预测下一期</a>
+    <a href="#knockoff">04 Knockoff通俗解释</a>
+    <a href="#workflow">05 完整统计流程</a>
+    <a href="#results">06 月度结果与参数K</a>
+    <a href="#benchmark">07 基准比较</a>
+    <a href="#ablation">08 消融与模拟实验</a>
+    <a href="#weekly">09 周度与结构稳健性</a>
+    <a href="#innovation">10 创新点与研究边界</a>
+    <a href="#proposal">11 开题报告内容</a>
+    <a href="#slides">12 开题汇报内容</a>
+    <a href="#summary">13 一句话总结</a>
+  </nav>
+
+  <main>
+    <header class="cover">
+      <div>
+        <div class="eyebrow">应用统计硕士论文 · 通俗完整介绍</div>
+        <h1>基于去随机化 Model-X Knockoff 的电商 GMV 多粒度受控维度选择研究</h1>
+        <p class="subtitle">从“几十个指标看不过来”出发，解释数据怎么构造、假变量怎么生成、14项如何选出、参数K如何控制展示，以及开题报告和开题汇报分别讲了什么。</p>
+      </div>
+      <div class="cover-meta">
+        <div><strong>研究生</strong>吴优 · 2025213385</div>
+        <div><strong>指导教师</strong>张吕欧</div>
+        <div><strong>学院</strong>统计与数据科学学院</div>
+      </div>
+    </header>
+
+    <section id="overview">
+      <h2>01　研究到底要做什么</h2>
+      <div class="lead">企业以GMV为核心指标，但周围可能有几十个价格、交易、履约、口碑、地域和营销维度。论文希望用历史数据筛出少数真正值得持续监控的维度，同时减少重复指标和偶然误选。</div>
+      <p>这篇论文的最终目的不是做一个“预测最准”的GMV模型，而是完成<strong>预测型维度选择</strong>：用下一期GMV作为评价标准，判断本期某个指标在已经知道其他指标以后，是否仍然提供额外信息。</p>
+      <div class="grid-2">
+        <div class="card">
+          <h3>业务问题</h3>
+          <p>订单数、件数、顾客数经常同时变化；价格、运费和商品结构也相互关联。只看相关系数，容易把同一类信息重复放进看板。</p>
+        </div>
+        <div class="card">
+          <h3>统计问题</h3>
+          <p>同时检查31个指标会累积误报。论文需要的不只是重要性排序，还需要一个针对发现集合的目标错误率口径。</p>
+        </div>
+      </div>
+      <h3>论文中“最好”的含义</h3>
+      <table>
+        <thead><tr><th>评价维度</th><th>通俗含义</th><th>论文中的证据</th></tr></thead>
+        <tbody>
+          <tr><td>增量信息</td><td>其他30项已知后，该指标是否仍有用</td><td>真实变量与Knockoff竞争</td></tr>
+          <tr><td>误选控制</td><td>不希望为了找得多而混入大量无效指标</td><td>e-value与e-BH</td></tr>
+          <tr><td>稳定性</td><td>随机过程稍变，具体名单不要大幅改变</td><td>多轮生成与后续统一重抽样</td></tr>
+          <tr><td>信息保留</td><td>减少指标后，预测能力不要明显下降</td><td>时间外RMSE等指标</td></tr>
+          <tr><td>业务可用</td><td>数量可控、含义清晰、可以准入和退出</td><td>参数K与分层看板</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="data" class="print-break">
+      <h2>02　数据与31项经营维度</h2>
+      <p>研究使用巴西Olist公开电商数据，覆盖2017年1月至2018年7月，原始数据约10万笔订单。订单、商品明细、支付和评价不能直接平铺连接，否则一笔多商品、多支付订单会造成GMV重复放大，因此先在各自自然粒度聚合，再形成卖家面板。</p>
+      <div class="metrics">
+        <div class="metric"><strong>14,677</strong><span>卖家－月观测</span></div>
+        <div class="metric"><strong>2,793</strong><span>月度卖家数</span></div>
+        <div class="metric"><strong>33,190</strong><span>卖家－周观测</span></div>
+        <div class="metric"><strong>31</strong><span>最终建模维度</span></div>
+      </div>
+      <h3>数据连接原则</h3>
+      <div class="flow">
+        <div class="flow-step"><b>1</b>支付、评价先聚合到订单</div>
+        <div class="flow-step"><b>2</b>地理信息按邮编前缀聚合</div>
+        <div class="flow-step"><b>3</b>连接商品明细与卖家</div>
+        <div class="flow-step"><b>4</b>顾客按唯一标识去重</div>
+        <div class="flow-step"><b>5</b>按卖家与月份聚合</div>
+        <div class="flow-step"><b>6</b>生成下一期GMV目标</div>
+      </div>
+      <h3>31项维度</h3>
+      <table class="compact">
+        <thead><tr><th>业务类别</th><th>数量</th><th>具体指标</th></tr></thead>
+        <tbody>
+          <tr><td>价格成本</td><td>2</td><td>平均商品价格、平均运费</td></tr>
+          <tr><td>商品物理属性</td><td>4</td><td>平均重量、长度、高度、宽度</td></tr>
+          <tr><td>商品内容</td><td>3</td><td>平均图片数、标题长度、描述长度</td></tr>
+          <tr><td>支付与口碑</td><td>7</td><td>分期期数、支付序列、信用卡/Boleto/代金券/借记卡占比、评价得分</td></tr>
+          <tr><td>履约</td><td>4</td><td>下单至送达、下单至审核、审核至承运、预计提前送达天数</td></tr>
+          <tr><td>交易规模</td><td>4</td><td>成交件数、订单数、活跃品类数、独立顾客数</td></tr>
+          <tr><td>市场覆盖</td><td>4</td><td>买家州数量、第一大州占比、跨州交易占比、买卖家距离</td></tr>
+          <tr><td>卖家与营销</td><td>3</td><td>卖家所在州频率、营销来源频率、是否匹配营销成交线索</td></tr>
+        </tbody>
+      </table>
+      <div class="warning"><strong>为什么删除第32项：</strong>申报月收入在分析面板中全部为0，没有任何区分能力，因此不进入模型。</div>
+    </section>
+
+    <section id="target">
+      <h2>03　为什么使用下一期GMV</h2>
+      <div class="formula">Y<sub>s,t+1</sub> = log(1 + GMV<sub>s,t+1</sub>)</div>
+      <p>例如，用卖家A在6月份的31项经营指标判断7月份GMV。若7月GMV为10,000，则模型使用的目标约为 <code>log(10001)=9.21</code>；预测完成后可以通过 <code>exp(9.21)-1</code> 转回GMV。</p>
+      <div class="grid-2">
+        <div class="card">
+          <h3>为什么不是当期GMV</h3>
+          <p>当期GMV与当期件数、订单数、平均价格存在机械定义关系。改用下一期，可以把问题从“重复计算GMV”变为“是否具有前瞻监控信息”。</p>
+        </div>
+        <div class="card">
+          <h3>为什么取对数</h3>
+          <p>加1可以处理GMV为0；对数可以压缩极少数超大卖家的影响，使模型更关注相对变化而不是只追随最大卖家。</p>
+        </div>
+      </div>
+      <div class="definition"><strong>边界：</strong>能帮助预测下一期GMV，不等于主动改变该指标一定会改变GMV。本文识别的是条件预测信息，不是因果效应。</div>
+    </section>
+
+    <section id="knockoff" class="print-break">
+      <h2>04　Knockoff：给每个真实指标安排一个假双胞胎</h2>
+      <p>普通重要性模型只比较真实变量之间的大小，Knockoff则为每个真实指标生成一个外表相似、但不应包含额外GMV信息的负对照变量。</p>
+      <div class="competition">
+        <div class="fighter">
+          <h3>真实订单数</h3>
+          <p>保留真实业务信息，与顾客数、件数、价格等变量存在真实相关结构。</p>
+        </div>
+        <div class="versus">VS</div>
+        <div class="fighter fake">
+          <h3>假订单数</h3>
+          <p>模仿订单数的分布和相关结构，但只根据真实特征生成，不读取下一期GMV。</p>
+        </div>
+      </div>
+      <h3>一个极简生成例子</h3>
+      <p>假设订单量为 <code>[1, 3, 5, 10]</code>，先按排名映射为近似正态尺度 <code>[-1.15, -0.32, 0.32, 1.15]</code>。在单变量简化情况下，若MVR得到的参数为 <code>s=0.6</code>，则可以写成：</p>
+      <div class="formula">Z̃ = 0.4Z + √0.84 × ε，　ε ~ N(0,1)</div>
+      <p>假变量一部分参考真实值，一部分加入随机扰动。理论上其均值和方差与真实变量相同；有限样本中不必逐项精确相等，但整体应当接近。真实研究有31维，生成时还要同时保持订单数与顾客数、件数、价格等变量的相关结构。</p>
+      <h3>S矩阵控制什么</h3>
+      <div class="formula">Cov(Z<sub>j</sub>, Z̃<sub>j</sub>) = 1 - s<sub>j</sub></div>
+      <table>
+        <thead><tr><th>参数情况</th><th>真假变量关系</th><th>影响</th></tr></thead>
+        <tbody>
+          <tr><td><code>s</code>较小</td><td>真假变量非常相似</td><td>模型难以判断谁更有用，筛选功效较低</td></tr>
+          <tr><td><code>s</code>适中</td><td>保持分布合法，同时形成差异</td><td>更适合公平竞争</td></tr>
+          <tr><td><code>s</code>过大</td><td>可能破坏联合协方差合法性</td><td>不能随意设置</td></tr>
+        </tbody>
+      </table>
+      <p>MVR、SDP和等相关方法，本质上是三种确定S矩阵的方式。论文主线选择MVR，是因为它专门降低真实变量与Knockoff之间的可重构性，适合高度相关的经营指标。</p>
+    </section>
+
+    <section id="workflow">
+      <h2>05　从31项维度到确认集合的完整流程</h2>
+      <div class="flow">
+        <div class="flow-step"><b>1</b>秩高斯Copula处理混合分布</div>
+        <div class="flow-step"><b>2</b>Ledoit-Wolf估计协方差</div>
+        <div class="flow-step"><b>3</b>MVR生成31个假变量</div>
+        <div class="flow-step"><b>4</b>Lasso完成真假竞争</div>
+        <div class="flow-step"><b>5</b>重复生成并聚合60轮</div>
+        <div class="flow-step"><b>6</b>e-BH形成确认集合</div>
+      </div>
+      <h3>每轮如何竞争</h3>
+      <div class="formula">W<sub>j</sub> = |β̂<sub>j</sub>| - |β̂<sub>j+p</sub>|</div>
+      <p>31个真实变量和31个假变量共同进入Lasso。若真实订单数的系数绝对值为0.30、假订单数为0.05，则 <code>W=0.25</code>；若真实评价得分为0.06、假评价得分为0.09，则 <code>W=-0.03</code>。负向统计量用于估计正向发现中可能混入的错误数量。</p>
+      <h3>60轮不是平均选出多少项</h3>
+      <p>真实数据和GMV始终不变，每轮同时重新生成31个假双胞胎。最后针对每个具体变量分别平均60个e-value，再在最终目标水平0.20下实施e-BH。正式14项是具体名称，不是“每轮平均选出14项”。</p>
+      <div class="note"><strong>准确理解：</strong>使用前1、5、10、20、40轮时，发现数为12、16、15、17、16；使用全部60轮得到14项。60轮与正式集合一致是定义结果，真正的信息是较少轮数时名单仍有波动，不能据此证明60轮已经理论收敛。</div>
+    </section>
+
+    <section id="results" class="print-break">
+      <h2>06　月度预分析结果与参数K</h2>
+      <p>当前完整月度样本在最终e-BH目标水平0.20下形成14项候选确认集合，其中10项在单轮程序中的出现频率不低于90%。</p>
+      <div class="selected-grid">
+        <div class="selected-item">成交订单数</div>
+        <div class="selected-item">平均商品价格</div>
+        <div class="selected-item">独立顾客数</div>
+        <div class="selected-item">成交件数</div>
+        <div class="selected-item">买家州数量</div>
+        <div class="selected-item">平均审核至承运天数</div>
+        <div class="selected-item">平均运费</div>
+        <div class="selected-item">活跃品类数</div>
+        <div class="selected-item">平均预计提前送达天数</div>
+        <div class="selected-item">平均商品标题长度</div>
+        <div class="selected-item">平均商品高度</div>
+        <div class="selected-item">卖家所在州频率</div>
+        <div class="selected-item">平均商品描述长度</div>
+        <div class="selected-item">平均下单至送达天数</div>
+      </div>
+      <h3>参数K如何控制展示数量</h3>
+      <table>
+        <thead><tr><th>展示档位</th><th>K</th><th>累计验证贡献</th><th>初步测试RMSE</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td>极简</td><td>4</td><td>72.1%</td><td>2.388</td><td>高层快速总览</td></tr>
+          <tr><td>均衡</td><td>8</td><td>87.1%</td><td>2.389</td><td>日常经营首页</td></tr>
+          <tr><td>默认推荐</td><td>10</td><td>92.6%</td><td>2.385</td><td>信息与容量平衡</td></tr>
+          <tr><td>完整确认集</td><td>14</td><td>100%</td><td>2.384</td><td>完整复核页面</td></tr>
+        </tbody>
+      </table>
+      <div class="warning"><strong>当前证据口径：</strong>14项使用完整样本形成，默认K及其RMSE属于预分析结果。后续将严格隔离选维、验证和测试信息，重新确认时间外性能。</div>
+    </section>
+
+    <section id="benchmark">
+      <h2>07　与标准方法的比较</h2>
+      <p>为避免“选得越多越容易预测”的不公平比较，基准实验只使用2018年4月及以前的数据选维，并统一为12项预算、相同XGBoost预测器和相同测试期。</p>
+      <table>
+        <thead><tr><th>方法</th><th>测试RMSE</th><th>报告稳定性</th><th>主要解释</th></tr></thead>
+        <tbody>
+          <tr><td>XGBoost-SHAP</td><td><strong>2.383</strong></td><td>0.686</td><td>纯预测误差最低</td></tr>
+          <tr><td>影子变量树模型</td><td>2.387</td><td>0.832</td><td>非线性影子变量筛选</td></tr>
+          <tr><td>稳定性选择</td><td>2.390</td><td>0.814</td><td>有竞争力的经验基线</td></tr>
+          <tr><td>Elastic Net</td><td>2.390</td><td><strong>0.873</strong></td><td>配对稳定性均值最高</td></tr>
+          <tr><td>去随机化Knockoff</td><td>2.392</td><td>0.855</td><td>提供目标FDR解释</td></tr>
+        </tbody>
+      </table>
+      <div class="bar-chart" aria-label="方法RMSE对比">
+        <div class="bar-row"><span>XGBoost-SHAP</span><div class="track"><div class="bar blue" style="width:98.0%"></div></div><strong>2.383</strong></div>
+        <div class="bar-row"><span>影子变量树</span><div class="track"><div class="bar gold" style="width:98.4%"></div></div><strong>2.387</strong></div>
+        <div class="bar-row"><span>稳定性选择</span><div class="track"><div class="bar" style="width:98.8%"></div></div><strong>2.390</strong></div>
+        <div class="bar-row"><span>Elastic Net</span><div class="track"><div class="bar" style="width:98.8%"></div></div><strong>2.390</strong></div>
+        <div class="bar-row"><span>Knockoff</span><div class="track"><div class="bar red" style="width:99.0%"></div></div><strong>2.392</strong></div>
+      </div>
+      <div class="note"><strong>统一稳定性结论：</strong>30组完全相同的70%卖家子样本下，Elastic Net与Knockoff的平均稳定性分别为0.873和0.855，配对差异的95%区间包含0，不能认定二者存在明确差异。固定数据只更换仿制变量得到的0.969仅作为Knockoff算法随机性诊断。</div>
+    </section>
+
+    <section id="ablation" class="print-break">
+      <h2>08　消融实验与已知真值模拟</h2>
+      <h3>消融：一次更换一个零件</h3>
+      <table class="compact">
+        <thead><tr><th>检查内容</th><th>设定</th><th>重复数</th><th>严格数</th><th>与主集Jaccard</th></tr></thead>
+        <tbody>
+          <tr><td>S矩阵</td><td>MVR</td><td>30</td><td>16</td><td>0.875</td></tr>
+          <tr><td>S矩阵</td><td>SDP</td><td>30</td><td>16</td><td>0.765</td></tr>
+          <tr><td>S矩阵</td><td>等相关</td><td>30</td><td>12</td><td>0.857</td></tr>
+          <tr><td>重复次数</td><td>M=1 / 10 / 60</td><td>1 / 10 / 60</td><td>12 / 15 / 14</td><td>0.857 / 0.933 / 1.000</td></tr>
+          <tr><td>边际处理</td><td>原始高斯-MVR-Lasso</td><td>40</td><td>12</td><td>0.733</td></tr>
+          <tr><td>统计量</td><td>Copula-MVR-XGBoost</td><td>25</td><td>0</td><td>0.000</td></tr>
+        </tbody>
+      </table>
+      <p>S矩阵三种方法使用相同30轮，可以直接比较；重复次数也使用同一批结果的不同前缀。原始高斯和XGBoost分支的重复数不同，更准确地属于组件敏感性分析。</p>
+      <h3>模拟：先出一份知道答案的考试</h3>
+      <p>从真实特征矩阵抽取4,000行，人工规定10项是真信号，其余21项为假信号，再加入随机噪声生成20套人工目标。因为标准答案已知，可以计算FDP和Power。</p>
+      <div class="grid-2">
+        <div class="card">
+          <h4>FDP：选中的指标里错了多少</h4>
+          <div class="formula">FDP = 错误入选数 ÷ 全部入选数</div>
+          <p>例如选12项，其中3项是假变量，FDP就是25%。越低越好。</p>
+        </div>
+        <div class="card">
+          <h4>Power：真指标找回了多少</h4>
+          <div class="formula">Power = 正确入选数 ÷ 全部真变量数</div>
+          <p>10个真变量找回9个，Power就是90%。越高越好。</p>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>方法</th><th>平均FDP</th><th>FDP&gt;0.20概率</th><th>Power</th><th>平均发现数</th></tr></thead>
+        <tbody>
+          <tr><td>去随机化Knockoff</td><td><strong>0.054</strong></td><td>10%</td><td>1.000</td><td>10.65</td></tr>
+          <tr><td>单次Knockoff</td><td>0.145</td><td>35%</td><td>1.000</td><td>12.05</td></tr>
+          <tr><td>Elastic Net</td><td>0.644</td><td>100%</td><td>1.000</td><td>28.15</td></tr>
+          <tr><td>稳定性选择</td><td>0.090</td><td>5%</td><td>1.000</td><td>11.05</td></tr>
+          <tr><td>影子变量树模型</td><td>0.566</td><td>100%</td><td>1.000</td><td>23.10</td></tr>
+        </tbody>
+      </table>
+      <div class="warning"><strong>模拟边界：</strong>20次模拟、10个线性真信号仍较有限；全部方法Power为1说明当前信号较强。后续将扩展弱信号、不同稀疏度、非线性和更多重复次数。</div>
+    </section>
+
+    <section id="weekly">
+      <h2>09　周度、卖家结构与负结果</h2>
+      <div class="metrics">
+        <div class="metric"><strong>18项</strong><span>周度目标FDR水平0.20下入选</span></div>
+        <div class="metric"><strong>11项</strong><span>月度与周度共同入选</span></div>
+        <div class="metric"><strong>0.524</strong><span>月周集合Jaccard</span></div>
+        <div class="metric"><strong>2.421</strong><span>周度18项XGBoost RMSE</span></div>
+      </div>
+      <div class="formula">Jaccard = 共同11项 ÷ (月度14 + 周度18 - 共同11) = 11 ÷ 21 = 0.524</div>
+      <p>全31维周度模型RMSE为2.420，18项模型为2.421，差距只有0.001，说明压缩后信息基本保留。但周度下一期零成交率为40.46%，高于月度的25.86%，因此周度不替代月度主分析。</p>
+      <h3>卖家间与卖家内</h3>
+      <table>
+        <thead><tr><th>分析层次</th><th>月度结果</th><th>周度结果</th><th>含义</th></tr></thead>
+        <tbody>
+          <tr><td>卖家间长期位置</td><td>16项</td><td>12项</td><td>主要信号来自不同卖家的长期规模和经营差异</td></tr>
+          <tr><td>同一卖家时间变化</td><td>0项</td><td>0项</td><td>当前序列不足以支持严格的短期动态发现</td></tr>
+        </tbody>
+      </table>
+      <div class="definition"><strong>业务解释：</strong>当前结果更适合筛选长期监控和卖家分层指标，不能直接解释为“同一卖家改变某指标就会导致GMV改变”。</div>
+      <h3>为什么保留失败结果</h3>
+      <p>深度生成器虽然边际分布接近，但深度核MMD和分类器仍能识别交换后的样本，因此不进入FDR结论。主Copula生成器也存在联合诊断差异，后续需继续校准。否决失败生成器是研究设计的一部分，而不是隐藏不利结果。</p>
+    </section>
+
+    <section id="innovation" class="print-break">
+      <h2>10　研究创新点、边界与后续工作</h2>
+      <div class="lead">研究创新主要体现为面向电商核心指标治理的一套可实施方法流，而不是提出新的Knockoff定理。</div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>创新点</h3>
+          <ol>
+            <li>把多轮随机Knockoff转化为可聚合的e-value证据。</li>
+            <li>把FDR确认与参数K展示分离。</li>
+            <li>构建月度确认、周度复核、结构与生成诊断的分层证据。</li>
+            <li>统一窗口和预算比较标准方法，并结合消融与已知真值模拟。</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h3>可迁移价值</h3>
+          <p>流程可以迁移到GMV、活跃用户数、留存率及其他核心经营指标：先确认具有增量预测信息的候选维度，再按业务容量形成分层展示，通过滚动复核管理指标准入、观察和退出。</p>
+        </div>
+      </div>
+      <h3>仍需完成的验证</h3>
+      <div class="timeline">
+        <div class="timeline-item"><b>严格时间隔离</b>按字段真实可见时间重构物流与评价指标，避免回溯信息进入预测。</div>
+        <div class="timeline-item"><b>严格时间外复核</b>在训练期完成选维、验证期确定参数K，测试期只用于最终评价。</div>
+        <div class="timeline-item"><b>扩展模拟</b>增加弱信号、不同稀疏度、非线性和更多Monte Carlo重复。</div>
+        <div class="timeline-item"><b>滚动时间窗口</b>区分长期核心指标、阶段性指标和观察指标。</div>
+      </div>
+      <h3>主要技术风险</h3>
+      <table>
+        <thead><tr><th>风险</th><th>为什么存在</th><th>后续处理</th></tr></thead>
+        <tbody>
+          <tr><td>联合分布近似</td><td>Copula不能无条件保证全部高阶依赖</td><td>加强交换性诊断与生成器校准</td></tr>
+          <tr><td>面板与时间口径</td><td>同一卖家重复观测，部分字段产生较晚</td><td>簇级处理、真实可见时间和滚动回测</td></tr>
+          <tr><td>样本时间较短</td><td>19个月不足以覆盖大量经营阶段</td><td>扩展数据或使用更长企业面板</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="proposal">
+      <h2>11　16页开题报告讲了什么</h2>
+      <p>开题报告是正式书面材料，重点是证明选题有意义、数据可获得、方法可执行、已有预分析支持可行性，同时明确后续验证任务。</p>
+      <table class="compact">
+        <thead><tr><th>页码</th><th>主要内容</th><th>目的</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>开题申请表、个人信息、导师签名</td><td>完成学校申请格式</td></tr>
+          <tr><td>2</td><td>开题报告书封面</td><td>题目、姓名、学号、导师</td></tr>
+          <tr><td>3</td><td>背景、研究问题、理论与实践价值</td><td>说明为什么需要受控维度选择</td></tr>
+          <tr><td>4</td><td>国内外研究现状</td><td>交代FDR、Model-X、MVR、e-value和机器学习文献</td></tr>
+          <tr><td>5</td><td>数据来源、面板与31项指标</td><td>证明数据口径可对账</td></tr>
+          <tr><td>6–7</td><td>核心统计方法和参数K</td><td>给出假变量、W、e-value和e-BH公式</td></tr>
+          <tr><td>8</td><td>基准、消融与模拟设计</td><td>说明如何验证方法价值</td></tr>
+          <tr><td>9–10</td><td>月度14项、K路径和预测初步结果</td><td>展示选题可行性</td></tr>
+          <tr><td>11–12</td><td>统一基准、组件敏感性和模拟</td><td>比较预测、稳定性与错误发现</td></tr>
+          <tr><td>13–14</td><td>周度、结构、生成器和负结果</td><td>限定结论适用范围</td></tr>
+          <tr><td>15</td><td>研究创新点、待验证结论、风险和计划</td><td>说明贡献和后续工作</td></tr>
+          <tr><td>16</td><td>25条主要参考文献</td><td>建立理论和方法依据</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="slides" class="print-break">
+      <h2>12　20页开题汇报讲了什么</h2>
+      <p>开题汇报比书面报告更强调叙事节奏：先提出经营看板的维度过载，再说明为什么需要Knockoff，随后用结果证明方法可运行，最后说明创新与计划。</p>
+      <div class="timeline">
+        <div class="timeline-item"><b>1–2　封面与提纲</b>题目、汇报人、学号、导师和六部分结构。</div>
+        <div class="timeline-item"><b>3–5　背景、问题与文献</b>为什么相关、逐项检验和普通重要性排序不够。</div>
+        <div class="timeline-item"><b>6–7　数据与目标</b>Olist样本、31项指标和下一期GMV。</div>
+        <div class="timeline-item"><b>8–10　主方法</b>统一流程、Copula-MVR、真假变量竞争、e-value、e-BH与参数K。</div>
+        <div class="timeline-item"><b>11–12　验证设计</b>面板、组级、深度诊断、统一基准和消融协议。</div>
+        <div class="timeline-item"><b>13–15　核心预分析</b>月度14项、默认K=10、基准预测和模拟FDP/Power。</div>
+        <div class="timeline-item"><b>16–17　周度与负结果</b>18项周度集合、月周交集、卖家内0项和深度生成器否决。</div>
+        <div class="timeline-item"><b>18–20　创新、计划和文献</b>应用统计方法流、后续验证安排及主要参考文献。</div>
+      </div>
+      <div class="note"><strong>汇报主线：</strong>维度太多 → 普通方法缺少误选控制 → 用假双胞胎建立公平竞争 → 多轮聚合形成确认池 → 参数K控制展示 → 基准、模拟和周度分析说明价值与边界。</div>
+    </section>
+
+    <section id="summary">
+      <h2>13　最后怎样理解整篇论文</h2>
+      <div class="flow">
+        <div class="flow-step"><b>数据</b>正确拼接多表并构造卖家面板</div>
+        <div class="flow-step"><b>目标</b>用本期指标判断下一期GMV</div>
+        <div class="flow-step"><b>竞争</b>真实变量与假双胞胎比较</div>
+        <div class="flow-step"><b>确认</b>多轮e-value与e-BH控制准入</div>
+        <div class="flow-step"><b>展示</b>参数K形成不同容量看板</div>
+        <div class="flow-step"><b>复核</b>基准、模拟、周度和滚动验证</div>
+      </div>
+      <div class="lead">一句话：本研究利用下一期GMV定义指标的监控价值，通过去随机化Model-X Knockoff从31项候选指标中形成目标错误率明确的确认集合，再以参数K控制展示数量，并通过基准、模拟、周度和结构诊断检验其适用边界。</div>
+    </section>
+
+    <footer class="footer">
+      内容依据当前开题报告、开题汇报及实际计算结果整理。所有结果属于现阶段预分析证据；正式论文将继续完成严格时间隔离、统一重抽样、扩展模拟和滚动窗口验证。
+    </footer>
+  </main>
+</div>

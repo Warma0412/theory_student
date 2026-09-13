@@ -1,0 +1,323 @@
+<meta charset="utf-8">
+<title>Olist GMV维度选择研究：v1极限精简方法版</title>
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; color: #171717; background: #fff; }
+body {
+  font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+  font-size: 10.6pt;
+  line-height: 1.46;
+}
+.page {
+  position: relative;
+  width: 210mm;
+  height: 297mm;
+  padding: 16mm 19mm 17mm 21mm;
+  overflow: hidden;
+  break-after: page;
+}
+.page:last-child { break-after: auto; }
+.page-number {
+  position: absolute;
+  bottom: 6.5mm;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font: 9pt "Times New Roman", serif;
+}
+.doc-head {
+  margin-bottom: 5mm;
+  padding-bottom: 3mm;
+  border-bottom: 1.4pt solid #8d2231;
+}
+.doc-head strong {
+  display: block;
+  font: 700 18pt/1.3 "Heiti SC", "STHeiti", sans-serif;
+}
+.doc-head span { color: #666; font-size: 9.5pt; }
+h2, h3 {
+  font-family: "Heiti SC", "STHeiti", sans-serif;
+  letter-spacing: 0;
+}
+h2 {
+  margin: 0 0 4mm;
+  padding-bottom: 2mm;
+  border-bottom: 1.2pt solid #8d2231;
+  font-size: 16pt;
+}
+h3 { margin: 3.2mm 0 1.3mm; font-size: 12pt; }
+p { margin: 0 0 2.2mm; text-align: justify; }
+ul, ol { margin: 1mm 0 2.5mm 4.5mm; padding-left: 4.5mm; }
+li { margin: 0.7mm 0; }
+.lead {
+  margin-bottom: 3mm;
+  padding: 3mm 4mm;
+  border-left: 3pt solid #8d2231;
+  background: #f5f5f2;
+  font-size: 10.8pt;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2mm;
+  margin: 3mm 0;
+}
+.stat {
+  min-height: 18mm;
+  padding: 2.5mm;
+  border-top: 2pt solid #287271;
+  background: #f3f7f6;
+}
+.stat strong {
+  display: block;
+  color: #174f4e;
+  font: 700 15pt "Times New Roman", "Heiti SC", sans-serif;
+}
+.stat span { font-size: 8.8pt; }
+.flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2mm;
+  margin: 3mm 0;
+}
+.flow div {
+  min-height: 25mm;
+  padding: 2.5mm;
+  border: 0.7pt solid #999;
+}
+.flow b { display: block; margin-bottom: 1mm; color: #8d2231; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+.formula {
+  margin: 2mm 0;
+  padding: 2.5mm 3mm;
+  border: 0.7pt solid #aaa;
+  background: #fafafa;
+  text-align: center;
+  font: 11pt "Times New Roman", serif;
+}
+.callout {
+  margin: 3mm 0;
+  padding: 3mm 4mm;
+  color: #fff;
+  background: #174f4e;
+}
+.warning {
+  margin: 2.5mm 0;
+  padding: 2.5mm 3mm;
+  border: 1pt solid #c38d27;
+  background: #fffaf0;
+}
+.result-group {
+  margin-bottom: 2mm;
+  padding: 2.5mm 3mm;
+  border-left: 2.5pt solid #287271;
+  background: #f3f7f6;
+}
+.result-group b { color: #174f4e; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5mm 0 3mm;
+  font-size: 8.5pt;
+  line-height: 1.3;
+}
+th, td { border: 0.7pt solid #777; padding: 1.3mm 1.7mm; vertical-align: top; }
+th { background: #ececea; font-family: "Heiti SC", sans-serif; }
+.small { font-size: 9pt; line-height: 1.35; }
+.refs {
+  margin-top: 3mm;
+  padding-top: 2mm;
+  border-top: 0.7pt solid #aaa;
+  font-size: 8pt;
+}
+</style>
+
+<section class="page">
+  <div class="doc-head">
+    <strong>Olist电商GMV维度选择研究</strong>
+    <span>v1 极限精简版 · 数据、方法与模型方向</span>
+  </div>
+  <h2>一、数据基础与研究任务</h2>
+  <div class="lead"><b>研究目标：</b>用本月卖家经营特征预测次月GMV，并在控制其余候选变量后识别仍有增量信息的维度；核心不是普通重要性排序，而是在预设FDR水平下控制入选集合的假发现比例。</div>
+
+  <h3>1. 原始数据与连接原则</h3>
+  <p>数据来自Olist Brazilian E-Commerce Public Dataset和Marketing Funnel by Olist，共使用订单、商品明细、支付、评价、商品、卖家、顾客、地理、品类翻译与营销漏斗等11张CSV。连接前先按自然粒度聚合，避免商品明细×支付×评价形成多对多膨胀。</p>
+  <table>
+    <thead><tr><th>数据域</th><th>先聚合口径</th><th>主要用途</th></tr></thead>
+    <tbody>
+      <tr><td>订单与商品明细</td><td>订单-卖家、卖家-月</td><td>GMV、件数、价格、运费、商品属性</td></tr>
+      <tr><td>支付与评价</td><td>先聚合到订单级</td><td>支付结构、分期、评价得分</td></tr>
+      <tr><td>顾客与地理</td><td>顾客唯一标识；邮编前缀经纬度中位数</td><td>独立顾客、州覆盖、跨州与距离</td></tr>
+      <tr><td>营销漏斗</td><td>线索映射到卖家后再入面板</td><td>营销来源与成交线索匹配</td></tr>
+    </tbody>
+  </table>
+
+  <div class="stats">
+    <div class="stat"><strong>{{PANEL_ROWS}}</strong><span>卖家-月观测</span></div>
+    <div class="stat"><strong>{{PANEL_SELLERS}}</strong><span>卖家</span></div>
+    <div class="stat"><strong>{{PANEL_MONTHS}}</strong><span>特征月份</span></div>
+    <div class="stat"><strong>{{GMV_MILLION}}</strong><span>百万雷亚尔GMV</span></div>
+  </div>
+
+  <h3>2. 分析单位、目标与变量</h3>
+  <ul>
+    <li>样本期为{{PANEL_START}}至{{PANEL_END}}，仅保留已送达订单；处理后GMV与原始明细对账一致。</li>
+    <li>目标为 <b>Y<sub>s,t+1</sub>=log(1+GMV<sub>s,t+1</sub>)</b>；次月无成交记0，零成交率{{ZERO_RATE}}。</li>
+    <li>构造{{CANDIDATE_COUNT}}个候选维度，覆盖价格、商品、支付、口碑、履约、规模、地域和营销；零方差的申报月收入排除后，{{ANALYSIS_COUNT}}项进入模型。</li>
+    <li>独立顾客按 <code>customer_unique_id</code> 去重；异常物流时长转缺失后在训练口径内插补。</li>
+  </ul>
+  <div class="warning"><b>任务边界：</b>拒绝条件独立零假设只代表“包含增量预测信息”，不等于因果效应。</div>
+  <div class="page-number">1</div>
+</section>
+
+<section class="page">
+  <h2>二、预处理与Copula-MVR Knockoff</h2>
+  <div class="flow">
+    <div><b>稳健处理</b>1%/99%缩尾、偏态变换、中位数插补、标准化。</div>
+    <div><b>秩高斯</b>固定种子打散并列秩，将混合边际映射到近似正态空间。</div>
+    <div><b>协方差</b>Ledoit-Wolf收缩，降低高相关变量造成的病态估计。</div>
+    <div><b>MVR生成</b>最小化可重构性，逐轮生成与真实特征竞争的负对照。</div>
+  </div>
+
+  <h3>1. 为什么使用秩高斯Copula</h3>
+  <p>金额、计数、比例、二元变量和大量并列值不适合直接套用原始高斯。对第j列按随机化秩映射：</p>
+  <div class="formula">Zᵢⱼ = Φ⁻¹[(rᵢⱼ − 0.5) / n]</div>
+  <p>该处理保留每列单调顺序，并用高斯Copula近似变量间依赖结构。它不是宣称原始变量服从正态分布，而是为二阶Model-X生成提供可计算空间。</p>
+
+  <h3>2. MVR二阶Model-X生成</h3>
+  <div class="formula">X̃ | X ~ N{ X(I − Σ̂⁻¹S), 2S − SΣ̂⁻¹S }</div>
+  <p>Σ̂由Ledoit-Wolf估计，S由MVR准则确定。理想仿制变量需满足成对可交换性，并在给定X后不再包含Y的信息。每轮只重新抽取X̃，不重新选择响应模型参数。</p>
+
+  <h3>3. 生成质量诊断</h3>
+  <div class="stats">
+    <div class="stat"><strong>{{COPULA_MEAN_KS}}</strong><span>Copula平均KS</span></div>
+    <div class="stat"><strong>{{GAUSSIAN_MEAN_KS}}</strong><span>原始高斯平均KS</span></div>
+    <div class="stat"><strong>{{COPULA_COV_ERROR}}</strong><span>协方差相对误差</span></div>
+    <div class="stat"><strong>{{COPULA_CROSS_ASYM}}</strong><span>交叉协方差非对称</span></div>
+  </div>
+  <table>
+    <thead><tr><th>诊断</th><th>判断内容</th><th>使用方式</th></tr></thead>
+    <tbody>
+      <tr><td>边际KS</td><td>Xⱼ与X̃ⱼ的一维分布差异</td><td>比较Copula与原始高斯</td></tr>
+      <tr><td>协方差误差</td><td>仿制变量是否保留二阶依赖</td><td>检查整体矩阵保真</td></tr>
+      <tr><td>交叉对称性</td><td>Cov(X,X̃)是否近似对称</td><td>检查交换性必要特征</td></tr>
+    </tbody>
+  </table>
+  <div class="warning small">Copula显著改善边际匹配，因此作为确认性主生成器；但较小KS和二阶误差不能证明全部高阶联合分布完全正确。</div>
+  <div class="page-number">2</div>
+</section>
+
+<section class="page">
+  <h2>三、Lasso竞争、Knockoff+与e-value</h2>
+  <h3>1. 条件独立假设与反对称统计量</h3>
+  <div class="formula">H₀ⱼ: Yₛ,ₜ₊₁ ⟂ Xⱼ,ₛ,ₜ | X₋ⱼ,ₛ,ₜ</div>
+  <p>在联合设计矩阵[X,X̃]上拟合Lasso，惩罚系数由首轮五折交叉验证确定，后续轮次固定。真实变量和仿制变量的系数绝对值之差为：</p>
+  <div class="formula">Wⱼ = |β̂ⱼ| − |β̂ⱼ₊ₚ|</div>
+  <p>交换Xⱼ与X̃ⱼ后Wⱼ变号，满足Knockoff所需的反对称性；较大的正W表示真实变量稳定胜过负对照。</p>
+
+  <h3>2. 单轮阈值与60轮去随机化</h3>
+  <div class="two-col">
+    <div>
+      <div class="result-group"><b>单轮Knockoff+</b><br>按α<sub>kn</sub>=0.10寻找正负W失衡阈值；使用“1+负向数”控制偏乐观选择。</div>
+      <div class="result-group"><b>每轮e-value</b><br>入选变量获得与p/(1+负向数)成比例的证据，未入选变量记0。</div>
+    </div>
+    <div>
+      <div class="result-group"><b>重复60轮</b><br>不同随机种子重新生成X̃，逐变量平均e-value，降低单次仿制随机性。</div>
+      <div class="result-group"><b>最终e-BH</b><br>在α<sub>eBH</sub>=0.20下输出严格集合；单轮频率另作稳定性描述。</div>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>输出层</th><th>定义</th><th>是否承担FDR声明</th></tr></thead>
+    <tbody>
+      <tr><td>严格确认集</td><td>60轮e-value平均后通过e-BH</td><td>是，在Model-X近似条件下</td></tr>
+      <tr><td>稳定候选集</td><td>单轮入选频率≥90%</td><td>否，只说明随机稳定性</td></tr>
+      <tr><td>预测解释层</td><td>XGBoost、SHAP、固定效应</td><td>否，用于交叉印证</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3. 阈值与稳健性方向</h3>
+  <div class="stats">
+    <div class="stat"><strong>{{Q10_COUNT}}</strong><span>FDR 0.10严格发现</span></div>
+    <div class="stat"><strong>{{STRICT_COUNT}}</strong><span>FDR 0.20主发现</span></div>
+    <div class="stat"><strong>{{Q30_COUNT}}</strong><span>FDR 0.30严格发现</span></div>
+    <div class="stat"><strong>{{PRETEST_COUNT}}</strong><span>测试前独立选维</span></div>
+  </div>
+  <p>稳健性情景还包括原始高斯生成器、同月GMV、次月客单价、截尾时间窗、XGBoost Knockoff及测试期前选维。稀疏模拟保留了去随机化e-BH功效为{{SIM_POWER}}的不利结果，说明低维少信号时Knockoff+存在离散门槛。</p>
+  <div class="page-number">3</div>
+</section>
+
+<section class="page">
+  <h2>四、预测模型、SHAP与面板回归</h2>
+  <h3>1. 自然时间外预测设计</h3>
+  <div class="stats">
+    <div class="stat"><strong>{{TRAIN_N}}</strong><span>训练：2017-01至12</span></div>
+    <div class="stat"><strong>{{VALID_N}}</strong><span>验证：2018-01至04</span></div>
+    <div class="stat"><strong>{{TEST_N}}</strong><span>测试：2018-05至07</span></div>
+    <div class="stat"><strong>{{BEST_RMSE}}</strong><span>最佳测试RMSE(log)</span></div>
+  </div>
+  <p>模型与超参数只使用训练和验证期确定，测试期一次性评估。采用对数RMSE、MAE、R²和原始GMV WAPE，兼顾重尾稳健性与金额解释。</p>
+
+  <table>
+    <thead><tr><th>模型方向</th><th>主要作用</th><th>解释边界</th></tr></thead>
+    <tbody>
+      <tr><td>Ridge / Lasso</td><td>线性、正则化基线；观察平滑结构</td><td>系数受相关变量竞争影响</td></tr>
+      <tr><td>Extra Trees</td><td>非线性、交互与随机集成对照</td><td>重要性不等于显著性</td></tr>
+      <tr><td>XGBoost</td><td>主非线性预测器；缺失与交互适应</td><td>用时间外误差评价泛化</td></tr>
+      <tr><td>精简XGBoost</td><td>仅使用测试前Knockoff集合</td><td>检验选维后的预测保留度</td></tr>
+      <tr><td>MLP</td><td>神经网络表格预测对照</td><td>19个月不足以支持TFT</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2. 时间外结果</h3>
+  {{ULTRA_MODEL_TABLE}}
+  <p>最佳模型为<b>{{BEST_MODEL}}</b>，RMSE为<b>{{BEST_RMSE}}</b>、R²为<b>{{BEST_R2}}</b>，较朴素基线下降<b>{{RMSE_IMPROVEMENT}}</b>。精简XGBoost接近全变量模型，说明测试前选出的变量保留了大部分预测信息。</p>
+
+  <h3>3. 三种补充解释</h3>
+  <ul>
+    <li><b>TreeSHAP：</b>解释测试期XGBoost如何使用特征；前五项为{{TOP_SHAP_5}}。</li>
+    <li><b>双向固定效应：</b>控制卖家不变异质性和共同月份冲击，标准误按卖家聚类；显著变量为{{SIGNIFICANT_FE}}。</li>
+    <li><b>证据分层：</b>Knockoff回答条件发现，SHAP回答模型依赖，固定效应回答卖家内关联，三者均不直接给出因果效应。</li>
+  </ul>
+  <div class="page-number">4</div>
+</section>
+
+<section class="page">
+  <h2>五、核心发现与方法结论</h2>
+  <div class="callout">最终FDR水平0.20下，严格e-BH入选<b>{{STRICT_COUNT}}项</b>；其中<b>{{STABLE_COUNT}}项</b>的单轮入选频率至少90%。</div>
+  <div class="two-col">
+    <div>
+      <div class="result-group"><b>经营规模</b><br>{{STRICT_SCALE}}</div>
+      <div class="result-group"><b>价格成本</b><br>{{STRICT_PRICE}}</div>
+      <div class="result-group"><b>履约效率</b><br>{{STRICT_FULFILLMENT}}</div>
+    </div>
+    <div>
+      <div class="result-group"><b>商品与市场覆盖</b><br>{{STRICT_PRODUCT_MARKET}}</div>
+      <div class="result-group"><b>90%稳定候选</b><br>{{STABLE_LIST}}</div>
+    </div>
+  </div>
+
+  <h3>1. 结果如何使用</h3>
+  <table>
+    <thead><tr><th>证据等级</th><th>变量</th><th>建议用途</th></tr></thead>
+    <tbody>
+      <tr><td>一级监控</td><td>{{CORE_LIST}}</td><td>首页趋势、异常预警</td></tr>
+      <tr><td>二级诊断</td><td>{{SECONDARY_LIST}}</td><td>异常后的商品、履约与地域定位</td></tr>
+      <tr><td>专题分析</td><td>支付、评价、距离、营销等未严格入选变量</td><td>专项研究与实验候选</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2. 方法方向总结</h3>
+  <ul>
+    <li><b>统计主线：</b>自然粒度聚合 → 前瞻目标 → Copula-MVR Knockoff → Lasso反对称W → 60轮e-value → e-BH。</li>
+    <li><b>机器学习主线：</b>时间外XGBoost预测 + TreeSHAP解释；只承担预测验证，不替代FDR推断。</li>
+    <li><b>面板主线：</b>双向固定效应提供卖家内关联证据，仍需实验或准实验确认可干预效果。</li>
+  </ul>
+  <div class="warning small"><b>主要局限：</b>卖家-月存在组内相关；Copula只近似高阶依赖；缺少曝光、库存、促销和竞争变量；19个月限制长序列模型；低维稀疏场景下Knockoff+可能保守。</div>
+  <div class="refs">
+    <b>复现：</b>随机种子{{SEED}}；面板SHA-256：{{PANEL_SHA256}}；完整代码、逐轮W、结果表和图位于“论文/v1”。<br>
+    <b>核心方法文献：</b>Barber & Candès (2015)；Candès et al. (2018)；Spector & Janson (2022)；Ren & Barber (2024)；Lundberg & Lee (2017)。
+  </div>
+  <div class="page-number">5</div>
+</section>

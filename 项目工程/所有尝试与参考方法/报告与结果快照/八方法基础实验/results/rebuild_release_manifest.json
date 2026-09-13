@@ -1,0 +1,159 @@
+{
+  "passed": true,
+  "source": "audited experiment results, not fabricated values",
+  "outputs": {
+    "【最终版】/v7/论文.tex": "65648516ce239c53248fd2dffbb88816a50e4d17d395ba0cb831440314d25ce5",
+    "【最终版】/v7/开题汇报.tex": "8871c887f6b8fcf4ae2186a0c8ce10ca9182b1ddd4ddc383af3dcf708bf01a7d",
+    "【最终版】/v7/开题报告.pdf": "0f260db1a7ed4634dace5f557f5cc7e809352c10a2bb8ec3222ac5b7f8c5e6b0",
+    "【最终版】/v7/开题报告.tex": "16607f7df9d86ec7c12e96e70479d4e5e5445baf92c88efedc2dd01ce62b9ba1",
+    "【最终版】/v7/开题汇报.pdf": "5b59f0da444b140a7b7493f424898104a052a3c23929166cce751410eb469ff5",
+    "【最终版】/v7/论文.pdf": "70347199a3125c4d5380b45cc021507f7d9a36cbc34dbb7abda7870b65e1221b",
+    "论文/v7/论文_v7_精简版.md": "9691f05e85ccf8c9b357388ae7d37ebe6cc36e55f6034aa16411e1c263e5adf4",
+    "论文/v7/论文_v7_精简版.tex": "33a373dfef53d518bcc92a8e1a62d6f31d24ee214309c1bbe9348a5730c635fa",
+    "论文/v7/论文_v7_精简版.pdf": "88d1cea59f168a9dc714607235ea8f757e5a6a93d17d16d14be935f6a1dea24f",
+    "论文/v7/论文_v7_极限精简版.md": "c0a8c37e43a2b9fdea29916efa181350f9b1bbfd255fe9980dcba035c9fe8454",
+    "论文/v7/论文_v7_极限精简版.tex": "d848890510e01a0f222e9274d120c529d667fd6feb517f8fec9baccebe1e5c2c",
+    "论文/v7/论文_v7_极限精简版.pdf": "ffbb3ace57e8e67a3266619cf8b8bb5f1fee94cbb2080e87b79add98f53f7151",
+    "论文/v7/论文_v7.md": "846bda2edfd9939b04699fb29859a3f61f36096505310386b0bbcad452c6569d",
+    "论文/v7/论文_v7.pdf": "70347199a3125c4d5380b45cc021507f7d9a36cbc34dbb7abda7870b65e1221b",
+    "论文/v7/开题报告_v7.md": "5bf365f3557ba10b5dbe60bd881e355f8e8752d8a6650eae13457459ceab87ff",
+    "论文/v7/开题汇报_v7_演讲稿.md": "02ec06ab2c9c7dbe35474afc09b8d4e43cc28be2980e869a9155693f1d9ea552",
+    "所有尝试与参考方法/项目必读.md": "14a04432253ae15c1ab6c7090175d27c6ec50dd145ade2f955ee0f1cf7ef8bfc",
+    "所有尝试与参考方法/README.md": "81680b1dbaffdb530395007632ab62b085b6b4af37c58ee8ad8ec00183f61925",
+    "所有尝试与参考方法/方法登记表.csv": "981e0727016620fc2c9bb22fc79c490bece0330bc4f3464c87c4b4e95a56a6b3",
+    "所有尝试与参考方法/方法登记表.json": "b25c2fccc6326062c7f366512aac935982d2e7112073fecddbd072e5742021c2",
+    "所有尝试与参考方法/源码摘要.json": "097f32ad2739fa439a447551e531653a1796f5a6223f9e656e608310911ede3c"
+  },
+  "pdf_validation": {
+    "thesis": {
+      "path": "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/latex工程/论文/论文.pdf",
+      "pages": 42,
+      "sha256": "70347199a3125c4d5380b45cc021507f7d9a36cbc34dbb7abda7870b65e1221b",
+      "characters": 38835,
+      "out_of_page_spans": [],
+      "template_warnings": [
+        "Invalid UTF-8 byte or sequence at line 284 replaced by U+FFFD.",
+        "Invalid UTF-8 byte or sequence at line 299 replaced by U+FFFD.",
+        "Invalid UTF-8 byte or sequence at line 550 replaced by U+FFFD.",
+        "LaTeX Font Warning: Font shape `TU/STSong(1)/b/n' undefined",
+        "LaTeX Font Warning: Font shape `TU/STKaiti(0)/b/n' undefined",
+        "LaTeX Font Warning: Font shape `U/rsfs/m/n' in size <10.53937> not available",
+        "LaTeX Font Warning: Font shape `U/rsfs/m/n' in size <7.52812> not available",
+        "LaTeX Font Warning: Font shape `TU/STHeiti(0)/b/n' undefined",
+        "LaTeX Font Warning: Size substitutions with differences",
+        "LaTeX Font Warning: Some font shapes were not available, defaults substituted."
+      ],
+      "template_warning_scope": "retained; figures, page numbers and scientific content visually checked"
+    },
+    "report": {
+      "path": "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/latex工程/开题报告/开题报告.pdf",
+      "pages": 7,
+      "sha256": "0f260db1a7ed4634dace5f557f5cc7e809352c10a2bb8ec3222ac5b7f8c5e6b0",
+      "characters": 10438,
+      "out_of_page_spans": [],
+      "template_warnings": [
+        "LaTeX Font Warning: Font shape `TU/SongtiSC(0)/m/sl' undefined",
+        "LaTeX Font Warning: Some font shapes were not available, defaults substituted."
+      ],
+      "template_warning_scope": "retained; figures, page numbers and scientific content visually checked"
+    },
+    "slides": {
+      "path": "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/latex工程/开题汇报/开题汇报.pdf",
+      "pages": 20,
+      "sha256": "5b59f0da444b140a7b7493f424898104a052a3c23929166cce751410eb469ff5",
+      "characters": 3492,
+      "out_of_page_spans": [],
+      "template_warnings": [
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!",
+        "Missing character: There is no 4 (\"34) in font nullfont!"
+      ],
+      "template_warning_scope": "retained; figures, page numbers and scientific content visually checked"
+    },
+    "condensed": {
+      "path": "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/论文_v7_精简版.pdf",
+      "pages": 14,
+      "sha256": "88d1cea59f168a9dc714607235ea8f757e5a6a93d17d16d14be935f6a1dea24f",
+      "characters": 24003,
+      "out_of_page_spans": [],
+      "template_warnings": [
+        "LaTeX Font Warning: Font shape `TU/SongtiSC(0)/m/sl' undefined",
+        "LaTeX Font Warning: Some font shapes were not available, defaults substituted."
+      ],
+      "template_warning_scope": "retained; figures, page numbers and scientific content visually checked"
+    },
+    "brief": {
+      "path": "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/论文_v7_极限精简版.pdf",
+      "pages": 4,
+      "sha256": "ffbb3ace57e8e67a3266619cf8b8bb5f1fee94cbb2080e87b79add98f53f7151",
+      "characters": 2140,
+      "out_of_page_spans": [],
+      "template_warnings": [
+        "LaTeX Font Warning: Font shape `TU/SongtiSC(0)/m/sl' undefined",
+        "LaTeX Font Warning: Some font shapes were not available, defaults substituted."
+      ],
+      "template_warning_scope": "retained; figures, page numbers and scientific content visually checked"
+    }
+  },
+  "method_catalogue_entries": 71,
+  "backup": "/Users/bytedance/Documents/trae_projects/theory_brazil/论文/v7/文档重建备份_20260913",
+  "supplement": {
+    "passed": true,
+    "real_cases": 111,
+    "simulation_cases": 800,
+    "new_method_count": 8,
+    "real_method_results": 888,
+    "simulation_method_results": 6400,
+    "prediction_outputs": 32,
+    "new_simulation_datasets": 0,
+    "same_input_hashes": true,
+    "same_sets_same_predictions": true,
+    "nuisance_rank_response_usage_disclosed": true,
+    "source_equivalence": {
+      "passed": true,
+      "max_score_error": 2.0122792321330962e-16,
+      "raw_source_sha": "a945c72aaabbcf86aa6ef5fe0b289ecc279cd73d17137df5fa3b1a855b0b8020",
+      "source_commit": "ff51ec239529620300e92efd9988eb69490eb3ac",
+      "threshold_source": "author AST function without unrelated imports",
+      "scope": "Ridge fit/predict, permutation order, vectorized score; native threshold corrected to paper equation",
+      "author_threshold_no_solution_bug": {
+        "W": [
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "q": 0.2,
+        "author_threshold": 4.0,
+        "author_selected": [
+          3
+        ],
+        "correct_selected": []
+      },
+      "not_an_algorithmic_innovation": true
+    },
+    "protocol_sha": "f23b3843e996ae47417b9ba2ede67de9c43a28529c1424f5c70c4cef1cf961cd",
+    "source_hashes": {
+      "read_paper.py": "c0851f1cf76b8d7e179b8bac0f100b2e1d5aeca11d28f4555110a83878a7addf",
+      "summarize.py": "0ee6a85f06f86a79a45febf71be3e0f18c92899a6e7c8281d9b35a368576ba13",
+      "run_supplement.py": "d59408f5e26eb17815acb3de3368fb1a7530894ecc49aaa421e4c3d065d31738",
+      "build_archive.py": "4cc3d9dcb8fee864169ae39a136ba6915ca4a573bee1962ddccedc7898ac9ff9"
+    }
+  }
+}

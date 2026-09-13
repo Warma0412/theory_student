@@ -1,0 +1,8 @@
+mode: both
+seed: 42
+plot: outputs/exp1_main_benchmark/LassoNet_Task1_compare.png
+metrics_csv: outputs/exp1_main_benchmark/LassoNet_Task1_compare_metrics.csv
+data_dir: data/raw/sers
+adv_rho: 0.1
+adv_alpha: 1.0
+adv_delta: 1e-12

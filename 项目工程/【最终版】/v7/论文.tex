@@ -1,0 +1,1088 @@
+\documentclass{sufethesismas}
+\usepackage{fontspec,longtable,booktabs,array,calc,url,seqsplit,etoolbox,pdflscape}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\setlength{\LTleft}{0pt plus 1fill}
+\setlength{\LTright}{0pt plus 1fill}
+\renewcommand{\arraystretch}{1.12}
+\setlength{\emergencystretch}{2em}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>.70\textheight .70\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\urlstyle{same}
+
+\usepackage{xurl,needspace,fancyvrb}
+\setmonofont{Menlo}
+\setCJKmonofont{Songti SC}
+\setlength{\tabcolsep}{4pt}
+\AddToHook{cmd/section/before}{\Needspace{6\baselineskip}}
+
+\begin{document}
+\classification{}\confidential{}\UDC{}\serialnumber{}
+\title{面向电商经营指标筛选的\\非线性方法与交换对称损失研究}
+\englishtitle{Nonlinear Feature Selection and Swap-Canonical Loss for E-commerce Indicators}
+\author{吴优}\advisor{张吕欧}\major{应用统计硕士专业学位论文}
+\completedate{2026年9月}\department{统计与数据科学学院}
+\school{上海财经大学}\studentidnumber{2025213385}
+\maketitle
+\frontmatter
+\begin{abstractCN}电商经营看板的指标选择需要同时考虑预测信息保留、名单维护成本与错误发现风险。相关指标之间的替代、响应的非线性和假变量生成失配，使``预测准确''\,``名单稳定''和``统计上可确认''成为不同问题。本文以卖家下一自然月签收确认商品金额为目标，在统一业务口径和评价条件下研究非线性特征选择，并构造固定预测器上的交换对称成对损失统计量。
+
+研究使用Olist十张原始表，按月末已发生事件构建13,754个卖家月观测、2,723名卖家和31项指标。基础比较覆盖稀疏回归、重抽样、树模型、Deep Lasso、TabM与VTFS适配；机制实验进一步研究预测Jacobian正则、预算门、动态输入剪枝和固定容量序列损失。所有主比较共享卖家抽样，区分30组互补半样本、70\%及80\%抽样和固定数据随机种子变化；下游预测使用共同XGBoost与TabM，相同集合采用规范列顺序并共享预测。
+
+交换对称损失通过不依赖真假命名的背景比较每个特征与Knockoff的预测损失。本文给出其完整符号翻转性质，并说明随机背景在精确生成器下的边际分布性质。800份八场景模拟区分精确生成、全无效和错设条件；另外依据Semi-knockoffs的双侧条件重建思路，检验条件均值与条件尺度扩展。理论说明仅涉及统计量性质及已有定理的条件调用，不将估计生成器、估计条件矩或面板数据直接视为有限样本FDR受控。
+
+实测没有显示复杂方法全面领先。基础规范Top-12比较中，XGBoost-SHAP与Deep Lasso的XGBoost评价RMSE分别为1.8466与1.8450；Jacobian版本的半样本Jaccard为0.8618，但其优势未同时覆盖互补稳定性和模拟发现质量。SCPL预定标准化TabM版本在强非线性与纯交互场景的Power分别为0.794与0.934，匹配线性对照分别为0.087与0.003；未标准化版本却往往更强，高相关线性场景也存在明显反例。真实数据主生成器下SCPL表现较弱；事后MVR诊断改善预测但未形成稳定性优势。
+
+条件矩补充中，预定TabM均值尺度版本的真实Top-12 RMSE为1.8965，半样本Jaccard为0.4099；强非线性原生Power为0.8660，平均FDP为0.1313。这些结果仍需结合估计条件重建的误选风险解释，不将局部检出增加直接写为有效错误控制。
+
+研究结论支持将预测器能力、评分对称性、生成器有效性和业务适用性分开检验。本文形成了可复核的方法研究原型与负结果证据，但不主张新颖性优先权已经确立、真实FDR已经受控或任何方法无条件最优。
+\end{abstractCN}
+\keywordsCN{电商经营指标；非线性特征选择；交换对称损失；样本稳定性；错误发现率}
+\begin{abstractEN}Selecting indicators for e-commerce monitoring requires a balance between predictive information, selection stability, and false discovery risk. This study investigates nonlinear feature selection for next-month delivered merchandise value and develops swap-canonical paired loss statistics for independently trained predictors.
+
+Ten Olist tables are aggregated with event-time restrictions into 13,754 seller-month observations, 2,723 sellers, and 31 candidate indicators. Statistical and tree baselines are compared with Deep Lasso, TabM permutation ranking, and a documented VTFS adaptation. Mechanism studies examine Jacobian regularization, budget gates, dynamic pruning, and fixed-cardinality sequence losses. Shared seller samples and canonical feature ordering separate predictor quality from selection quality.
+
+The proposed loss statistic compares original and knockoff coordinates against backgrounds invariant to pair swapping. A pathwise sign-flip proposition and an oracle marginal-distribution argument are provided. Eight simulation scenarios with 100 repetitions each include nonlinear responses, pure interactions, global nulls, and generator misspecification. A supplementary study evaluates conditional-mean and conditional-scale adaptations of Semi-knockoffs on the same simulation datasets.
+
+Complexity does not yield consistent improvement. The prespecified studentized TabM statistic has power 0.794 under strong nonlinearity and 0.934 under pure interactions, versus 0.087 and 0.003 for a matched linear predictor. Nevertheless, unstudentized variants often perform better, and highly correlated linear settings favor linear methods. Real-data generator diagnostics reveal substantial mismatch; a post hoc MVR extension improves prediction but does not establish superior sample stability. Estimated nuisance functions and repeated seller observations do not inherit oracle finite-sample guarantees automatically.
+
+The prespecified conditional-mean-and-scale TabM adaptation achieves power 0.8660 and mean FDP 0.1313 in the strongly nonlinear scenario. However, its real-data Top-12 RMSE is 1.8965 with half-sample Jaccard 0.4099, which does not establish improvement over the strong tree baseline.
+
+The contribution is a reproducible methodological investigation with explicit algebraic properties, component ablations, and limitations. It is not a claim of established priority, unconditional real-data FDR control, or universal superiority.
+\end{abstractEN}
+\keywordsEN{e-commerce indicators; nonlinear feature selection; swap-canonical loss; selection stability; false discovery rate}
+\tableofcontents
+\mainmatter
+\chapter{绪论}
+
+\section{业务问题与统计目标}
+
+经营看板同时展示价格、交易规模、支付、口碑、履约和市场覆盖等大量指标。指标越多，维护、解释与注意力分配的成本越高；指标越少，遗漏弱信号或非线性信息的风险越大。本文将问题限定为：在固定展示容量下，筛选对下一期签收确认金额具有预测信息的经营指标，并检验名单是否对参与分析的卖家过度敏感。
+
+预测目标提供可计算的信息保留标准。若仅保留若干指标后共同评价器的样本外误差基本不变，说明压缩保留了该评价器能够利用的大部分信息；这并不说明被删除指标在所有模型、所有月份或所有业务问题上无价值。名单稳定性衡量相同方法在不同样本中的选择一致程度，也不能直接理解为指标正确率。
+
+本文不将预测性筛选、描述性分解与因果归因混为一谈。按州或品类拆分当期GMV属于金额结构分析；用月末指标预测下一月目标属于监督学习；估计改变物流策略将使GMV增加多少属于因果问题。本文只研究第二类问题，不能从重要性排名推导干预效果。
+
+\section{方法研究动机}
+
+线性系数能够直接表达变量作用，但面对对称平方效应或纯交互时可能遗漏真实信号。神经网络与树模型有更强的函数表达能力，却不自动产生可靠的变量发现。输入梯度、置换、SHAP、门控和序列搜索分别度量不同的模型依赖，具有不同的噪声与相关性敏感性。
+
+Knockoff提供了真假变量竞争的错误控制框架，但其有效性同时依赖生成器和统计量。一个普通的单列损失差即使在交换自身真假值后反号，也可能因其他列进入比较背景而改变其他统计量，不满足完整符号翻转。另一方面，即使统计量代数性质正确，错误生成器仍会破坏推断前提。因此需要研究具体评分机制，而非只将更复杂预测器接到原有流程后宣称创新。
+
+\section{研究问题}
+
+本文提出四个问题。第一，近期非线性选择方法在相同容量和评价器下是否优于强基线？第二，输入梯度、预算门、历史剪枝分数和序列效用损失的改动是否具有独立增量？第三，固定预测器上的损失比较能否满足完整交换对称性，其收益来自评分规则还是预测器表达能力？第四，联合生成失配或条件矩估计误差会怎样改变真实应用与模拟结果？
+
+评价维度在实验前明确为预测误差、样本稳定性、模拟平均FDP和Power，辅以集合大小、机会校正稳定性、算法随机性与计算成本。不根据某一方法事后表现新增专门使其胜出的总分，也不要求一个有价值的方法在所有指标上同时第一。能够说明目标场景、机制、增量和代价，才构成可讨论的研究证据。
+
+\section{本文工作与边界}
+
+研究首先完成可见性面板和统一比较，其次对多个非线性机制做拆分实验，再构造交换对称成对损失及条件矩扩展。具体工作包括方法公式、性质说明、作者实现核对、公共样本扰动、独立评分设计、生成诊断以及案例级审计。所有结果由实际运行记录生成，退出候选不填零替代。
+
+本文不把已有网络、既有FDR定理、普通正则或软件纠错称为原创。候选统计量的精确构造与先行工作的差异仍需更全面的文献比对；非线性模拟收益不自动成为真实电商应用收益。正式结论允许``改动没有得到支持''，不以计算次数或方法数量替代方法贡献。
+
+\chapter{相关研究与理论基础}
+
+\section{统计与树模型基线}
+
+Lasso利用绝对值惩罚进行稀疏估计，Elastic Net加入平方惩罚以缓解相关变量竞争\cite{lasso1996,elastic2005}。稳定性选择与互补成对抽样为选择频率和误选界提供理论基础，但具体控制结论取决于选择量、阈值与假设\cite{stability2010,cpss2013}。本文的经验频率基线不自动继承所有原文保证。
+
+XGBoost能够表达非线性与交互，SHAP及TreeSHAP提供模型贡献分解\cite{xgb2016,shap2017,treeshap2020}。平均绝对贡献可用于排序，但不等价于条件独立检验。Extra Trees影子变量比较参考随机树与Boruta思想，本文没有实现Boruta全部检验和停止规则，故只称影子变量树\cite{extratrees2006,boruta2010}。
+
+\section{近期非线性特征选择}
+
+Deep Lasso在输入损失梯度上施加组稀疏惩罚\cite{deeplasso2023}。VTFS将子集编码为序列并学习潜在效用，本文使用其官方骨干进行定额适配\cite{vtfs2024}。TabM是参数高效的表格集成预测器，置换排名是本文另加的评分过程，不是网络原生的统计检验\cite{tabm2025}。
+
+EntryPrune以动态稀疏输入层和进入后的相对变化衡量特征\cite{entryprune2025}。随机门和以函数偏导构造稀疏惩罚均有先行研究，因此预算门或Jacobian改动不能仅凭名称认定原创\cite{stg2020,snvs2018}。
+
+DeepPINK与DeepPIG分别研究成对输入网络、成对层和随机门\cite{deeppink2018,deeppig2024}。GRIP2研究二维正则曲面上的特征活动聚合\cite{grip2026}。本研究核验这些文献的关系，但没有把未在共同协议下完整实测的方法放入已完成排名。
+
+DeepDRK是依赖正则的深度Knockoff生成方法，TabPFN v2是预训练表格基础预测器\cite{deepdrk2024,tabpfn2025}。前者在本地适配的三种子生成诊断中失败，后者在完整样本MPS运行中遇到内存错误。两种退出原因不同，都不能填入替代数字或解释为已经完成全部统计性能比较。
+
+\section{Knockoff、e-value与FDR}
+
+FDR定义为选择集合中错误比例的期望，而不是每次错误比例都低于目标\cite{bh1995}。Knockoff及Model-X通过交换性负对照构造有效竞争统计量\cite{knockoff2015,modelx2018}。MVR以最小可重构性改善功效，多轮e-value聚合与e-BH减少生成随机性，但不修复错误联合分布\cite{mvr2022,derand2024,ebh2022}。
+
+给定候选变量\(X\)、响应\(Y\)和Knockoff\(\widetilde X\)，需要对适用交换集合满足
+
+\[
+(X,\widetilde X)_{\mathrm{swap}(S)}\overset d=(X,\widetilde X),
+\qquad \widetilde X\perp Y\mid X.
+\]
+
+还需要统计量满足被交换分量反号、其他分量不变的完整性质。仅检查协方差、边际分布或单个自身反号均不充分。关于生成失败的近期研究特别区分边际同分布和正确配对，提醒不能把简单诊断通过当作联合有效性证明\cite{knockofffail2025}。
+
+\section{损失比较与条件重建}
+
+CPI使用条件替换后的预测损失变化衡量变量信息\cite{cpi2021}。普通替换背景不直接满足所有Knockoff符号要求，并不否定CPI文献中其他检验程序。本文研究的是构造一个可代入标准Knockoff阈值的完整对称统计量。
+
+Semi-knockoffs比较条件于其他变量、以及额外条件于响应的两种重建，能够使用已有预测器\cite{semiko2026}。需要特别区分其oracle条件期望已知时的有限样本结论与估计条件期望时的理论：原文另给出稳定性、Wasserstein距离和双重稳健性讨论，估计统计量符号匹配的部分还以猜想表述。不能仅阅读摘要，就把任意估计器的有限样本FDR都说成已获证明。
+
+\section{与先行工作的关系}
+
+{
+\footnotesize
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.333333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.333333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.333333}}@{}}
+\caption{方法家族及本研究完成范围}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+家族
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+代表
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+本研究范围
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+家族
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+代表
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+本研究范围
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+统计/树基线 & Elastic Net、稳定性选择、影子树、SHAP & 公共样本与预算完整比较 \\
+近期深度 & Deep Lasso、TabM、VTFS & 官方函数/骨干及已披露适配 \\
+模型改动 & Jacobian、预算门、EntryPrune、序列成对损失 & 十项配置完整机制实验 \\
+对称评分 & XGB/TabM普通、中点、随机、标准化 & 14种方法/消融完整实测 \\
+条件重建 & Semi-KO Ridge及条件均值/尺度 & 八项补充适配，作者数值核对 \\
+运行后退出 & DeepDRK、TabPFN v2 & 生成诊断失败/内存失败 \\
+相邻方法 & DeepPINK、DeepPIG、GRIP2、HRT等 & 文献比较；不计作完整实测基线 \\
+\end{longtable}
+}
+
+本文对称化的研究对象是评分背景而不是新生成器；条件矩扩展的对象是双侧重建函数而不是新网络。相关公式具有可解释的结构，但仍属于已有条件抽样与群对称思想附近的方法研究。对先行文献的针对性核验不能证明不存在同等构造。
+
+\chapter{数据与公平实验设计}
+
+\section{数据来源与自然连接层级}
+
+研究使用Olist电商与营销漏斗公开数据\cite{olist2018,funnel2018}。十张原始表涵盖订单、商品明细、支付、评价、商品、卖家、顾客、地理位置、营销线索与营销成交。订单表含99,441条记录，商品明细含112,650条记录。支付与评价先在订单层聚合，地理位置按邮编前缀取经纬度中位数，再按卖家月份汇总，避免多对多连接放大金额。
+
+目标金额来自商品明细价格，不含运费。支付和物流指标在卖家订单层去重后平均，商品属性与部分地域指标按商品明细聚合，二者对应不同业务对象。全源表有送达时间的商品金额对账为13,220,895.11巴西雷亚尔，不能误称为最终面板目标总和。
+
+\section{月末可见性与目标}
+
+对于卖家\(s\)和特征月\(t\)，目标为
+
+\[
+G_{s,t+1}=\sum_{i:\operatorname{seller}(i)=s,\,
+\operatorname{deliverymonth}(i)=t+1}\operatorname{price}_i,
+\quad Y_{s,t+1}=\log(1+G_{s,t+1}).
+\]
+
+该定义按下一自然月签收确认，不是按购买月回溯最终送达金额，也不是净利润或扣除全部售后的会计收入。物流仅使用月末前发生的事件，评价按回答时间截断，营销按成交日期截断。支付、商品和卖家元数据缺少完整修订历史，其购买时可得性仍是工作假设，不能宣称完全还原生产实时账本。
+
+分析人口是特征月有购买商品明细的卖家，不按未来最终送达状态过滤特征月。下一月无签收记录时目标记零。面板共18个特征月份、13,754行、2,723名卖家，目标零值率为17.8784\%。不直接外推到全部注册卖家或没有本月购买活动的冷启动人口。
+
+\section{时间分工与预处理}
+
+{
+\footnotesize
+\begin{longtable}[]{@{}llll@{}}
+\caption{训练、调参、评分与测试窗口}\tabularnewline
+\toprule\noalign{}
+阶段 & 目标月份 & 行数 & 主要用途 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+阶段 & 目标月份 & 行数 & 主要用途 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+训练 & 2017-02至2017-12 & 6567 & 预处理与基础拟合 \\
+调参 & 2018-01至2018-02 & 1831 & 选参数/轮次后重拟合 \\
+评分 & 2018-03至2018-04 & 1943 & 协议A可早停；协议B固定模型评分 \\
+测试 & 2018-05至2018-07 & 3413 & 仅评价；已经历探索 \\
+\end{longtable}
+}
+
+预处理包括预设偏态指标log1p变换、拟合窗口1\%和99\%缩尾、训练中位数填补及标准化。各评价窗口只应用冻结参数。缺失可能意味着事件尚未发生，不应把中位数填补解释为已解决缺失机制。候选指标固定31项，不为某个方法单独增删变量。
+
+本文包含两类训练协议。基础选择器及其模型内部机制允许排序期参与早停或子集效用；固定预测器损失研究严格限定train/tune决定基础模型，rank只用于评分或已披露的条件重建。二者分别列示，不把同名模型在不同协议下的稳定性当成相同拟合结果。
+
+\section{样本扰动与稳定性}
+
+所有方法使用相同卖家清单：30组互补50\%样本、20个70\%样本、20个80\%样本；同一卖家所有月份共同保留。50\%样本有60份，但区间单位是30个互补组。另运行10组固定数据种子变化及一个完整参考，共111个案例。
+
+对集合\(A,B\)，Jaccard为\(|A\cap B|/|A\cup B|\)。本文同时报告与完整参考名单的Jaccard、互补两半直接比较的Jaccard及Nogueira机会校正稳定性\cite{nogueira2018}。高参考稳定性不代表互补两半同样一致；固定数据更换随机种子也不代表对新卖家稳定。全空集合的形式一致性需结合空集比例解释。
+
+\section{预测与发现质量}
+
+主容量为12项，8项为敏感性；规范化比较将选中列按固定编号排序，相同集合和评价器共享预测。所有名单分别交给共同XGBoost和TabM重拟合，在3,413行测试集评价log尺度RMSE、MAE、R²及金额尺度WAPE。卖家簇Bootstrap重复5,000次，其区间只条件于已观察的三个测试月份和已拟合模型。
+
+对于已知真支持集\(S_0\)，
+
+\[
+\operatorname{FDP}=\frac{|\widehat S\setminus S_0|}{|\widehat S|\vee1},
+\qquad
+\operatorname{Power}=\frac{|\widehat S\cap S_0|}{|S_0|}.
+\]
+
+空发现集合FDP为0；存在真信号时Power为0；全无效场景Power不定义。固定K与原生名单分别报告。若真信号只有5个，Top-12即使全部检出也至少误选7个，不能据此判定原生FDR失败。模拟设计、Monte Carlo误差与配对比较参照规范化模拟研究原则\cite{morris2019}。
+
+\section{实验组与证据权限}
+
+{
+\footnotesize
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.210000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.290000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.240000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.260000}}@{}}
+\caption{各实验设计与覆盖，禁止跨设计直接混排}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+设计
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+训练/评分
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+实测规模
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+主要边界
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+设计
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+训练/评分
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+实测规模
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+主要边界
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+A 基础与机制 & 排序期可用于早停/效用 & 8基线+10改动；600份模拟 & 固定配置适配，规范Top8/12复算 \\
+B SCPL & 基础模型不见评分响应 & 14评分；111真实；800模拟 & oracle与错设分开 \\
+B 生成敏感性 & 同B，仅换MVR & 111真实；30组预测 & 看过参考结果后追加 \\
+B 条件矩 & 基础模型固定；条件模型使用评分响应 & 8评分；111真实；800份复算 & 6,400方法结果，非新数据 \\
+\end{longtable}
+}
+
+测试期已被多轮探索查看，本研究不将其称为独立确认数据。补充算法与生成器研究保留探索性质。没有采用所有实验中最好的RMSE、另一实验的稳定性和第三实验的FDP拼成一个虚构``最优方法''。
+
+\chapter{基础选择器与模型机制改动}
+
+\section{基础方法}
+
+Elastic Net按绝对系数排序；稳定性选择在每个外层样本中再运行20组互补Lasso，采用频率和平均系数打破并列；影子树进行8轮真实/打乱变量比较。其经验原生阈值都不是本文新证明的FDR规则。XGBoost-SHAP使用三个模型的平均绝对贡献，TabM以每列三次置换的误差增量排序。
+
+Copula-MVR在训练经验分布变换后估计收缩协方差\cite{ledoit2004}，使用近似Lasso真假系数差，60组假变量聚合e-value，再按e-BH筛选。单轮q=.10、最终q=.20与频率90\%是不同设置。该实现的真实联合分布诊断未通过，因此保留经验比较，不授予真实发现证书。
+
+Deep Lasso调用官方输入梯度惩罚，使用两层MLP；TabM使用官方8成员参数高效集成；VTFS调用官方编码器解码器，但采用有限随机语料和无重复定额序列，公开实现中的常数重参数化行为被明确保留。完整参考名单来自语料回退时，不把收益归功于Transformer解码器。
+
+\section{从损失梯度到预测Jacobian}
+
+对于平方损失，输入损失梯度同时包含预测器偏导与残差权重：
+
+\[
+\frac{\partial (f(x)-y)^2}{\partial x_j}
+=2(f(x)-y)\frac{\partial f(x)}{\partial x_j}.
+\]
+
+较大残差可能放大某些观测对重要性的影响，因此检验预测Jacobian的稀疏惩罚及排名。消融包含同时改变训练与排名、只改变训练、只改变排名。该研究动机不是``复杂化一定更好''，并且函数偏导正则已有先行研究，不能把简单替换称为首创。
+
+\section{容量门、历史分数与序列效用}
+
+TabM预算门把固定K约束引入输入训练，检验训练使用全部变量、最终只保留少量变量之间的差异。直通梯度只是一种有偏近似，不声称精确解决最优子集选择。
+
+EntryPrune回归适配使用动态输入层；刷新和环境波动惩罚针对历史高分可能被偶然噪声长期保留的问题。均值减标准差仅是算法分数，不是有效统计置信下界。VTFS首先改为固定K语料，再加入成对效用差损失；预算纠正的收益不能归给后续损失。
+
+\section{真实结果与模拟发现质量}
+
+{
+\footnotesize
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.250000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.150000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.150000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.150000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.150000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.150000}}@{}}
+\caption{模型机制比较，规范Top-12预测与六场景固定K模拟}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+方法
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+XGB误差
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+TabM误差
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+半样本J
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+FDP@12
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Power@12
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+方法
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+XGB误差
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+TabM误差
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+半样本J
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+FDP@12
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Power@12
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Copula-MVR & 1.8650 & 1.8967 & 0.7355 & 0.3218 & 0.8305 \\
+Elastic Net & 1.8625 & 1.8806 & 0.7244 & 0.3251 & 0.8265 \\
+稳定性选择 & 1.8937 & 1.8885 & 0.5827 & 0.3383 & 0.8107 \\
+影子变量树 & 1.8611 & 1.8612 & 0.9388 & 0.3361 & 0.8261 \\
+XGBoost-SHAP & 1.8466 & 1.8571 & 0.7682 & 0.2315 & 0.9403 \\
+Deep Lasso & 1.8450 & 1.8594 & 0.8230 & 0.2687 & 0.8947 \\
+TabM-置换 & 1.8458 & 1.8586 & 0.7505 & 0.2656 & 0.8981 \\
+VTFS-定额适配 & 1.8622 & 1.8783 & 0.4068 & 0.5306 & 0.5876 \\
+Deep Lasso-Jacobian & 1.8461 & 1.8600 & 0.8618 & 0.2657 & 0.8978 \\
+Jacobian训练+原排名 & 1.8450 & 1.8594 & 0.7722 & 0.2686 & 0.8943 \\
+原Deep Lasso+Jacobian排名 & 1.8450 & 1.8594 & 0.8147 & 0.2656 & 0.8986 \\
+TabM-预算门 & 1.8450 & 1.8594 & 0.8071 & 0.2793 & 0.8826 \\
+EntryPrune-回归适配 & 1.8812 & 1.8744 & 0.6271 & 0.2869 & 0.8729 \\
+EntryPrune-刷新 & 2.0418 & 2.0350 & 0.4596 & 0.5203 & 0.6107 \\
+EntryPrune-环境波动惩罚 & 1.8706 & 1.8897 & 0.4498 & 0.5074 & 0.6263 \\
+VTFS-固定K & 1.8676 & 1.8921 & 0.4540 & 0.4593 & 0.6815 \\
+VTFS-固定K+成对损失 & 1.8653 & 1.8949 & 0.4333 & 0.4531 & 0.6901 \\
+等预算随机子集搜索 & 1.8661 & 1.8926 & 0.4368 & 0.4911 & 0.6412 \\
+\end{longtable}
+}
+
+基础规范比较中，SHAP和Deep Lasso的XGBoost评价RMSE分别为1.8466和1.8450，相差很小。Jacobian版本的参考Jaccard为0.8618，父方法为0.8230；但相对父方法的互补稳定性差区间跨零，模拟平均FDP变化也没有一致证据。相对SHAP的稳定性改善伴随较弱的模拟发现质量，属于权衡而非全面优势。
+
+预算门提高了相对完整参考名单的Jaccard，却没有同时提高互补稳定性，且模拟FDP增加。EntryPrune刷新显著恶化真实预测和发现质量，波动惩罚未恢复强基线水平。固定K修正改善VTFS模拟检出，但实际预测未改善；新增成对损失的独立增量更小。
+
+{
+\footnotesize
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.250000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.187500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.187500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.187500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.187500}}@{}}
+\caption{关键配对差异与组件判断}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+改动减父方法
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+参考J差
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+互补J差
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+FDP差
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Power差
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+改动减父方法
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+参考J差
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+互补J差
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+FDP差
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Power差
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Deep Lasso-Jacobian减Deep Lasso & 0.0388 & 0.0155 & -0.0031 & 0.0031 \\
+TabM-预算门减TabM-置换 & 0.0566 & -0.0448 & 0.0137 & -0.0155 \\
+EntryPrune-刷新减EntryPrune-回归适配 & -0.1675 & -0.1133 & 0.2333 & -0.2622 \\
+VTFS-固定K减VTFS-定额适配 & 0.0472 & -0.0339 & -0.0712 & 0.0939 \\
+VTFS-固定K+成对损失减VTFS-固定K & -0.0208 & 0.0085 & -0.0062 & 0.0086 \\
+\end{longtable}
+}
+
+只改变Deep Lasso排名的部分配置与原方法完整Top-12集合相同，因此规范化预测必须完全一致。任何未统一输入列顺序而产生的微小预测差都不能解释成选维改进。此前同月互补卖家梯度一致性探索最终选中gamma=0，其新增惩罚没有得到支持。
+
+\chapter{交换对称成对损失统计量}
+
+\section{独立预测器与对称背景}
+
+将数据分为基础预测器训练A、评分B和最终预测测试C。基础模型\(f_A\)及预处理在B的响应被使用前冻结。对B内每个数值对定义\(L_{ij}=\min(X_{ij},\widetilde X_{ij})\)、\(U_{ij}=\max(X_{ij},\widetilde X_{ij})\)。四组Bernoulli掩码及其补掩码构成八个背景\(C^{(b)}\)，每坐标从L或U选值，不依赖真假身份命名。
+
+对第\(j\)个变量，将背景其他坐标保持不变，分别放入真实值和假值，计算
+
+\[
+d_{ij}=\frac1B\sum_{b=1}^{B}
+\left[\ell\{Y_i,f_A(C^{(b)}_{i,-j},\widetilde X_{ij})\}
+-\ell\{Y_i,f_A(C^{(b)}_{i,-j},X_{ij})\}\right].
+\]
+
+先在卖家内平均，再对卖家平均形成\(W_j\)。标准化版本除以卖家均值标准误加\(10^{-8}\)。该标准化只用于排序，不是t检验。模拟中每行一个组。八个背景来自一组Knockoff，不是八次独立假变量生成。
+
+\section{完整符号翻转性质}
+
+\textbf{命题。} 固定预测器、预处理、掩码、分组和评分超参数，交换任意列对集合S后，\(j\in S\)的\(W_j\)反号，\(j\notin S\)的\(W_j\)保持不变。
+
+\textbf{证明。} 交换不改变任何min/max，因此背景逐路径不变。未交换的j自身真假值不变，其两次预测输入不变。被交换的j两次预测输入互换，损失差反号。组内与组间均值保留反号；标准差在整体反号下不变，标准化版本也成立。证毕。
+
+该命题不要求预测器正确拟合响应函数，但不保证Power或预测精度。中点\((X+\widetilde X)/2\)也具有交换不变性。普通真实背景在交换其他列后改变，不能直接满足这一完整性质。实际TabM的逐列及联合交换检查与代数检查一致。
+
+\section{随机背景边际与现有FDR结论}
+
+在独立同分布、精确逐坐标交换的oracle条件下，对掩码取平均，每个随机min/max背景的输入边际分布与X相同。给定真假数值，随机取min/max等价于随机取真实/假值，因此分布是所有交换子集的等权混合；每一交换子集下原侧向量均与X同分布。补掩码不会使各背景独立，中点背景一般也不具有这一边际性质。
+
+上述性质只涉及输入分布，不保留背景与Y的原关联，不消除有限八背景误差；错设生成器下不能使用。另以十万行高斯数据核验协方差，并用显式einsum核对矩阵采样数值；数值检查不是数学证明或Olist合格证。
+
+若B满足Model-X样本条件，条件于A的假变量精确交换、给定X后独立于Y，且统计量满足上述性质，可调用已有Knockoff+结论：
+
+\[
+T_q=\min\left\{t>0:
+\frac{1+\#\{j:W_j\le -t\}}{\#\{j:W_j\ge t\}\vee1}\le q\right\},
+\qquad \widehat S=\{j:W_j\ge T_q\}.
+\]
+
+无解时\(T_q=\infty\)，返回空集。本研究q=.20，q=.10为敏感性。至少需要\(\lceil1/q\rceil\)个正发现才可能非空。Top-K不继承该规则的FDR结论，真实同卖家跨期依赖与估计Copula也未满足全部oracle前提。
+
+\section{八场景模拟设计}
+
+{
+\footnotesize
+\begin{longtable}[]{@{}lllll@{}}
+\caption{损失评分研究的模拟设置}\tabularnewline
+\toprule\noalign{}
+场景 & 真信号 & 相关系数 & 信噪比 & 生成条件 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+场景 & 真信号 & 相关系数 & 信噪比 & 生成条件 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+全无效 & 0 & 0.6 & 不适用 & 已知精确 \\
+线性稀疏 & 5 & 0.6 & 2.0 & 已知精确 \\
+强非线性 & 10 & 0.6 & 2.0 & 已知精确 \\
+弱非线性 & 10 & 0.6 & 0.5 & 已知精确 \\
+纯交互 & 10 & 0.6 & 2.0 & 已知精确 \\
+高相关线性 & 10 & 0.9 & 2.0 & 已知精确 \\
+已知混合变换 & 10 & 0.6 & 2.0 & 已知精确 \\
+t生成错设 & 10 & 0.6 & 2.0 & 故意错设 \\
+\end{longtable}
+}
+
+每份n=2000、p=31，前1200行用于基础模型，其中1000/200作训练与选轮次；400行评分，400行预测测试。七场景为精确高斯或已知变换后的高斯Knockoff，t场景故意使用错误高斯生成。响应信号尺度只由训练部分确定，真支持集不参与选参。成对Lasso仅在400行评分集拟合，因此另设同1200行训练的线性预测器对照。
+
+\section{模拟结果与机制反例}
+
+{
+\footnotesize
+\begin{longtable}[]{@{}llllll@{}}
+\caption{原生q=.20的场景结果，平均FDP与Power}\tabularnewline
+\toprule\noalign{}
+场景 & 方法 & 平均FDP & FDP-MCSE & Power & 发现数 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+场景 & 方法 & 平均FDP & FDP-MCSE & Power & 发现数 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+全无效 & 匹配线性对称差 & 0.0100 & 0.0100 & 不定义 & 0.05 \\
+全无效 & XGB-中点差 & 0.0600 & 0.0239 & 不定义 & 0.34 \\
+全无效 & TabM-中点差 & 0.0500 & 0.0219 & 不定义 & 0.32 \\
+全无效 & TabM-随机对称差 & 0.0300 & 0.0171 & 不定义 & 0.24 \\
+全无效 & TabM-标准化对称差 & 0.0500 & 0.0219 & 不定义 & 0.35 \\
+线性稀疏 & 匹配线性对称差 & 0.1798 & 0.0182 & 1.0000 & 6.50 \\
+线性稀疏 & XGB-中点差 & 0.1632 & 0.0196 & 1.0000 & 6.51 \\
+线性稀疏 & TabM-中点差 & 0.2013 & 0.0213 & 1.0000 & 6.94 \\
+线性稀疏 & TabM-随机对称差 & 0.1850 & 0.0219 & 1.0000 & 6.86 \\
+线性稀疏 & TabM-标准化对称差 & 0.1955 & 0.0205 & 0.9700 & 6.73 \\
+强非线性 & 匹配线性对称差 & 0.0760 & 0.0169 & 0.0870 & 1.44 \\
+强非线性 & XGB-中点差 & 0.1619 & 0.0135 & 0.9990 & 12.31 \\
+强非线性 & TabM-中点差 & 0.1808 & 0.0151 & 0.9570 & 12.20 \\
+强非线性 & TabM-随机对称差 & 0.1732 & 0.0155 & 0.9650 & 12.19 \\
+强非线性 & TabM-标准化对称差 & 0.1668 & 0.0166 & 0.7940 & 10.26 \\
+弱非线性 & 匹配线性对称差 & 0.0742 & 0.0177 & 0.0750 & 1.39 \\
+弱非线性 & XGB-中点差 & 0.1817 & 0.0156 & 0.9030 & 11.61 \\
+弱非线性 & TabM-中点差 & 0.1823 & 0.0187 & 0.7580 & 10.34 \\
+弱非线性 & TabM-随机对称差 & 0.1826 & 0.0174 & 0.7610 & 10.23 \\
+弱非线性 & TabM-标准化对称差 & 0.1636 & 0.0189 & 0.4310 & 6.44 \\
+纯交互 & 匹配线性对称差 & 0.0155 & 0.0109 & 0.0030 & 0.13 \\
+纯交互 & XGB-中点差 & 0.1471 & 0.0128 & 0.9310 & 11.25 \\
+纯交互 & TabM-中点差 & 0.1565 & 0.0151 & 0.9980 & 12.31 \\
+纯交互 & TabM-随机对称差 & 0.1545 & 0.0144 & 0.9970 & 12.22 \\
+纯交互 & TabM-标准化对称差 & 0.1528 & 0.0149 & 0.9340 & 11.58 \\
+高相关线性 & 匹配线性对称差 & 0.1746 & 0.0115 & 0.8590 & 10.75 \\
+高相关线性 & XGB-中点差 & 0.1712 & 0.0163 & 0.7020 & 9.34 \\
+高相关线性 & TabM-中点差 & 0.1617 & 0.0163 & 0.8440 & 10.87 \\
+高相关线性 & TabM-随机对称差 & 0.1686 & 0.0163 & 0.8510 & 11.04 \\
+高相关线性 & TabM-标准化对称差 & 0.1772 & 0.0197 & 0.5840 & 8.46 \\
+已知混合变换 & 匹配线性对称差 & 0.0903 & 0.0172 & 0.1750 & 2.56 \\
+已知混合变换 & XGB-中点差 & 0.1750 & 0.0154 & 0.9940 & 12.56 \\
+已知混合变换 & TabM-中点差 & 0.1612 & 0.0163 & 0.9640 & 12.10 \\
+已知混合变换 & TabM-随机对称差 & 0.1518 & 0.0144 & 0.9630 & 11.78 \\
+已知混合变换 & TabM-标准化对称差 & 0.1506 & 0.0146 & 0.8030 & 10.00 \\
+t生成错设 & 匹配线性对称差 & 0.0755 & 0.0208 & 0.0370 & 1.00 \\
+t生成错设 & XGB-中点差 & 0.1382 & 0.0167 & 0.5090 & 6.80 \\
+t生成错设 & TabM-中点差 & 0.1390 & 0.0192 & 0.3710 & 5.02 \\
+t生成错设 & TabM-随机对称差 & 0.1551 & 0.0202 & 0.3970 & 5.52 \\
+t生成错设 & TabM-标准化对称差 & 0.1783 & 0.0228 & 0.2740 & 4.49 \\
+\end{longtable}
+}
+
+标准化TabM在强非线性、弱非线性、纯交互中明显提高相对匹配线性预测器的Power，说明非线性表达确实有用。但未标准化TabM在强非线性下Power达到0.965，高于预定标准化版本0.794；高相关线性下主候选0.584，低于线性对照0.859。不能事后将更强消融改写为预定主方法，也不能把表达能力增益都归于对称化。
+
+全无效场景主候选100次中5次非空，FDR估计.05，准确二项95\%区间约{[}.016,.113{]}；不是总体错误率恰等于.05的证明。t错设下平均FDP即使低于目标也不能恢复理论保证。线性稀疏的TabM中点平均FDP略高于.20，必须连同Monte Carlo误差保留。
+
+\section{真实数据及生成器敏感性}
+
+{
+\footnotesize
+\begin{longtable}[]{@{}llllll@{}}
+\caption{SCPL同预算真实结果，两个生成器条件分别列示}\tabularnewline
+\toprule\noalign{}
+生成条件 & 方法 & XGB误差 & TabM误差 & J & Nogueira \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+生成条件 & 方法 & XGB误差 & TabM误差 & J & Nogueira \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+等相关 & XGBoost-SHAP & 1.8466 & 1.8571 & 0.7682 & 0.7439 \\
+等相关 & Deep Lasso & 1.8468 & 1.8567 & 0.8394 & 0.8012 \\
+等相关 & TabM-中点差 & 1.8577 & 1.8776 & 0.3934 & 0.2009 \\
+等相关 & TabM-随机对称差 & 1.8577 & 1.8776 & 0.3912 & 0.1993 \\
+等相关 & TabM-标准化对称差 & 2.0964 & 2.0886 & 0.3249 & 0.1248 \\
+MVR追加 & XGBoost-SHAP & 1.8466 & 1.8571 & 0.7682 & 0.7439 \\
+MVR追加 & Deep Lasso & 1.8468 & 1.8567 & 0.8394 & 0.8012 \\
+MVR追加 & TabM-中点差 & 1.8431 & 1.8575 & 0.4988 & 0.4509 \\
+MVR追加 & TabM-随机对称差 & 1.8630 & 1.8732 & 0.4874 & 0.4675 \\
+MVR追加 & TabM-标准化对称差 & 1.8493 & 1.8645 & 0.4696 & 0.3947 \\
+\end{longtable}
+}
+
+训练估计Copula的等相关S约.00334，约49.4\%真假值完全相同，评分信息很弱，完整参考原生规则均为空。主候选Top-12的RMSE为2.0964、Jaccard为.3249，明显弱于SHAP。不能以零发现的低FDP或形式稳定性美化这一结果。
+
+事后参考样本MVR检查已看到预测变化后，再登记111例生成器敏感性分析。MVR改善主候选RMSE至1.8493，但Jaccard仅.4696；中点TabM的1.8431虽低于SHAP1.8466，配对差95\%区间{[}-.0118,.0053{]}包含零。该追加不是预先确认，MVR也是既有生成器，不构成新发明。
+
+{
+\footnotesize
+\begin{longtable}[]{@{}llll@{}}
+\caption{真实交换诊断，按卖家隔离的分类AUC}\tabularnewline
+\toprule\noalign{}
+条件 & 25\%交换 & 50\%交换 & 100\%交换 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+条件 & 25\%交换 & 50\%交换 & 100\%交换 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+等相关 & 0.9514 & 0.6470 & 0.8998 \\
+MVR追加 & 0.8782 & 0.9139 & 0.9467 \\
+\end{longtable}
+}
+
+两套生成器均明显可区分交换前后联合样本。该AUC是工程诊断，不是已校准的面板检验；接近.5也不能证明有效。原生发现数增加不能证明真实FDR正确。
+
+\chapter{双侧条件重建与条件矩扩展}
+
+\section{原算法的目标}
+
+Semi-knockoffs令\(\nu_j(X_{-j})=E(X_j\mid X_{-j})\)、\(\rho_j(X_{-j},Y)=E(X_j\mid X_{-j},Y)\)。两侧分别重建特征并独立打乱残差，比较共同预测器的损失。零假设下两个条件期望一致，为oracle双侧对称提供依据。这些重建不是标准Model-X假变量，不能与SCPL生成机制混称。
+
+原文实践允许条件模型使用评分响应；本研究明确将rank响应提供给条件重建，不提供给基础预测器训练、早停或最终测试预测。条件于Y的拟合属于算法定义，不是未披露的基础模型泄漏。估计模型可能过拟合并偏离零假设对称，因此实际FDR需要单独检验。
+
+\section{条件均值与尺度的四种机制}
+
+线性条件均值可能无法表达平方效应中的方差信息。因此预先登记四种重建：固定Ridge均值；加入平方与响应交互的非线性均值；线性均值加条件尺度；非线性均值与条件尺度联合。每种分别接入同一批XGBoost和TabM，共八项评分，主候选为TabM联合扩展。
+
+非线性侧使用原输入及逐坐标平方，条件于Y时再加Y、Y²及Y与其他特征的乘积。不声称这是通用深度条件分布估计。尺度模型对残差平方加稳定常数后取log并用相同基函数Ridge拟合，指数预测相对残差方差截断在{[}.05,20{]}，再开方；这是一种条件尺度代理而非已证明无偏的方差估计。
+
+\[
+\widetilde X^{(r)}_{ij}
+=\widehat m_{rj}(Z_{ri})+
+\widehat s_{rj}(Z_{ri})
+\left\{\frac{X_{\pi_r(i),j}-\widehat m_{rj}(Z_{r,\pi_r(i)})}
+{\widehat s_{rj}(Z_{r,\pi_r(i)})}\right\},\quad r=1,2.
+\]
+
+两侧使用相互独立的置换，所有机制共享置换；不使用Y的一侧\(Z_1=X_{-j}\)，另一侧\(Z_2=(X_{-j},Y)\)。统计量按行平均平方损失差，不额外标准化。零假设下oracle均值及尺度一致时，两侧残差抽样对称，但估计均值尺度不会自动保持这一性质。这里不提出无条件的新FDR定理。
+
+\section{作者代码核验与实现差异}
+
+作者源码锁定commit \texttt{ff51ec239529620300e92efd9988eb69490eb3ac}。在小型样本上逐项核对Ridge拟合、置换顺序与向量化损失分数，最大差约\(2.0\times10^{-16}\)。固定alpha=1代替原实验RidgeCV；基础预测器、样本与评价器采用本文公共协议，故称原算法机制适配，不称复现原文全部实验。
+
+作者辅助阈值函数在无解时返回最后一个有限候选。例如W=(1,2,3,4)、q=.2时，任何阈值都不满足Knockoff+条件，原函数仍返回4。本文按原文公式修正为\(\infty\)并保留反例，不把软件错误归于原文数学定理，也不把纠错当作算法创新。
+
+\section{补充结果}
+
+本实验在全部111个公共真实案例上计算八种评分，并在相同800份SCPL模拟数据上追加6,400个方法案例。没有新增800份独立数据，也没有复用旧方法输出冒充新算法结果。Top-8/12采用两个公共评价器，共32组真实预测；预测器与父实验的参考分数逐真实案例核对。
+
+{
+\footnotesize
+\begin{longtable}[]{@{}lllll@{}}
+\caption{条件矩扩展的真实Top-12结果}\tabularnewline
+\toprule\noalign{}
+方法 & XGB-RMSE & TabM-RMSE & 半样本J & Nogueira \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+方法 & XGB-RMSE & TabM-RMSE & 半样本J & Nogueira \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+XGBoost-SHAP & 1.8466 & 1.8571 & 0.7682 & 0.7439 \\
+TabM置换 & 1.8458 & 1.8586 & 0.7288 & 0.6841 \\
+Deep Lasso & 1.8468 & 1.8567 & 0.8394 & 0.8012 \\
+XGB-SKO-Ridge & 1.8794 & 1.8669 & 0.4511 & 0.2696 \\
+XGB-SKO-非线性均值 & 1.8612 & 1.8722 & 0.3828 & 0.2228 \\
+XGB-SKO-尺度 & 1.8813 & 1.8731 & 0.3927 & 0.3007 \\
+XGB-SKO-均值尺度 & 1.8508 & 1.8654 & 0.4407 & 0.2568 \\
+TabM-SKO-Ridge & 1.8996 & 1.9130 & 0.4397 & 0.3115 \\
+TabM-SKO-非线性均值 & 1.8837 & 1.9010 & 0.4224 & 0.3103 \\
+TabM-SKO-尺度 & 1.8793 & 1.9009 & 0.4713 & 0.3617 \\
+TabM-SKO-均值尺度 & 1.8965 & 1.9033 & 0.4099 & 0.3497 \\
+\end{longtable}
+}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={共同预测器下的真实预测与样本稳定性，误差与名单一致性分开评价}]{figures/10_conditional_moments_real.png}}
+\caption{共同预测器下的真实预测与样本稳定性，误差与名单一致性分开评价}
+\end{figure}
+
+{
+\footnotesize
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.150000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.280000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.142500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.142500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.142500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.142500}}@{}}
+\caption{条件矩扩展的八场景原生发现}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+场景
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+方法
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+平均FDP
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+MCSE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Power
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+发现数
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+场景
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+方法
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+平均FDP
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+MCSE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Power
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+发现数
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+全无效 & XGB-SKO-Ridge & 0.0300 & 0.0171 & 不定义 & 0.30 \\
+全无效 & XGB-SKO-非线性均值 & 0.0400 & 0.0197 & 不定义 & 0.32 \\
+全无效 & XGB-SKO-尺度 & 0.0200 & 0.0141 & 不定义 & 0.11 \\
+全无效 & XGB-SKO-均值尺度 & 0.0500 & 0.0219 & 不定义 & 0.36 \\
+全无效 & TabM-SKO-Ridge & 0.0400 & 0.0197 & 不定义 & 0.28 \\
+全无效 & TabM-SKO-非线性均值 & 0.0200 & 0.0141 & 不定义 & 0.10 \\
+全无效 & TabM-SKO-尺度 & 0.0300 & 0.0171 & 不定义 & 0.22 \\
+全无效 & TabM-SKO-均值尺度 & 0.0300 & 0.0171 & 不定义 & 0.20 \\
+线性稀疏 & XGB-SKO-Ridge & 0.1551 & 0.0184 & 1.0000 & 6.32 \\
+线性稀疏 & XGB-SKO-非线性均值 & 0.1327 & 0.0169 & 1.0000 & 6.08 \\
+线性稀疏 & XGB-SKO-尺度 & 0.1769 & 0.0184 & 1.0000 & 6.54 \\
+线性稀疏 & XGB-SKO-均值尺度 & 0.1446 & 0.0166 & 1.0000 & 6.18 \\
+线性稀疏 & TabM-SKO-Ridge & 0.1799 & 0.0212 & 1.0000 & 6.83 \\
+线性稀疏 & TabM-SKO-非线性均值 & 0.1830 & 0.0205 & 1.0000 & 6.77 \\
+线性稀疏 & TabM-SKO-尺度 & 0.1786 & 0.0201 & 1.0000 & 6.68 \\
+线性稀疏 & TabM-SKO-均值尺度 & 0.1990 & 0.0218 & 1.0000 & 7.08 \\
+强非线性 & XGB-SKO-Ridge & 0.0100 & 0.0050 & 0.1350 & 1.45 \\
+强非线性 & XGB-SKO-非线性均值 & 0.1102 & 0.0142 & 0.8190 & 9.67 \\
+强非线性 & XGB-SKO-尺度 & 0.0558 & 0.0111 & 0.4000 & 4.70 \\
+强非线性 & XGB-SKO-均值尺度 & 0.1356 & 0.0149 & 0.9130 & 11.04 \\
+强非线性 & TabM-SKO-Ridge & 0.0183 & 0.0079 & 0.1290 & 1.52 \\
+强非线性 & TabM-SKO-非线性均值 & 0.1125 & 0.0134 & 0.8560 & 10.01 \\
+强非线性 & TabM-SKO-尺度 & 0.0351 & 0.0098 & 0.3200 & 3.66 \\
+强非线性 & TabM-SKO-均值尺度 & 0.1313 & 0.0151 & 0.8660 & 10.50 \\
+弱非线性 & XGB-SKO-Ridge & 0.0161 & 0.0069 & 0.0580 & 0.73 \\
+弱非线性 & XGB-SKO-非线性均值 & 0.0885 & 0.0137 & 0.4540 & 5.57 \\
+弱非线性 & XGB-SKO-尺度 & 0.0221 & 0.0071 & 0.1800 & 1.99 \\
+弱非线性 & XGB-SKO-均值尺度 & 0.0967 & 0.0142 & 0.5700 & 6.95 \\
+弱非线性 & TabM-SKO-Ridge & 0.0278 & 0.0095 & 0.0740 & 0.92 \\
+弱非线性 & TabM-SKO-非线性均值 & 0.1023 & 0.0150 & 0.4710 & 5.90 \\
+弱非线性 & TabM-SKO-尺度 & 0.0360 & 0.0101 & 0.1060 & 1.40 \\
+弱非线性 & TabM-SKO-均值尺度 & 0.1223 & 0.0151 & 0.5150 & 6.49 \\
+纯交互 & XGB-SKO-Ridge & 0.0210 & 0.0108 & 0.0190 & 0.41 \\
+纯交互 & XGB-SKO-非线性均值 & 0.1603 & 0.0165 & 0.7950 & 10.17 \\
+纯交互 & XGB-SKO-尺度 & 0.0049 & 0.0035 & 0.0090 & 0.12 \\
+纯交互 & XGB-SKO-均值尺度 & 0.1559 & 0.0157 & 0.8110 & 10.26 \\
+纯交互 & TabM-SKO-Ridge & 0.0000 & 0.0000 & 0.0120 & 0.12 \\
+纯交互 & TabM-SKO-非线性均值 & 0.1500 & 0.0146 & 0.9590 & 11.72 \\
+纯交互 & TabM-SKO-尺度 & 0.0000 & 0.0000 & 0.0160 & 0.16 \\
+纯交互 & TabM-SKO-均值尺度 & 0.1493 & 0.0145 & 0.9660 & 11.79 \\
+高相关线性 & XGB-SKO-Ridge & 0.1413 & 0.0167 & 0.6370 & 8.24 \\
+高相关线性 & XGB-SKO-非线性均值 & 0.1514 & 0.0156 & 0.6620 & 8.48 \\
+高相关线性 & XGB-SKO-尺度 & 0.1432 & 0.0154 & 0.6800 & 8.58 \\
+高相关线性 & XGB-SKO-均值尺度 & 0.1481 & 0.0154 & 0.6470 & 8.29 \\
+高相关线性 & TabM-SKO-Ridge & 0.1541 & 0.0171 & 0.7970 & 10.28 \\
+高相关线性 & TabM-SKO-非线性均值 & 0.1423 & 0.0158 & 0.7560 & 9.56 \\
+高相关线性 & TabM-SKO-尺度 & 0.1608 & 0.0170 & 0.8030 & 10.42 \\
+高相关线性 & TabM-SKO-均值尺度 & 0.1343 & 0.0162 & 0.7640 & 9.55 \\
+已知混合变换 & XGB-SKO-Ridge & 0.0050 & 0.0036 & 0.0420 & 0.47 \\
+已知混合变换 & XGB-SKO-非线性均值 & 0.0883 & 0.0128 & 0.7160 & 8.26 \\
+已知混合变换 & XGB-SKO-尺度 & 0.0312 & 0.0090 & 0.2440 & 2.83 \\
+已知混合变换 & XGB-SKO-均值尺度 & 0.1248 & 0.0140 & 0.8670 & 10.35 \\
+已知混合变换 & TabM-SKO-Ridge & 0.0125 & 0.0060 & 0.0750 & 0.89 \\
+已知混合变换 & TabM-SKO-非线性均值 & 0.1297 & 0.0137 & 0.8500 & 10.21 \\
+已知混合变换 & TabM-SKO-尺度 & 0.0424 & 0.0106 & 0.3430 & 3.89 \\
+已知混合变换 & TabM-SKO-均值尺度 & 0.1643 & 0.0138 & 0.8860 & 11.06 \\
+t生成错设 & XGB-SKO-Ridge & 0.0076 & 0.0060 & 0.0280 & 0.38 \\
+t生成错设 & XGB-SKO-非线性均值 & 0.0809 & 0.0129 & 0.2380 & 3.07 \\
+t生成错设 & XGB-SKO-尺度 & 0.0152 & 0.0061 & 0.0370 & 0.47 \\
+t生成错设 & XGB-SKO-均值尺度 & 0.1143 & 0.0161 & 0.3010 & 4.16 \\
+t生成错设 & TabM-SKO-Ridge & 0.0215 & 0.0123 & 0.0190 & 0.37 \\
+t生成错设 & TabM-SKO-非线性均值 & 0.1147 & 0.0192 & 0.2200 & 3.44 \\
+t生成错设 & TabM-SKO-尺度 & 0.0205 & 0.0105 & 0.0250 & 0.48 \\
+t生成错设 & TabM-SKO-均值尺度 & 0.0999 & 0.0186 & 0.2000 & 3.13 \\
+\end{longtable}
+}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={八场景中的原生平均FDP和Power，名义水平不代替有效性验证}]{figures/11_loss_simulation_boundaries.png}}
+\caption{八场景中的原生平均FDP和Power，名义水平不代替有效性验证}
+\end{figure}
+
+预定主候选的XGB评价RMSE为1.8965，同TabM的Ridge机制适配为1.8996；其半样本参考Jaccard为0.4099。相对SHAP的RMSE差为0.0499，卖家簇Bootstrap点态95\%区间为{[}0.0308,0.0697{]}。区间跨零时不能宣称已证实提升，也不能声称已证明等价。
+
+强非线性下主候选Power为0.8660，Ridge适配为0.1290；主候选平均FDP为0.1313。平均FDP超过名义.20的场景检查：所列场景未出现高于.20的点估计，但有限模拟不证明总体控制。检出增多须与误选同时解释。条件尺度建模不自动产生交换有效性，任何经验失控都必须保留，不因其真实预测较好而隐去。
+
+该实验补足了近期双侧条件重建的机制比较，但仅是固定参数、有限基函数的适配。当前没有把条件均值/尺度扩展称为已证明原创的新方法。
+
+\textbf{独立组件判断。} 强非线性中只用非线性均值的Power已为.856，联合尺度后为.866；纯交互中为.959与.966。大部分检出改进来自非线性条件均值，而不是尺度项。联合项减非线性均值的配对差如下，Holm校正限于同场景、同规则、同指标的比较族，不能解释为跨所有场景筛选后的确认结论。
+
+{
+\footnotesize
+\begin{longtable}[]{@{}llll@{}}
+\caption{条件尺度相对非线性均值的检出增量}\tabularnewline
+\toprule\noalign{}
+场景 & 加入尺度的Power差 & 95\%区间 & Holm p \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+场景 & 加入尺度的Power差 & 95\%区间 & Holm p \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+强非线性 & 0.0100 & {[}-0.0240,0.0440{]} & 0.561 \\
+弱非线性 & 0.0440 & {[}-0.0083,0.0963{]} & 0.09793 \\
+纯交互 & 0.0070 & {[}-0.0029,0.0169{]} & 0.3252 \\
+已知混合变换 & 0.0360 & {[}0.0074,0.0646{]} & 0.01401 \\
+高相关线性 & 0.0080 & {[}-0.0140,0.0300{]} & 1 \\
+\end{longtable}
+}
+
+联合TabM真实RMSE约1.8965，SHAP为1.8466，误差差区间完全为正；参考Jaccard约.4099，也低于SHAP的.7682。联合方法没有形成真实应用优势。此外，未标准化SCPL随机对称TabM在强非线性、弱非线性和纯交互中的Power仍更高，因此不能把相对Ridge适配的巨大提高写成超越所有非线性方法。
+
+条件重建扩展在何种机制下有收益，需要与同一预测器的Ridge、非线性均值和尺度单独版本对比，而不是只与线性预测器比较。是否优于SHAP则只能在相同K的预测和模拟表中回答；原生FDR程序与没有原生阈值的SHAP不直接混比。
+
+\chapter{讨论、业务含义与局限}
+
+\section{为什么没有全面优胜者}
+
+31项指标中存在强代理和构成约束，增加网络复杂度不一定增加可识别信息。预测器可利用多个相似指标保持准确，却可能在抽样后交换它们的排名；高名单稳定性也可能来自强惩罚或机械并列。FDR规则则允许证据不足时不作发现，这与固定展示容量存在真实冲突。
+
+由此需要区分三种结果：预测器改善了响应拟合；评分改善了真变量相对假变量的可区分程度；生成器更接近有效联合分布。只有控制其他部分，才能把收益归因于具体改动。标准化失败、EntryPrune刷新失败及生成器替换敏感性，都是这一分解的实证证据。
+
+\section{指标看板的使用边界}
+
+研究名单可作为后续看板试运行候选。展示8或12项需要结合维护成本，而不是对每一项附加``真实有效''的永久标签。应持续记录未来月份误差、缺失、变量替代和名单变动；没有新数据验证前，不把测试期点估计最优名单设为唯一生产默认。
+
+具体解释应回到经营口径：交易规模指标提示下一期签收规模，履约和口碑指标反映当前可见状态，地域指标表达买家构成。指标被选中不说明人为改变它必然改变GMV。业务原因解释仍需描述性拆解或因果设计。
+
+\section{有效性与计算限制}
+
+本研究仅有一个电商平台和三个测试月份，且测试已被探索查看；同卖家跨期相关破坏简单独立样本前提。生成器和条件矩估计都存在建模误差，缩尾、填补和静态快照也影响研究对象。真实数据未知支持集，不能直接估计真实FDP。
+
+不同实验的训练信息、早停、模拟场景和内部预算不同，因此按设计分表。共享预测器使评分消融更公平，但不能把联合训练耗时拆成各方法独立速度。基础参数在真实开发期选定后迁移到模拟，不代表每场景充分调参后的性能上界。
+
+条件矩适配统一按数值型变量使用残差重建，包含少数二元或占比指标；重建值可能离开原离散支持。本文没有实现原文所建议的分类概率重建分支，因此其真实结果和混合场景必须视为适配限制，不能用oracle连续变量结论掩盖。即使连续变量中，尺度模型也是稳定化代理而非一致性已获证明的条件方差估计。
+
+当前没有完成DeepPIG、GRIP2原算法、HRT或dCRT在公共协议下的完整比较，也没有第二真实数据集。文献名称新并不能代替这些缺口。全部已实测、失败和仅参考方法在独立档案登记，不能把``下载作者代码''统计为成功比较。
+
+\section{方法贡献的合理表述}
+
+可支持的贡献是一个具体可检验的评分对称化问题、性质证明、组件消融、条件重建扩展与完整负结果分析。尚不可支持的是已证明的原创优先权、估计生成器下的新FDR定理，以及电商真实数据上全面超越强基线。
+
+论证应围绕``在何种前提下解决什么问题、在哪些场景失败''，而不是以网络规模或尝试数量证明创新。更广泛的文献逐公式比较、近期受控非线性基线和独立真实数据，是决定方法原型能否形成充分学位论文贡献的后续证据。
+
+\chapter{结论与后续研究}
+
+基础比较显示近期深度方法具有竞争力，但没有跨预测器、稳定性与模拟发现质量的一致冠军。模型内部机制改动中，Jacobian具有局部稳定性价值，预算门、动态剪枝和序列损失的独立收益受限。负结果不应被更换指标或事后主方法遮盖。
+
+交换对称成对损失满足明确的路径级符号翻转，并可在精确生成器与独立评分条件下使用已有Knockoff理论。非线性模拟中它相对匹配线性模型提高检出，但标准化常降低Power，高相关线性构成反例。真实生成器失配限制了实际发现解释，MVR敏感性改善预测也未提供可靠的稳定性优势。
+
+双侧条件矩补充得到主候选真实RMSE 1.8965、半样本J 0.4099，强非线性Power 0.8660与平均FDP 0.1313。它说明估计条件矩的收益与误选代价需要共同检查；作者阈值函数的纠错仅保证实现符合公式，不能补救条件模型失配。
+
+后续优先进行三项工作：在未使用过的真实数据和时间窗口冻结验证；与近期非线性受控筛选算法按相同信息与预算比较；研究条件矩估计误差和生成失配对统计量符号及发现风险的影响。只有这些证据补足后，才能更明确判断方法贡献与适用范围。本文不预先承诺这些工作必然产生优势。
+
+\backmatter
+\begin{thebibliography}{99}
+\bibitem{lasso1996} Tibshirani R. Regression shrinkage and selection via the lasso[J]. Journal of the Royal Statistical Society, Series B, 58(1), 267-288, 1996. \url{https://doi.org/10.1111/j.2517-6161.1996.tb02080.x}.
+\bibitem{elastic2005} Zou H, Hastie T. Regularization and variable selection via the elastic net[J]. Journal of the Royal Statistical Society, Series B, 67(2), 301-320, 2005. \url{https://doi.org/10.1111/j.1467-9868.2005.00503.x}.
+\bibitem{stability2010} Meinshausen N, Buhlmann P. Stability selection[J]. Journal of the Royal Statistical Society, Series B, 72(4), 417-473, 2010. \url{https://doi.org/10.1111/j.1467-9868.2010.00740.x}.
+\bibitem{cpss2013} Shah R D, Samworth R J. Variable selection with error control: another look at stability selection[J]. Journal of the Royal Statistical Society, Series B, 75(1), 55-80, 2013. \url{https://doi.org/10.1111/j.1467-9868.2011.01034.x}.
+\bibitem{xgb2016} Chen T, Guestrin C. XGBoost: A Scalable Tree Boosting System[C]. Proceedings of KDD, 785-794, 2016. \url{https://doi.org/10.1145/2939672.2939785}.
+\bibitem{shap2017} Lundberg S M, Lee S I. A Unified Approach to Interpreting Model Predictions[C]. Advances in Neural Information Processing Systems, 30, 2017. \url{https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions}.
+\bibitem{treeshap2020} Lundberg S M, Erion G, Chen H, et al. From local explanations to global understanding with explainable AI for trees[J]. Nature Machine Intelligence, 2, 56-67, 2020. \url{https://doi.org/10.1038/s42256-019-0138-9}.
+\bibitem{extratrees2006} Geurts P, Ernst D, Wehenkel L. Extremely randomized trees[J]. Machine Learning, 63, 3-42, 2006. \url{https://doi.org/10.1007/s10994-006-6226-1}.
+\bibitem{boruta2010} Kursa M B, Rudnicki W R. Feature Selection with the Boruta Package[J]. Journal of Statistical Software, 36(11), 1-13, 2010. \url{https://doi.org/10.18637/jss.v036.i11}.
+\bibitem{deeplasso2023} Cherepanova V, Levin R, Somepalli G, et al. A Performance-Driven Benchmark for Feature Selection in Tabular Deep Learning[C]. NeurIPS Datasets and Benchmarks Track, 2023. \url{https://openreview.net/forum?id=v4PMCdSaAT}.
+\bibitem{vtfs2024} Ying W, Wang D, Chen H, Fu Y. Feature Selection as Deep Sequential Generative Learning[J]. ACM Transactions on Knowledge Discovery from Data, 18(9), Article 221, 2024. \url{https://doi.org/10.1145/3687485}.
+\bibitem{tabm2025} Gorishniy Y, Kotelnikov A, Babenko A. TabM: Advancing Tabular Deep Learning with Parameter-Efficient Ensembling[C]. International Conference on Learning Representations, 2025. \url{https://openreview.net/forum?id=Sd4wYYOhmY}.
+\bibitem{entryprune2025} Zimmer F, Okanovic P, Hoefler T. EntryPrune: Neural Network Feature Selection using First Impressions[EB/OL]. arXiv:2410.02344v4, preprint, 2025. \url{https://arxiv.org/abs/2410.02344v4}.
+\bibitem{stg2020} Yamada Y, Lindenbaum O, Negahban S, Kluger Y. Feature Selection using Stochastic Gates[C]. Proceedings of Machine Learning Research, 119, 10648-10659, 2020. \url{https://proceedings.mlr.press/v119/yamada20a.html}.
+\bibitem{snvs2018} Gregorova M, Kalousis A, Marchand-Maillet S. Structured Nonlinear Variable Selection[C]. Uncertainty in Artificial Intelligence, 2018. \url{https://auai.org/uai2018/proceedings/papers/17.pdf}.
+\bibitem{deeppink2018} Lu Y, Fan Y, Lv J, Noble W S. DeepPINK: reproducible feature selection in deep neural networks[C]. Advances in Neural Information Processing Systems, 2018. \url{https://arxiv.org/abs/1809.01185}.
+\bibitem{deeppig2024} Oh E, Lee H. DeepPIG: deep neural network architecture with pairwise connected layers and stochastic gates using knockoff frameworks for feature selection[J]. Scientific Reports, 14, Article 15582, 2024. \url{https://doi.org/10.1038/s41598-024-66061-6}.
+\bibitem{grip2026} Zou B J, Tian L. GRIP2: A Robust and Powerful Deep Knockoff Method for Feature Selection[EB/OL]. arXiv:2602.00218v1, preprint, 2026. \url{https://arxiv.org/abs/2602.00218v1}.
+\bibitem{deepdrk2024} Shen H, Yan Y, Zhao Z. DeepDRK: Deep Dependency Regularized Knockoff for Feature Selection[C]. Advances in Neural Information Processing Systems, 2024. \url{https://openreview.net/forum?id=ibKpPabHVn}.
+\bibitem{tabpfn2025} Hollmann N, Muller S, Purucker L, et al. Accurate predictions on small data with a tabular foundation model[J]. Nature, 637, 319-326, 2025. \url{https://doi.org/10.1038/s41586-024-08328-6}.
+\bibitem{bh1995} Benjamini Y, Hochberg Y. Controlling the false discovery rate: a practical and powerful approach to multiple testing[J]. Journal of the Royal Statistical Society, Series B, 57(1), 289-300, 1995. \url{https://doi.org/10.1111/j.2517-6161.1995.tb02031.x}.
+\bibitem{knockoff2015} Barber R F, Candes E J. Controlling the false discovery rate via knockoffs[J]. The Annals of Statistics, 43(5), 2055-2085, 2015. \url{https://doi.org/10.1214/15-AOS1337}.
+\bibitem{modelx2018} Candes E, Fan Y, Janson L, Lv J. Panning for gold: model-X knockoffs for high dimensional controlled variable selection[J]. Journal of the Royal Statistical Society, Series B, 80(3), 551-577, 2018. \url{https://doi.org/10.1111/rssb.12265}.
+\bibitem{mvr2022} Spector A, Janson L. Powerful knockoffs via minimizing reconstructability[J]. The Annals of Statistics, 50(1), 252-276, 2022. \url{https://doi.org/10.1214/21-AOS2104}.
+\bibitem{derand2024} Ren Z, Barber R F. Derandomised knockoffs: leveraging e-values for false discovery rate control[J]. Journal of the Royal Statistical Society, Series B, 86(1), 122-154, 2024. \url{https://doi.org/10.1093/jrsssb/qkad085}.
+\bibitem{ebh2022} Wang R, Ramdas A. False discovery rate control with e-values[J]. Journal of the Royal Statistical Society, Series B, 84(3), 822-852, 2022. \url{https://doi.org/10.1111/rssb.12489}.
+\bibitem{knockofffail2025} Blain A, Reyero Lobo A, Linhart J, Thirion B, Neuvial P. When knockoffs fail: diagnosing and fixing non-exchangeability of knockoffs[EB/OL]. arXiv:2407.06892, revised preprint, 2025. \url{https://arxiv.org/abs/2407.06892}.
+\bibitem{cpi2021} Watson D S, Wright M N. Testing conditional independence in supervised learning algorithms[J]. Machine Learning, 110, 2107-2129, 2021. \url{https://doi.org/10.1007/s10994-021-06030-6}.
+\bibitem{semiko2026} Reyero-Lobo A, Thirion B, Neuvial P. Semi-knockoffs: a model-agnostic conditional independence testing method with finite-sample guarantees[C]. International Conference on Machine Learning; arXiv:2601.23124v2, 2026. \url{https://arxiv.org/abs/2601.23124v2}.
+\bibitem{olist2018} Olist. Brazilian E-Commerce Public Dataset by Olist[DB/OL]. Kaggle dataset, 2018. \url{https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce}.
+\bibitem{funnel2018} Olist. Marketing Funnel by Olist[DB/OL]. Kaggle dataset, 2018. \url{https://www.kaggle.com/datasets/olistbr/marketing-funnel-olist}.
+\bibitem{nogueira2018} Nogueira S, Sechidis K, Brown G. On the Stability of Feature Selection Algorithms[J]. Journal of Machine Learning Research, 18(174), 1-54, 2018. \url{https://www.jmlr.org/papers/v18/17-514.html}.
+\bibitem{morris2019} Morris T P, White I R, Crowther M J. Using simulation studies to evaluate statistical methods[J]. Statistics in Medicine, 38(11), 2074-2102, 2019. \url{https://doi.org/10.1002/sim.8086}.
+\bibitem{ledoit2004} Ledoit O, Wolf M. A well-conditioned estimator for large-dimensional covariance matrices[J]. Journal of Multivariate Analysis, 88(2), 365-411, 2004. \url{https://doi.org/10.1016/S0047-259X(03)00096-4}.
+\end{thebibliography}
+\chapterx{附录A 候选指标字典}
+{
+\footnotesize
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.250000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.150000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.150000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.150000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.150000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.150000}}@{}}
+\caption{31项指标及观测范围}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+编号
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+中文含义
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+类型
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+观测范围
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+取值数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+缺失率
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+编号
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+中文含义
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+类型
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+观测范围
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+取值数
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+缺失率
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & 平均商品价格 & 连续聚合量 & 0.850至6735.000 & 8101 & 0.00\% \\
+2 & 平均运费 & 连续聚合量 & 0.030至314.400 & 9396 & 0.00\% \\
+3 & 平均商品重量 & 连续聚合量 & 2.000至30000.000 & 5499 & 0.01\% \\
+4 & 平均商品长度 & 连续聚合量 & 8.000至105.000 & 2345 & 0.01\% \\
+5 & 平均商品高度 & 连续聚合量 & 2.000至105.000 & 2306 & 0.01\% \\
+6 & 平均商品宽度 & 连续聚合量 & 6.000至104.000 & 2239 & 0.01\% \\
+7 & 平均商品图片数 & 连续聚合量 & 1.000至19.000 & 928 & 1.66\% \\
+8 & 平均商品标题长度 & 连续聚合量 & 7.000至64.000 & 2229 & 1.66\% \\
+9 & 平均商品描述长度 & 连续聚合量 & 4.000至3992.000 & 7535 & 1.66\% \\
+10 & 平均支付分期期数 & 连续聚合量 & 1.000至24.000 & 1579 & 0.00\% \\
+11 & 平均支付序列数 & 连续聚合量 & 1.000至15.000 & 284 & 0.00\% \\
+12 & 信用卡支付占比 & 连续聚合量 & 0.000至1.000 & 1836 & 0.00\% \\
+13 & Boleto支付占比 & 连续聚合量 & 0.000至1.000 & 374 & 0.00\% \\
+14 & 代金券支付占比 & 连续聚合量 & 0.000至1.000 & 1690 & 0.00\% \\
+15 & 借记卡支付占比 & 连续聚合量 & 0.000至1.000 & 151 & 0.00\% \\
+16 & 月末可见平均评价 & 连续聚合量 & 1.000至5.000 & 382 & 26.68\% \\
+17 & 月末已送达平均天数 & 连续聚合量 & 1.115至29.304 & 10733 & 21.74\% \\
+18 & 月末已审核平均天数 & 连续聚合量 & 0.000至23.162 & 11290 & 0.61\% \\
+19 & 月末已承运平均准备天数 & 连续聚合量 & 0.001至24.190 & 12725 & 7.14\% \\
+20 & 月末已送达预计提前天数 & 连续聚合量 & -13.236至139.397 & 10740 & 21.74\% \\
+21 & 购买件数 & 计数 & 1.000至358.000 & 153 & 0.00\% \\
+22 & 购买订单数 & 计数 & 1.000至271.000 & 139 & 0.00\% \\
+23 & 活跃品类数 & 计数 & 0.000至17.000 & 17 & 0.00\% \\
+24 & 独立顾客数 & 计数 & 1.000至268.000 & 140 & 0.00\% \\
+25 & 买家州数量 & 计数 & 1.000至22.000 & 22 & 0.00\% \\
+26 & 第一大买家州占比 & 连续聚合量 & 0.100至1.000 & 453 & 0.00\% \\
+27 & 跨州交易占比 & 连续聚合量 & 0.000至1.000 & 515 & 0.00\% \\
+28 & 平均买卖家距离 & 连续聚合量 & 0.000至3343.136 & 13684 & 0.43\% \\
+29 & 已观察卖家州频率 & 连续聚合量 & 0.000至0.605 & 230 & 0.00\% \\
+30 & 已成交营销来源频率 & 连续聚合量 & 0.000至0.344 & 41 & 0.00\% \\
+31 & 月末已匹配营销成交 & 二元 & 0.000至1.000 & 2 & 0.00\% \\
+\end{longtable}
+}
+
+\chapterx{附录B 完整表与复现}
+{
+\footnotesize
+\begin{longtable}[]{@{}llllll@{}}
+\caption{SCPL全部同预算评分结果，六个精确非零场景等权平均}\tabularnewline
+\toprule\noalign{}
+方法 & XGB误差 & TabM误差 & J & FDP@12 & Power@12 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+方法 & XGB误差 & TabM误差 & J & FDP@12 & Power@12 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+评分集成对Lasso & 1.9488 & 1.9765 & 0.3569 & 0.5203 & 0.6590 \\
+线性预测器+标准化对称差 & 2.0784 & 2.0687 & 0.4046 & 0.4860 & 0.7002 \\
+XGBoost-SHAP & 1.8466 & 1.8571 & 0.7682 & 0.2629 & 0.9678 \\
+XGBoost-置换 & 1.8478 & 1.8612 & 0.7853 & 0.2514 & 0.9817 \\
+TabM-置换 & 1.8458 & 1.8586 & 0.7288 & 0.2594 & 0.9720 \\
+Deep Lasso & 1.8468 & 1.8567 & 0.8394 & 0.2678 & 0.9620 \\
+XGB-普通损失差 & 1.9286 & 1.9479 & 0.4237 & 0.2669 & 0.9630 \\
+XGB-中点对称差 & 1.9286 & 1.9479 & 0.4308 & 0.2719 & 0.9570 \\
+XGB-随机对称差 & 1.9286 & 1.9479 & 0.4300 & 0.2697 & 0.9597 \\
+XGB-标准化对称差 & 1.9323 & 1.9621 & 0.3387 & 0.3171 & 0.9028 \\
+TabM-普通损失差 & 2.0271 & 2.0294 & 0.3740 & 0.2728 & 0.9560 \\
+TabM-中点对称差 & 1.8577 & 1.8776 & 0.3934 & 0.2769 & 0.9510 \\
+TabM-随机对称差 & 1.8577 & 1.8776 & 0.3912 & 0.2739 & 0.9547 \\
+TabM-标准化对称差 & 2.0964 & 2.0886 & 0.3249 & 0.3214 & 0.8977 \\
+\end{longtable}
+}
+
+{
+\footnotesize
+\begin{longtable}[]{@{}llll@{}}
+\caption{条件矩与共同对照的固定K模拟结果}\tabularnewline
+\toprule\noalign{}
+方法 & 六场景FDP@12 & Power@12 & 共同模拟RMSE \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+方法 & 六场景FDP@12 & Power@12 & 共同模拟RMSE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+XGBoost-SHAP & 0.2629 & 0.9678 & 0.9631 \\
+TabM-随机对称差 & 0.2739 & 0.9547 & 0.9643 \\
+TabM-标准化对称差 & 0.3214 & 0.8977 & 0.9732 \\
+XGB-SKO-Ridge & 0.5064 & 0.6757 & 1.0480 \\
+XGB-SKO-非线性均值 & 0.3453 & 0.8690 & 0.9848 \\
+XGB-SKO-尺度 & 0.4629 & 0.7278 & 1.0275 \\
+XGB-SKO-均值尺度 & 0.3247 & 0.8937 & 0.9767 \\
+TabM-SKO-Ridge & 0.4829 & 0.7038 & 1.0433 \\
+TabM-SKO-非线性均值 & 0.3140 & 0.9065 & 0.9758 \\
+TabM-SKO-尺度 & 0.4529 & 0.7398 & 1.0278 \\
+TabM-SKO-均值尺度 & 0.3090 & 0.9125 & 0.9733 \\
+\end{longtable}
+}
+
+{
+\footnotesize
+\begin{longtable}[]{@{}lllll@{}}
+\caption{q=.10敏感性，预定主候选}\tabularnewline
+\toprule\noalign{}
+主候选 & 场景 & 平均FDP & Power & 发现数 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+主候选 & 场景 & 平均FDP & Power & 发现数 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+TabM-标准化对称差 & 全无效 & 0.0100 & 不定义 & 0.11 \\
+TabM-标准化对称差 & 高相关线性 & 0.0477 & 0.1880 & 2.54 \\
+TabM-标准化对称差 & 线性稀疏 & 0.0167 & 0.0300 & 0.34 \\
+TabM-标准化对称差 & t生成错设 & 0.0325 & 0.0440 & 0.82 \\
+TabM-标准化对称差 & 已知混合变换 & 0.0602 & 0.3270 & 3.96 \\
+TabM-标准化对称差 & 强非线性 & 0.0607 & 0.2740 & 3.45 \\
+TabM-标准化对称差 & 弱非线性 & 0.0399 & 0.0900 & 1.37 \\
+TabM-标准化对称差 & 纯交互 & 0.0588 & 0.5260 & 5.96 \\
+TabM-SKO-均值尺度 & 全无效 & 0.0000 & 不定义 & 0.00 \\
+TabM-SKO-均值尺度 & 高相关线性 & 0.0542 & 0.3990 & 4.64 \\
+TabM-SKO-均值尺度 & 线性稀疏 & 0.0387 & 0.0700 & 0.79 \\
+TabM-SKO-均值尺度 & t生成错设 & 0.0109 & 0.0230 & 0.36 \\
+TabM-SKO-均值尺度 & 已知混合变换 & 0.0667 & 0.4760 & 5.55 \\
+TabM-SKO-均值尺度 & 强非线性 & 0.0479 & 0.4540 & 5.14 \\
+TabM-SKO-均值尺度 & 弱非线性 & 0.0223 & 0.0830 & 1.07 \\
+TabM-SKO-均值尺度 & 纯交互 & 0.0569 & 0.7340 & 8.08 \\
+\end{longtable}
+}
+
+表格均由案例JSON与逐行预测CSV生成。相同输入哈希、排名、两种原生阈值、模拟FDP/Power、预测指标以及相同集合预测一致性逐项核对。模拟失败不丢弃，空集采用均值预测，不以零值填补未运行模型。源码初始和最终摘要、软件版本、作者代码及日志在工程中保留。
+
+预测CSV的float32序列化后以float64复算可产生约\(10^{-8}\)量级差异，采用明确数值容差。系统矩阵乘法警告保留，并进行有限值与替代计算核验，不通过关闭警告隐藏失败。完整工程与正式六份TeX/PDF分开，签名和审批意见留空。
+
+本文借助自动化计算和写作工具形成；作者与导师须复核统计论证、引文与署名，并遵守学校关于AI辅助和学术诚信的规定。
+
+\end{document}

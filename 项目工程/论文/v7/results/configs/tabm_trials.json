@@ -1,0 +1,122 @@
+[
+  {
+    "trial": 0,
+    "params": {
+      "width": 64,
+      "layers": 2,
+      "lr": 0.0005
+    },
+    "rmse_scaled": 0.7169428624304809,
+    "seconds": 5.522782915970311
+  },
+  {
+    "trial": 1,
+    "params": {
+      "width": 64,
+      "layers": 2,
+      "lr": 0.001
+    },
+    "rmse_scaled": 0.7036311401888582,
+    "seconds": 4.856298666913062
+  },
+  {
+    "trial": 2,
+    "params": {
+      "width": 64,
+      "layers": 2,
+      "lr": 0.003
+    },
+    "rmse_scaled": 0.7039514821499618,
+    "seconds": 2.537193583091721
+  },
+  {
+    "trial": 3,
+    "params": {
+      "width": 64,
+      "layers": 3,
+      "lr": 0.0005
+    },
+    "rmse_scaled": 0.7030708121352681,
+    "seconds": 7.453695083037019
+  },
+  {
+    "trial": 4,
+    "params": {
+      "width": 64,
+      "layers": 3,
+      "lr": 0.001
+    },
+    "rmse_scaled": 0.7009872373111229,
+    "seconds": 5.593678708886728
+  },
+  {
+    "trial": 5,
+    "params": {
+      "width": 64,
+      "layers": 3,
+      "lr": 0.003
+    },
+    "rmse_scaled": 0.7027640305167469,
+    "seconds": 2.919625415932387
+  },
+  {
+    "trial": 6,
+    "params": {
+      "width": 128,
+      "layers": 2,
+      "lr": 0.0005
+    },
+    "rmse_scaled": 0.7143956077841672,
+    "seconds": 11.163766792044044
+  },
+  {
+    "trial": 7,
+    "params": {
+      "width": 128,
+      "layers": 2,
+      "lr": 0.001
+    },
+    "rmse_scaled": 0.7120747026658488,
+    "seconds": 9.149017666000873
+  },
+  {
+    "trial": 8,
+    "params": {
+      "width": 128,
+      "layers": 2,
+      "lr": 0.003
+    },
+    "rmse_scaled": 0.7108904824618814,
+    "seconds": 4.081694915890694
+  },
+  {
+    "trial": 9,
+    "params": {
+      "width": 128,
+      "layers": 3,
+      "lr": 0.0005
+    },
+    "rmse_scaled": 0.7118160999742645,
+    "seconds": 16.312121708877385
+  },
+  {
+    "trial": 10,
+    "params": {
+      "width": 128,
+      "layers": 3,
+      "lr": 0.001
+    },
+    "rmse_scaled": 0.7118927326193217,
+    "seconds": 11.301080709090456
+  },
+  {
+    "trial": 11,
+    "params": {
+      "width": 128,
+      "layers": 3,
+      "lr": 0.003
+    },
+    "rmse_scaled": 0.7099253584013718,
+    "seconds": 5.053407208994031
+  }
+]

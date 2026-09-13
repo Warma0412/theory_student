@@ -1,0 +1,110 @@
+[
+  {
+    "trial": 0,
+    "params": {
+      "alpha": 0.001,
+      "l1_ratio": 0.5
+    },
+    "rmse_scaled": 0.7615897544729222,
+    "seconds": 0.025041208136826754
+  },
+  {
+    "trial": 1,
+    "params": {
+      "alpha": 0.001,
+      "l1_ratio": 0.9
+    },
+    "rmse_scaled": 0.7615662885753754,
+    "seconds": 0.020247959066182375
+  },
+  {
+    "trial": 2,
+    "params": {
+      "alpha": 0.003,
+      "l1_ratio": 0.5
+    },
+    "rmse_scaled": 0.7615679397764467,
+    "seconds": 0.01130062504671514
+  },
+  {
+    "trial": 3,
+    "params": {
+      "alpha": 0.003,
+      "l1_ratio": 0.9
+    },
+    "rmse_scaled": 0.761572109426197,
+    "seconds": 0.017153457971289754
+  },
+  {
+    "trial": 4,
+    "params": {
+      "alpha": 0.01,
+      "l1_ratio": 0.5
+    },
+    "rmse_scaled": 0.7619281044801116,
+    "seconds": 0.004909582901746035
+  },
+  {
+    "trial": 5,
+    "params": {
+      "alpha": 0.01,
+      "l1_ratio": 0.9
+    },
+    "rmse_scaled": 0.7626494463234945,
+    "seconds": 0.01432804181240499
+  },
+  {
+    "trial": 6,
+    "params": {
+      "alpha": 0.03,
+      "l1_ratio": 0.5
+    },
+    "rmse_scaled": 0.764019850968031,
+    "seconds": 0.011181999929249287
+  },
+  {
+    "trial": 7,
+    "params": {
+      "alpha": 0.03,
+      "l1_ratio": 0.9
+    },
+    "rmse_scaled": 0.7667189381912938,
+    "seconds": 0.005852000089362264
+  },
+  {
+    "trial": 8,
+    "params": {
+      "alpha": 0.1,
+      "l1_ratio": 0.5
+    },
+    "rmse_scaled": 0.7728778867492241,
+    "seconds": 0.0013604999985545874
+  },
+  {
+    "trial": 9,
+    "params": {
+      "alpha": 0.1,
+      "l1_ratio": 0.9
+    },
+    "rmse_scaled": 0.780712899331942,
+    "seconds": 0.002224125200882554
+  },
+  {
+    "trial": 10,
+    "params": {
+      "alpha": 0.3,
+      "l1_ratio": 0.5
+    },
+    "rmse_scaled": 0.8039895859060906,
+    "seconds": 0.0009197078179568052
+  },
+  {
+    "trial": 11,
+    "params": {
+      "alpha": 0.3,
+      "l1_ratio": 0.9
+    },
+    "rmse_scaled": 0.8470446466323649,
+    "seconds": 0.0011111670173704624
+  }
+]

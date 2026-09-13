@@ -1,0 +1,133 @@
+{
+  "status": "ok",
+  "method": "stability_selection",
+  "scenario": {
+    "name": "linear_sparse",
+    "signals": 5,
+    "snr": 3.0,
+    "response": "linear"
+  },
+  "rep": 12,
+  "data_hash": "90ec2466fc5398d5dd0dbf34e659d47b4807833ded7fcd2f6ffc6c9dbd1708a2",
+  "truth": [
+    14,
+    13,
+    12,
+    17,
+    3
+  ],
+  "score": [
+    0.925,
+    0.95,
+    0.85,
+    1.0,
+    0.95,
+    1.0,
+    0.925,
+    0.95,
+    1.0,
+    0.9,
+    1.0,
+    0.975,
+    1.0,
+    1.0,
+    1.0,
+    0.925,
+    0.875,
+    1.0,
+    1.0,
+    0.825,
+    0.975,
+    0.975,
+    0.875,
+    1.0,
+    1.0,
+    1.0,
+    0.875,
+    0.95,
+    1.0,
+    1.0,
+    0.875
+  ],
+  "response_hash": "756044e336cd56fd65c5f4cd2e4752bd11ff502db6f3302a61fe956fdab1cda1",
+  "response_scaling": "training mean and population standard deviation",
+  "order": [
+    3,
+    17,
+    13,
+    14,
+    12,
+    5,
+    8,
+    18,
+    28,
+    23,
+    10,
+    29,
+    24,
+    25,
+    21,
+    11,
+    20,
+    7,
+    4,
+    27,
+    1,
+    15,
+    6,
+    0,
+    9,
+    16,
+    26,
+    22,
+    30,
+    2,
+    19
+  ],
+  "metrics": [
+    {
+      "rule": "top4",
+      "FDP": 0.0,
+      "power": 0.8,
+      "discoveries": 4,
+      "FDP_gt_0.2": false
+    },
+    {
+      "rule": "top8",
+      "FDP": 0.375,
+      "power": 1.0,
+      "discoveries": 8,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top10",
+      "FDP": 0.5,
+      "power": 1.0,
+      "discoveries": 10,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top12",
+      "FDP": 0.5833333333333334,
+      "power": 1.0,
+      "discoveries": 12,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "top14",
+      "FDP": 0.6428571428571429,
+      "power": 1.0,
+      "discoveries": 14,
+      "FDP_gt_0.2": true
+    },
+    {
+      "rule": "native",
+      "FDP": 0.8,
+      "power": 1.0,
+      "discoveries": 25,
+      "FDP_gt_0.2": true
+    }
+  ],
+  "rmse_at_12": 0.6487030235026189,
+  "seconds": 0.04065320803783834
+}

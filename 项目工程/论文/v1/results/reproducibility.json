@@ -1,0 +1,123 @@
+{
+  "seed": 20260823,
+  "python": "3.9.6 (default, Apr 30 2025, 02:07:17) \n[Clang 17.0.0 (clang-1700.0.13.5)]",
+  "platform": "macOS-15.7.3-arm64-arm-64bit",
+  "numpy": "2.0.2",
+  "pandas": "2.3.3",
+  "scipy": "1.13.1",
+  "scikit_learn": "1.6.1",
+  "statsmodels": "0.14.6",
+  "xgboost": "2.1.4",
+  "primary_selected_features": [
+    "avg_price",
+    "avg_freight",
+    "avg_product_height_cm",
+    "avg_product_name_length",
+    "avg_product_description_length",
+    "avg_delivery_days",
+    "avg_ship_days",
+    "avg_estimate_gap_days",
+    "item_count",
+    "order_count",
+    "category_count",
+    "unique_customer_count",
+    "buyer_state_diversity",
+    "seller_state_frequency"
+  ],
+  "primary_stable_features_at_90pct": [
+    "avg_price",
+    "avg_freight",
+    "avg_product_name_length",
+    "avg_ship_days",
+    "avg_estimate_gap_days",
+    "item_count",
+    "order_count",
+    "category_count",
+    "unique_customer_count",
+    "buyer_state_diversity"
+  ],
+  "pretest_selected_features": [
+    "avg_price",
+    "avg_product_name_length",
+    "avg_product_description_length",
+    "avg_ship_days",
+    "avg_estimate_gap_days",
+    "item_count",
+    "order_count",
+    "category_count",
+    "unique_customer_count",
+    "buyer_state_diversity",
+    "dominant_customer_state_share",
+    "seller_state_frequency"
+  ],
+  "model_metadata": {
+    "train_n": 7199,
+    "validation_n": 3970,
+    "test_n": 3508,
+    "train_period": [
+      "2017-01",
+      "2017-12"
+    ],
+    "validation_period": [
+      "2018-01",
+      "2018-04"
+    ],
+    "test_period": [
+      "2018-05",
+      "2018-07"
+    ],
+    "ridge_alpha": 100.0,
+    "lasso_alpha": 0.009249147277217335,
+    "extra_trees": {
+      "min_samples_leaf": 8,
+      "max_features": 1.0
+    },
+    "xgboost": {
+      "max_depth": 2,
+      "learning_rate": 0.04,
+      "min_child_weight": 10
+    },
+    "mlp": {
+      "hidden_layer_sizes": [
+        64,
+        32
+      ],
+      "alpha": 0.001
+    },
+    "pretest_selected_features": [
+      "avg_price",
+      "avg_product_name_length",
+      "avg_product_description_length",
+      "avg_ship_days",
+      "avg_estimate_gap_days",
+      "item_count",
+      "order_count",
+      "category_count",
+      "unique_customer_count",
+      "buyer_state_diversity",
+      "dominant_customer_state_share",
+      "seller_state_frequency"
+    ]
+  },
+  "simulation_calibration": {
+    "method": "derandomized_knockoffs_eBH",
+    "repetitions": 30,
+    "knockoff_repetitions_per_dataset": 20,
+    "alpha_ebh": 0.2,
+    "alpha_kn": 0.1,
+    "true_features": [
+      "avg_price",
+      "avg_review_score",
+      "item_count",
+      "category_count",
+      "avg_delivery_days"
+    ],
+    "mean_fdp": 0.0,
+    "probability_fdp_above_q": 0.0,
+    "mean_power": 0.0,
+    "mean_discoveries": 0.0,
+    "single_knockoff_mean_fdp": 0.19730940355940355,
+    "single_knockoff_mean_power": 1.0
+  },
+  "elapsed_seconds": 17988.55549287796
+}
